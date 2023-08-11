@@ -1,0 +1,84 @@
+//
+// COLORS
+//
+// All the colors used by the application.
+//
+
+// ------------------------------------ //
+// CSS COLORS
+// ------------------------------------ //
+:root {
+    // Gray scale.
+    --color-gray-00: #ffffff;
+    --color-gray-01: #fafafa;
+    --color-gray-02: #e7e7e7;
+    --color-gray-03: #dfdfdf; // #e4e4e4;
+    --color-gray-04: #bfbfbf;
+    --color-gray-05: #838383;
+    --color-gray-06: #4b5053;
+
+    // Text colors.
+    --color-text: #4b5053;
+    --color-text-light: #828c91;
+    --color-text-inverse: #ffffff;
+    --color-text-link: #00aced;
+    --color-text-hover: #0089bb;
+    --color-text-visited: #0089bb;
+    --color-text-form-placeholder: #a6a9ac;
+
+    // Main colors.
+    --color-first: #00aced;
+    --color-first-dark: #0089bb;
+    --color-second: #0058b0;
+    --color-third: #377ca7;
+    --color-titles: #4b5053;
+
+    // Alerts and notifications.
+    --color-favourites: #ea4c89;
+    --color-favourites-rgb: 234, 76, 137;
+    --color-error: #ff643f;
+    --color-error-rgb: 255, 100, 63;
+    --color-error-background: #fff3f0;
+    --color-error-dark: #cf3c18;
+    --color-warning: #febe53;
+    --color-success: #4ace85;
+    --color-success-rgb: 74, 206, 133;
+
+    // Forecast status.
+    --color-forecast-possible: #a7efaf;
+    --color-forecast-good: #45c46f;
+    --color-forecast-very-good: #1a9342;
+    --color-forecast-epic: #0a3d1b;
+
+    // Charts-colors
+    --color-chart-swell: #0058b0;
+    --color-chart-wind: #00aced;
+    --color-chart-period: #febe53;
+    --color-chart-tide: #0058b0;
+    --color-chart-pie-aframe: #0058b0;
+    --color-chart-pie-right: #48c0df;
+    --color-chart-pie-left: #55ce96;
+    --color-chart-pie-sand: #e7be4e;
+    --color-chart-pie-sand-rocks: #a5e74e;
+    --color-chart-pie-rocks: #b97c37;
+    --color-chart-pie-rocks-sand: #8ac07d;
+    --color-chart-pie-reef: #55cace;
+    --color-chart-pie-reef-sand: #4971e0;
+    --color-chart-pie-boulders: #ce6d55;
+    --color-chart-pie-cobbles: #aca49f;
+
+    // Social colors.
+    --color-facebook: #4267b2;
+    --color-facebook-hover: #2c4c8b;
+    --color-whatsapp: #01e675;
+    --color-whatsapp-hover: #00c563;
+    --color-twitter: #00aced;
+    --color-google: #db3236;
+}
+
+// ------------------------------------ //
+// OTHER PROPERTIES
+// ------------------------------------ //
+:root {
+    --desktop-breakpoint: 768;
+}
