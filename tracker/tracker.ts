@@ -1,4 +1,3 @@
-// import { FacebookAnalytics } from 'capacitor-plugin-facebook-analytics';
 import mixpanel from 'mixpanel-browser';
 
 import { TrackingEvent } from '../constants/trackingEvent';
