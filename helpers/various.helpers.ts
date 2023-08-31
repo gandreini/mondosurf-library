@@ -1,7 +1,4 @@
-import { Clipboard } from '@capacitor/clipboard';
 import _ from 'lodash';
-
-import { isApp } from './device.helpers';
 
 /**
  * Returns the value of a GET parameter,
@@ -57,27 +54,19 @@ export function oneDecimal(numberToFix: number): number {
 }
 
 /**
- * Copy to clipboard function.
+ * Copy to clipboard function only for web applications (non apps).
  * 
  * @param   {element} elementToGetStringId Id of the form element (like an input or textarea) to copy the text from.
  * @param   {Function} callbackFunction Callback function to be called after the text has been copied.
  */
-export function copyToClipboard(textToCopy: string, callbackFunction?: Function): void {
-    if (isApp()) {
-        Clipboard.write({
-            string: textToCopy
-        }).then(function () {
-            if (callbackFunction) callbackFunction();
-        });
-    } else {
-        navigator.clipboard.writeText(
-            textToCopy
-        ).then(function () {
-            if (callbackFunction) callbackFunction();
-        }, function () {
-            /* clipboard write failed */
-        });
-    }
+export function copyToClipboardWeb(textToCopy: string, callbackFunction?: Function): void {
+    navigator.clipboard.writeText(
+        textToCopy
+    ).then(function () {
+        if (callbackFunction) callbackFunction();
+    }, function () {
+        /* clipboard write failed */
+    });
 }
 
 /**
