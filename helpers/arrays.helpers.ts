@@ -1,4 +1,4 @@
-import { returnMonthShortLabel } from "./labels.helpers";
+import { returnMonthShortLabel } from "helpers/labels.helpers";
 
 /**
  * Checks if a given item si present in an array.
