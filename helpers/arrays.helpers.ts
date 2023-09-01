@@ -1,5 +1,3 @@
-import { returnMonthShortLabel } from "helpers/labels.helpers";
-
 /**
  * Checks if a given item si present in an array.
  *
@@ -52,28 +50,6 @@ function sortMultiArraySecondColumnMatch(a: number[] | string[], b: number[] | s
     else {
         return (a[1] < b[1]) ? -1 : 1;
     }
-}
-
-/**
- * Function that returns an array with the short labels of months.
- * 
- * @returns {string[]} String array with months' labels (Jan, Feb...).
- */
-export function monthsArray(): string[] {
-    return [
-        returnMonthShortLabel(1),
-        returnMonthShortLabel(2),
-        returnMonthShortLabel(3),
-        returnMonthShortLabel(4),
-        returnMonthShortLabel(5),
-        returnMonthShortLabel(6),
-        returnMonthShortLabel(7),
-        returnMonthShortLabel(8),
-        returnMonthShortLabel(9),
-        returnMonthShortLabel(10),
-        returnMonthShortLabel(11),
-        returnMonthShortLabel(12)
-    ];
 }
 
 /**
