@@ -1,5 +1,4 @@
-import { setLocalStorageData } from "../helpers/localStorage.helpers";
-import { getLocalStorageData } from "../helpers/localStorage.helpers";
+import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "../helpers/localStorage.helpers";
 import { geolocationIsAuthorized } from "../redux/appConfigSlice";
 import { store } from "../redux/store";
 
@@ -37,7 +36,7 @@ export function getUserPositionWeb(): Promise<GeolocationPosition> {
 
     geoPromise = new Promise((resolve, reject) =>
         navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
-            setLocalStorageData('geolocation_authorization', 'true');
+            setLocalStorageDataWeb('geolocation_authorization', 'true');
             store.dispatch(geolocationIsAuthorized());
             resolve(pos);
         }, reject, {
@@ -50,14 +49,13 @@ export function getUserPositionWeb(): Promise<GeolocationPosition> {
 }
 
 /**
- * Retrieves the geolocation auth state and writes it in Redux..
+ * Retrieves the geolocation auth state and writes it in Redux.
  *
  * @returns {void}
  */
-export const retrieveGeolocationAuth = () => {
-    getLocalStorageData('geolocation_authorization').then((response) => {
-        if (response && response === 'true') {
-            store.dispatch(geolocationIsAuthorized());
-        }
-    });
+export const retrieveGeolocationAuthWeb = () => {
+    const geolocationAuth = getLocalStorageDataWeb('geolocation_authorization');
+    if (geolocationAuth !== null && geolocationAuth === 'true') {
+        store.dispatch(geolocationIsAuthorized());
+    }
 }
