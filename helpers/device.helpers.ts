@@ -1,6 +1,19 @@
 import { DeviceUUID } from 'device-uuid';
 
-import { store } from "../redux/store";
+/**
+ * Check the with of the device and returns true if it's bigger that the provided minWidth.
+ *
+ * @param   {number} minWidth Returns true if the screen is wider than this value.
+ * @returns {boolean} True if screen is wider than the provided value.
+ */
+export function screenWiderThan(minWidth: number): boolean {
+    const mediaQuery = window.matchMedia('(min-width: ' + minWidth.toString() + 'px)');
+    if (mediaQuery.matches) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
 * Returns true if mobile device.
@@ -18,41 +31,13 @@ export function isMobile(): boolean {
 }
 
 /**
- * Check the with of the device and returns true if it's bigger that the provided minWidth.
- *
- * @param   {number} minWidth Returns true if the screen is wider than this value.
- * @returns {boolean} True if screen is wider than the provided value.
- */
-export function screenWiderThan(minWidth: number): boolean {
-    const mediaQuery = window.matchMedia('(min-width: ' + minWidth.toString() + 'px)');
-    if (mediaQuery.matches) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
  * Returns the type of platform that react is running on from Redux.
- * Values can be "web", "ios", "android".
+ * Values can be "web".
  * 
- * @returns {"web" | "ios" | "android"} Values: "web", "ios", "android".
+ * @returns {"web"} "web".
  */
-export function getPlatform(): "web" | "ios" | "android" {
-    const state = store.getState();
-    const platform = state.appConfig.platform; // Redux.
-    return platform;
-}
-
-/**
- * Returns true if running on iOS or Android App.
- * False if it's on web.
- * 
- * @returns {boolean} True for iOS or Android App.
- */
-export function isApp(): boolean {
-    if (getPlatform() === "ios" || getPlatform() === "android") return true;
-    return false;
+export function getPlatform(): "web" {
+    return "web";
 }
 
 /**
