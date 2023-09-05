@@ -7,9 +7,13 @@ export interface ISurfSpot {
     name: string;
     slug: string;
     region: string;
+    region_name: string;
     region_id: string;
+    region_slug: string;
     country: string;
+    country_name: string;
     country_id: string;
+    country_slug: string;
     last_update: number;
     lat: number;
     lng: number;
