@@ -1,0 +1,30 @@
+/**
+ * METADATA
+ *
+ * Metadata
+ */
+
+/* ------------------------------------ *\
+    #METADATA
+\* ------------------------------------ */
+.ms-metadata {
+    &__label {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+    }
+
+    &__value {
+        font-size: $font-size-m-fluid;
+    }
+
+    &__inline {
+        display: flex;
+        gap: $space;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
