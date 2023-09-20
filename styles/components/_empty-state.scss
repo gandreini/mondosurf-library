@@ -1,0 +1,51 @@
+/**
+ * EMPTY STATE
+ *
+ * Empty state style
+ */
+
+/* ------------------------------------ *\
+   #EMPTY-STATE
+\* ------------------------------------ */
+.ms-empty-state {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__title {
+        margin: 0 0 $space * 1 0;
+        padding: 0;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-l;
+        line-height: 1.65;
+    }
+
+    &__text {
+        margin: 0;
+        padding: 0;
+        font-weight: $font-weight-normal;
+        font-size: $font-size-s;
+        line-height: 1.65;
+    }
+
+    &__buttons {
+        margin-top: $space * 2;
+    }
+
+    &_link {
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}
