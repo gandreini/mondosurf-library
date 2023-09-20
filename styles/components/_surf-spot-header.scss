@@ -1,0 +1,33 @@
+/**
+ * SURF SPOT HEADER
+ *
+ * Reused header section for all surf spot pages.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-HEADER
+\* ------------------------------------ */
+.ms-surf-spot-header {
+    padding-top: $space * 3;
+    background-color: $color-background-base;
+
+    &__content {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    &__title {
+        display: flex;
+    }
+
+    &__title-tools {
+        margin-left: auto;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
