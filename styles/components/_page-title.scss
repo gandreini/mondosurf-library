@@ -1,0 +1,62 @@
+/**
+ * PAGE TITLE
+ *
+ * Title of the page with flag and mobile back button
+ */
+
+/* ------------------------------------ *\
+    #PAGE-TITLE
+\* ------------------------------------ */
+.ms-page-title {
+    display: flex;
+    gap: $space * 1.5;
+    margin: 0 0 $space * 2;
+
+    &__flag-title-wrapper {
+        display: flex;
+        gap: $space * 0.75;
+    }
+
+    &__flag {
+        margin-top: 2px;
+        font-size: $font-size-xl-fluid;
+        line-height: 1;
+    }
+
+    &__icon-wrapper {
+        display: flex;
+        align-items: flex-start;
+        .mondo-icon {
+            color: var(--color-text);
+            font-size: $font-size-xl-fluid;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-size: $font-size-xl-fluid;
+        line-height: 1;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-page-title {
+        margin: 0;
+
+        &__flag-title-wrapper {
+            gap: $space * 1;
+            align-items: center;
+        }
+
+        &__icon-wrapper {
+            display: none;
+        }
+
+        &__title {
+            font-size: $font-size-xxl-fluid;
+        }
+    }
+}
