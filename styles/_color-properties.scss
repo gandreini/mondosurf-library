@@ -8,31 +8,31 @@
 // CSS COLORS
 // ------------------------------------ //
 :root {
-    // Gray scale.
+    // Gray scale
     --color-gray-00: #ffffff;
-    --color-gray-01: #fafafa;
-    --color-gray-01-05: #f0f0f0;
-    --color-gray-02: #e7e7e7;
-    --color-gray-03: #dfdfdf; // #e4e4e4;
-    --color-gray-04: #bfbfbf;
-    --color-gray-05: #838383;
-    --color-gray-06: #4b5053;
+    --color-gray-01: #f9fafb;
+    --color-gray-01-05: #eeeff2;
+    --color-gray-02: #e5e6e9;
+    --color-gray-03: #dddee1;
+    --color-gray-04: #bbbec3;
+    --color-gray-05: #7d8189;
+    --color-gray-06: #4b4e53;
 
-    // Text colors.
-    --color-text: #4b5053;
-    --color-text-light: #828c91;
+    // Text colors
+    --color-text: #4b4e53;
+    --color-text-light: #828791;
     --color-text-inverse: #ffffff;
-    --color-text-link: #406fcb; //  #00aced;
-    --color-text-hover: #0089bb;
-    --color-text-visited: #0089bb;
-    --color-text-form-placeholder: #a6a9ac;
+    --color-text-link: #406fcb;
+    --color-text-hover: #2d529a;
+    --color-text-visited: #2d529a;
+    --color-text-form-placeholder: #a5a8ad;
+    --color-titles: #4b4e53;
 
-    // Main colors.
+    // Main colors
     --color-first: #406fcb; //#00aced;
-    --color-first-dark: #0089bb;
-    --color-second: #0058b0;
-    --color-third: #377ca7;
-    --color-titles: #4b5053;
+    --color-first-dark: #234280;
+    --color-second: #2d529a;
+    --color-third: #6bcc95;
 
     // Alerts and notifications.
     --color-favourites: #ea4c89;
@@ -42,14 +42,14 @@
     --color-error-background: #fff3f0;
     --color-error-dark: #cf3c18;
     --color-warning: #febe53;
-    --color-success: #4ace85;
+    --color-success: #45c46f;
     --color-success-rgb: 74, 206, 133;
 
-    // Forecast status.
+    // Forecast
     --color-forecast-possible: #a7efaf;
     --color-forecast-good: #45c46f;
-    --color-forecast-very-good: #1a9342;
-    --color-forecast-epic: #0a3d1b;
+    --color-forecast-very-good: #1e8f4e;
+    --color-forecast-epic: #0d3a24;
 
     // Charts-colors
     --color-chart-swell: #406fcb;
