@@ -22,4 +22,4 @@ export const IOS_EULA_URL = "https://www.apple.com/legal/internet-services/itune
 export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
 export const APP_LATEST_VERSION = "4.0.0";
-export const APP_LATEST_VERSION_PROGRESSIVE = 38;
+export const APP_LATEST_VERSION_PROGRESSIVE = 42;
