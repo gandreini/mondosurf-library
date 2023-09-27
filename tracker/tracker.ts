@@ -6,6 +6,7 @@ import { isDebug } from '../helpers/debug.helpers';
 import { getPlatform } from '../helpers/device.helpers';
 import { stringToBool } from '../helpers/strings.helpers';
 import { store } from '../redux/store';
+import { DEBUG_MODE, DISABLE_TRACKING } from '@/constants/localConstants';
 
 type DestinationType = ('fb' | 'fbapp' | 'mp' | 'at' | 'ga' | 'sb')[];
 
@@ -23,8 +24,8 @@ export class Tracker {
      * @returns {void}
      */
     static mixpanelInit(mixpanelToken: string) {
-        if (process.env.REACT_APP_DEBUG_MODE === "true") {
-            mixpanel.init(mixpanelToken, { debug: stringToBool(process.env.REACT_APP_DEBUG_MODE) });
+        if (DEBUG_MODE === "true") {
+            mixpanel.init(mixpanelToken, { debug: stringToBool(DEBUG_MODE) });
         } else {
             mixpanel.init(mixpanelToken);
         }
@@ -67,8 +68,8 @@ export class Tracker {
         if ((logged === "no" || logged === "checking") && !cookieTracking) trackingStatus = false;
         // The user has refused tracking when registering (or was disabled by the admin).
         if (logged === "yes" && !authorizedTracking) trackingStatus = false;
-        // Checks the env parameter REACT_APP_DISABLE_TRACKING.
-        if (process.env.REACT_APP_DISABLE_TRACKING === "true") trackingStatus = false;
+        // Checks the global local variable DISABLE_TRACKING.
+        if (DISABLE_TRACKING === "true") trackingStatus = false;
 
         return trackingStatus;
     }

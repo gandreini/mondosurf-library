@@ -1,3 +1,4 @@
+import { FAKE_USER_LAT, FAKE_USER_LNG } from "@/constants/localConstants";
 import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "../helpers/localStorage.helpers";
 import { geolocationIsAuthorized } from "../redux/appConfigSlice";
 import { store } from "../redux/store";
@@ -13,13 +14,13 @@ export function getUserPositionWeb(): Promise<GeolocationPosition> {
     let geoPromise: Promise<GeolocationPosition>;
 
     // Fake values retrieved from .env (only for testing).
-    if (process.env.REACT_APP_FAKE_USER_LAT && process.env.REACT_APP_FAKE_USER_LNG) {
+    if (FAKE_USER_LAT && FAKE_USER_LNG) {
         geoPromise = new Promise((resolve, reject) => {
             resolve(
                 {
                     coords: {
-                        latitude: Number(process.env.REACT_APP_FAKE_USER_LAT),
-                        longitude: Number(process.env.REACT_APP_FAKE_USER_LNG),
+                        latitude: Number(FAKE_USER_LAT),
+                        longitude: Number(FAKE_USER_LNG),
                         accuracy: 0,
                         altitude: null,
                         altitudeAccuracy: null,

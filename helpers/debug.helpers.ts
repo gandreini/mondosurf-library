@@ -1,3 +1,5 @@
+import { DEBUG_MODE } from "@/constants/localConstants";
+
 /**
  * Return true if the debug is active.
  *
@@ -5,6 +7,6 @@
  */
 export const isDebug = () => {
     let debugActive = false;
-    if (process.env.REACT_APP_DEBUG_MODE === 'true') debugActive = true;
+    if (DEBUG_MODE === 'true') debugActive = true;
     return debugActive;
 }
