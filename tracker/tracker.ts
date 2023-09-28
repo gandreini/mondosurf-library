@@ -6,7 +6,7 @@ import { isDebug } from '../helpers/debug.helpers';
 import { getPlatform } from '../helpers/device.helpers';
 import { stringToBool } from '../helpers/strings.helpers';
 import { store } from '../redux/store';
-import { DEBUG_MODE, DISABLE_TRACKING } from '@/constants/localConstants';
+import { DEBUG_MODE, DISABLE_TRACKING } from '../../constants/localConstants';
 
 type DestinationType = ('fb' | 'fbapp' | 'mp' | 'at' | 'ga' | 'sb')[];
 

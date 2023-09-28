@@ -1,4 +1,4 @@
-import { FAKE_USER_LAT, FAKE_USER_LNG } from "@/constants/localConstants";
+import { FAKE_USER_LAT, FAKE_USER_LNG } from "../../constants/localConstants";
 import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "../helpers/localStorage.helpers";
 import { geolocationIsAuthorized } from "../redux/appConfigSlice";
 import { store } from "../redux/store";
