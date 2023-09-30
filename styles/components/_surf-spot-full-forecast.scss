@@ -1,0 +1,23 @@
+/**
+ * SURF SPOT FULL FORECAST
+ *
+ * Style for the content of the full forecast page
+ */
+
+/* ------------------------------------ *\
+    #SURF- SPOT-FULL-FORECAST
+\* ------------------------------------ */
+.ms-surf-spot-full-forecast {
+    flex-grow: 1;
+    display: flex;
+
+    .ms-empty-state {
+        margin-top: $space * 8;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

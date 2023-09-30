@@ -1,0 +1,79 @@
+/**
+ * LANGUAGE SELECTOR WIDGET
+ *
+ * Style for language selector in widget
+ */
+
+/* ------------------------------------ *\
+   #LANGUAGE-SELECTOR-WIDGET
+\* ------------------------------------ */
+.wpml-ls {
+    width: 100%;
+    background-color: transparent;
+    box-sizing: border-box;
+
+    ul {
+        border: 0;
+
+        .wpml-ls-item {
+            a.wpml-ls-item-toggle {
+                display: flex;
+                align-items: center;
+                padding: 0 $space;
+                height: $dropdown-height;
+                line-height: $dropdown-height;
+                color: var(--color-text);
+                background-color: $color-background-base;
+                border-radius: $border-radius;
+                font-size: $font-size-s;
+
+                &:hover {
+                    color: var(--color-text);
+                    background-color: $color-background-base;
+                }
+
+                &:before {
+                    position: absolute;
+                    content: "\25BC";
+                    right: $space;
+                    line-height: $dropdown-height;
+                }
+
+                &:after {
+                    display: none;
+                }
+            }
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+            > .wpml-ls-item {
+                > a {
+                    color: var(--color-text);
+                    border-radius: 0;
+                    font-size: $font-size-s;
+                    padding: 0 $space;
+                    height: $dropdown-height;
+                    line-height: $dropdown-height;
+
+                    &:hover {
+                        color: var(--color-text);
+                        font-weight: $font-weight-bold;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

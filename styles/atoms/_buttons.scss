@@ -1,0 +1,289 @@
+/**
+ * BUTTONS
+ *
+ * Style for all types of buttons
+ */
+
+/* ------------------------------------ *\
+   #STANDARD-BUTTON
+\* ------------------------------------ */
+.ms-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: $space * 0.5;
+    overflow: hidden;
+    box-sizing: border-box;
+    // height: $button-normal-height;
+    height: $height-common-m;
+    padding: 0 $space * 1.5;
+    margin: 0;
+    // border: $button-border-width solid $color-button-border;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $color-button-border;
+    border-radius: $button-border-radius;
+    background-color: $color-button-bg;
+    color: $color-button-text;
+    // @include font-size('s');
+    font-size: $font-size-s-fluid;
+    font-weight: $font-weight-bold;
+    font-family: var(--font-family-main);
+    line-height: 1.12;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all $transition-durations;
+    text-align: center;
+    // text-transform: capitalize;
+    // text-transform: uppercase;
+
+    &:hover {
+        color: $color-button-text-hover;
+        background-color: $color-button-bg-hover;
+        border-color: $color-button-border-hover;
+        text-decoration: none;
+    }
+
+    // Disabled.
+    &.disabled,
+    &:disabled,
+    &.disabled:hover,
+    &:disabled:hover,
+    &.disabled:active,
+    &:disabled:active,
+    &.disabled:active:hover,
+    &:disabled:active:hover {
+        color: $color-button-text;
+        border-color: $color-button-border;
+        background-color: $color-button-bg;
+        text-shadow: none;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    // Active.
+    &.active,
+    &:active,
+    &.active:hover,
+    &:active:hover,
+    &:focus,
+    &:focus:hover {
+        color: $color-button-text;
+        background-color: $color-button-bg;
+        border-color: $color-button-border;
+    }
+
+    &.ms-btn-s {
+        padding: 0 $space * 1;
+        // height: $button-small-height;
+        height: $height-common-s;
+        // @include font-size('xs');
+        font-size: $font-size-xs-fluid;
+    }
+
+    // Mostly used into bars.
+    &.ms-btn-l {
+        padding: 0 $space * 2.5;
+        // height: $button-large-height;
+        height: $height-common-l;
+        // @include font-size('m');
+        font-size: $font-size-m-fluid;
+    }
+
+    // Same height as .cs-btn-l but with bigger contents.
+    &.ms-btn-xl {
+        padding: 0 $space * 3.5;
+        // height: $button-xlarge-height;
+        height: $height-common-xl;
+        // @include font-size('l');
+        font-size: $font-size-l-fluid;
+    }
+
+    // Full width.
+    &.ms-btn-full {
+        width: 100%;
+    }
+
+    // Fluid height.
+    &.ms-btn-fluid {
+        height: auto;
+        padding-top: $space * 1;
+        padding-bottom: $space * 1;
+
+        span:first-child {
+            margin-bottom: $space * 0.5;
+            @include font-size('l');
+        }
+        span:last-child {
+            @include font-size('xs');
+            font-weight: $font-weight-normal;
+        }
+    }
+
+    // With tag inside.
+    &.ms-btn-with-tag {
+        flex-direction: row;
+        span:last-child {
+            @include font-size('xs');
+            border-radius: $border-radius * 0.5;
+            padding: $space * 0.5 $space * 0.75;
+            margin-left: $space * 1;
+            background-color: var(--color-gray-00);
+            color: var(--color-text);
+            line-height: 1;
+            font-weight: $font-weight-semibold;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LIGHT-BUTTON
+\* ------------------------------------ */
+// No background.
+.ms-btn-light {
+    color: $color-button-light-text;
+    background-color: $color-button-light-bg;
+    border-color: $color-button-light-border;
+    // border-width: 0;
+
+    &:hover {
+        color: $color-button-light-text-hover;
+        background-color: $color-button-light-bg-hover;
+        border-color: $color-button-light-border-hover;
+    }
+
+    // Disabled.
+    &.disabled,
+    &:disabled,
+    &.disabled:hover,
+    &:disabled:hover,
+    &.disabled:active,
+    &:disabled:active,
+    &.disabled:active:hover,
+    &:disabled:active:hover {
+        color: $color-button-light-text;
+        background-color: $color-button-light-bg;
+        border-color: $color-button-light-border;
+        opacity: 0.7;
+    }
+
+    // Active.
+    &.active,
+    &:active,
+    &.active:hover,
+    &:active:hover,
+    &:focus,
+    &:focus:hover {
+        color: $color-button-light-text;
+        background-color: $color-button-light-bg;
+        border-color: $color-button-light-border;
+    }
+}
+
+/* ------------------------------------ *\
+   #CALL-TO-ACTION-BUTTON
+\* ------------------------------------ */
+.ms-btn-cta {
+    color: $color-button-cta-text;
+    background-color: $color-button-cta-bg;
+    border-color: $color-button-cta-border;
+    border-width: 0;
+
+    &:hover {
+        color: $color-button-cta-text-hover;
+        background-color: $color-button-cta-bg-hover;
+        border-color: $color-button-cta-border-hover;
+    }
+
+    // Disabled.
+    &.disabled,
+    &:disabled,
+    &.disabled:hover,
+    &:disabled:hover,
+    &.disabled:active,
+    &:disabled:active,
+    &.disabled:active:hover,
+    &:disabled:active:hover {
+        color: $color-button-cta-text;
+        background-color: $color-button-cta-bg;
+        border-color: $color-button-cta-border;
+        opacity: 0.7;
+    }
+
+    // Active.
+    &.active,
+    &:active,
+    &.active:hover,
+    &:active:hover,
+    &:focus,
+    &:focus:hover {
+        color: $color-button-cta-text;
+        background-color: $color-button-cta-bg;
+        border-color: $color-button-cta-border;
+    }
+}
+
+/* ------------------------------------ *\
+   #ICONS
+\* ------------------------------------ */
+.ms-btn {
+    svg {
+        height: 18px;
+        width: auto;
+        margin-left: $space/2;
+    }
+}
+
+/* ------------------------------------ *\
+   #BRAND-BUTTONS
+\* ------------------------------------ */
+.ms-btn {
+    &.ms-btn-wa {
+        border: $button-border-width solid var(--color-whatsapp);
+        background-color: var(--color-whatsapp);
+        color: var(--color-text-inverse);
+
+        // Active.
+        &.active,
+        &:active,
+        &.active:hover,
+        &:active:hover,
+        &:focus,
+        &:focus:hover {
+            border: $button-border-width solid var(--color-whatsapp);
+            background-color: var(--color-whatsapp);
+            color: var(--color-text-inverse);
+        }
+
+        &:hover {
+            border: $button-border-width solid var(--color-whatsapp-hover);
+            background-color: var(--color-whatsapp-hover);
+            color: var(--color-text-inverse);
+        }
+    }
+
+    &.ms-btn-fb {
+        border: $button-border-width solid var(--color-facebook);
+        background-color: var(--color-facebook);
+        color: var(--color-text-inverse);
+
+        // Active.
+        &.active,
+        &:active,
+        &.active:hover,
+        &:active:hover,
+        &:focus,
+        &:focus:hover {
+            border: $button-border-width solid var(--color-facebook);
+            background-color: var(--color-facebook);
+            color: var(--color-text-inverse);
+        }
+
+        &:hover {
+            border: $button-border-width solid var(--color-facebook-hover);
+            background-color: var(--color-facebook-hover);
+            color: var(--color-text-inverse);
+        }
+    }
+}

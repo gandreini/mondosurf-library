@@ -1,0 +1,31 @@
+/**
+ * GLOBAL
+ *
+ * Global styles, tags and common classes
+ */
+
+/* ------------------------------------ *\
+   #TAGS
+\* ------------------------------------ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-size: 16px;
+    touch-action: none;
+}
+
+body {
+    box-sizing: border-box;
+    // background-color: var(--color-gray-01);
+    background-color: $color-background-base;
+    color: var(--color-text);
+    font-family: var(--font-family-main);
+    font-size: 16px;
+    letter-spacing: 0.02rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+:focus {
+    outline: 0;
+}

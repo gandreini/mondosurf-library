@@ -1,0 +1,45 @@
+/**
+ * HOME FAVOURITES SPOTS FORECAST
+ *
+ * Home sections showing the forecast of the favourites spots.
+ */
+
+/* ------------------------------------ *\
+    #HOME FAVOURITES SPOTS FORECAST
+\* ------------------------------------ */
+.ms-home-favorites-spots-forecast {
+    margin-bottom: $space * 5;
+
+    // Loading.
+    &__loading {
+        padding-top: $space;
+    }
+
+    // Empty state.
+    &__no-favourites {
+        .mondo-icon {
+            @include font-size('xl');
+            color: var(--color-favourites);
+            vertical-align: middle;
+        }
+    }
+
+    // Last update.
+    &__last-update {
+        margin-top: $space * 1;
+        margin-bottom: $space * 1;
+
+        &.has-ho-results {
+            text-align: center;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-home-favorites-spots-forecast {
+        padding-top: $space * 3;
+    }
+}

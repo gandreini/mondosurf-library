@@ -1,0 +1,173 @@
+/**
+ * SURF SPOT MAP
+ *
+ * OSM map that displays the position of a surf spot.
+ *
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-MAP
+\* ------------------------------------ */
+.ms-map-global {
+    position: relative;
+
+    &__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.ms-map-global .ms-map-global__container {
+    background: $map-background-color;
+}
+
+/* ------------------------------------ *\
+   #CLUSTER
+\* ------------------------------------ */
+.ms-map-cluster {
+    position: absolute;
+    left: -($map-cluster-size/2);
+    top: -($map-cluster-size/2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-05);
+    padding: 0;
+    box-sizing: border-box;
+    width: $map-cluster-size;
+    height: $map-cluster-size;
+    border-radius: $map-cluster-size;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.075);
+
+    &__text {
+        text-align: center;
+        font-size: $font-size-m;
+        font-weight: $font-weight-bold;
+        text-shadow: 0 2px 2px rgba(0, 0, 0, 0.075);
+        color: var(--color-text-inverse);
+    }
+
+    &.is-good {
+        background-color: var(--color-forecast-good);
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MAP-CONTROLS
+\* ------------------------------------ */
+.ms-map {
+    &__controls {
+        position: absolute;
+        top: $map-control-margin;
+        left: $map-control-margin;
+        z-index: $z-index-map-zoom-buttons;
+    }
+
+    /* Zoom */
+    &__zoom {
+        margin-bottom: $map-control-margin;
+    }
+    &__zoom-in {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 1px solid $color-border-normal;
+    }
+    &__zoom-out {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    /* Map switch button */
+    &__switch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        cursor: pointer;
+        pointer-events: all;
+
+        .mondo-icon {
+            font-size: $font-size-xl;
+            color: var(--color-text);
+            transition: all $transition-durations;
+        }
+
+        &.is-active {
+            .mondo-icon {
+                color: var(--color-first);
+            }
+        }
+    }
+
+    /* Center map */
+    &__center {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: $z-index-map-center-button;
+
+        width: $map-control-size;
+        height: $map-control-size;
+
+        @include map-control;
+        bottom: $map-control-margin;
+        left: $map-control-margin;
+        cursor: pointer;
+
+        [class*=' mondo-icon-'] {
+            font-size: $font-size-xl;
+        }
+
+        &.is-displayed {
+            display: flex;
+        }
+    }
+}
+
+// Position from top for the controls in the map page.
+// Considering the top padding due to the iOS bar.
+.ms-map .ms-map__controls {
+    top: calc(#{$map-control-margin} + var(--ios-status-bar-margin)); // iOS spacing.
+}
+
+/* ------------------------------------ *\
+   #ATTRIBUTION
+\* ------------------------------------ */
+.ms-map-global__container {
+    .leaflet-top {
+        z-index: $z-index-map-copyright;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

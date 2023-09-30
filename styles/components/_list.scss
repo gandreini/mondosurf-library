@@ -1,0 +1,21 @@
+/**
+ * LIST
+ *
+ * List component to repeat components.
+ */
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.ms-list {
+    &__load-more-btn {
+        display: flex;
+        margin: $space * 1.5 auto 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

@@ -1,0 +1,207 @@
+/**
+ * HOME HERO
+ *
+ * Hero block in homepage.
+ *
+ */
+
+/* ------------------------------------ *\
+   #HOME-HERO
+\* ------------------------------------ */
+.ms-home-hero {
+    position: relative;
+    // width: 100%;
+    overflow: hidden;
+    padding-left: $space*3;
+    padding-right: $space*3;
+    
+    // Image or video bg.
+    &__background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        box-sizing: border-box;
+    }
+
+    &__background-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        &:after {
+            position: absolute;
+            content: ' ';
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(#000000, 0.4);
+            transition: all $transition-durations;
+            z-index: 2;
+        }
+    }
+
+    &__background-image, video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        z-index: 1;
+    }
+
+    // Content.
+    &__content {
+        padding-top: $space * 5;
+        padding-bottom: $space * 5;
+        position: relative;
+        z-index: 2;
+    }
+
+    &__ms {
+        display: flex;
+        align-items: center;
+        margin-bottom: $space * 1.5;
+    }
+
+    &__ms-logo {
+        margin-right: $space * 1;
+    }
+
+    &__ms-copy {
+        margin-right: $space;
+        margin-bottom: 0;
+
+        span {
+            display: block;
+            font-size: $font-size-s;
+            color: var(--color-text-inverse);
+            line-height: 1;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__title {
+        margin-bottom: $space * 0.5;
+        color: var(--color-text-inverse);
+        font-size: $font-size-xxl-fluid;
+        font-weight: $font-weight-bold;
+        line-height: 1.19;
+    }
+
+    &__text.ms-large-text,
+    &__text.ms-large-text:not(:last-child) {
+        color: var(--color-text-inverse);
+        margin-bottom: $space * 6;
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: $space;        
+    }
+}
+
+/* ------------------------------------ *\
+   #IMAGE
+\* ------------------------------------ */
+.ms-home-hero-image {
+    /* Overlay */
+    &:after {
+        content: " ";
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+/* ------------------------------------ *\
+   #VIDEO
+\* ------------------------------------ */
+.ms-home-hero-video {
+    /* Video bg */
+    .ms-home-hero__video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: 0;
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    /* Video overlay */
+    .ms-home-hero__video-overlay {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-home-hero {
+        padding-left: $space*10;
+        padding-right: $space*10;
+
+        &__ms {
+            display: none;
+        }
+
+        &__content {
+            padding-top: $header-height-desktop + $space * 8;
+            padding-bottom: $header-height-desktop + $space * 8;
+        }
+
+        &__buttons {
+            flex-direction: row;
+            gap: $space * 2;
+        }
+    }
+}
+
+@media all and (min-width: $page-width-wide) {
+    .ms-home-hero {
+        margin-bottom: $space * 8;
+
+        &__background {
+            max-width: $page-width-wide;
+        }
+
+        &__background-content {
+            border-radius: $border-radius;
+            
+            &:after {
+                border-radius: $border-radius;
+            }
+        }
+    }
+}
+
+@media all and (min-width: ($page-max-width + $space * 4)) {
+    .ms-home-hero {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

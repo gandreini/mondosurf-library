@@ -1,0 +1,41 @@
+/**
+ * ALERTS
+ *
+ * All alerts used on Mondo Surf
+ */
+
+/* ------------------------------------ *\
+   #GENERAL STYLE
+\* ------------------------------------ */
+.ms-alert {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: none;
+    padding: $space * 1 $space * 2;
+    margin-bottom: $space * 2;
+    background-color: var(--color-success);
+    @include font-size('m');
+    border-radius: $border-radius;
+    color: var(--color-text-inverse);
+    text-shadow: none;
+    text-align: center;
+}
+
+.ms-alert-success {
+    background-color: var(--color-success);
+}
+
+.ms-alert-warning {
+    background-color: var(--color-warning);
+}
+
+.ms-alert-error {
+    background-color: var(--color-error);
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

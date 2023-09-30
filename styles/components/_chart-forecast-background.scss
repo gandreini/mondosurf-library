@@ -1,0 +1,134 @@
+/**
+ * CHART FORECAST BACKGROUND
+ *
+ * Background for forecast charts.
+ */
+
+/* ------------------------------------ *\
+   #CHART-FORECAST-BACKGROUND
+\* ------------------------------------ */
+.ms-chart-forecast-background {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0; // 19px;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $color-background-base;
+
+    &__day {
+        position: relative;
+        box-sizing: border-box;
+        height: 100%;
+        border-left: 1px solid $forecast-chart-hour-separator-color-vertical;
+        border-top: 1px solid $forecast-chart-hour-separator-color-top;
+        border-bottom: 1px solid $forecast-chart-hour-separator-color-bottom;
+        flex-grow: 1;
+        flex-shrink: 1;
+
+        &.is-00 {
+            &:before {
+                content: ' ';
+                position: absolute;
+                width: $forecast-chart-day-separator-width;
+                top: -4px;
+                bottom: 0;
+                left: -($forecast-chart-day-separator-width/2 + 1px);
+                background-color: $forecast-chart-day-separator-color; // The actual color of the border
+                border-left: 1px solid var(--color-gray-00);
+                border-right: 1px solid var(--color-gray-00);
+                z-index: $z-index-spots-charts;
+            }
+        }
+
+        &:not(.has-light) {
+            background-color: $forecast-chart-night-color;
+        }
+
+        &.is-now:after {
+            content: ' ';
+            position: absolute;
+            background-color: var(--color-favourites);
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            left: 50%;
+            margin-left: -3px;
+            top: -14px;
+        }
+
+        /* First item */
+        &:first-child {
+            .ms-chart-forecast-background__date-label {
+                display: none;
+            }
+
+            .ms-chart-forecast-background__day-label {
+                // left: 0;
+                left: 15px;
+                text-align: left;
+            }
+        }
+    }
+
+    &__day-good {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        right: 0;
+        height: $forecast-chart-good-day-bar-height;
+        background-color: $forecast-chart-good-day-bar-default-color;
+        border-bottom: 1px solid $color-background-base;
+
+        &.ms-chart-forecast-background__day-good-0 {
+            background-color: var(--color-forecast-possible);
+        }
+
+        &.ms-chart-forecast-background__day-good-1 {
+            background-color: var(--color-forecast-good);
+        }
+
+        &.ms-chart-forecast-background__day-good-2 {
+            background-color: var(--color-forecast-very-good);
+        }
+
+        &.ms-chart-forecast-background__day-good-3 {
+            background-color: var(--color-forecast-epic);
+        }
+    }
+
+    /* Label hour */
+    &__date-label {
+        position: absolute;
+        // left: 0;
+        left: -100%;
+        right: 0;
+        text-align: center;
+        margin-top: -17px;
+        @include font-size('xxxs');
+    }
+
+    /* Label day */
+    &__day-label {
+        position: absolute;
+        left: -100%;
+        right: 0;
+        text-align: center;
+        margin-top: -34px;
+        font-weight: $font-weight-bold;
+        @include font-size('xxs');
+        text-transform: uppercase;
+        color: var(--color-text);
+        white-space: nowrap;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-chart {
+    }
+}

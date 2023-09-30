@@ -1,0 +1,179 @@
+/**
+* FORM.
+*
+* Common styles for MS forms.
+ */
+
+/* ------------------------------------ *\
+   #FORM
+\* ------------------------------------ */
+.ms-form {
+    width: 100%;
+    text-align: left;
+
+    // Input or textarea label.
+    &__label {
+        display: block;
+        font-size: $font-size-m;
+        color: var(--color-text);
+    }
+
+    &__input {
+        display: block;
+        margin-bottom: $space * 2;
+        width: 100%;
+    }
+
+    &__checkbox {
+        margin: 0 $space $space * 2 0;
+    }
+
+    // Generic error for the whole form.
+    &__form-error {
+        display: block;
+        margin-bottom: $space * 2;
+        font-size: $font-size-s;
+        color: var(--color-error);
+        line-height: 1.45;
+    }
+
+    // Error for a specific field.
+    &__field-error {
+        display: block;
+        margin-top: -$space * 1;
+        margin-bottom: $space * 2;
+        font-size: $font-size-s;
+        color: var(--color-error);
+        line-height: 1.45;
+    }
+
+    // Password field with eye icon.
+    &__input-wrapper {
+        position: relative;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    &__input-right-item {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 8px;
+        right: fluid-size(8, 12);
+        cursor: pointer;
+    }
+
+    &__password-visibility-toggle {
+        border: 0;
+        padding: $space;
+        background-color: $color-background-light;
+        border-radius: $border-radius;
+        text-transform: uppercase;
+        font-size: $font-size-xxs-fluid;
+        font-weight: $font-weight-bold;
+        color: var(--color-text-light);
+
+        &:hover {
+        }
+    }
+
+    // Wraps checkbox and label for best alignment.
+    &__checkbox-label-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: $space;
+        cursor: pointer;
+
+        input[type='checkbox'] {
+            margin: 0 $space 0 0;
+        }
+
+        label {
+            display: block;
+            margin: 0;
+            font-size: $font-size-m;
+            color: var(--color-text);
+        }
+    }
+
+    // Buttons section at the end of the form.
+    &__bottom-buttons {
+        display: flex;
+        align-items: center;
+        gap: $space;
+    }
+
+    &__bottom-buttons-min-sizes {
+        .ms-btn {
+            min-width: 110px;
+        }
+    }
+
+    &__bottom-buttons-left {
+    }
+
+    &__bottom-buttons-square {
+        .ms-btn-l {
+            min-width: 0;
+            width: $button-large-height;
+        }
+    }
+
+    &__bottom-buttons-right {
+        margin-left: auto;
+    }
+
+    // Subtext.
+    &__subtext {
+        margin-bottom: $space * 2;
+    }
+
+    &__after-section {
+        margin-top: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+.ms-form {
+    &__block.has-error {
+        margin-bottom: $space * 2;
+
+        .ms-form__input-text {
+            border-color: var(--color-error);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #AFTERFORM
+\* ------------------------------------ */
+/* Section below the form */
+.ms-form {
+    &__afterform {
+        margin-top: $space * 3;
+    }
+
+    &__afterform-link {
+        font-size: $font-size-s-fluid;
+        cursor: pointer;
+        color: var(--color-text-link);
+        text-decoration: underline;
+
+        &:hover {
+            color: var(--color-text-link-hover);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

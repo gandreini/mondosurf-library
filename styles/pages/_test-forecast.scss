@@ -1,0 +1,101 @@
+/**
+ * TEST FORECAST
+ *
+ * ...
+ */
+
+/* ------------------------------------ *\
+   #TEST FORECAST
+\* ------------------------------------ */
+.ms-test-forecast {
+    padding-bottom: $space*10;
+
+    &__table {
+        width: auto;
+        margin-bottom: $space*3;
+
+        td, th {
+            padding: $space;
+        }
+
+        label {
+            display: block;
+            font-size: $font-size-s;
+        }
+
+        input[type="number"] {
+            max-width: 80px;
+        }
+    }
+
+    &__button {
+        margin-bottom: $space*3;
+    }
+
+    &__results {
+        h2 {
+            font-weight: $font-weight-bold;
+            text-transform: uppercase;
+        }
+
+        .ms-test-forecast__loader {
+            display: none;
+        }
+
+        .ms-loader {
+            display: block;
+            padding: $space*1.5;
+        }
+
+        .ms-test-forecast__result-text {
+            font-weight: $font-weight-bold;
+            font-size: $font-size-m;
+            text-transform: uppercase;
+            text-size-adjust: none;
+            max-height: 200px;
+
+            &:before {
+                content: ' ';
+                display: inline-block;
+                width: 24px;
+                height: 12px;
+                margin-right: $space;
+                background-color: var(--color-gray-03);
+            }
+        }
+
+        .ms-test-forecast__result {
+            .forecast_test_0 {
+                &:before {
+                    background-color: var(--color-forecast-possible);
+                }
+            }
+            .forecast_test_1 {
+                &:before {
+                    background-color: var(--color-forecast-good);
+                }
+            }
+            .forecast_test_2 {
+                &:before {
+                    background-color: var(--color-forecast-very-good);
+                }
+            }
+            .forecast_test_3 {
+                &:before {
+                    background-color: var(--color-forecast-epic);
+                }
+            }
+        }
+
+        &.is-loading {
+            .ms-test-forecast__loader {
+                display: block;
+            }
+
+            .ms-test-forecast__result {
+                display: none;
+            }
+        }
+    }
+}
+

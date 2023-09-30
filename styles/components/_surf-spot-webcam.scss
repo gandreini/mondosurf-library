@@ -1,0 +1,28 @@
+/**
+ * SURF SPOT WEBCAM
+ *
+ * Style for the component displaying the link for a webcam with link.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT WEBCAM
+\* ------------------------------------ */
+.ms-surf-spot-webcam {
+    &__thumb {
+        margin-bottom: $space;
+        aspect-ratio: 2 / 1;
+        background-size: cover;
+        border-radius: $border-radius;
+    }
+    &__thumb-default {
+    }
+    &__title {
+        @include font-size('s');
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

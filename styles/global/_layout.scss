@@ -1,0 +1,82 @@
+/**
+ * LAYOUT
+ *
+ * General layout
+ */
+
+/* ------------------------------------ *\
+   #LAYOUT
+\* ------------------------------------ */
+.ms-root,
+.ms-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    // border: 2px solid red;
+}
+
+.ms {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    z-index: $z-index-ms;
+    margin-bottom: var(--tab-bar-height);
+    overflow-y: auto;
+    background-color: $color-background-base;
+    // border: 2px solid gold;
+}
+
+/* .ms-content-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    // border: 2px solid pink;
+} */
+
+.ms-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: $page-max-width;
+    margin: $space * 3 auto;
+    width: 100%;
+    //padding: calc(#{$space} * 1.5 + var(--ios-status-bar-margin)) 0 $space * 1.5
+    //     0; // iOS spacing.
+    // border: 2px solid aqua;
+}
+
+/* ------------------------------------ *\
+   #FOOTER
+\* ------------------------------------ */
+.ms-footer {
+    display: none;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-footer {
+        display: block;
+    }
+
+    /* Sticky footer */
+    .ms {
+        flex: 1 0 auto;
+        margin-bottom: 0;
+    }
+
+    /* .ms-content-wrapper {
+        // flex: 1 0 auto;
+    } */
+
+    .ms-content {
+        margin: 0 auto $space * 10 auto;
+    }
+
+    .ms-footer {
+        // flex-shrink: 0;
+    }
+}

@@ -1,0 +1,101 @@
+/**
+ * PAGINATION
+ *
+ * Used to paginate lists
+ */
+
+/* ------------------------------------ *\
+   #PAGINATION
+\* ------------------------------------ */
+.pagination {
+    display: block;
+    float: none;
+    clear: both;
+    width: auto;
+    margin: 0 auto $space*2 auto;
+    padding: 0;
+    text-align: center;
+    @include consistent;
+
+    li {
+        display: inline-block;
+        vertical-align: top;
+        
+        a {
+            display: inline-block;
+            width: $pagination-item-size;
+            height: $pagination-item-size;
+            margin-right: $space/2;
+            line-height: $pagination-item-size;
+            text-align: center;
+            background-color: $color-background-light;
+            border-radius: $border-radius;
+            color: var(--color-text);
+            font-size: $font-size-m;
+
+            &:hover {
+                background-color: var(--color-text-link);
+                color: var(--color-text-inverse);
+            }
+        }
+
+        &::last-child {
+            margin-right: 0;
+        }
+    }
+
+    /* Active element */
+    .active {
+        a {
+            background-color: $color-background-dark;
+            color: var(--color-text-inverse);
+
+            &:hover {
+                background-color: $color-background-dark;
+                color: var(--color-text-inverse);
+            }
+        }
+    }
+
+    /* Left and right arrows */
+    li:first-child,
+    .roundleft {
+        a {
+            border-radius: $border-radius;
+
+            &:after {
+                position: absolute;
+                display: block;
+                width: $pagination-item-size;
+                content: "\e906";
+                font-family: 'sn-icons';
+                line-height: $pagination-item-size;
+                font-size: $font-size-l;
+            }
+        }
+    }
+
+    li:last-child,
+    .roundright {
+        a {
+            border-radius: $border-radius;
+
+            &:after {
+                position: absolute;
+                display: block;
+                width: $pagination-item-size;
+                content: "\e907";
+                font-family: 'ms-icons';
+                line-height: $pagination-item-size;
+                font-size: $font-size-l;
+            }
+        }
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

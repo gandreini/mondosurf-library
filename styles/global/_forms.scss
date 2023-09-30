@@ -1,0 +1,330 @@
+/**
+ * FORMS
+ *
+ * Style for forms elements
+ */
+
+/* ------------------------------------ *\
+   #GENERAL
+\* ------------------------------------ */
+select,
+textarea,
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='email'],
+input[type='month'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'] {
+    box-sizing: border-box;
+    padding: 0 $space;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $color-border-normal;
+    background-color: $color-background-base;
+    border-radius: $form-border-radius;
+    color: var(--color-text);
+    font-size: $font-size-m;
+    font-family: var(--font-family-main);
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.05) inset,
+        0 1px 3px rgba(0, 0, 0, 0.05) inset;
+    // -webkit-appearance: none;
+    // font-weight: $font-weight-normal;
+    // line-height: $form-input-height;
+    // outline: none;
+    // transition-property: border;
+    // transition-duration: $transition-durations;
+
+    &:hover {
+    }
+
+    &:focus {
+        // border-color: var(--color-text-link);
+        border-color: var(--color-success);
+        box-shadow: 0 0 0 4px rgba(var(--color-success-rgb), 0.2);
+    }
+    &:active {
+        border-color: var(--color-first);
+
+        // box-shadow: inset 0 0 6px 0 rgba(0,0,0,0.05), 0 0 2px fade($color-brand, 20%);
+    }
+
+    &.small {
+        // height: $form-input-small-height;
+        // padding: 0 8px;
+        // font-size: $font-size-s;
+        // line-height: $form-input-small-height;
+    }
+
+    @include placeholder;
+}
+
+/* Set Height */
+textarea,
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='email'],
+input[type='month'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'] {
+    // height: 44px; // Safari fallback.
+    height: $height-common-xl;
+    @include placeholder;
+    // line-height: $form-input-height; // Safari fallback.
+    // line-height: fluid-size(44, 52);
+}
+
+/* Select */
+select {
+    // height: 44px; // Safari fallback.
+    height: $height-common-xl;
+}
+
+/* Checkbox */
+input[type='checkbox'] {
+    width: $height-common-s;
+    height: $height-common-s;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $color-border-normal;
+    background-color: $color-background-base;
+    border-radius: $form-border-radius;
+}
+
+/* Labels */
+label {
+    margin-bottom: $space;
+    font-weight: $font-weight-bold;
+    line-height: 1.2;
+    text-transform: uppercase;
+    @include font-size('m');
+    color: var(--color-text);
+}
+
+input[type='checkbox'] + label {
+    // margin-bottom: $space;
+    font-weight: $font-weight-normal;
+    line-height: 1.45;
+    color: var(--color-text);
+    text-transform: none;
+    @include font-size('s');
+}
+
+/* Textarea */
+textarea {
+    line-height: 1.2;
+    padding: $space;
+
+    @include placeholder;
+}
+
+/* Custom checkboxes */
+/*
+Html must be:
+<label class="ms-checkbox">
+    <input class="ms-checkbox__check" type="checkbox" />
+    <span class="ms-checkbox__label">Check Me</span>
+</label>
+*/
+.ms-checkbox {
+    display: inline-flex;
+    position: relative;
+    margin-bottom: 0;
+    cursor: pointer;
+
+    &__label {
+        padding: 0;
+        color: var(--color-text);
+        font-size: $font-size-m;
+        font-weight: $font-weight-normal;
+        text-transform: none;
+        line-height: 1.4;
+    }
+
+    &__check {
+        height: $form-checkbox-size;
+        width: $form-checkbox-size;
+        margin: 0 $space 0 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        flex-shrink: 0;
+        border: 2px solid $color-border-normal;
+        border-radius: 4px;
+        outline: none;
+        transition-duration: $transition-durations;
+        background-color: $color-background-base;
+        cursor: pointer;
+
+        &:checked {
+            border: 1px solid var(--color-text-link);
+            background-color: var(--color-text-link);
+        }
+
+        &:checked + span:before {
+            position: absolute;
+            width: $form-checkbox-size;
+            height: $form-checkbox-size;
+            content: '\e941';
+            font-family: 'ms-icons';
+            font-size: $font-size-l;
+            top: 0;
+            left: 0;
+            text-align: center;
+            line-height: $form-checkbox-size;
+            color: var(--color-text-inverse);
+        }
+
+        & > input:active {
+            border: 2px solid $color-border-normal;
+        }
+    }
+
+    /* Hover */
+    &:hover {
+        .ms-checkbox__check {
+            border: 2px solid var(--color-text-link);
+        }
+    }
+}
+
+/* Small check */
+.ms-checkbox.ms-checkbox-small {
+    .ms-checkbox__label {
+        font-size: $font-size-s;
+    }
+
+    .ms-checkbox__check {
+        height: $form-checkbox-small-size;
+        width: $form-checkbox-small-size;
+    }
+
+    .ms-checkbox__check:checked + span:before {
+        width: $form-checkbox-small-size;
+        height: $form-checkbox-small-size;
+        line-height: $form-checkbox-small-size;
+        font-size: $font-size-m;
+    }
+}
+
+/* Darker border color for checkboxes and radios */
+/* input[type="radio"], input[type="checkbox"] {
+    border-color: #ff0000;
+    outline: 1px solid #1e5180;
+} */
+
+// Fieldset.
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+
+    label {
+        display: block;
+        margin: 0 $space $space 0;
+        font-weight: $font-weight-normal;
+        line-height: 1.2;
+        color: var(--color-text);
+        text-transform: none;
+        font-size: $font-size-s-fluid;
+    }
+}
+
+/* ------------------------------------ *\
+   #MANDATORY
+\* ------------------------------------ */
+/* Mandatory label and asterisk */
+.ms-mandatory-asterisk {
+    color: $form-mandatory-asterisk-color;
+    font-size: $font-size-l;
+    margin-right: $space/4;
+}
+
+.ms-label-mandatory {
+    font-weight: $font-weight-bold;
+}
+
+/* ------------------------------------ *\
+   #DISABLED
+\* ------------------------------------ */
+select,
+textarea,
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='email'],
+input[type='month'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'] {
+    &:disabled {
+        border-color: $color-border-light;
+        background-color: $color-background-light;
+        color: var(--color-text-form-placeholder);
+
+        @include placeholder;
+    }
+}
+
+/* ------------------------------------ *\
+   #ERRORS
+\* ------------------------------------ */
+.ms-form__error {
+    display: none;
+    margin-top: $space;
+    color: var(--color-error);
+    font-size: $font-size-xs;
+    line-height: 1.4;
+}
+
+select,
+textarea,
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='email'],
+input[type='month'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='time'],
+input[type='url'],
+input[type='week'] {
+    &.is-error {
+        border-color: var(--color-error);
+    }
+
+    &:focus.is-error {
+        // border-color: var(--color-text-link);
+        box-shadow: 0 0 0 4px rgba(var(--color-error-rgb), 0.2);
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

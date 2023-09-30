@@ -1,0 +1,65 @@
+/**
+ * HOME NEAR SPOTS FORECAST
+ *
+ * Section in homepage where it is possible to see the near spots and the related forecast.
+ */
+
+/* ------------------------------------ *\
+    #HOME NEAR SPOTS FORECAST
+\* ------------------------------------ */
+.ms-home-near-spots-forecast {
+    // margin-bottom: $space * 5;
+    padding: $space * 5 0;
+    background-color: $color-background-ultralight;
+
+    // Loading.
+    &__loading {
+        text-align: center;
+    }
+
+    // Call to action.
+    &__cta {
+        text-align: center;
+    }
+
+    // Results.
+    &__forecast {
+    }
+
+    &__title.ms-h2-title {
+        margin-bottom: $space * 3;
+        text-align: center;
+    }
+
+    .ms-home-near-spots-forecast__forecast-empty,
+    .ms-home-near-spots-forecast__spots-empty {
+        margin-bottom: 0;
+    }
+
+    // Separator.
+    &__forecast-separator {
+        padding-bottom: $space * 2;
+        border-bottom: 1px solid $color-border-normal;
+        margin: 0 0 $space * 2 0;
+    }
+
+    // Error.
+    &__error {
+        text-align: center;
+    }
+
+    // Server-error.
+    &__server-error {
+        text-align: center;
+    }
+
+    .ms-home-near-spots-forecast__server-error-text {
+        margin-bottom: 0;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

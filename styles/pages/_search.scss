@@ -1,0 +1,42 @@
+/**
+ * SEARCH
+ *
+ * Search Page Layout
+ */
+
+/* ------------------------------------ *\
+   #SEARCH
+\* ------------------------------------ */
+.ms-search {
+    &__form {
+        margin-bottom: $space * 2;
+    }
+
+    /* &__form-label {
+        display: block;
+        margin-bottom: $space * 2;
+    } */
+
+    &__content-no-search,
+    &__content-loading,
+    &__content-error,
+    &__content-no-results {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-search {
+        bottom: 0;
+
+        .ms-page-title {
+            margin-bottom: $space * 3;
+        }
+    }
+}

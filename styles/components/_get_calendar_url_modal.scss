@@ -1,0 +1,41 @@
+/**
+ * GET CALENDAR URL MODAL
+ *
+ * Modal to get the URL of the calendar.
+ */
+
+/* ------------------------------------ *\
+    #GET CALENDAR URL MODAL
+\* ------------------------------------ */
+.ms-get_calendar_url_modal {
+    &__section:not(:last-child) {
+        margin-bottom: $space * 3;
+    }
+    &__form {
+        display: flex;
+        margin-top: $space * 2;
+        align-items: center;
+
+        input[type='checkbox'] {
+            margin-right: $space * 1;
+        }
+
+        input[type='checkbox'] + label {
+            margin-bottom: 0;
+        }
+    }
+
+    &__section-help {
+        margin-top: $space * 3;
+    }
+
+    &__section-help-btn-1 {
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

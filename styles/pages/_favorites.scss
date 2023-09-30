@@ -1,0 +1,20 @@
+/**
+ * PROFILE FAVOURITES
+ *
+ * Page displaying the favoiurites of the registered user.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE FAVOURITES
+\* ------------------------------------ */
+.ms-favorites {
+    .ms-content {
+        margin-bottom: $space * 8;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

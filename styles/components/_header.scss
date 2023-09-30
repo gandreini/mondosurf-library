@@ -1,0 +1,162 @@
+/**
+ * HEADER
+ *
+ * Header and header navigation style
+ *
+ */
+
+/* ------------------------------------ *\
+   #HEADER
+\* ------------------------------------ */
+.ms-header {
+    position: relative;
+    display: none;
+    z-index: $z-index-header;
+    width: 100%;
+    padding-left: $space * 2;
+    padding-right: $space * 2;
+    box-sizing: border-box;
+    @include consistent;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        max-width: $page-max-width;
+        height: $header-height;
+        margin-left: auto;
+        margin-right: auto;
+        border-bottom: 0;
+    }
+
+    &__inside {
+        width: auto;
+    }
+
+    /* Logo and Mondo Surf */
+    &__logo-text {
+        display: flex;
+        align-items: center;
+    }
+
+    &__logo {
+        display: inline-block;
+        padding: 0;
+        margin: 0 $space 0 0;
+
+        img {
+            max-height: 36px;
+            width: auto;
+        }
+    }
+
+    &__text {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+
+        span {
+            display: block;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-l;
+            color: var(--color-text);
+        }
+
+        span:first-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #HAMBURGER MENU
+\* ------------------------------------ */
+.ms-header {
+    &__mobile-nav-toggle {
+        display: none;
+    }
+}
+
+/* ------------------------------------ *\
+   #MOBILE TOP NAV
+\* ------------------------------------ */
+.ms-header {
+    &__mobile-nav-wrapper {
+        display: none;
+    }
+}
+
+/* ------------------------------------ *\
+   #DESKTOP NAV
+\* ------------------------------------ */
+.ms-header {
+    &__desktop-tools {
+        display: none;
+        flex-grow: 2;
+        margin-left: auto;
+    }
+
+    &__desktop-nav {
+        text-align: right;
+
+        ul {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            gap: $space * 2;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: var(--color-text);
+            font-size: $font-size-m-fluid;
+
+            &:hover {
+                color: var(--color-text-link);
+            }
+        }
+
+        .ms-header__search {
+            padding-top: $space;
+        }
+
+        /* Current */
+        li {
+            a.is-active {
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-header {
+        display: block;
+        height: $header-height-desktop;
+
+        &__content {
+            height: $header-height-desktop;
+        }
+
+        &__desktop-tools {
+            display: block;
+        }
+    }
+}
+
+@media all and (min-width: ($page-max-width + $space * 4)) {
+    .ms-header {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

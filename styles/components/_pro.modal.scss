@@ -1,0 +1,24 @@
+/**
+ * PRO MODAL
+ *
+ * Modal page with details on the Pro plan and call to actions.
+ */
+
+/* ------------------------------------ *\
+    #PRO
+\* ------------------------------------ */
+.ms-pro {
+    .ms-btn {
+        margin-bottom: $space * 2;
+    }
+
+    .ms-pro-features-list {
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

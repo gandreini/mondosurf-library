@@ -1,0 +1,50 @@
+/**
+ * PROFILE PLAN
+ *
+ * Page displaying the plan of the user (Free/Pro).
+ */
+
+/* ------------------------------------ *\
+    #PROFILE PLAN
+\* ------------------------------------ */
+.ms-profile-plan {
+    &__content {
+        // max-width: $page-max-medium-width;
+        margin-bottom: $space * 2;
+
+        .ms-btn {
+            margin-bottom: $space * 2;
+        }
+    }
+
+    &__metadata {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: $space;
+        column-gap: $space;
+        margin-bottom: $space * 2;
+    }
+
+    &__metadata-border {
+        padding-bottom: $space * 2;
+        border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__text {
+        margin-bottom: $space * 2;
+    }
+
+    .ms-small-text {
+        margin-bottom: $space * 1.5;
+    }
+
+    .ms-grid-2-2 {
+        margin-bottom: $space * 1.5;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

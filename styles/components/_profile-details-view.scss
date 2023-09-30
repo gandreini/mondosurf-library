@@ -1,0 +1,42 @@
+/**
+ * PROFILE DETAILS VIEW
+ *
+ * List with the details of the user in read mode.
+ */
+
+/* ------------------------------------ *\
+    PROFILE DETAILS
+\* ------------------------------------ */
+.ms-profile-details-view {
+    &__title {
+        margin-bottom: $space * 2;
+    }
+
+    &__contents {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: $space;
+        column-gap: $space;
+        margin-bottom: $space * 2;
+    }
+
+    &__button-edit {
+        margin-bottom: $space * 3;
+    }
+
+    &__button-delete {
+        margin-bottom: $space * 1;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-profile-details-view {
+        &__contents {
+            row-gap: $space;
+            column-gap: $space * 3;
+        }
+    }
+}

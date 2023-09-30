@@ -1,0 +1,53 @@
+/**
+ * DAY TIDE TABLE
+ *
+ * Tables displaying the tides of a day */
+
+/* ------------------------------------ *\
+   #DAY-TIDE-TABLE
+\* ------------------------------------ */
+.ms-day-tide-table {
+    &__table {
+        width: 100%;
+        margin-bottom: $space * 2;
+        border-collapse: collapse;
+        border: 2px solid $color-border-normal;
+        border-radius: $border-radius * 2;
+    }
+
+    td {
+        padding: $space/2;
+        border: 2px solid $color-border-normal;
+        font-size: $font-size-s;
+        color: var(--color-text);
+
+        &:first-child {
+            text-align: center;
+            width: 24px;
+        }
+    }
+
+    &__row {
+    }
+
+    &__row-high {
+    }
+
+    &__row-low {
+    }
+
+    &__icon {
+    }
+
+    &__size {
+    }
+
+    &__time {
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

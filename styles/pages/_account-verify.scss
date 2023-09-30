@@ -1,0 +1,41 @@
+/**
+ * ACCOUNT VERIFY
+ *
+ * Page where the user can verify her account.
+ */
+
+/* ------------------------------------ *\
+    #ACCOUNT VERIFY
+\* ------------------------------------ */
+.ms-account-verify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+
+    &__mondo-logo {
+        margin-bottom: $space;
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-bold;
+    }
+
+    &__page-title {
+        margin-bottom: $space;
+    }
+
+    &__text {
+        margin-bottom: $space * 2;
+    }
+
+    &__btn {
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

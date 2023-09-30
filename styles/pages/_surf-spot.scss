@@ -1,0 +1,350 @@
+/**
+ * SURF SPOT PAGE
+ *
+ * Surf spot page
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT
+\* ------------------------------------ */
+.ms-surf-spot {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    box-sizing: border-box;
+    padding: 0 0 $space * 2 0;
+
+    // Main content.
+    &__main-content {
+        display: flex;
+        flex-grow: 10;
+        max-width: $page-max-width;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    // Map.
+    &__content-map {
+        flex-grow: 1;
+    }
+
+    &__map {
+        // margin-top: $space * 2;
+        width: 100%;
+        overflow: hidden;
+        // border-radius: $border-radius-hard $border-radius-hard 0 0;
+        .ms-map-global {
+            height: 360px;
+        }
+    }
+
+    // Tabs contents.
+    .ms-tabs__content {
+        margin-top: $space * 3;
+    }
+
+    // Description.
+    &__description {
+        @include consistent;
+        margin-bottom: $space * 3.5;
+        padding-bottom: $space * 3;
+        border-bottom: 1px solid $color-border-normal;
+        @include fix-android-wrong-font-size;
+    }
+}
+
+/* ------------------------------------ *\
+   #COORDINATES
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__coordinates {
+        display: flex;
+        align-items: center;
+        flex-direction: column-reverse;
+        gap: $space;
+        margin: 0 0 $space * 3 0;
+        padding: $space * 2 $space * 2 $space * 1.5 $space * 2;
+        background-color: var(--color-gray-02);
+        border-radius: 0;
+
+        .ms-btn {
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 10px;
+            padding: $space;
+            height: auto;
+            // text-transform: uppercase;
+
+            .ms-surf-spot__coordinates-google-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: $space/2;
+                background: transparent url('../assets/google-map-icon.png') center center no-repeat;
+                background-size: contain;
+            }
+
+            &:first-child {
+                margin-right: $space;
+            }
+        }
+    }
+
+    &__coordinates-text {
+        // margin-bottom: $space * 2;
+        font-size: $font-size-s;
+        color: var(--color-text);
+        @include first-letter-capital;
+
+        .ms-surf-spot__coordinates-lat,
+        .ms-surf-spot__coordinates-lng {
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__coordinates-actions {
+        flex-grow: 1;
+        display: flex;
+        width: 100%;
+    }
+}
+
+/* ------------------------------------ *\
+   #SPOT-INFO
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__info {
+        @include consistent;
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+   #WAVE-DIRECTION-SWELL-WIND-DIRECTIONS
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__special-info {
+        margin-bottom: $space * 3.5;
+        padding-bottom: $space * 3;
+        border-bottom: 1px solid $color-border-normal;
+        // @include consistent;
+
+        .ms-surf-spot__metadata {
+            display: flex;
+            align-items: center;
+            height: $space * 5;
+        }
+
+        .ms-label {
+            max-width: 140px;
+            margin-right: $space;
+            flex: 0 0 120px;
+            line-height: 1.2;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-m-fluid;
+            @include first-letter-capital;
+        }
+
+        .ms-value {
+            flex: 1 1;
+            font-size: $font-size-m-fluid;
+            @include first-letter-capital;
+
+            strong {
+                font-weight: $font-weight-normal;
+            }
+        }
+
+        .ms-surf-spot__direction-icon {
+            display: flex;
+            // margin-top: $space * 0.25;
+
+            .mondo-icon {
+                margin: -3px $space * 0.5 -3px -5px;
+                font-size: $font-size-xxxl;
+            }
+        }
+
+        // Inside .ms-surf-spot-direction.
+        .ms-surf-spot-direction__chart svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .ms-surf-spot-direction__value {
+            color: var(--color-text);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #FORECAST
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__forecast {
+        padding-top: $space * 3;
+    }
+
+    &__forecast-chart {
+    }
+
+    &__forecast-update {
+        margin-bottom: $space * 2;
+
+        .ms-label,
+        .ms-value {
+            font-size: $font-size-xxs;
+        }
+
+        .ms-label {
+            margin-right: $space/2;
+            text-transform: capitalize;
+        }
+    }
+
+    .ms-astronomy-table {
+        margin-top: $space;
+        margin-bottom: $space;
+    }
+
+    &__forecast-settings {
+        margin-bottom: $space * 3;
+    }
+}
+
+/* ------------------------------------ *\
+   #VIDEOS
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__videos {
+        @include consistent;
+        margin-top: $space * 3;
+    }
+
+    &__videos-video {
+        display: block;
+    }
+
+    &__videos-image {
+        height: 120px;
+        margin-bottom: $space * 2;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: $border-radius;
+    }
+
+    &__videos-title {
+        margin-bottom: 0;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-s;
+        color: var(--color-text);
+        line-height: 1.25;
+    }
+}
+
+/* Empty video */
+.ms-surf-spot {
+    &__video-empty {
+        text-align: center;
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-surf-spot.is-loading {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    .ms-surf-spot__title {
+        height: 36px;
+        width: 200px;
+        @include loading-effect;
+        text-indent: -9999px;
+    }
+
+    .ms-tabs.is-loading {
+        margin-left: $space * 2;
+    }
+
+    .ms-tabs__content {
+        flex-grow: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ms-surf-spot__near-spots,
+    .ms-surf-spot__video {
+        flex-grow: 1;
+    }
+}
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+.ms-surf-spot.is-error {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    .ms-surf-spot__title,
+    .ms-breadcrumbs {
+        display: none;
+    }
+
+    .ms-tabs__content {
+        flex-grow: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ms-surf-spot__error {
+        margin: $space * 4;
+    }
+
+    .ms-surf-spot__error-text {
+        text-align: center;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: ($page-max-width + $space * 4)) {
+    .ms-surf-spot {
+        &__coordinates {
+            border-radius: 0 0 $border-radius $border-radius;
+        }
+    }
+}
+
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot {
+        &__coordinates {
+            flex-direction: row;
+        }
+
+        &__coordinates-actions {
+            width: auto;
+        }
+
+        &__videos-image {
+            height: 220px;
+        }
+
+        &__forecast-ics-calendar-image {
+            float: left;
+            margin-right: $space * 2;
+        }
+
+        // Wave direction and swell wind directions.
+        &__special-info {
+            .ms-label {
+                flex: 0 0 auto;
+            }
+        }
+    }
+}

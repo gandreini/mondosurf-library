@@ -1,0 +1,55 @@
+/**
+ * SURF SPOT INFO TIDE
+ *
+ * Box with main tide info in the surf spot page.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-INFO-TIDE
+\* ------------------------------------ */
+.ms-surf-spot-info-tide {
+    padding: $space * 2;
+    margin-bottom: $space * 4;
+    background-color: $color-background-light;
+
+    &__title {
+        margin-bottom: $space;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        @include first-letter-capital;
+    }
+
+    &__details {
+        display: inline-block;
+        margin: 0 0 $space/2 0;
+        font-size: $font-size-s;
+        @include first-letter-capital;
+        @include fix-android-wrong-font-size;
+    }
+
+    &__details-value {
+        font-weight: $font-weight-bold;
+    }
+
+    &__details-movement {
+        display: inline-block;
+        @include fix-android-wrong-font-size;
+    }
+
+    &__good-moments {
+        display: block;
+        margin: 0 0 $space 0;
+        font-size: $font-size-s;
+        @include first-letter-capital;
+        @include fix-android-wrong-font-size;
+    }
+
+    &__button {
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

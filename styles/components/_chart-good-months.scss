@@ -1,0 +1,60 @@
+/**
+ * CHART GOOD MONTHS
+ *
+ * Chart displaying the good months of a region (or spots).
+ */
+
+/* ------------------------------------ *\
+   #CHART-GOOD-MONTHS
+\* ------------------------------------ */
+.ms-chart-good-months {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    border: 1px solid $color-border-normal;
+    border-bottom: 0;
+    margin-bottom: $space * 3;
+
+    &__month {
+        box-sizing: border-box;
+        border-bottom: 1px solid $color-border-normal;
+
+        &:not(:last-child):not(:nth-child(6)) {
+            border-right: 1px solid $color-border-normal;
+        }
+
+        &.is-good {
+            .ms-chart-good-months__month-cell {
+                background-color: var(--color-forecast-good);
+            }
+        }
+    }
+
+    &__month-label {
+        padding: $space/2;
+        border-bottom: 1px solid $color-border-normal;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        @include font-size('xs');
+    }
+
+    &__month-cell {
+        height: 20px;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-chart-good-months {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        margin-bottom: $space * 4;
+
+        &__month {
+            &:not(:last-child) {
+                border-right: 1px solid $color-border-normal;
+            }
+        }
+    }
+}

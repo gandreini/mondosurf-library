@@ -1,0 +1,124 @@
+/**
+ * SURF SPOT FORECAST DAYS NAV
+ *
+ * Buttons to browse days of forecast and change the chart.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT FORECAST DAYS NAV
+\* ------------------------------------ */
+.ms-surf-spot-forecast-days-nav {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(#{$surf-spot-forecast-days-nav-height} + var(--ios-bottom-bar-margin)); // iOS spacing.
+    margin: 0;
+    box-sizing: border-box;
+    padding-bottom: var(--ios-bottom-bar-margin); // iOS spacing.
+    text-align: center;
+    background-color: $color-background-dark;
+    z-index: $z-index-chart-days-nav;
+    transition: all $transition-durations;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+
+    &__content {
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        box-sizing: border-box;
+        @include hide-scrollbar;
+    }
+
+    &__buttons {
+        display: inline-flex;
+        box-sizing: border-box;
+        align-items: flex-start;
+        margin: $space * 1.5;
+    }
+
+    &__button {
+        flex-shrink: 0;
+        width: auto;
+        padding: 0;
+        width: $ms-spot-forecast-days-nav-width;
+        height: $ms-spot-forecast-days-nav-height;
+        margin-right: $space * 0.5;
+        box-sizing: border-box;
+        background-color: $color-background-light;
+        background-color: $color-background-base;
+        text-transform: uppercase;
+        font-size: $font-size-xxs-fluid;
+        font-weight: $font-weight-normal;
+        border-radius: $border-radius;
+        border: 2px solid $color-background-dark;
+        box-shadow: 0 0 0 1px $color-background-dark;
+        cursor: pointer;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__button.is-active {
+        font-weight: $font-weight-bold;
+        box-shadow: 0 0 0 1px $color-background-base;
+    }
+
+    &__button.is-good-0 {
+        background-color: var(--color-forecast-possible);
+    }
+
+    &__button.is-good-1 {
+        background-color: var(--color-forecast-good);
+    }
+
+    &__button.is-good-2 {
+        background-color: var(--color-forecast-very-good);
+        color: var(--color-text-inverse);
+    }
+
+    &__button.is-good-3 {
+        background-color: var(--color-forecast-epic);
+        color: var(--color-text-inverse);
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-forecast-days-nav {
+        width: auto;
+        margin: 0 0 $space * 2;
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        background-color: transparent;
+        box-shadow: none;
+
+        &__button {
+            width: $ms-spot-forecast-days-nav-width-desktop;
+            height: $ms-spot-forecast-days-nav-height-desktop;
+            margin-right: $space * 1;
+            border: 1px solid $color-background-dark;
+            box-shadow: none;
+        }
+
+        &__button.is-active {
+            font-weight: $font-weight-bold;
+            box-shadow: 0 0 0 1px $color-background-base, 0 0 0 2px $color-background-dark;
+        }
+
+        &.is-visible {
+            // bottom: 0;
+        }
+    }
+}

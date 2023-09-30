@@ -1,0 +1,33 @@
+/**
+ * SURF SPOT VIDEO
+ *
+ * Video spot page .
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT VIDEO
+\* ------------------------------------ */
+.ms-surf-spot-video {
+    flex-grow: 1;
+    display: flex;
+
+    &__videos {
+        flex-grow: 1;
+        margin: $space * 3 0 auto 0;
+    }
+
+    &__empty {
+        flex-grow: 1;
+        display: flex;
+
+        .ms-empty-state {
+            margin-top: $space * 8;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

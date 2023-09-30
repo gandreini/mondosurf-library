@@ -1,0 +1,33 @@
+/**
+ * SURF SPOT NEAR SPOTS
+ *
+ * Near spots in the surf spot page .
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT NEAR SPOTS
+\* ------------------------------------ */
+.ms-surf-spot-near-spots {
+    flex-grow: 1;
+    display: flex;
+
+    &__results {
+        flex-grow: 1;
+        margin: $space * 3 0 auto 0;
+    }
+
+    &__empty {
+        flex-grow: 1;
+        display: flex;
+
+        .ms-empty-state {
+            margin-top: $space * 8;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

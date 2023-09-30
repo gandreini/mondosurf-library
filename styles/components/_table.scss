@@ -1,0 +1,53 @@
+/**
+ * TABLE
+ *
+ * Table style
+ */
+
+/* ------------------------------------ *\
+   #TABLE
+\* ------------------------------------ */
+.ms-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid $color-border-normal;
+
+    thead {
+        th {
+            padding: $space/2;
+            border: 1px solid $color-border-normal;
+            background-color: $color-background-light;
+            color: var(--color-text);
+            font-size: $font-size-xs;
+            text-align: left;
+        }
+    }
+
+    tbody {
+        td {
+            padding: $space/2;
+            border: 1px solid $color-border-normal;
+            background-color: $color-background-base;
+            color: var(--color-text);
+            font-size: $font-size-xs;
+            text-align: left;
+        }
+    }
+
+    /* No data */
+    &__no-data {
+        font-style: italic;
+        color: var(--color-text-light);
+    }
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+
+    .ms-footer {
+        margin-bottom: 0;
+    }
+}

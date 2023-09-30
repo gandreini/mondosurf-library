@@ -1,0 +1,62 @@
+/* ------------------------------------ *\
+   #LAYOUT
+\* ------------------------------------ */
+.ms-max-width {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ms-centered {
+    text-align: center;
+}
+
+// Add padding on the sides and remove it on desktop.
+.ms-side-spacing {
+    padding-left: $space * 2;
+    padding-right: $space * 2;
+    box-sizing: border-box;
+}
+
+// Max page width for desktop.
+.ms-desktop-max-width {
+    max-width: $page-max-width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ms-center-with-margin {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Full height.
+.is-full-height {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+// Full height and centers what's inside.
+.is-full-height-and-center {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ms-card {
+    @include card;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: calc($page-max-width + $space * 4)) {
+    .ms-side-spacing {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

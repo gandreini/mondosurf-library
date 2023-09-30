@@ -1,0 +1,86 @@
+/**
+ * MAP TOOLTIP
+ *
+ * OSM map tooltip.
+ *
+ */
+
+/* ------------------------------------ *\
+   #MAP-TOOLTIP
+\* ------------------------------------ */
+.leaflet-container .ms-map-tooltip {
+    font-family: var(--font-family-main);
+
+    .leaflet-popup-content-wrapper {
+        padding: 0;
+        border-radius: $border-radius;
+        @include card-box-shadow;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: $border-radius;
+    }
+
+    .leaflet-popup-tip {
+        @include card-box-shadow;
+    }
+
+    .leaflet-popup-content {
+        margin: 0;
+
+        > div {
+            padding: $space * 2;
+            cursor: pointer;
+        }
+    }
+
+    &__detail {
+        display: block;
+    }
+
+    &__title {
+        margin-bottom: $space/2;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+    }
+
+    &__details {
+        font-size: $font-size-xs-fluid;
+        color: var(--color-text);
+
+        .ms-label-value {
+            display: block;
+            span {
+                font-size: $font-size-xs-fluid;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    // Close
+    a.leaflet-popup-close-button {
+        top: $space + 0.5;
+        right: $space + 0.5;
+        span {
+            font-size: $font-size-l-fluid;
+        }
+    }
+
+    // Hover
+    &:hover {
+        .ms-map-tooltip__title {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

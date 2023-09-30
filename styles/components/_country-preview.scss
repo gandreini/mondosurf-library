@@ -1,0 +1,105 @@
+/**
+ * COUNTRY PREVIEW
+ *
+ * Item that previews a Country
+ */
+
+/* ------------------------------------ *\
+   #COUNTRY-PREVIEW
+\* ------------------------------------ */
+.ms-country-preview {
+    @include card;
+    padding-top: $space * 1.5;
+
+    &__title-flag {
+        display: flex;
+        align-items: center;
+    }
+
+    &__flag {
+        margin-top: 2px;
+        margin-right: $space/2;
+        font-size: $font-size-xl;
+        line-height: 1;
+    }
+
+    &__title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-l-fluid;
+        color: var(--color-text);
+        transition: all $transition-durations;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__counters {
+        // display: flex;
+    }
+
+    &__counter {
+        display: block;
+
+        &:not(:last-child) {
+            margin-right: $space/2;
+        }
+    }
+
+    .ms-value {
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+
+    .ms-label {
+        font-size: $font-size-s-fluid;
+        font-weight: $font-weight-normal;
+        color: var(--color-text-light);
+    }
+}
+
+/* ------------------------------------ *\
+   #HOVER
+\* ------------------------------------ */
+.ms-country-preview:hover {
+    .ms-country-preview__title {
+        color: var(--color-text-link);
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-country-preview.is-loading {
+    height: 86px;
+    padding: $space * 1.5;
+    background-color: $color-background-ultralight;
+
+    .ms-country-preview__contents {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .ms-country-preview__title {
+        width: 100%;
+        height: 26px;
+        margin-bottom: $space;
+        @include loading-effect;
+    }
+
+    .ms-country-preview__counters {
+        width: 50%;
+        height: 20px;
+        @include loading-effect;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    /* Hover */
+    .ms-country-preview:not(.is-loading):hover {
+        @include card-hover;
+    }
+}

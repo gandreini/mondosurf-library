@@ -1,0 +1,225 @@
+/**
+ * SURF SPOT TINY PREVIEW
+ *
+ * Small item that previews a Surf Spot, used in the favourites draggable list.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-TINY-PREVIEW
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview {
+    cursor: pointer !important;
+    display: block;
+
+    &__content {
+        transition: all $transition-durations;
+        @include card;
+        padding: 0;
+    }
+
+    &__breadcrumbs {
+        display: flex;
+        align-items: center;
+        font-size: $font-size-xs;
+        padding: $space * 0.75 $space * 1.5 $space * 0.4 $space * 1.5;
+        border-bottom: 1px solid $color-border-light;
+        cursor: pointer;
+    }
+
+    &__breadcrumbs-flag {
+        margin-right: $space;
+        font-size: $font-size-m;
+    }
+
+    &__breadcrumbs-country {
+        font-size: $font-size-xs;
+        color: var(--color-text-light);
+        &:after {
+            content: '\203A';
+            margin-left: $space/2;
+            margin-right: $space/2;
+        }
+    }
+
+    &__breadcrumbs-region {
+        font-size: $font-size-xs;
+        color: var(--color-text-light);
+    }
+
+    &__main {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0; // $space * 0.5 $space * 0.5 $space * 0.5 $space * 2;
+    }
+
+    // Spot name.
+    &__title {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        width: 100%;
+        margin: 0;
+        padding-left: $space * 2;
+        padding-right: $space;
+        cursor: pointer;
+    }
+
+    &__title-text {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m;
+        line-height: 1.25;
+        color: var(--color-text);
+        transition: all $transition-durations;
+
+        // Ellipsis.
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+    }
+}
+
+/* ------------------------------------ *\
+   #TOOLS
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview {
+    &__tools {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding-right: $space;
+
+        > * {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            min-width: 34px;
+            height: 34px;
+            border: 1px solid $color-border-light;
+            font-size: $font-size-l;
+            color: var(--color-text-light);
+            transition: all $transition-durations;
+            background-color: $color-background-ultralight;
+            border: 1px solid $color-border-light;
+        }
+
+        > *:first-child {
+            border-radius: $space 0 0 $space;
+        }
+        > *:last-child {
+            border-radius: 0 $space $space 0;
+        }
+
+        > *:hover {
+            color: var(--color-text-link);
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+    }
+
+    &__tool-drag {
+        padding: 0 $space * 1;
+        cursor: grab;
+        text-transform: uppercase;
+        @include font-size('xxs');
+        font-weight: $font-weight-bold;
+    }
+    &__tool-trash {
+        padding: 0 $space * 0.25;
+        cursor: pointer;
+    }
+    &__tool-link {
+        padding: 0 $space * 0.25;
+        cursor: pointer;
+    }
+}
+
+/* ------------------------------------ *\
+   #DRAGGING
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview.is-dragged {
+    position: relative;
+    z-index: 1000010 !important;
+
+    .ms-surf-spot-tiny-preview__content {
+        position: relative;
+        z-index: 1000010 !important;
+        box-shadow: 0 1px 3px rgba(1, 1, 1, 0.08), 0 10px 20px rgba(1, 1, 1, 0.15);
+        transform: rotate(1deg); /* Equal to rotateZ(45deg) */
+
+        .ms-surf-spot-tiny-preview__breadcrumbs,
+        .ms-surf-spot-tiny-preview__title,
+        .ms-surf-spot-tiny-preview__tools [class*='mondo-icon-drag'] {
+            cursor: grabbing;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #BEING-DELETED
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview.is-being-deleted {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* ------------------------------------ *\
+   #IS-GOOD
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview.is-good {
+    .ms-surf-spot-tiny-preview__title-wrapper {
+        position: relative;
+        &:after {
+            position: absolute;
+            top: -2px;
+            left: -7px;
+            content: ' ';
+            width: 6px;
+            height: 6px;
+            background-color: var(--color-forecast-good);
+            border-radius: $space;
+            border: 2px solid var(--color-gray-00);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-surf-spot-tiny-preview.is-loading {
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+
+@media (hover: hover) {
+    .ms-surf-spot-tiny-preview {
+        .mondo-icon {
+            &:hover {
+                color: var(--color-text-link);
+            }
+        }
+    }
+}
+
+@media all and (min-width: $breakpoint-desktop) {
+}

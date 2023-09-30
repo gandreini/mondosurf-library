@@ -1,0 +1,26 @@
+/**
+ * GOOD TIME SHARE
+ *
+ * Component included in the modal, with buttons to share the good time.
+ */
+
+/* ------------------------------------ *\
+   #GOOD-TIME-SHARE
+\* ------------------------------------ */
+.ms-good-time-share {
+    &__button:not(:last-child) {
+        margin-bottom: $space * 2;
+    }
+    &__textarea {
+        opacity: 0.01;
+        height: 0;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

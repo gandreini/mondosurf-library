@@ -1,0 +1,90 @@
+/**
+ * TABS
+ *
+ * Style for tabs.
+ */
+
+/* ------------------------------------ *\
+   #TABS
+\* ------------------------------------ */
+.ms-tabs {
+    margin: 0;
+    padding: 0;
+
+    &__items {
+        display: flex;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+        margin: 0;
+        -ms-overflow-style: none; // Hides scrollbar
+        scrollbar-width: none; // Hides scrollbar
+
+        &::-webkit-scrollbar {
+            display: none; // Hides scrollbar
+        }
+    }
+
+    &__item {
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    &__link {
+        display: block;
+        box-sizing: border-box;
+        height: $tab-height;
+        padding: 0 $space * 2;
+        line-height: $tab-height;
+        text-transform: uppercase;
+        background-color: $color-background-base;
+        border-bottom: 3px solid var(--color-text);
+        color: var(--color-text);
+
+        // Active tab
+        &.is-active {
+            color: var(--color-first);
+            border-bottom: 3px solid var(--color-first);
+        }
+
+        // Disabled
+        &.is-disabled {
+            border-bottom: 3px solid var(--color-gray-02);
+            color: var(--color-gray-04);
+            cursor: default;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-tabs.is-loading {
+    height: $tab-height - $space;
+    margin-left: $space * 1.5;
+    cursor: default;
+    pointer-events: none;
+
+    .ms-tabs__items {
+        @include loading-effect;
+        height: $space * 3;
+        max-width: 200px;
+    }
+
+    .ms-tabs__link {
+        display: none;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-tabs.is-loading {
+        margin-left: 0;
+    }
+}

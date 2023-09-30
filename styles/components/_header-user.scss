@@ -1,0 +1,21 @@
+/**
+ * HEADER USER
+ *
+ * User details or login button in the header.
+ *
+ */
+
+/* ------------------------------------ *\
+   #HEADER-USER
+\* ------------------------------------ */
+.ms-header-user {
+    padding: $space * 0.5 0 0 $space * 1;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-header-user {
+    }
+}

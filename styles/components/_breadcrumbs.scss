@@ -1,0 +1,119 @@
+/**
+ * BREADCRUMBS
+ *
+ * Style for generic breadcrumbs
+ */
+
+/* ------------------------------------ *\
+   #BREACRUMBS
+\* ------------------------------------ */
+.ms-breadcrumbs {
+    display: none;
+
+    &__list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &__list-item {
+        display: none;
+    }
+
+    /* &__list-item:nth-last-child(2) {
+        display: inline-block;
+
+        .ms-breadcrumbs__list-link {
+            display: block;
+            height: $breadcrumbs-mobile-height;
+            line-height: $breadcrumbs-mobile-height;
+            border-radius: $border-radius;
+
+            &:before {
+                content: '\2039';
+                margin-right: $space;
+            }
+        }
+    } */
+
+    &__list-link {
+        color: var(--color-text);
+        @include font-size('s');
+        font-weight: $font-weight-normal;
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+
+    /* Last item */
+    &__list-item.is-active {
+        .ms-breadcrumbs__list-link {
+            font-weight: $font-weight-bold;
+            cursor: default;
+
+            &:hover {
+                color: var(--color-text);
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-breadcrumbs.is-loading {
+    .ms-breadcrumbs__list {
+        @include loading-effect;
+        height: 20px;
+        width: 200px;
+        margin-bottom: $space * 1.75;
+    }
+
+    .ms-breadcrumbs__list-item {
+        display: none;
+    }
+}
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-breadcrumbs {
+        display: block;
+        margin: $space * 3 0 $space * 2 0;
+        padding: 0 0 $space * 1.5 0;
+        border-bottom: 1px solid $color-border-normal;
+
+        &__list-item {
+            display: inline-block;
+
+            &:after {
+                content: '\203A';
+                margin-right: $space * 1;
+                margin-left: $space * 1;
+            }
+
+            &:last-child:after {
+                content: '';
+            }
+        }
+
+        &__list-link {
+            font-weight: $font-weight-normal;
+        }
+
+        &__list-item:nth-last-child(2) {
+            .ms-breadcrumbs__list-link {
+                display: inline;
+                padding: 0;
+                background-color: transparent;
+                border-radius: 0;
+
+                &:before {
+                    content: '';
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

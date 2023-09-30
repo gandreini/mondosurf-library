@@ -1,0 +1,84 @@
+/**
+ * COUNTRIES PAGE
+ *
+ * Page with list of countries
+ */
+
+/* ------------------------------------ *\
+   #COUNTRIES
+\* ------------------------------------ */
+.ms-countries {
+    padding: 0;
+    margin: 0;
+
+    .ms-breadcrumbs {
+        flex-grow: 1;
+    }
+
+    &__title-buttons-wrapper {
+        display: flex;
+        direction: row;
+        margin-bottom: $space * 3;
+        justify-content: space-between;
+
+        .ms-page-title {
+            margin-bottom: 0;
+        }
+    }
+
+    &__regions-number {
+        display: inline;
+        margin-left: $space;
+        color: var(--color-text-light);
+    }
+
+    &__description {
+    }
+
+    &__regions-list {
+        list-style: none;
+        padding: 0;
+        margin: $space 0 $space 0;
+    }
+
+    &__regions-list-item {
+        border-bottom: 1px solid $color-border-light;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    &__regions-list-link {
+        display: block;
+        padding-top: $space;
+        padding-bottom: $space;
+        color: var(--color-text);
+        font-size: $font-size-m;
+        font-weight: $font-weight-bold;
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+
+    &__regions-list-count {
+        margin-left: $space;
+        color: var(--color-text-light);
+        font-size: $font-size-s;
+        font-weight: $font-weight-normal;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-countries {
+        padding: 0 0 $space * 8 0;
+
+        &__title-buttons-wrapper {
+            align-items: center;
+        }
+    }
+}

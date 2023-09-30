@@ -1,0 +1,137 @@
+/**
+ * FLOATING HEAD
+ *
+ * Style for floating-head box.
+ */
+
+/* ------------------------------------ *\
+   #FLOATING-HEAD
+\* ------------------------------------ */
+.ms-floating-head {
+    flex-grow: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: $z-index-floating-head;
+    background-color: $color-background-base;
+    @include card;
+    padding: calc(#{$space} + var(--ios-status-bar-margin)) 0 0 0; // iOS spacing.
+    border-radius: 0;
+
+    /* Breadcrumbs */
+    .ms-breadcrumbs {
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding: 0 $space * 1.5;
+    }
+
+    /* Title */
+    &__title-wrapper {
+        padding: 0 $space * 1.5;
+    }
+
+    &__title-flag {
+        display: inline-block;
+        margin-right: $space;
+        font-size: $font-size-m;
+    }
+
+    &__title {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        font-size: $font-size-l;
+        font-weight: $font-weight-bold;
+    }
+
+    /* Counters */
+    &__info {
+        display: flex;
+        align-items: center;
+        margin-bottom: $space * 0.5;
+        padding: 0 $space * 1.5;
+
+        .ms-label {
+            margin-right: $space/2;
+            color: var(--color-text-light);
+            font-size: $font-size-s;
+            font-weight: $font-weight-normal;
+        }
+
+        .ms-value {
+            margin-right: $space/2;
+            color: var(--color-text-light);
+            font-size: $font-size-s;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    /* Buttons */
+    &__switch {
+        padding: 0;
+        margin: 0;
+
+        .ms-btn:not(:last-child) {
+            margin-right: $space;
+        }
+
+        /* Active item */
+        .is-active,
+        .is-active:focus,
+        .is-active:active {
+            color: var(--color-first);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-floating-head.is-loading {
+    .ms-breadcrumbs {
+        margin-bottom: $space;
+    }
+
+    .ms-floating-head__title {
+        width: 100px;
+        height: 24px;
+        margin-bottom: $space;
+        @include loading-effect;
+    }
+
+    .ms-floating-head__title-flag {
+        width: 26px;
+        height: 24px;
+        margin-bottom: $space;
+        @include loading-effect;
+    }
+
+    .ms-floating-head__info {
+        display: inline-block;
+        width: 120px;
+        height: 16px;
+        margin-bottom: $space;
+        margin-left: $space * 1.5;
+        @include loading-effect;
+
+        .ms-value,
+        .ms-label {
+            display: none;
+        }
+    }
+
+    .ms-floating-head__switch {
+        width: 120px;
+        height: 36px;
+        @include loading-effect;
+        > * {
+            display: none;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

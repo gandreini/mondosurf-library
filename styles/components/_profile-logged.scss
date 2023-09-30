@@ -1,0 +1,73 @@
+/**
+ * PROFILE LOGGED
+ *
+ * Stile for Profile Logged page, with the list of all profile sections.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE LOGGED
+\* ------------------------------------ */
+.ms-profile-logged {
+    &__welcome-text {
+    }
+    &__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Buttons type. */
+    &__list-item,
+    &__list-item a,
+    &__list-item .ms-btn {
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-normal;
+    }
+
+    &__list-item {
+        padding: $space * 2 0;
+        text-transform: uppercase;
+        color: var(--color-text-light);
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $color-border-light;
+        }
+
+        a {
+            color: var(--color-text);
+            font-weight: $font-weight-bold;
+
+            &:hover {
+                color: var(--color-first);
+            }
+        }
+
+        /* Button */
+        .ms-btn {
+            margin: 0;
+            padding: 0;
+            height: auto;
+            background-color: transparent;
+            text-transform: uppercase;
+            border: 0;
+            color: var(--color-text);
+            font-weight: $font-weight-bold;
+
+            &:hover {
+                color: var(--color-first);
+            }
+        }
+    }
+
+    &__coming-soon {
+        display: block;
+        text-transform: none;
+        font-size: $font-size-xxs;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

@@ -1,0 +1,67 @@
+/**
+ * VIDEO PREVIEW
+ *
+ * Single preview of a video.
+ */
+
+/* ------------------------------------ *\
+   #VIDEO PREVIEW
+\* ------------------------------------ */
+.ms-video-preview {
+    display: block;
+    cursor: pointer;
+    &__thumb {
+        height: 120px;
+        margin-bottom: $space * 2;
+        background-color: $color-background-ultralight;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: $border-radius;
+    }
+
+    &__title {
+        margin-bottom: 0;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-s;
+        color: var(--color-text);
+        line-height: 1.25;
+    }
+
+    &:hover {
+        .ms-video-preview__title {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-video-preview.is-loading {
+    .ms-video-preview__thumb {
+        height: 120px;
+        @include loading-effect;
+
+        .mondo-icon {
+            display: none;
+        }
+    }
+
+    .ms-video-preview__title {
+        width: 50%;
+        height: 24px;
+        @include loading-effect;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-video-preview {
+        &__thumb {
+            height: 220px;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+/**
+ * HOME PRO CALL TO ACTION
+ *
+ * CTA in the home engaging users to login and subscribe to Pro.
+ */
+
+/* ------------------------------------ *\
+    #HOME PRO CALL TO ACTION
+\* ------------------------------------ */
+.ms-home-pro-cta {
+    position: relative;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    // padding: $space * 3 0 0 0;
+    padding: 0;
+    margin-bottom: $space * 5;
+
+    &__content {
+        @include card;
+        width: 100%;
+        max-width: 600px;
+        margin-left: $space * 2;
+        margin-right: $space * 2;
+    }
+
+    .ms-emoji {
+    }
+
+    .ms-h2-title {
+    }
+
+    .ms-body-text {
+        margin-bottom: $space * 5;
+    }
+
+    .ms-pro-features-list {
+        margin: 0 auto $space * 3 auto;
+    }
+
+    .ms-btn {
+        display: flex;
+    }
+
+    &__subtext {
+        margin-top: $space * 2;
+    }
+
+    &__subtext-link {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

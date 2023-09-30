@@ -1,0 +1,160 @@
+/**
+ * REGION
+ *
+ * Page of region with the list of the surf spots and map.
+ */
+
+/* ------------------------------------ *\
+   #REGION
+\* ------------------------------------ */
+.ms-region {
+    padding: 0;
+    margin: 0;
+
+    .ms-page-title {
+        margin-bottom: $space * 0.5;
+    }
+
+    &__metadata {
+        display: flex;
+        gap: $space * 2;
+    }
+}
+
+/* .ms-region {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: var(--tab-bar-height);
+    display: flex;
+    flex-direction: column;
+
+    &__top {
+        position: relative;
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    &__content {
+        position: relative;
+        flex-grow: 1;
+        min-height: 0;
+        overflow-y: scroll;
+        background-color: $color-background-ultralight;
+    }
+} */
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.ms-region {
+    &__spots-list-wrapper {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        z-index: 100;
+    }
+
+    &__spots-list {
+        // padding: $space * 2 $space * 2 $space * 2 $space * 2;
+        padding: $space * 2 0 $space * 2 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #MAP
+\* ------------------------------------ */
+/* .ms-region {
+    &__map {
+        .ms-map-global {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+            box-sizing: border-box;
+            height: auto;
+        }
+
+        // Visible.
+        &.is-front {
+            .ms-map-global__container {
+                z-index: 200;
+            }
+        }
+    }
+} */
+
+/* ------------------------------------ *\
+   #INFO-TAB
+\* ------------------------------------ */
+/* .ms-region {
+    &__info {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        padding: $space * 3 0;
+    }
+
+    &__info-ai-text {
+        margin-bottom: $space * 2;
+    }
+
+    &__chart-temperatures {
+        margin-bottom: $space * 2;
+    }
+
+    &__chart-swell,
+    &__chart-wind {
+        margin-bottom: $space * 4;
+    }
+
+    &__chart-split {
+        margin-bottom: $space * 2;
+    }
+} */
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+/* .ms-region.is-loading {
+    .ms-region__content-map,
+    .ms-region__content-charts {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+} */
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+/* .ms-region.is-error {
+    .ms-region__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+} */
+
+/* ------------------------------------ *\
+   #EMPTY-STATE
+\* ------------------------------------ */
+/* .ms-region {
+    .ms-empty-state {
+        margin-top: $floating-head-height + $space * 3;
+    }
+} */
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-region {
+        padding: 0 0 $space * 8 0;
+    }
+    /* .ms-region {
+        top: $header-height-desktop;
+        bottom: 0;
+    } */
+}

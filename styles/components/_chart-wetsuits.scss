@@ -1,0 +1,70 @@
+/**
+ * CHART WETSUITS
+ *
+ * Chart displaying the right wetsuit for each month.
+ */
+
+/* ------------------------------------ *\
+   #CHART-WETSUITS
+\* ------------------------------------ */
+.ms-chart-wetsuits {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: $space * 2;
+    border: 1px solid $color-border-normal;
+    border-bottom: 0;
+
+    &__month {
+        box-sizing: border-box;
+        text-align: center;
+        border-bottom: 1px solid $color-border-normal;
+
+        &:not(:last-child):not(:nth-child(4)):not(:nth-child(9)) {
+            border-right: 1px solid $color-border-normal;
+        }
+    }
+
+    &__month-label {
+        padding: $space/2;
+        border-bottom: 1px solid $color-border-normal;
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        @include font-size('xs');
+    }
+
+    &__wetsuit {
+        padding: $space/2;
+    }
+
+    .mondo-icon {
+        display: block;
+        color: var(--color-text);
+        @include font-size('xxxl');
+    }
+
+    &__wetsuit-label {
+        color: var(--color-text-light);
+        line-height: 1.1;
+        @include font-size('xs');
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-chart-wetsuits {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        margin-bottom: $space * 4;
+
+        &__month {
+            &:not(:last-child) {
+                border-right: 1px solid $color-border-normal;
+            }
+        }
+
+        &__month-break {
+            display: none;
+        }
+    }
+}

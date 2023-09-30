@@ -1,0 +1,135 @@
+/* ------------------------------------ *\
+   #TITLES
+\* ------------------------------------ */
+// H1 title, unique in every page.
+.ms-page-title {
+    color: var(--color-text);
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xxl-fluid;
+    @include first-letter-capital;
+}
+
+// Inner titles
+.ms-h2-title {
+    color: var(--color-titles);
+    font-weight: $font-weight-bold;
+    line-height: 1.22;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-xl-fluid;
+    @include first-letter-capital;
+    margin-bottom: 0.3em;
+    &:not(:last-child) {
+        // margin-bottom: 0.3em;
+    }
+}
+
+// Inner titles
+.ms-h3-title {
+    color: var(--color-titles);
+    font-weight: $font-weight-bold;
+    line-height: 1.32;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-l-fluid;
+    @include first-letter-capital;
+    margin-bottom: 0.4em;
+    &:not(:last-child) {
+        // margin-bottom: 0.4em;
+    }
+}
+
+// Inner titles
+.ms-h4-title {
+    color: var(--color-titles);
+    font-weight: $font-weight-bold;
+    line-height: 1.32;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-m-fluid;
+    @include first-letter-capital;
+    margin-bottom: 0.4em;
+    &:not(:last-child) {
+        // margin-bottom: 0.4em;
+    }
+}
+
+.ms-large-text {
+    color: var(--color-text);
+    font-weight: $font-weight-normal;
+    line-height: 1.4;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-l-fluid;
+    @include fix-android-wrong-font-size;
+    margin-bottom: 0.75em;
+    &:not(:last-child) {
+        // margin-bottom: 0.75em;
+    }
+}
+
+.ms-body-text {
+    color: var(--color-text);
+    font-weight: $font-weight-normal;
+    line-height: 1.5;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-m-fluid;
+    @include fix-android-wrong-font-size;
+    margin-bottom: 0.75em;
+    &:not(:last-child) {
+        //
+    }
+}
+
+.ms-list {
+    li {
+        color: var(--color-text);
+        font-weight: $font-weight-normal;
+        line-height: 1.45;
+        font-size: $font-size-m-fluid;
+        @include fix-android-wrong-font-size;
+    }
+}
+
+.ms-small-text {
+    display: block;
+    color: var(--color-text-light);
+    font-weight: $font-weight-normal;
+    line-height: 1.4;
+    white-space: pre-line; // To allow new line with '\n'.
+    font-size: $font-size-xs-fluid;
+    @include fix-android-wrong-font-size;
+    margin-bottom: 0.95em;
+    &:not(:last-child) {
+        //
+    }
+}
+
+.ms-emoji {
+    font-size: $font-size-xxxxl-fluid;
+    line-height: 1.22;
+    margin-bottom: 0.1em;
+    &:not(:last-child) {
+        //
+    }
+}
+
+.ms-emoji-small {
+    font-size: $font-size-xxl-fluid;
+    line-height: 1.32;
+    margin-bottom: 0.1em;
+    &:not(:last-child) {
+        //
+    }
+}
+
+/* ------------------------------------ *\
+   #CAPITALIZE
+\* ------------------------------------ */
+.ms-first-capital {
+    @include first-letter-capital;
+}
+
+.ms-capital {
+    text-transform: capitalize;
+}
+
+.ms-uppercase {
+    text-transform: uppercase;
+}

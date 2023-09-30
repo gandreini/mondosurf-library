@@ -1,0 +1,38 @@
+/**
+ * LAST UPDATE
+ *
+ * Component that displayes the last updated of the forecast.
+ */
+
+/* ------------------------------------ *\
+    #LAST UPDATE
+\* ------------------------------------ */
+.ms-last-update {
+    display: flex;
+    gap: $space;
+    &__last-update {
+        // display: inline;
+        white-space: nowrap;
+        line-height: 1;
+    }
+    &__next-update {
+        // display: inline;
+        white-space: nowrap;
+        line-height: 1;
+    }
+    &__label {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-xs-fluid;
+        color: var(--color-text);
+    }
+    &__value {
+        font-size: $font-size-xs-fluid;
+        color: var(--color-text);
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

@@ -1,0 +1,38 @@
+/**
+ * TIDE-TABLE-WEEKLY-LEVELS
+ *
+ * Table displaying the weekly min, max and middle levels of the tide.
+ */
+
+/* ------------------------------------ *\
+   #TIDE-TABLE-WEEKLY-LEVELS
+\* ------------------------------------ */
+.ms-tide-table-weekly-levels {
+    &__title {
+        margin-bottom: $space;
+        font-size: $font-size-xs;
+        @include first-letter-capital;
+    }
+    &__values {
+        margin-bottom: $space;
+        border-top: 1px solid $color-border-normal;
+        border-left: 1px solid $color-border-normal;
+    }
+    &__value {
+        padding: $space;
+        border-bottom: 1px solid $color-border-normal;
+        border-right: 1px solid $color-border-normal;
+        font-size: $font-size-xs;
+        @include first-letter-capital;
+
+        span {
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

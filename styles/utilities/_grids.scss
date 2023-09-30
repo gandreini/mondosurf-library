@@ -1,0 +1,129 @@
+/**
+ * GRIDS
+ *
+ * Helper class to display items feed in grids.
+ * Apply the class to the container of the griddable elements (like cards). Direct
+ * descendants will be gridded.
+ */
+
+/* ------------------------------------ *\
+   #GRIDS
+\* ------------------------------------ */
+/* General grid setting */
+[class*='ms-grid-'],
+[class^='ms-grid-'] {
+    display: grid;
+    grid-column-gap: $grid-gutter-h;
+    grid-row-gap: $grid-gutter-v;
+}
+
+/* 1-1 */
+.ms-grid-1-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* 1-2 */
+.ms-grid-1-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* 1-3 */
+.ms-grid-1-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* 1-4 */
+.ms-grid-1-4 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+/* 2-2 */
+.ms-grid-2-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 2-3 */
+.ms-grid-2-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 2-4 */
+.ms-grid-2-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 3-3 */
+.ms-grid-3-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 3-4 */
+.ms-grid-3-4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 4-4 */
+.ms-grid-4-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Tight vertical spacing */
+.ms-grid-v-0 {
+    grid-row-gap: 0;
+}
+
+.ms-grid-v-1 {
+    grid-row-gap: $grid-gutter-v/3 * 2;
+}
+
+.ms-grid-v-2 {
+    grid-row-gap: $grid-gutter-v/2;
+}
+
+.ms-grid-v-3 {
+    grid-row-gap: $grid-gutter-v/3;
+}
+
+.ms-grid-v-4 {
+    grid-row-gap: $grid-gutter-v/4;
+}
+
+/* Tight horizontal spacing */
+.ms-grid-h-0 {
+    grid-column-gap: 0;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    /* 1-2 */
+    .ms-grid-1-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 1-3 */
+    .ms-grid-1-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* 1-4 */
+    .ms-grid-1-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* 2-3 */
+    .ms-grid-2-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* 2-4 */
+    .ms-grid-2-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* 3-4 */
+    .ms-grid-3-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

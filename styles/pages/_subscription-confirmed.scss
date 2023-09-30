@@ -1,0 +1,64 @@
+/**
+ * SUBSCRIPTION CONFIRMED
+ *
+ * Page to which Stripe redirects and displayed after Trial activation.
+ */
+
+/* ------------------------------------ *\
+    #SUBSCRIPTION CONFIRMED
+\* ------------------------------------ */
+.ms-subscription-confirmed {
+    &__content {
+        max-width: $page-max-medium-width;
+        margin-bottom: $space * 2;
+    }
+
+    .ms-card {
+        max-width: 600px;
+        margin-left: $space * 2;
+        margin-right: $space * 2;
+    }
+
+    .ms-btn {
+        display: flex;
+        margin: 0 0 $space 0;
+    }
+
+    /* Contents to start using the features */
+    &__start {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        row-gap: $space * 2;
+        column-gap: $space * 2;
+        text-align: left;
+        margin-bottom: $space * 2;
+
+        .mondo-icon {
+            @include font-size('xxxxl');
+        }
+
+        .mondo-icon-heart {
+            color: var(--color-favourites);
+        }
+
+        .ms-body-text:not(:last-child) {
+            margin-bottom: $space * 0.5;
+        }
+
+        .ms-small-text {
+            color: var(--color-text-light);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-subscription-confirmed {
+        .ms-card {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}

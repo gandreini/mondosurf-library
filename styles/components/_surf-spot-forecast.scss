@@ -1,0 +1,149 @@
+/**
+ * SURF SPOT FORECAST
+ *
+ * Page with the information about the surf forecast.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT FORECAST
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    flex-grow: 1;
+}
+
+/* ------------------------------------ *\
+   #EDITOR'S DAILY-FORECAST
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__daily-forecast {
+        margin-bottom: $space * 5;
+        padding: $space * 1.5 $space * 2;
+        background-color: $color-background-light;
+        box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &__daily-forecast-text {
+        padding-bottom: $space;
+        margin-bottom: $space;
+        border-bottom: 1px solid var(--color-gray-00);
+        font-size: $font-size-s;
+    }
+
+    &__daily-forecast-region {
+        display: inline-block;
+        margin-bottom: 0;
+        font-size: $font-size-xs;
+        color: var(--color-text-light);
+
+        span {
+            color: var(--color-text);
+        }
+    }
+
+    &__daily-forecast-author {
+        display: inline-block;
+        margin-bottom: 0;
+        font-size: $font-size-xs;
+        color: var(--color-text-light);
+
+        span {
+            color: var(--color-text);
+        }
+    }
+
+    &__daily-forecast-date {
+        display: inline-block;
+        margin-bottom: 0;
+        font-size: $font-size-xs;
+        color: var(--color-text-light);
+    }
+}
+
+/* ------------------------------------ *\
+   #GOOD-TIMES
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__forecast-good-times {
+        margin: $space * 3 0 $space * 5 0;
+    }
+
+    &__good-times-days {
+        margin-bottom: $space * 2;
+    }
+
+    // No good days.
+    &__empty {
+        margin: 0 0 $space * 5 0;
+        .ms-empty-state {
+            padding: $space * 8 0 $space * 8 0;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #BANNERS
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__banners {
+        margin-bottom: $space * 5;
+    }
+}
+
+/* ------------------------------------ *\
+    #ASTRONOMY AND tiDE TABLES
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__tables {
+        margin-bottom: $space * 5;
+
+        .ms-h3-title {
+            margin-bottom: $space * 1.5;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #FORECAST CHART
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__forecast-chart {
+        margin-bottom: $space * 5;
+    }
+}
+
+/* ------------------------------------ *\
+    #WEBCAMS-STATIONS
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__webcams,
+    &__meteo-stations {
+        margin-bottom: $space * 5;
+
+        .ms-h3-title {
+            margin-bottom: $space * 1.5;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__error {
+        margin: $space * 5;
+    }
+
+    &__error-text {
+        text-align: center;
+    }
+}
+
+/* ------------------------------------ *\
+    #WINDY
+\* ------------------------------------ */
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

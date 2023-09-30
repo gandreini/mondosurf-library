@@ -1,0 +1,42 @@
+/**
+ * COLORS GUIDE
+ *
+ * Sections explaining the meaning of the colors.
+ */
+
+/* ------------------------------------ *\
+    #COLORS GUIDE
+\* ------------------------------------ */
+.ms-colors-guide {
+    &__level {
+        margin-bottom: $space * 1;
+        padding-bottom: $space * 1;
+        border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__level-title {
+        display: inline-block;
+        padding: $space * 0.5 $space * 1;
+        border-radius: $border-radius;
+        background-color: $color-background-medium;
+        color: var(--color-text);
+    }
+
+    & &__level-title-inverse {
+        color: var(--color-text-inverse);
+    }
+
+    &__level-stars {
+        margin-bottom: $space * 0.5;
+    }
+
+    .mondo-icon {
+        @include font-size('xxl');
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

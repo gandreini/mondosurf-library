@@ -1,0 +1,76 @@
+/**
+ * REGION PREVIEW
+ *
+ * Item that shows region in homepage
+ */
+
+/* ------------------------------------ *\
+   #REGION-PREVIEW
+\* ------------------------------------ */
+.ms-region-preview {
+    @include card;
+    padding-bottom: $space * 1.5;
+
+    &__title-wrapper {
+        display: block;
+        margin-bottom: $space/2;
+    }
+
+    &__title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-l-fluid;
+        color: var(--color-text);
+        transition: all $transition-durations;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__counters {
+        display: block;
+    }
+
+    .ms-label {
+        margin: $space/2;
+        font-size: $font-size-s-fluid;
+        font-weight: $font-weight-normal;
+        color: var(--color-text-light);
+    }
+
+    .ms-value {
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-region-preview.is-loading {
+    .ms-region-preview__contents {
+        cursor: default;
+        pointer-events: none;
+    }
+    .ms-region-preview__title-wrapper {
+        height: 21px;
+        width: 100%;
+        margin-bottom: $space;
+        @include loading-effect;
+    }
+    .ms-region-preview__counters {
+        height: 19px;
+        width: 50%;
+        @include loading-effect;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    /* Hover */
+    .ms-region-preview:not(.is-loading):hover {
+        @include card-hover;
+    }
+}

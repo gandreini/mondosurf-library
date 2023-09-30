@@ -1,0 +1,67 @@
+/**
+ * FILTER TOGGLE
+ *
+ * Button to toggle the filter
+ */
+
+/* ------------------------------------ *\
+   #FILTER-TOGGLE
+\* ------------------------------------ */
+.ms-filter-toggle {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    z-index: $z-index-filters-toggle;
+    height: $map-control-size;
+    bottom: calc(var(--tab-bar-height) + #{$space});
+    right: $map-control-margin;
+    padding: $map-control-margin;
+    border-radius: $border-radius;
+    border: 0;
+    background-color: $color-background-base;
+    @include card-box-shadow;
+    cursor: pointer;
+
+    &__icon {
+        display: inline-block;
+        transition: width $transition-durations;
+        margin-right: $space/2;
+
+        .mondo-icon {
+            font-size: $font-size-m;
+        }
+    }
+
+    &__text {
+        display: inline-block;
+        font-family: var(--font-family-main);
+        font-size: $font-size-s;
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+    }
+}
+
+/* ------------------------------------ *\
+   #ACTIVE
+\* ------------------------------------ */
+.ms-filter-toggle.is-active {
+    .ms-filter-toggle__icon {
+        .mondo-icon {
+            color: var(--color-first);
+            font-size: $font-size-xl;
+        }
+    }
+
+    .ms-filter-toggle__text {
+        color: var(--color-first);
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-filter-toggle {
+        bottom: $space;
+    }
+}

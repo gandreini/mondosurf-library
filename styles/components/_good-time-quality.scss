@@ -1,0 +1,90 @@
+/**
+ * GOOD TIME QUALITY
+ *
+ * Displays starts and text.
+ */
+
+/* ------------------------------------ *\
+   #GOOD TIME QUALITY
+\* ------------------------------------ */
+.ms-good-time-quality {
+    display: flex;
+    align-items: center;
+
+    &__stars {
+        margin-right: $space * 0.5;
+    }
+
+    &__text {
+        margin-top: 2px;
+        font-size: $font-size-xs;
+        text-transform: uppercase;
+        font-weight: $font-weight-normal;
+        font-weight: $font-weight-bold;
+        color: var(--color-text-light);
+    }
+
+    &__text-1 {
+        display: block;
+        font-size: $font-size-xs;
+        // color: var(--color-text-light);
+    }
+    &__text-2 {
+        display: block;
+        font-size: $font-size-xxs;
+        color: var(--color-text-light);
+    }
+
+    .mondo-icon-star {
+        font-size: $font-size-xl;
+        color: $color-background-base;
+        -webkit-text-stroke: 1px $color-border-dark;
+        text-stroke: 1px $color-border-normal;
+    }
+}
+
+.ms-good-time-quality-1 {
+    .mondo-icon-star:nth-child(1) {
+        color: var(--color-forecast-good);
+        -webkit-text-stroke: 1px var(--color-forecast-good);
+        text-stroke: 1px var(--color-forecast-good);
+    }
+}
+
+.ms-good-time-quality-2 {
+    .mondo-icon-star:nth-child(1),
+    .mondo-icon-star:nth-child(2) {
+        color: var(--color-forecast-very-good);
+        -webkit-text-stroke: 1px var(--color-forecast-very-good);
+        text-stroke: 1px var(--color-forecast-very-good);
+    }
+}
+
+.ms-good-time-quality-3 {
+    .mondo-icon-star:nth-child(1),
+    .mondo-icon-star:nth-child(2),
+    .mondo-icon-star:nth-child(3) {
+        color: var(--color-forecast-epic);
+        -webkit-text-stroke: 1px var(--color-forecast-epic);
+        text-stroke: 1px var(--color-forecast-epic);
+    }
+}
+
+/* ------------------------------------ *\
+   #LOW-QUALITY
+\* ------------------------------------ */
+.ms-good-time-quality-0 {
+    .ms-good-time-quality__text {
+        font-weight: $font-weight-normal;
+    }
+
+    .ms-good-time-quality__stars {
+        // margin-right: $space * 1.5;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

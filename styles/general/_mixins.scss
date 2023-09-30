@@ -1,0 +1,234 @@
+//
+// MIXINS AND FUNCTIONS
+//
+// Various mixins
+//
+
+// ------------------------------------ //
+// #FIRST LETTER CAPITAL
+// ------------------------------------ //
+@mixin first-letter-capital() {
+    &:first-letter {
+        text-transform: uppercase;
+    }
+}
+
+// ------------------------------------ //
+// #ANDROID-WRONG-FONT-SIZE
+// ------------------------------------ //
+@mixin fix-android-wrong-font-size() {
+    max-height: 999999px;
+}
+
+// ------------------------------------ //
+// #MIXINS
+// ------------------------------------ //
+@mixin overlay {
+    content: ' ';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(#000000, 0.75);
+    transition: all $transition-durations;
+}
+
+@mixin overlay-bottom-gradient {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background: -moz-linear-gradient(
+        top,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 1) 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+        top,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 1) 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 1) 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+    transition: all $transition-durations;
+}
+
+@mixin consistent {
+    &:after {
+        content: ' ';
+        clear: both;
+        display: block;
+    }
+}
+
+// ------------------------------------ //
+// #CARD SHADOWS
+// ------------------------------------ //
+@mixin card {
+    padding: $space * 2 $space * 2 $space * 2 $space * 2;
+    background-color: $color-background-base; // $color-background-ultralight;
+    box-sizing: border-box;
+    border-radius: $border-radius * 2;
+    // border: 1px solid #f7f7f7; // ! TODO ADD VARIABLE
+    // border: 1px solid rgb(221, 221, 221); // ! TODO ADD VARIABLE
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02),
+        0 6px 12px rgba(0, 0, 0, 0.02), 0 12px 24px rgba(0, 0, 0, 0.02), 0 0px 4px rgba(0, 0, 0, 0.04);
+    transition: all $transition-durations;
+    transition-timing-function: ease-in;
+}
+
+@mixin card-hover {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(0, 0, 0, 0.1), 0 36px 50px -50px rgba(0, 0, 0, 0.2);
+}
+
+@mixin card-box-shadow {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 3px 12px rgba(0, 0, 0, 0.04);
+    transition: box-shadow $transition-durations;
+    transition-timing-function: ease-in;
+}
+
+@mixin card-box-shadow-hover {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(0, 0, 0, 0.15), 0 36px 40px -40px rgba(0, 0, 0, 0.1);
+}
+
+@mixin card-box-shadow-invert {
+    box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.15), 0 -2px 15px rgba(0, 0, 0, 0.05);
+}
+
+// ------------------------------------ //
+// #PLACEHOLDER
+// ------------------------------------ //
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        color: $form-input-placeholder-color;
+        font-weight: $font-weight-normal;
+        font-family: var(--font-family-main);
+    }
+
+    &:-moz-placeholder {
+        color: $form-input-placeholder-color;
+        font-weight: $font-weight-normal;
+        font-family: var(--font-family-main);
+    }
+
+    &::-moz-placeholder {
+        color: $form-input-placeholder-color;
+        font-weight: $font-weight-normal;
+        font-family: var(--font-family-main);
+    }
+
+    &:-ms-input-placeholder {
+        color: $form-input-placeholder-color;
+        font-weight: $font-weight-normal;
+        font-family: var(--font-family-main);
+    }
+}
+
+// ------------------------------------ //
+// #LOADING EFFECT
+// ------------------------------------ //
+@mixin loading-effect() {
+    border-radius: $border-radius;
+    background: $color-background-light;
+    background: linear-gradient(
+        to right,
+        $color-background-light 0%,
+        $color-background-medium 25%,
+        $color-background-light 50%
+    );
+    background-size: 800px 100%;
+    // height: 100px;
+    // position: relative;
+
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: contentPlaceholderAnimation;
+    animation-timing-function: linear;
+}
+
+@keyframes contentPlaceholderAnimation {
+    0% {
+        background-position: -400px 0;
+    }
+    100% {
+        background-position: 400px 0;
+    }
+}
+
+// ------------------------------------ //
+// #HIDE-SCROLLBAR
+// ------------------------------------ //
+@mixin hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// ------------------------------------ //
+// #MAP-CONTROLS
+// ------------------------------------ //
+@mixin map-control {
+    border: 0;
+    background-color: $color-background-base;
+    border-radius: $border-radius;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+// ------------------------------------ //
+// #FONT-SIZES
+// ------------------------------------ //
+@mixin font-size($size) {
+    @if $size == 'xxxs' {
+        font-size: 10px;
+        font-size: fluid-size(10, 12);
+    }
+    @if $size == 'xxs' {
+        font-size: 11px;
+        font-size: fluid-size(11, 13);
+    }
+    @if $size == 'xs' {
+        font-size: 13px;
+        font-size: fluid-size(13, 15);
+    }
+    @if $size == 's' {
+        font-size: 14px;
+        font-size: fluid-size(14, 16);
+    }
+    @if $size == 'm' {
+        font-size: 15px;
+        font-size: fluid-size(15, 18);
+    }
+    @if $size == 'l' {
+        font-size: 18px;
+        font-size: fluid-size(18, 24);
+    }
+    @if $size == 'xl' {
+        font-size: 24px;
+        font-size: fluid-size(24, 34);
+    }
+    @if $size == 'xxl' {
+        font-size: 28px;
+        font-size: fluid-size(28, 42);
+    }
+    @if $size == 'xxxl' {
+        font-size: 36px;
+        font-size: fluid-size(36, 48);
+    }
+    @if $size == 'xxxxl' {
+        font-size: 48px;
+        font-size: fluid-size(48, 60);
+    }
+}

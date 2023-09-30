@@ -1,0 +1,36 @@
+/**
+ * HOMEPAGE
+ *
+ * Homepage Layout
+ */
+
+/* ------------------------------------ *\
+   #HOMEPAGE
+\* ------------------------------------ */
+.ms-home {
+    .ms-search-form {
+        margin: $space * 8 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-home {
+        padding-bottom: 0;
+
+        &__form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .ms-search-form {
+            max-width: $page-max-width;
+            flex-grow: 1;
+        }
+    }
+}

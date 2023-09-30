@@ -1,0 +1,67 @@
+/**
+ * FAVOURITE ADD BUTTON
+ *
+ * Button used in different locations to add/remove a spot to/from favourites.
+ */
+
+/* ------------------------------------ *\
+   #FAVOURITE-ADD-BUTTON
+\* ------------------------------------ */
+.ms-favourite-add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    font-size: $font-size-xxl;
+    cursor: pointer;
+
+    span {
+        transition: all $transition-durations;
+    }
+    // Add.
+    &.ms-favourite-add-button-add {
+        span {
+            color: var(--color-gray-04);
+        }
+        &:hover span {
+            color: var(--color-favourites);
+        }
+    }
+
+    // Add for not logged users.
+    &.ms-favourite-add-button-add-not-logged {
+        span {
+            color: var(--color-gray-04);
+        }
+        &:hover span {
+            color: var(--color-favourites);
+        }
+    }
+
+    // Remove.
+    &.ms-favourite-add-button-remove {
+        span {
+            color: var(--color-favourites);
+        }
+        &:hover span {
+            color: var(--color-gray-04);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-favourite-add-button.is-loading {
+    cursor: default;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

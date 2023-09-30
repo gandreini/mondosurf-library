@@ -1,0 +1,25 @@
+/**
+ * PROFILE
+ *
+ * Profile page with access to inner sections
+ */
+
+/* ------------------------------------ *\
+    #PROFILE
+\* ------------------------------------ */
+.ms-profile {
+    &__content {
+        // max-width: $page-max-medium-width;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-profile {
+        &__content {
+            margin-bottom: $space * 5;
+        }
+    }
+}
