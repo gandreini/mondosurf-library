@@ -12,9 +12,9 @@
     position: relative;
     // width: 100%;
     overflow: hidden;
-    padding-left: $space*3;
-    padding-right: $space*3;
-    
+    padding-left: $space * 3;
+    padding-right: $space * 3;
+
     // Image or video bg.
     &__background {
         position: absolute;
@@ -48,7 +48,8 @@
         }
     }
 
-    &__background-image, video {
+    &__background-image,
+    video {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -100,12 +101,6 @@
         color: var(--color-text-inverse);
         margin-bottom: $space * 6;
     }
-
-    &__buttons {
-        display: flex;
-        flex-direction: column;
-        gap: $space;        
-    }
 }
 
 /* ------------------------------------ *\
@@ -114,7 +109,7 @@
 .ms-home-hero-image {
     /* Overlay */
     &:after {
-        content: " ";
+        content: ' ';
         position: absolute;
         background-color: rgba(0, 0, 0, 0.6);
         top: 0;
@@ -162,8 +157,8 @@
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
     .ms-home-hero {
-        padding-left: $space*10;
-        padding-right: $space*10;
+        padding-left: $space * 10;
+        padding-right: $space * 10;
 
         &__ms {
             display: none;
@@ -191,7 +186,7 @@
 
         &__background-content {
             border-radius: $border-radius;
-            
+
             &:after {
                 border-radius: $border-radius;
             }
