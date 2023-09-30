@@ -44,7 +44,8 @@
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
     .ms-page-title {
-        margin: 0;
+        // margin: 0 0 0 $space * 2;
+        margin: 0 0 $space * 3 0;
 
         &__flag-title-wrapper {
             gap: $space * 1;
