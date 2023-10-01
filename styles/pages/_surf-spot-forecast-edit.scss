@@ -1,0 +1,23 @@
+/**
+ * SURF SPOT FORECAST EDIT PAGE
+ *
+ * Surf spot page to edit the forecast by the admin.
+ * Desktop only.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-FORECAST-EDIT-PAGE
+\* ------------------------------------ */
+.ms-surf-spot-forecast-edit {
+    &__title {
+        max-width: 1380px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
