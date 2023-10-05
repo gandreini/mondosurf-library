@@ -14,7 +14,8 @@ $mapToolHeight: 600px;
     position: relative;
     z-index: 10;
     width: $mapToolWidth;
-    height: $mapToolHeight;
+    // height: $mapToolHeight;
+    margin-bottom: $space * 4;
     margin-left: auto;
     margin-right: auto;
 
