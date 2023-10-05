@@ -24,6 +24,10 @@
         width: 100%;
     }
 
+    &__input.ms-form__input-small {
+        height: $height-common-m;
+    }
+
     &__checkbox {
         margin: 0 $space $space * 2 0;
     }

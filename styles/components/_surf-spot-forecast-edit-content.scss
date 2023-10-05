@@ -74,8 +74,45 @@ $mapToolHeight: 600px;
         position: absolute;
         z-index: 200;
         right: $space * 2;
-        top: $space * 2;
+        top: $space * 7;
         @include card;
+
+        .ms-form__label {
+            font-size: $font-size-xxs-fluid;
+        }
+
+        .ms-form__input {
+            width: 135px;
+        }
+    }
+
+    &__form-inline-items {
+        display: flex;
+        flex-direction: row;
+        gap: $space;
+    }
+
+    // Ai form
+    &__ai-text-form {
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            height: 450px;
+            margin-bottom: $space * 2;
+            font-size: $font-size-m-fluid;
+        }
+
+        .ms-btn {
+            margin-bottom: $space * 2;
+        }
+    }
+
+    &__ai-text-form-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: $space * 2;
     }
 }
 
