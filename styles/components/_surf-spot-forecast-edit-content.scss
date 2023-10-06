@@ -93,6 +93,12 @@ $mapToolHeight: 600px;
         gap: $space;
     }
 
+    &__form-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 2;
+    }
+
     // Ai form
     &__ai-text-form {
         form {
