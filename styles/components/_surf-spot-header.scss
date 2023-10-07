@@ -18,6 +18,8 @@
 
     &__title {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     &__title-tools {
