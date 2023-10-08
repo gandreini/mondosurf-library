@@ -1,15 +1,17 @@
 /**
- * SURF SPOT FULL FORECAST
+ * SURF SPOT FULL FORECAST PAGE
  *
- * Style for the content of the full forecast page
+ * Surf spot page with he full forecast info.
  */
 
 /* ------------------------------------ *\
-    #SURF- SPOT-FULL-FORECAST
+   #SURF-SPOT-FORECAST-EDIT-PAGE
 \* ------------------------------------ */
 .ms-surf-spot-full-forecast {
     flex-grow: 1;
     display: flex;
+    flex-direction: column;
+    padding: $space * 1 0 $space * 5 0;
 
     .ms-empty-state {
         margin-top: $space * 8;
@@ -17,7 +19,7 @@
 }
 
 /* ------------------------------------ *\
-    #MEDIA-QUERIES
+   #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
 }

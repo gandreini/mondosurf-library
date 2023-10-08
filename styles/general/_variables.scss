@@ -137,6 +137,7 @@ $font-size-m-fluid: fluid-size(16, 18); // clamp(14px, calc(1rem + 1.2vw), 18px)
 $font-size-s-fluid: fluid-size(14, 16); // clamp(1rem, calc(1rem + 1.2vw), 20px);
 $font-size-xs-fluid: fluid-size(13, 14); // clamp(11px, calc(1rem + 1.2vw), 14px);
 $font-size-xxs-fluid: fluid-size(11, 12); // clamp(10px, calc(1rem + 1.2vw), 12px);
+$font-size-xxxs-fluid: fluid-size(10, 11); // clamp(10px, calc(1rem + 1.2vw), 12px);
 
 // Font weight
 $font-weight-normal: 400;
@@ -177,6 +178,7 @@ $height-common-xl: fluid-size(48, 56); // 52px;
 // ------------------------------------ //
 // #BORDER-RADIUS
 // ------------------------------------ //
+$border-radius-soft: 3px;
 $border-radius: 6px;
 $border-radius-hard: 12px;
 

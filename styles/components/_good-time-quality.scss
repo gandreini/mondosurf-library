@@ -84,6 +84,22 @@
 }
 
 /* ------------------------------------ *\
+   #VERTICAL
+\* ------------------------------------ */
+.ms-good-time-quality.ms-good-time-quality-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .ms-good-time-quality__text {
+        margin-top: 0;
+        font-size: $font-size-xxxs-fluid;
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {

@@ -1,0 +1,36 @@
+/**
+ * SURF FORECAST DAY
+ *
+ * Group of surf rows for the whole day.
+ */
+
+/* ------------------------------------ *\
+    #SURF FORECAST DAY
+\* ------------------------------------ */
+.ms-surf-forecast-day {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $space * 3;
+
+    &__day {
+        padding: $space * 1 0;
+        font-weight: $font-weight-bold;
+        position: -webkit-sticky; /* For Safari */
+        position: sticky;
+        top: 0;
+        background-color: $color-background-base;
+        z-index: 10;
+    }
+
+    &__rows {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

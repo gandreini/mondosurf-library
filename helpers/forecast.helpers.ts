@@ -116,6 +116,35 @@ export const limitGoodTimesToDaysRange = (goodTimes: IGoodTime[]): IGoodTime[] =
 }
 
 /**
+ * Checks if a given direction in degrees is within a specified range.
+ * 
+ * The function handles cases where the range wraps around the 360-degree point,
+ * e.g., when min is 320 and max is 20.
+ * 
+ * @param direction - The direction in degrees to check. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * @param min - The minimum bound of the range. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * @param max - The maximum bound of the range. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * 
+ * @returns `true` if the direction is within the range, `false` otherwise.
+ */
+export const directionIsWithinRange = (direction: number, min: number, max: number): boolean => {
+    // Normalize the direction, min, and max to be within [0, 360)
+    direction = (direction + 360) % 360;
+    min = (min + 360) % 360;
+    max = (max + 360) % 360;
+
+    // If min is less than or equal to max, it's a straightforward check
+    if (min <= max) {
+        return direction >= min && direction <= max;
+    }
+    // If min is greater than max, the range wraps around 360
+    else {
+        return direction >= min || direction <= max;
+    }
+}
+
+
+/**
  * 
  * * DEPRECATED: Use `limitGoodTimesToDaysRange` instead
  * 

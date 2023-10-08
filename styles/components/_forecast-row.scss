@@ -1,0 +1,234 @@
+/**
+ * FORECAST ROW
+ *
+ * Single row showing the forecast details of one hour or a section of day.
+ */
+
+$no-good-opacity: 0.6;
+
+/* ------------------------------------ *\
+    #FORECAST ROW
+\* ------------------------------------ */
+.ms-forecast-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // border: 1px solid $color-border-light;
+    width: 100%;
+    height: 50px;
+    border-radius: $border-radius-soft;
+
+    // Time
+    &__time {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-background-mediumlight;
+        height: 100%;
+        width: 20px;
+        border-radius: $border-radius-soft 0 0 $border-radius-soft;
+    }
+    &__time-label {
+        display: block;
+        transform: rotate(-90deg);
+        white-space: nowrap;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-light);
+    }
+
+    // Quality
+    &__quality {
+        width: 18%;
+        padding: 0 $space * 1;
+    }
+
+    // Height
+    &__swell-size {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: $space * 0.125;
+        width: 54px;
+        margin: 0 $space;
+        padding: $space 0;
+        border-radius: $border-radius-soft;
+        background-color: var(--color-chart-swell);
+    }
+    &__swell-size-value {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+        color: var(--color-text-inverse);
+    }
+    &__swell-size-unit {
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-inverse);
+        opacity: 0.65;
+    }
+
+    &__swell-size.is-no-good {
+        opacity: $no-good-opacity;
+    }
+
+    // Period
+    &__swell-period {
+        width: 40px;
+        margin: 0 0;
+    }
+    &__swell-period-value {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+    }
+    &__swell-period-unit {
+        font-size: $font-size-xs-fluid;
+        color: var(--color-text);
+        opacity: 0.65;
+    }
+
+    &__swell-period.is-no-good {
+        opacity: $no-good-opacity;
+    }
+
+    // Directions
+    &__swell-direction,
+    &__wind-direction {
+        display: flex;
+        align-items: center;
+        width: 30px;
+        justify-content: center;
+    }
+
+    &__swell-direction.is-no-good {
+        opacity: $no-good-opacity;
+    }
+
+    &__wind-direction.is-no-good {
+        opacity: $no-good-opacity;
+    }
+
+    // Wind
+    &__wind-speed {
+        display: flex;
+        flex-direction: column;
+        width: 44px;
+        margin-left: $space * 2;
+    }
+    &__wind-speed-label {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-xxxs-fluid;
+        color: var(--color-text);
+        opacity: 0.65;
+    }
+    &__wind-speed-content {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: $space * 0.125;
+    }
+    &__wind-speed-value {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+        line-height: 1;
+    }
+    &__wind-speed-unit {
+        font-size: $font-size-xxxs-fluid;
+        color: var(--color-text);
+        opacity: 0.65;
+    }
+
+    &__wind-speed.is-no-good {
+        opacity: $no-good-opacity;
+    }
+}
+
+/* ------------------------------------ *\
+    #QUALITY
+\* ------------------------------------ */
+.ms-forecast-row {
+    &.ms-forecast-row-quality-1 {
+    }
+    &.ms-forecast-row-quality0 {
+        .ms-forecast-row__time {
+            background-color: $color-background-light;
+        }
+        .ms-forecast-row__time-label {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.ms-forecast-row-quality1 {
+        .ms-forecast-row__time {
+            background-color: var(--color-forecast-good);
+        }
+        .ms-forecast-row__time-label {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.ms-forecast-row-quality2 {
+        .ms-forecast-row__time {
+            background-color: var(--color-forecast-very-good);
+        }
+        .ms-forecast-row__time-label {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.ms-forecast-row-quality3 {
+        .ms-forecast-row__time {
+            background-color: var(--color-forecast-epic);
+        }
+        .ms-forecast-row__time-label {
+            color: var(--color-text-inverse);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #NIGHT
+\* ------------------------------------ */
+.ms-forecast-row {
+    &.ms-forecast-row-night {
+        background-color: #6694a8;
+
+        // Time
+        .ms-forecast-row__time {
+            background-color: #1e6888;
+        }
+        .ms-forecast-row__time-label {
+            color: var(--color-text-inverse);
+        }
+
+        // Quality
+        .ms-forecast-row__quality {
+            .mondo-icon {
+                color: #ffd966;
+                font-size: $font-size-l-fluid;
+            }
+        }
+
+        // Height
+        // Height
+        .ms-forecast-row__swell-size {
+            background-color: #1e6888;
+        }
+
+        // Period
+        .ms-forecast-row__swell-period-value,
+        .ms-forecast-row__swell-period-unit {
+            color: var(--color-text-inverse);
+        }
+
+        // Wind
+        .ms-forecast-row__wind-speed-label,
+        .ms-forecast-row__wind-speed-value,
+        .ms-forecast-row__wind-speed-unit {
+            color: var(--color-text-inverse);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}
