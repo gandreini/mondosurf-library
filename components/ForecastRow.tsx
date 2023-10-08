@@ -1,5 +1,7 @@
 import { ISurfForecastRow } from '@/model/iSurfSpot';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import GoodTimeQuality from '@/features/goodTime/GoodTimeQuality';
 import Icon from '@/components/Icon';
 import DirectionArrow from './DirectionArrow';
@@ -7,6 +9,7 @@ import { directionIsWithinRange } from '@/mondosurf-library/helpers/forecast.hel
 
 interface IForecastRow {
     row: ISurfForecastRow;
+    timezone: string;
     goodConditions: {
         swellDirectionMin: number;
         swellDirectionMax: number;
@@ -21,6 +24,10 @@ interface IForecastRow {
 }
 
 const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
+    // Dayjs plugins.
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+
     // Check if the wind speed is good taking into account all parameters
     const returnWindIsGood = (windSpeed: number, windDirection: number) => {
         if (
@@ -56,14 +63,17 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
 
     return (
         <div
-            id={`day-${dayjs(props.row.time).format('D')}-hour-${dayjs(props.row.time).format('H')}`}
+            id={`day-${dayjs(props.row.time).tz(props.timezone).format('D')}-hour-${dayjs(props.row.time)
+                .tz(props.timezone)
+                .format('H')}`}
             className={`ms-forecast-row ${!props.row.is_light ? 'ms-forecast-row-night' : ''} ${
                 'ms-forecast-row-quality' + props.row.is_good.toString()
             }`}>
             {/* Time */}
             <div className="ms-forecast-row__time">
-                {/* <span className="ms-forecast-row__time-label">{dayjs(props.row.time).format('HH:mm')}</span> */}
-                <span className="ms-forecast-row__time-label">{dayjs(props.row.time).format('H')}</span>
+                <span className="ms-forecast-row__time-label">
+                    {dayjs(props.row.time).tz(props.timezone).format('H')}
+                </span>
             </div>
             {/* Quality */}
             <div className="ms-forecast-row__quality">
