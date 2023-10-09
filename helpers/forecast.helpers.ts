@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import { FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "../constants/constants";
+import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "../constants/constants";
 import IGoodTime from "../model/iGoodTime";
 import { ISurfSpotForecast } from "../model/iSurfSpot";
 import { store } from "../redux/store";
@@ -143,6 +143,35 @@ export const directionIsWithinRange = (direction: number, min: number, max: numb
     }
 }
 
+/**
+ * Calculate the time span (in minutes) to the next forecast update.
+ * 
+ * This function determines the number of minutes remaining until the next forecast update
+ * based on the current time in the Europe/Rome timezone and the predefined update hours.
+ * 
+ * @returns The number of minutes until the next forecast update.
+ */
+export function timeSpanToNextUpdate(): number {
+    // Dayjs
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+
+    // Get the current time in the Europe/Rome timezone
+    const now = dayjs().tz('Europe/Rome');
+
+    // Find the next update hour
+    const nextUpdateHour = FORECAST_UPDATES.find(hour => hour > now.hour());
+
+    // If there's a next update hour on the same day
+    if (nextUpdateHour !== undefined) {
+        const nextUpdate = now.hour(nextUpdateHour).minute(0).second(0).millisecond(0);
+        return nextUpdate.diff(now, 'seconds');
+    }
+
+    // If the next update is on the next day (first hour in the array)
+    const nextUpdate = now.add(1, 'day').hour(FORECAST_UPDATES[0]).minute(0).second(0).millisecond(0);
+    return nextUpdate.diff(now, 'seconds');
+}
 
 /**
  * 

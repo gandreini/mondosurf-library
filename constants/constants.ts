@@ -1,5 +1,6 @@
 export const TOAST_DURATION = 2800;
 export const FORECAST_UPDATE_PERIOD = 21600; // 6 hours in seconds
+export const FORECAST_UPDATES = [4, 10, 16, 22];
 
 export const STRIPE_YEARLY_SUBSCRIPTION_SUCCESS_URL = "yearly-subscription-success";
 export const STRIPE_YEARLY_SUBSCRIPTION_CANCEL_URL = "yearly-subscription-cancel";

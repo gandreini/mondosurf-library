@@ -1,9 +1,9 @@
-import { ISurfForecastRow } from '@/model/iSurfSpot';
+import { ISurfForecastRow } from '@/mondosurf-library/modelStrict/iSurfSpot';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import GoodTimeQuality from '@/features/goodTime/GoodTimeQuality';
-import Icon from '@/components/Icon';
+import Icon from '@/mondosurf-library/components/Icon';
 import DirectionArrow from './DirectionArrow';
 import { directionIsWithinRange } from '@/mondosurf-library/helpers/forecast.helpers';
 
@@ -75,11 +75,13 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     {dayjs(props.row.time).tz(props.timezone).format('H')}
                 </span>
             </div>
+
             {/* Quality */}
             <div className="ms-forecast-row__quality">
                 {!props.row.is_light && <Icon icon={'night-2'} />}
                 {props.row.is_light && <GoodTimeQuality quality={props.row.is_good} vertical={true} />}
             </div>
+
             {/* Swell size */}
             <div
                 className={`ms-forecast-row__swell-size ${
@@ -93,6 +95,7 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                 <span className="ms-forecast-row__swell-size-value">{props.row.swell_height.toFixed(1)}</span>
                 <span className="ms-forecast-row__swell-size-unit">mt</span>
             </div>
+
             {/* Swell period */}
             <div
                 className={`ms-forecast-row__swell-period ${
@@ -101,6 +104,7 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                 <span className="ms-forecast-row__swell-period-value">{props.row.swell_period.toFixed(1)}</span>
                 <span className="ms-forecast-row__swell-period-unit">s</span>
             </div>
+
             {/* Swell direction */}
             <div
                 className={`ms-forecast-row__swell-direction ${
@@ -115,6 +119,7 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     style={`${props.row.is_light ? 'swell' : 'night'}`}
                 />
             </div>
+
             {/* Wind speed */}
             <div
                 className={`ms-forecast-row__wind-speed ${
@@ -126,6 +131,7 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     <div className="ms-forecast-row__wind-speed-unit">kph</div>
                 </div>
             </div>
+
             {/* Wind direction */}
             <div
                 className={`ms-forecast-row__wind-direction ${
