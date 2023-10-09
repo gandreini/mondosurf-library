@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import GoodTimeQuality from '@/features/goodTime/GoodTimeQuality';
+import GoodTimeQuality from '@/mondosurf-library/components/GoodTimeQuality';
 import Icon from '@/mondosurf-library/components/Icon';
 import { directionIsWithinRange } from '@/mondosurf-library/helpers/forecast.helpers';
 import { ISurfForecastRow } from '@/mondosurf-library/modelStrict/iSurfSpot';
