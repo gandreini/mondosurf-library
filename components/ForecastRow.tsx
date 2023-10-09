@@ -1,11 +1,13 @@
-import { ISurfForecastRow } from '@/mondosurf-library/modelStrict/iSurfSpot';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+
 import GoodTimeQuality from '@/features/goodTime/GoodTimeQuality';
 import Icon from '@/mondosurf-library/components/Icon';
-import DirectionArrow from './DirectionArrow';
 import { directionIsWithinRange } from '@/mondosurf-library/helpers/forecast.helpers';
+import { ISurfForecastRow } from '@/mondosurf-library/modelStrict/iSurfSpot';
+
+import DirectionArrow from './DirectionArrow';
 
 interface IForecastRow {
     row: ISurfForecastRow;
