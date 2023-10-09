@@ -1,5 +1,4 @@
-import Icon from '@/mondosurf-library/components/Icon';
-import { mondoTranslate } from '@/helpers/translations.helper';
+import Icon from '../components/Icon';
 
 interface IGoodTimeQuality {
     quality: number;
