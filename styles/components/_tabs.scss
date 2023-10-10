@@ -64,15 +64,20 @@
    #LOADING
 \* ------------------------------------ */
 .ms-tabs.is-loading {
-    height: $tab-height - $space;
-    margin-left: $space * 1.5;
+    height: $tab-height;
     cursor: default;
     pointer-events: none;
+    display: flex;
+    align-items: center;
 
     .ms-tabs__items {
+        flex-grow: 1;
         @include loading-effect;
-        height: $space * 3;
-        max-width: 200px;
+        height: $space * 1.5;
+        max-width: 140px;
+        margin: 0 $space * 2;
+        background-color: transparent;
+        border-bottom: transparent;
     }
 
     .ms-tabs__link {
