@@ -257,24 +257,6 @@
     flex-direction: column;
     padding-bottom: 0;
 
-    .ms-surf-spot__title {
-        height: 36px;
-        width: 200px;
-        @include loading-effect;
-        text-indent: -9999px;
-    }
-
-    .ms-tabs.is-loading {
-        margin-left: $space * 2;
-    }
-
-    .ms-tabs__content {
-        flex-grow: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .ms-surf-spot__near-spots,
     .ms-surf-spot__video {
         flex-grow: 1;

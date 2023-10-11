@@ -28,9 +28,9 @@
 
 /* .ms-content-wrapper {
     position: relative;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     // border: 2px solid pink;
 } */
 
@@ -45,6 +45,15 @@
     //padding: calc(#{$space} * 1.5 + var(--ios-status-bar-margin)) 0 $space * 1.5
     //     0; // iOS spacing.
     // border: 2px solid aqua;
+}
+
+.ms-mobile-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 $space * 2 0; // iOS spacing.
+    width: 100%;
 }
 
 /* ------------------------------------ *\

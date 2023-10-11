@@ -40,6 +40,22 @@
 }
 
 /* ------------------------------------ *\
+    #LOADING
+\* ------------------------------------ */
+.ms-page-title.is-loading {
+    .ms-page-title__icon-wrapper {
+        height: 24px;
+        width: 24px;
+        @include loading-effect;
+    }
+    .ms-page-title__flag-title-wrapper {
+        height: 24px;
+        width: 140px;
+        @include loading-effect;
+    }
+}
+
+/* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
