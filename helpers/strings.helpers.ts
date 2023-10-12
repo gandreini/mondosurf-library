@@ -24,7 +24,7 @@ export const stringToBool = (stringToConvert: string): boolean => {
 export function truncateTextAfterNCharacters(text: string, characters: number): string {
     let stringToReturn: string = text;
     if (text.length > characters) {
-        stringToReturn = text.substr(0, characters) + '...';
+        stringToReturn = text.slice(0, characters) + '...';
     }
     return stringToReturn;
 }
