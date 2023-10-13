@@ -4,7 +4,7 @@ import utc from 'dayjs/plugin/utc';
 
 import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "../constants/constants";
 import IGoodTime from "../model/iGoodTime";
-import { ISurfSpotForecast } from "../model/iSurfSpot";
+import { ISurfSpotForecast } from "../modelStrict/iSurfSpot";
 import { store } from "../redux/store";
 import { cloneObject } from "./object.helpers";
 
@@ -102,6 +102,7 @@ export const limitGoodTimesToDaysRange = (goodTimes: IGoodTime[]): IGoodTime[] =
     if (!goodTimes || goodTimes.length === 0) {
         return [];
     } else {
+        // eslint-disable-next-line array-callback-return
         return goodTimes.filter((goodTime: IGoodTime) => {
             const startOfRange = dayjs(); // Current time, returns Day.js object
             const endOfRange = dayjs().tz(goodTime.timezone).startOf('day').add(forecastDays(), 'd'); // Returns Day.js object
