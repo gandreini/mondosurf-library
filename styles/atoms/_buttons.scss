@@ -105,7 +105,24 @@
         width: 100%;
     }
 
-    // Fluid height.
+    // Multiline
+    &.ms-btn-multiline {
+        flex-direction: column;
+        height: auto;
+        padding-top: $space * 1;
+        padding-bottom: $space * 1;
+
+        span:first-child {
+            margin-bottom: $space * 0.5;
+            font-size: $font-size-l-fluid;
+        }
+        span:last-child {
+            font-size: $font-size-xs-fluid;
+            font-weight: $font-weight-normal;
+        }
+    }
+
+    // ! DEPRECATED! Use ms-btn-multiline instead
     &.ms-btn-fluid {
         height: auto;
         padding-top: $space * 1;
