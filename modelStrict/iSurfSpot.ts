@@ -17,6 +17,8 @@ export interface ISurfSpot {
     last_update: number;
     lat: number;
     lng: number;
+    lat_parking?: number;
+    lng_parking?: number;
     description?: string;
     timezone: string;
     calendar_url: string;

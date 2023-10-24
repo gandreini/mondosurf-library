@@ -25,6 +25,11 @@ $mapToolHeight: 600px;
         margin-bottom: $space;
     }
 
+    .ms-btn.is-active {
+        border: 2px solid var(--color-first);
+        color: var(--color-first);
+    }
+
     &__tools {
         position: relative;
     }
