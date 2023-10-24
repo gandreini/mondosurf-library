@@ -1,4 +1,4 @@
-import { COLOR_VARIABLES } from '@/mondosurf-library/constants/colorVariables';
+import { COLOR_VARIABLES } from '../constants/colorVariables';
 
 interface IDirectionArrow {
     direction: number;

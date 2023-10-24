@@ -8,7 +8,8 @@
     #SURF SPOT NEAR SPOTS
 \* ------------------------------------ */
 .ms-surf-spot-near-spots {
-    flex-grow: 1;
+    padding: $space * 2 0;
+    // flex-grow: 1;
     display: flex;
 
     &__results {

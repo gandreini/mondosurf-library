@@ -17,7 +17,8 @@
     // Main content.
     &__main-content {
         display: flex;
-        flex-grow: 10;
+        flex-direction: column;
+        flex-grow: 1;
         max-width: $page-max-width;
         width: 100%;
         margin: 0 auto;
