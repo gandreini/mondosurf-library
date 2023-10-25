@@ -1,6 +1,6 @@
 import ChartDirectionMini from '../components/ChartDirectionMini';
 import { COLOR_VARIABLES } from '../constants/colorVariables';
-import { readableDirectionFromDegrees } from '../helpers/surfSpot.helpers';
+import { getDirectionsInRange } from '../helpers/surfSpot.helpers';
 
 interface ISurfSpotDirection {
     min: number;
@@ -21,16 +21,17 @@ const SurfSpotDirection: React.FC<ISurfSpotDirection> = (props: ISurfSpotDirecti
         <div className={`ms-surf-spot-direction ms-surf-spot-direction-${props.type}`}>
             <div className="ms-surf-spot-direction__chart">
                 <ChartDirectionMini
-                    direction={readableDirectionFromDegrees(props.min, props.max)}
+                    direction={getDirectionsInRange(props.min, props.max)}
                     directionColor={returnDirectionColor()}
                 />
             </div>
             <div className="ms-surf-spot-direction__text">
                 {!props.hideLabel && <div className="ms-surf-spot-direction__label">{props.label}</div>}
                 <div className="ms-surf-spot-direction__value">
-                    {readableDirectionFromDegrees(props.min, props.max).join(', ')}
+                    {getDirectionsInRange(props.min, props.max).join(', ')}
                 </div>
             </div>
+            <small>{props.min + ', ' + props.max}</small>
         </div>
     );
 };

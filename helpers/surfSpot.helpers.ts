@@ -1,3 +1,5 @@
+import { removeDuplicatesFromArray } from "./arrays.helpers";
+
 /**
  * Returns an array of the directions strings (given a string like "SW-W-NW")
  * 
@@ -104,6 +106,63 @@ const findDirectionOctantIndex = (degrees: number): number => {
         return 7;
     }
     return 0;
+}
+
+/**
+ * Returns an array of cardinal direction acronyms based on a given degree range.
+ * 
+ * @param minDegrees - The starting degree of the range (inclusive).
+ * @param maxDegrees - The ending degree of the range (inclusive).
+ * 
+ * @remarks
+ * - The function handles cases where `minDegrees` is greater than `maxDegrees`, indicating the range spans across the 0-degree point.
+ * - The returned directions are based on the 8 cardinal points: N, NE, E, SE, S, SW, W, NW.
+ * - Degrees should be provided in the range [0, 360). However, the function normalizes values outside this range.
+ * 
+ * @returns An array of direction acronyms that fall within the specified degree range.
+ * 
+ * @example
+ * ```typescript
+ * const directions = getDirectionsInRange(315, 45); // Returns ['N', 'NE', 'NW']
+ * ```
+ */
+export const getDirectionsInRange = (minDegrees: number, maxDegrees: number): string[] => {
+    // Normalize degrees to handle cases where degrees are below 0 or above 360
+    minDegrees = ((minDegrees % 360) + 360) % 360;
+    maxDegrees = ((maxDegrees % 360) + 360) % 360;
+
+    const directionRanges = [
+        { degrees: 0, dir: 'N' },
+        { degrees: 360, dir: 'N' },
+        { degrees: 45, dir: 'NE' },
+        { degrees: 90, dir: 'E' },
+        { degrees: 135, dir: 'SE' },
+        { degrees: 180, dir: 'S' },
+        { degrees: 225, dir: 'SW' },
+        { degrees: 270, dir: 'W' },
+        { degrees: 315, dir: 'NW' }
+    ];
+
+    const directions: string[] = [];
+
+    directionRanges.forEach((range) => {
+        if (minDegrees < maxDegrees) {
+            if (
+                (minDegrees <= range.degrees && maxDegrees >= range.degrees)
+            ) {
+                directions.push(range.dir);
+            }
+        } else if (minDegrees > maxDegrees) {
+            if (
+                // ((minDegrees <= 360 && minDegrees >= range.degrees) || (maxDegrees <= range.degrees && maxDegrees >= 0))
+                ((range.degrees >= minDegrees && range.degrees <= 360) || (range.degrees >= 0 && range.degrees <= maxDegrees))
+            ) {
+                directions.push(range.dir);
+            }
+        }
+    });
+
+    return removeDuplicatesFromArray(directions)
 }
 
 /**

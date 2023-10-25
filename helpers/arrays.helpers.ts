@@ -62,3 +62,21 @@ export const removeFirstAndLastItem = <T>(array: T[]): T[] => {
     if (array === undefined) array = [];
     return array.slice(1, array.length - 1);
 }
+
+/**
+ * Removes duplicate values from an array.
+ *
+ * @param {T[]} arr - The array from which to remove duplicates.
+ * @returns {T[]} A new array with duplicates removed.
+ * @template T - The type of elements in the array.
+ */
+export const removeDuplicatesFromArray = <T>(arr: T[]): T[] => {
+    // Creating a Set automatically removes duplicates, as sets only allow unique values.
+    const uniqueSet: Set<T> = new Set(arr);
+
+    // Convert the Set back to an array.
+    const uniqueArray: T[] = Array.from(uniqueSet);
+
+    return uniqueArray;
+}
+
