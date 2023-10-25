@@ -4,12 +4,14 @@ interface IGoodTimeQuality {
     quality: number;
     night?: boolean;
     vertical?: boolean;
+    hideLabel?: boolean;
+    size?: 's' | 'm';
 }
 
 const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
     return (
         <div
-            className={`ms-good-time-quality ms-good-time-quality-${props.quality} ${
+            className={`ms-good-time-quality ms-good-time-quality-${props.quality} ms-good-time-quality-${props.size} ${
                 props.vertical && 'ms-good-time-quality-vertical'
             }`}>
             {/* -1 */}
@@ -29,9 +31,11 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                         <Icon icon={'star'} />
                         <Icon icon={'star'} />
                     </div>
-                    <div className="ms-good-time-quality__text">
-                        <span className="ms-good-time-quality__text">Poor</span>
-                    </div>
+                    {props.hideLabel !== true && (
+                        <div className="ms-good-time-quality__text">
+                            <span className="ms-good-time-quality__text">Poor</span>
+                        </div>
+                    )}
                 </>
             )}
 
@@ -43,7 +47,7 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                         <Icon icon={'star'} />
                         <Icon icon={'star'} />
                     </div>
-                    <div className="ms-good-time-quality__text">Good</div>
+                    {props.hideLabel !== true && <div className="ms-good-time-quality__text">Good</div>}
                 </>
             )}
 
@@ -55,7 +59,7 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                         <Icon icon={'star'} />
                         <Icon icon={'star'} />
                     </div>
-                    <div className="ms-good-time-quality__text">Very good</div>
+                    {props.hideLabel !== true && <div className="ms-good-time-quality__text">Very good</div>}
                 </>
             )}
 
@@ -67,7 +71,7 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                         <Icon icon={'star'} />
                         <Icon icon={'star'} />
                     </div>
-                    <div className="ms-good-time-quality__text">Epic</div>
+                    {props.hideLabel !== true && <div className="ms-good-time-quality__text">Epic</div>}
                 </>
             )}
         </div>

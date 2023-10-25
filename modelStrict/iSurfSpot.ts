@@ -49,6 +49,7 @@ export interface ISurfSpot {
     hide_secondary_swell?: boolean;
     spot_forecast?: ISurfSpotForecast;
     daily_forecast?: ISurfSpotDailyForecast;
+    forecast_conditions_swell_best_direction?: number;
     forecast_conditions_swell_direction_min: number;
     forecast_conditions_swell_direction_max: number;
     forecast_conditions_swell_height_min: number;

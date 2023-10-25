@@ -8,13 +8,14 @@
    #TEST FORECAST
 \* ------------------------------------ */
 .ms-test-forecast {
-    padding-bottom: $space*10;
+    padding-bottom: $space * 10;
 
     &__table {
         width: auto;
-        margin-bottom: $space*3;
+        margin-bottom: $space * 3;
 
-        td, th {
+        td,
+        th {
             padding: $space;
         }
 
@@ -23,13 +24,13 @@
             font-size: $font-size-s;
         }
 
-        input[type="number"] {
+        input[type='number'] {
             max-width: 80px;
         }
     }
 
     &__button {
-        margin-bottom: $space*3;
+        margin-bottom: $space * 3;
     }
 
     &__results {
@@ -44,7 +45,7 @@
 
         .ms-loader {
             display: block;
-            padding: $space*1.5;
+            padding: $space * 1.5;
         }
 
         .ms-test-forecast__result-text {
@@ -67,7 +68,7 @@
         .ms-test-forecast__result {
             .forecast_test_0 {
                 &:before {
-                    background-color: var(--color-forecast-possible);
+                    background-color: var(--color-forecast-poor);
                 }
             }
             .forecast_test_1 {
@@ -98,4 +99,3 @@
         }
     }
 }
-
