@@ -104,6 +104,14 @@ $mapToolHeight: 600px;
         gap: $space * 2;
     }
 
+    &__form-quality-preview {
+        padding-top: 22px;
+    }
+
+    &__form-quality-preview-line {
+        display: flex;
+    }
+
     // Ai form
     &__ai-text-form {
         form {
