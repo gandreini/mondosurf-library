@@ -43,6 +43,13 @@
     }
 }
 
+.ms-good-time-quality-0 {
+    .mondo-icon-star:nth-child(1) {
+        -webkit-text-stroke: 1px var(--color-forecast-poor);
+        text-stroke: 1px var(--color-forecast-poor);
+    }
+}
+
 .ms-good-time-quality-1 {
     .mondo-icon-star:nth-child(1) {
         color: var(--color-forecast-good);
@@ -67,6 +74,15 @@
         color: var(--color-forecast-epic);
         -webkit-text-stroke: 1px var(--color-forecast-epic);
         text-stroke: 1px var(--color-forecast-epic);
+    }
+}
+
+/* ------------------------------------ *\
+   #SMALL
+\* ------------------------------------ */
+.ms-good-time-quality.ms-good-time-quality-s {
+    .mondo-icon {
+        font-size: $font-size-m;
     }
 }
 

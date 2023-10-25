@@ -25,6 +25,11 @@ $mapToolHeight: 600px;
         margin-bottom: $space;
     }
 
+    .ms-btn.is-active {
+        border: 2px solid var(--color-first);
+        color: var(--color-first);
+    }
+
     &__tools {
         position: relative;
     }
@@ -97,6 +102,14 @@ $mapToolHeight: 600px;
         display: flex;
         flex-direction: column;
         gap: $space * 2;
+    }
+
+    &__form-quality-preview {
+        padding-top: 22px;
+    }
+
+    &__form-quality-preview-line {
+        display: flex;
     }
 
     // Ai form

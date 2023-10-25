@@ -72,7 +72,7 @@
     }
 
     &__button.is-good-0 {
-        background-color: var(--color-forecast-possible);
+        background-color: var(--color-forecast-poor);
     }
 
     &__button.is-good-1 {
@@ -114,7 +114,9 @@
 
         &__button.is-active {
             font-weight: $font-weight-bold;
-            box-shadow: 0 0 0 1px $color-background-base, 0 0 0 2px $color-background-dark;
+            box-shadow:
+                0 0 0 1px $color-background-base,
+                0 0 0 2px $color-background-dark;
         }
 
         &.is-visible {
