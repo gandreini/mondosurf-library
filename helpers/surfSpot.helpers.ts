@@ -47,9 +47,22 @@ export const sumDegrees = (currentDegrees: number, amountToAdd: number): number 
     return Math.round(newDegrees);
 }
 
-// ! TODO Include the cases when the min/maxDegrees includes the exact directions (90, 135, 180...)
-// ! TODO Write comment
-// max = exact direction
+/**
+ * Converts a range of degrees into a readable list of cardinal and intercardinal directions.
+ * 
+ * This function takes a minimum and maximum degree value, normalizes them within the 0 to 360-degree range, 
+ * and returns a list of directions that fall within this range. The directions are derived based on standard 
+ * cardinal and intercardinal points (N, NE, E, SE, S, SW, W, NW).
+ * 
+ * The function identifies the octant (45-degree sector) in which each degree parameter falls and compiles 
+ * a list of all directions from the starting octant to the ending one. If the range crosses the 0-degree point, 
+ * the function correctly handles the wraparound.
+ * 
+ * @param minDegrees - The starting degree of the range (inclusive). Values outside the 0-360 range will be normalized.
+ * @param maxDegrees - The ending degree of the range (inclusive). Values outside the 0-360 range will be normalized.
+ * @returns An array of strings representing the cardinal and intercardinal directions within the specified degree range.
+ * 
+ */
 export const readableDirectionFromDegreesRange = (minDegrees: number, maxDegrees: number): string[] => {
     // Array to return
     let returnArray = [];
@@ -91,7 +104,21 @@ export const readableDirectionFromDegreesRange = (minDegrees: number, maxDegrees
     return returnArray;
 }
 
-// ! TODO Write comment
+/**
+ * Determines the octant in which a specific direction falls.
+ * 
+ * This function is designed to identify the octant (a 45-degree sector) that a given direction degree falls into. 
+ * It's based on a predefined set of octants, each representing a cardinal or intercardinal direction (N, NE, E, SE, etc.).
+ * Each octant is defined by a minimum and maximum degree value, indicating its range.
+ * 
+ * The function iterates through the list of octants and returns the index of the octant where the specified degree fits.
+ * Special case handling is done for 0 degrees, which is considered to fall into the last octant (index 7, representing NW to N).
+ * 
+ * @param direction - The degree (from 0 to 360) representing the direction we are checking. It's assumed to be normalized within this range.
+ * @param octants - An array of objects, each representing an octant. Each object should have 'minDegrees' and 'maxDegrees' properties defining the octant's range.
+ * @returns The index (0-based) of the octant in which the 'direction' falls. Returns 0 as a fallback, though standard usage should never hit this case.
+ * 
+ */
 const returnDirectionOctant = (direction: number, octants: any[]): number => {
     // Case direction = 0
     if (direction === 0) return 7;
@@ -99,7 +126,7 @@ const returnDirectionOctant = (direction: number, octants: any[]): number => {
     for (let i: number = 0; i < octants.length; i++) {
         if (direction > octants[i].minDegrees && direction <= octants[i].maxDegrees) return i;
     }
-    // Fallback, should never go here
+    // Fallback, should never go here!
     return 0;
 }
 
