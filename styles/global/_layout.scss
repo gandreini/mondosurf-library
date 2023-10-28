@@ -21,7 +21,7 @@
     flex-grow: 2;
     z-index: $z-index-ms;
     margin-bottom: var(--tab-bar-height);
-    overflow-y: auto;
+    // overflow-y: auto;
     background-color: $color-background-base;
     // border: 2px solid gold;
 }
