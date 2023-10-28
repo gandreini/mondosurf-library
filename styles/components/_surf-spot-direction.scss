@@ -29,6 +29,16 @@
         @include font-size('xxs');
     }
 
+    &__text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__small-text {
+        color: var(--color-text-light);
+        font-size: $font-size-xxxs-fluid;
+    }
+
     &__value {
         color: var(--color-text-light);
         @include font-size('xs');

@@ -33,12 +33,88 @@ export const returnReadableArray = (arrayToConvert: string[] | number[], functio
 }
 
 /**
+ * Adds a given amount to the current degrees and wraps the result to ensure it's between 0 and 359.
+ * 
+ * @param currentDegrees - The current degree value (should be between 0 and 359).
+ * @param amountToAdd - The amount of degrees to add (can be negative to subtract).
+ * @returns The new degree value wrapped between 0 and 359.
+ */
+export const sumDegrees = (currentDegrees: number, amountToAdd: number): number => {
+    let newDegrees = (currentDegrees + amountToAdd) % 360;
+    if (newDegrees < 0) {
+        newDegrees += 360;  // Ensure it's positive
+    }
+    return Math.round(newDegrees);
+}
+
+// ! TODO Include the cases when the min/maxDegrees includes the exact directions (90, 135, 180...)
+// ! TODO Write comment
+// max = exact direction
+export const readableDirectionFromDegreesRange = (minDegrees: number, maxDegrees: number): string[] => {
+    // Array to return
+    let returnArray = [];
+
+    // Normalize degrees to handle cases where degrees are below 0 or above 360
+    minDegrees = ((minDegrees % 360) + 360) % 360;
+    maxDegrees = ((maxDegrees % 360) + 360) % 360;
+
+    // Definitions of the various sectors/octants
+    const octants = [
+        { minDegrees: 0, maxDegrees: 45, startDirection: "N", endDirection: "NE" },
+        { minDegrees: 45, maxDegrees: 90, startDirection: "NE", endDirection: "E" },
+        { minDegrees: 90, maxDegrees: 135, startDirection: "E", endDirection: "SE" },
+        { minDegrees: 135, maxDegrees: 180, startDirection: "SE", endDirection: "S" },
+        { minDegrees: 180, maxDegrees: 225, startDirection: "S", endDirection: "SW" },
+        { minDegrees: 225, maxDegrees: 270, startDirection: "SW", endDirection: "W" },
+        { minDegrees: 270, maxDegrees: 315, startDirection: "W", endDirection: "NW" },
+        { minDegrees: 315, maxDegrees: 360, startDirection: "NW", endDirection: "N" }
+    ]
+
+    // Finds the octant for the min degrees
+    const minDegreesOctant = returnDirectionOctant(minDegrees, octants);
+    let degreesIncreased = sumDegrees(minDegrees, 45);
+    returnArray.push(octants[minDegreesOctant].endDirection);
+
+    // Rearranges the array, so that the minDegreesOctant is removed, and the following one is the first
+    const rearrangedOctants = octants.slice(minDegreesOctant + 1).concat(octants.slice(0, minDegreesOctant));
+
+    // Loops the rearranged octants
+    for (let i = 0; i < rearrangedOctants.length; i++) {
+        // Break when we are in the octant of the max degrees
+        if (maxDegrees < rearrangedOctants[i].maxDegrees &&
+            maxDegrees >= rearrangedOctants[i].minDegrees) break;
+
+        returnArray.push(rearrangedOctants[i].endDirection);
+        degreesIncreased = sumDegrees(degreesIncreased, 45);
+    }
+
+    return returnArray;
+}
+
+// ! TODO Write comment
+const returnDirectionOctant = (direction: number, octants: any[]): number => {
+    // Case direction = 0
+    if (direction === 0) return 7;
+
+    for (let i: number = 0; i < octants.length; i++) {
+        if (direction > octants[i].minDegrees && direction <= octants[i].maxDegrees) return i;
+    }
+    // Fallback, should never go here
+    return 0;
+}
+
+// ---
+
+
+/**
  * Returns an array of readable directions (i.e. "NW", "N", "NE") given a range in degrees with a min and max.
  *
  * @param   {number} degreesFrom Degrees start of the range.
  * @param   {number} degreesTo Degrees end of the range.
  * @returns {string[]} Array of strings picked from: "N", "NE", "E", "SE", "S", "SW", "W", "NW".
  */
+/* 
+// DEPRECATED
 export const readableDirectionFromDegrees = (degreesFrom: number, degreesTo: number): string[] => {
     const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
     const indexStart = findDirectionOctantIndex(degreesFrom);
@@ -79,7 +155,7 @@ export const readableDirectionFromDegrees = (degreesFrom: number, degreesTo: num
         }
     }
     return returnArray;
-}
+} */
 
 /**
  * Returns the octant index (0 to 7) of a given direction in degrees.
@@ -87,6 +163,8 @@ export const readableDirectionFromDegrees = (degreesFrom: number, degreesTo: num
  * @param   {number} degrees A direction in degrees.
  * @returns {number} The ID of the octant, where "N" is 0, "NE" is 1, "E" is 2...
  */
+/*
+// DEPRECATED
 const findDirectionOctantIndex = (degrees: number): number => {
     if ((degrees > 337.5 && degrees <= 360) || (degrees >= 0 && degrees <= 22.5)) {
         return 0;
@@ -107,75 +185,4 @@ const findDirectionOctantIndex = (degrees: number): number => {
     }
     return 0;
 }
-
-/**
- * Returns an array of cardinal direction acronyms based on a given degree range.
- * 
- * @param minDegrees - The starting degree of the range (inclusive).
- * @param maxDegrees - The ending degree of the range (inclusive).
- * 
- * @remarks
- * - The function handles cases where `minDegrees` is greater than `maxDegrees`, indicating the range spans across the 0-degree point.
- * - The returned directions are based on the 8 cardinal points: N, NE, E, SE, S, SW, W, NW.
- * - Degrees should be provided in the range [0, 360). However, the function normalizes values outside this range.
- * 
- * @returns An array of direction acronyms that fall within the specified degree range.
- * 
- * @example
- * ```typescript
- * const directions = getDirectionsInRange(315, 45); // Returns ['N', 'NE', 'NW']
- * ```
  */
-export const getDirectionsInRange = (minDegrees: number, maxDegrees: number): string[] => {
-    // Normalize degrees to handle cases where degrees are below 0 or above 360
-    minDegrees = ((minDegrees % 360) + 360) % 360;
-    maxDegrees = ((maxDegrees % 360) + 360) % 360;
-
-    const directionRanges = [
-        { degrees: 0, dir: 'N' },
-        { degrees: 360, dir: 'N' },
-        { degrees: 45, dir: 'NE' },
-        { degrees: 90, dir: 'E' },
-        { degrees: 135, dir: 'SE' },
-        { degrees: 180, dir: 'S' },
-        { degrees: 225, dir: 'SW' },
-        { degrees: 270, dir: 'W' },
-        { degrees: 315, dir: 'NW' }
-    ];
-
-    const directions: string[] = [];
-
-    directionRanges.forEach((range) => {
-        if (minDegrees < maxDegrees) {
-            if (
-                (minDegrees <= range.degrees && maxDegrees >= range.degrees)
-            ) {
-                directions.push(range.dir);
-            }
-        } else if (minDegrees > maxDegrees) {
-            if (
-                // ((minDegrees <= 360 && minDegrees >= range.degrees) || (maxDegrees <= range.degrees && maxDegrees >= 0))
-                ((range.degrees >= minDegrees && range.degrees <= 360) || (range.degrees >= 0 && range.degrees <= maxDegrees))
-            ) {
-                directions.push(range.dir);
-            }
-        }
-    });
-
-    return removeDuplicatesFromArray(directions)
-}
-
-/**
- * Adds a given amount to the current degrees and wraps the result to ensure it's between 0 and 359.
- * 
- * @param currentDegrees - The current degree value (should be between 0 and 359).
- * @param amountToAdd - The amount of degrees to add (can be negative to subtract).
- * @returns The new degree value wrapped between 0 and 359.
- */
-export const sumDegrees = (currentDegrees: number, amountToAdd: number): number => {
-    let newDegrees = (currentDegrees + amountToAdd) % 360;
-    if (newDegrees < 0) {
-        newDegrees += 360;  // Ensure it's positive
-    }
-    return Math.round(newDegrees);
-}
