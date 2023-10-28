@@ -148,10 +148,16 @@ $no-good-opacity: 0.6;
 \* ------------------------------------ */
 .ms-forecast-row {
     &.ms-forecast-row-quality-1 {
+        .ms-good-time-quality.ms-good-time-quality-vertical {
+            .ms-good-time-quality__text {
+                color: var(--color-text-light);
+            }
+        }
     }
     &.ms-forecast-row-quality0 {
         .ms-forecast-row__time {
-            background-color: $color-background-light;
+            // background-color: $color-background-light;
+            background-color: var(--color-forecast-poor);
         }
         .ms-forecast-row__time-label {
             color: var(--color-text-inverse);
