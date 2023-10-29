@@ -48,7 +48,7 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
     // Current day in timezone at 00:00: day to start the forecast from.
     const startDayInTimezone = dayjs().tz(spotTimezone).startOf('day');
 
-    // Days: Id of the current day in timezone (in the "days" array).
+    // Days/Compressed Days: Id of the current day in timezone (in the "days" and "compressed days" arrays).
     let firstDayId = 0;
     clonedForecastData.days.forEach((day, index) => {
         if (day.time === startDayInTimezone.format()) {
@@ -56,28 +56,27 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
         }
     });
 
-    // Days: cuts the days before the current day, and those after the given number of days.
+    // Days: cuts the days before the current day, and those after the given number of days (both for "days" and "compressed days")
     clonedForecastData.days = clonedForecastData.days.slice(firstDayId, days + firstDayId);
+    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId, days + firstDayId);
 
     // Compressed days: Id of the hour corresponding to the current day in timezone (in the "compressed_days.hours" array).
-    let firstCompressedHourId = 0;
-    // ! Retro-compatibility notice: compressed_days.hours breaks the app if flat data is not retrieved.
-    clonedForecastData.compressed_days.hours.forEach((hour, index) => {
+    /* clonedForecastData.compressed_days.hours.forEach((hour, index) => {
         if (hour === startDayInTimezone.format()) {
             firstCompressedHourId = index;
         }
     });
-    const lastCompressedHourId = firstCompressedHourId + (days * 4); // Last hour of the compressed days. "4" in the number of hours per compressed day.
+    const lastCompressedHourId = firstCompressedHourId + (days * 4); // Last hour of the compressed days. "4" in the number of hours per compressed day. */
 
     // Actual slice of the compressed_days arrays.
-    clonedForecastData.compressed_days.hours = clonedForecastData.compressed_days.hours.slice(firstCompressedHourId, lastCompressedHourId);
+    /* clonedForecastData.compressed_days.hours = clonedForecastData.compressed_days.hours.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.is_good = clonedForecastData.compressed_days.is_good.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.is_light = clonedForecastData.compressed_days.is_light.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.swell_direction = clonedForecastData.compressed_days.swell_direction.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.swell_height = clonedForecastData.compressed_days.swell_height.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.swell_period = clonedForecastData.compressed_days.swell_period.slice(firstCompressedHourId, lastCompressedHourId);
     clonedForecastData.compressed_days.wind_direction = clonedForecastData.compressed_days.wind_direction.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.wind_speed = clonedForecastData.compressed_days.wind_speed.slice(firstCompressedHourId, lastCompressedHourId);
+    clonedForecastData.compressed_days.wind_speed = clonedForecastData.compressed_days.wind_speed.slice(firstCompressedHourId, lastCompressedHourId); */
 
     // Good times.
     const periodEnd = startDayInTimezone.add(days, 'd');
