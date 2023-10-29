@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import ISurfSpotPreview from '../modelStrict/iSurfSpotPreview';
 
 export interface IUserSliceValue {
     logged: 'yes' | 'no' | 'checking';
@@ -12,6 +13,7 @@ export interface IUserSliceValue {
     authorizedTracking: boolean;
     registrationDate: number;
     favoriteSpotsIds: number[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
+    favoriteSpots: ISurfSpotPreview[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
     timezoneId: string;
     timezoneUTC: number | null;
     timezoneDST: number | null;
@@ -40,6 +42,7 @@ const initialState: IUserSliceValue = {
     authorizedTracking: true,
     registrationDate: -1,
     favoriteSpotsIds: null,
+    favoriteSpots: null,
     timezoneId: '',
     timezoneUTC: null,
     timezoneDST: null,
@@ -100,6 +103,13 @@ export const userSlice = createSlice({
                 return { ...state, favoriteSpotsIds: action.payload };
             } else {
                 return { ...state, favoriteSpotsIds: [] };
+            }
+        },
+        setFavoriteSpots: (state, action) => {
+            if (action.payload && action.payload != null && Array.isArray(action.payload) && action.payload.length > 0) {
+                return { ...state, favoriteSpots: action.payload };
+            } else {
+                return { ...state, favoriteSpots: [] };
             }
         },
         setTimezoneId: (state, action) => {
@@ -192,6 +202,7 @@ export const { setLogin,
     setAuthorizedTracking,
     setRegistrationDate,
     setFavoriteSpotsIds,
+    setFavoriteSpots,
     setTimezoneId,
     setTimezoneUTC,
     setTimezoneDST,
