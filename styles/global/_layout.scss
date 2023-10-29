@@ -20,7 +20,8 @@
     flex-direction: column;
     flex-grow: 2;
     z-index: $z-index-ms;
-    margin-bottom: var(--tab-bar-height);
+    // margin-bottom: var(--tab-bar-height);
+    padding-bottom: var(--tab-bar-height);
     // overflow-y: auto;
     background-color: $color-background-base;
     // border: 2px solid gold;
@@ -52,7 +53,8 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 var(--tab-bar-height) 0; // iOS spacing.
+    // margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 var(--tab-bar-height) 0; // iOS spacing.
+    margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 0 0; // iOS spacing.
     width: 100%;
 }
 
