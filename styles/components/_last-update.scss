@@ -9,7 +9,11 @@
 \* ------------------------------------ */
 .ms-last-update {
     display: flex;
-    gap: $space;
+    gap: $space * 1;
+    // flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     &__last-update {
         // display: inline;
         white-space: nowrap;
@@ -22,12 +26,12 @@
     }
     &__label {
         font-weight: $font-weight-bold;
-        font-size: $font-size-xs-fluid;
-        color: var(--color-text);
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-light);
     }
     &__value {
-        font-size: $font-size-xs-fluid;
-        color: var(--color-text);
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-light);
     }
 }
 
