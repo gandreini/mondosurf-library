@@ -58,6 +58,11 @@
             cursor: default;
         }
     }
+
+    &__link:not(.is-disabled):hover {
+        color: var(--color-first);
+        border-bottom: 3px solid var(--color-first);
+    }
 }
 
 /* ------------------------------------ *\
