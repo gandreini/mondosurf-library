@@ -8,7 +8,9 @@ import { removeItemFromArray } from './arrays.helpers';
  * @param   {string} value Value of the parameter to be saved.
  */
 export function setLocalStorageDataWeb(key: string, value: string): void {
-    localStorage.setItem(key, value);
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(key, value);
+    }
 }
 
 /**
@@ -18,7 +20,9 @@ export function setLocalStorageDataWeb(key: string, value: string): void {
  * @param   {string} key Key of the parameter to be deleted.
  */
 export function deleteLocalStorageDataWeb(key: string): void {
-    localStorage.removeItem(key);
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem(key);
+    }
 }
 
 /**
@@ -28,7 +32,10 @@ export function deleteLocalStorageDataWeb(key: string): void {
  * @returns {string | null} Value of the data.
  */
 export function getLocalStorageDataWeb(key: string): string | null {
-    return localStorage.getItem(key);
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem(key);
+    }
+    return null;
 }
 
 /**
@@ -38,22 +45,24 @@ export function getLocalStorageDataWeb(key: string): string | null {
  * @param   {string} spotId Id of the spot.
  */
 export const addViewedSpotToLocalStorageWeb = (spotId: string): void => {
-    let visitedSpots = getLocalStorageDataWeb('visitedSpots');
-    let visitedSpotsArray: string[] = [];
+    if (typeof window !== 'undefined') {
+        let visitedSpots = getLocalStorageDataWeb('visitedSpots');
+        let visitedSpotsArray: string[] = [];
 
-    if (visitedSpots !== null) {
-        visitedSpotsArray = visitedSpots.split(',');
+        if (visitedSpots !== null) {
+            visitedSpotsArray = visitedSpots.split(',');
+        }
+
+        // Remove the spotId if already in the array.
+        removeItemFromArray(visitedSpotsArray, spotId);
+
+        // Adds the new spot id.
+        const lastSpotId = [spotId];
+        visitedSpotsArray = lastSpotId.concat(visitedSpotsArray);
+
+        // Max number of items is 10.
+        visitedSpotsArray = visitedSpotsArray.slice(0, 10);
+
+        setLocalStorageDataWeb('visitedSpots', visitedSpotsArray.toString())
     }
-
-    // Remove the spotId if already in the array.
-    removeItemFromArray(visitedSpotsArray, spotId);
-
-    // Adds the new spot id.
-    const lastSpotId = [spotId];
-    visitedSpotsArray = lastSpotId.concat(visitedSpotsArray);
-
-    // Max number of items is 10.
-    visitedSpotsArray = visitedSpotsArray.slice(0, 10);
-
-    setLocalStorageDataWeb('visitedSpots', visitedSpotsArray.toString())
 }
