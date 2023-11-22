@@ -144,12 +144,12 @@ export const directionIsWithinRange = (direction: number, min: number, max: numb
 }
 
 /**
- * Calculate the time span (in minutes) to the next forecast update.
+ * Calculate the time span (in seconds) to the next forecast update.
  * 
- * This function determines the number of minutes remaining until the next forecast update
+ * This function determines the number of seconds remaining until the next forecast update
  * based on the current time in the Europe/Rome timezone and the predefined update hours.
  * 
- * @returns The number of minutes until the next forecast update.
+ * @returns The number of seconds until the next forecast update.
  */
 export function timeSpanToNextUpdate(): number {
     // Dayjs
