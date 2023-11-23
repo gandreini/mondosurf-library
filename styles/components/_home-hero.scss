@@ -160,8 +160,15 @@
         padding-left: $space * 10;
         padding-right: $space * 10;
 
-        &__ms {
+        &__ms-logo {
             display: none;
+        }
+
+        &__ms-copy {
+            span {
+                font-weight: $font-weight-normal;
+                opacity: 0.75;
+            }
         }
 
         &__content {
