@@ -16,4 +16,6 @@ export interface IAppConfig {
     automatic_trial: boolean;
     tutorial_video_url_google_cal: string;
     tutorial_video_url_apple_cal: string;
+    mixpanel_tracking_token?: string;
+    ga_measurement_id?: string;
 }
