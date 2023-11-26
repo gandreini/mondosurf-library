@@ -83,14 +83,9 @@ export class Tracker {
      */
     static identifyUser(userId: number) {
         if (Tracker.trackingIsActive()) {
-            console.log("Works till here");
-            console.log("userId", userId);
             const state = store.getState();
-            console.log("Works till here 2");
             const accountType = state.user.accountType;
-            console.log("Works till here 3");
             mixpanel.identify(userId.toString());
-            console.log("Works till here 4");
             mixpanel.people.set({ "$name": userId.toString(), "AccountType": accountType });
         }
     }
