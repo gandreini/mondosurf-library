@@ -84,6 +84,7 @@ export class Tracker {
     static identifyUser(userId: number) {
         if (Tracker.trackingIsActive()) {
             console.log("Works till here");
+            console.log("userId", userId);
             const state = store.getState();
             console.log("Works till here 2");
             const accountType = state.user.accountType;
