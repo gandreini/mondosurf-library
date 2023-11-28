@@ -22,6 +22,11 @@
         display: block;
         margin-bottom: $space * 2;
         width: 100%;
+
+        // Ionic
+        .sc-ion-input {
+            width: 100%;
+        }
     }
 
     &__input.ms-form__input-small {
