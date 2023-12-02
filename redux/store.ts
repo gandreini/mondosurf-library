@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import appConfigSlice from './appConfigSlice';
+import appStatusSlice from './appStatusSlice';
 import debugSlice from './debugSlice';
 import IAPProductsSlice from './IAPProductsSlice';
 import mapFiltersSlice from './mapFiltersSlice';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     units: unitsSlice,
     modalSlice: modalSlice,
     appConfig: appConfigSlice,
+    appStatus: appStatusSlice,
     user: userSlice,
     debug: debugSlice,
     IAPProducts: IAPProductsSlice
