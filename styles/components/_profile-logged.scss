@@ -64,6 +64,14 @@
         text-transform: none;
         font-size: $font-size-xxs;
     }
+
+    // App status
+    &__app-status {
+        padding-top: $space * 2;
+        border-top: 1px solid $color-border-light;
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-light);
+    }
 }
 
 /* ------------------------------------ *\
