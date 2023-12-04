@@ -15,18 +15,24 @@ export const stringToBool = (stringToConvert: string): boolean => {
 }
 
 /**
- * Truncates a given string after N characters.
+ * Truncates a given string after N characters at the last whitespace.
  * 
  * @param   {string} text Given string to truncate.
  * @param   {number} characters Number after how many characters to cut the string.
+ * @param   {boolean} truncateAtWhitespace Flag to truncate at the last whitespace before the limit.
  * @returns {string} Text cut after N characters.
  */
-export function truncateTextAfterNCharacters(text: string, characters: number): string {
-    let stringToReturn: string = text;
-    if (text.length > characters) {
-        stringToReturn = text.slice(0, characters) + '...';
+export function truncateTextAfterNCharacters(text: string, characters: number, truncateAtWhitespace: boolean = false): string {
+    if (text.length <= characters) {
+        return text;
     }
-    return stringToReturn;
+
+    if (truncateAtWhitespace) {
+        const lastSpace = text.lastIndexOf(' ', characters);
+        return lastSpace === -1 ? text.slice(0, characters) + '...' : text.slice(0, lastSpace) + '...';
+    } else {
+        return text.slice(0, characters) + '...';
+    }
 }
 
 /**
