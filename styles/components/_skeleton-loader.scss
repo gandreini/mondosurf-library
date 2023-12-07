@@ -1,0 +1,21 @@
+/**
+ * SKELETON LOADER
+ *
+ * Element displayed in loading state.
+ */
+
+/* ------------------------------------ *\
+    #SKELETON LOADER
+\* ------------------------------------ */
+.ms-skeleton-loader {
+    width: 100%;
+    height: 24px;
+    margin-bottom: $space * 2;
+    @include loading-effect;
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}
