@@ -77,16 +77,24 @@
 
     .ms-tabs__items {
         flex-grow: 1;
-        @include loading-effect;
-        height: $space * 1.5;
-        max-width: 140px;
-        margin: 0 $space * 2;
-        background-color: transparent;
-        border-bottom: transparent;
+    }
+
+    .ms-tabs__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        height: $tab-height;
+        border-bottom: 3px solid var(--color-gray-02);
     }
 
     .ms-tabs__link {
-        display: none;
+        @include loading-effect;
+        height: $space * 2;
+        width: 50px;
+        margin: 0 $space * 2;
+        background-color: transparent;
+        border-bottom: transparent;
     }
 }
 
