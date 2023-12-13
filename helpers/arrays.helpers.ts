@@ -80,3 +80,20 @@ export const removeDuplicatesFromArray = <T>(arr: T[]): T[] => {
     return uniqueArray;
 }
 
+/**
+ * Splits an array into groups the length of size.
+ * If array can't be split evenly, the final chunk will be the remaining elements.
+ *
+ * @param {T[]} array The array to process.
+ * @param {number} size The length of each chunk.
+ * @returns {T[][]} An array containing the chunks.
+ */
+export const chunkArray = <T>(array: T[], size: number): T[][] => {
+    const chunkedArr = [];
+    for (let i = 0; i < array.length; i += size) {
+        chunkedArr.push(array.slice(i, i + size));
+    }
+    return chunkedArr;
+}
+
+

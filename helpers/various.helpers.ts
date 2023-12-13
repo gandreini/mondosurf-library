@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 /**
  * Returns the value of a GET parameter,
  * null if the parameter is not set.
@@ -29,7 +27,7 @@ export function getUrlParameter(
 */
 export function hexToRGBA(hex: string, alpha: number): string {
 
-    hex = _.trimStart(hex, ' '); // Trim white space if it's there.
+    hex = hex.trim(); // Removes whitespace from both ends of this string
 
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -99,4 +97,22 @@ export const checkIfElementIsInView = (element: HTMLElement, paddingTop: number 
     // Partially visible elements return true:
     const isVisible = elemTop < (window.innerHeight) && elemBottom >= 0;
     return isVisible;
+}
+
+/**
+ * Generates a UUID (Universally Unique Identifier) in version 4 format.
+ * 
+ * The UUID is generated using random numbers and follows the format
+ * 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx', where 'x' is replaced with a 
+ * random hexadecimal digit and 'y' is replaced with a random hexadecimal 
+ * digit from the set {8, 9, A, or B}.
+ * 
+ * @returns A string representing a UUID v4.
+ */
+export const generateUUID = (): string => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
