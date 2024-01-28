@@ -1,0 +1,561 @@
+{
+  "modal": {
+    "want_to_exit_app": "",
+    "close_btn": "",
+    "exit_app_btn": ""
+  },
+  "auth": {
+    "welcome": "",
+    "errors": {
+      "error_login": "",
+      "error_registration": "",
+      "email_required": "",
+      "email_short": "",
+      "email_verify": "",
+      "password_required": "",
+      "password_short": "",
+      "name_required": "",
+      "name_short": "",
+      "register_terms_conditions_accept_required": ""
+    },
+    "password_reset_sent": "",
+    "form": {
+      "email": "",
+      "close": "",
+      "email_form_submit": "",
+      "forgot_password": "",
+      "password ": "",
+      "hide_password": "",
+      "show_password": "",
+      "login_back": "",
+      "login_form_submit": "",
+      "user_name": "",
+      "user_name_placeholder": "",
+      "register_terms_conditions": "",
+      "register_back": "",
+      "register_form_submit": "",
+      "password_reset_form_text": "",
+      "password_reset_form_submit": "",
+      "password_reset_back": "",
+      "password_reset_success_text": "",
+      "logged": "",
+      "register_terms_conditions_accept": ""
+    },
+    "modal_title": "",
+    "refresh_token": "",
+    "password_reset": {
+      "no_token": "",
+      "reset_password": "",
+      "repeat_password": "",
+      "password2_required": "",
+      "password2_short": "",
+      "passwords_dont_match": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "basics": {
+    "login": "",
+    "logout": "",
+    "regions": "",
+    "surf_spots": "",
+    "countries": "",
+    "home": "",
+    "map": "",
+    "search": "",
+    "load_more": "",
+    "you": "",
+    "bottom": "",
+    "swell": "",
+    "wind": "",
+    "selected_countries": "",
+    "all_countries": "",
+    "cancel": "",
+    "direction": "",
+    "select_not_set": "",
+    "list_empty": "",
+    "a_frame": "",
+    "a_frame_plural": "",
+    "right": "",
+    "right_plural": "",
+    "left": "",
+    "left_plural": "",
+    "height_meters": "",
+    "height_feet": "",
+    "speed_kph": "",
+    "speed_kn": "",
+    "temperature_c": "",
+    "temperature_f": "",
+    "best_months": "",
+    "water_temperature": "",
+    "air_temperature": "",
+    "swell_direction_height": "",
+    "direction_degrees": "",
+    "wind_direction_speed": "",
+    "spots_direction": "",
+    "spots_bottom": "",
+    "sand": "",
+    "sand_rocks": "",
+    "rocks": "",
+    "rocks_sand": "",
+    "coral_reef": "",
+    "coral_reef_sand": "",
+    "boulders": "",
+    "cobbles": "",
+    "period_seconds": "",
+    "swell_good_from": "",
+    "swell_good_till": "",
+    "swell_good_from_till": "",
+    "dawn": "",
+    "sunrise": "",
+    "sunset": "",
+    "dusk": "",
+    "from": "",
+    "to": "",
+    "meters": "",
+    "feet": "",
+    "mondo_surf_icon": "",
+    "profile": "",
+    "info": "",
+    "forecast": "",
+    "near_spots": "",
+    "videos": "",
+    "bottom_not_available": "",
+    "surfboard": "",
+    "experience": "",
+    "months": "",
+    "dismiss": ""
+  },
+  "api_errors": {
+    "email_required": "",
+    "password_required": "",
+    "access_token_required": "",
+    "access_token_not_decoded": "",
+    "deviceid_required": "",
+    "refresh_token_required": "",
+    "email_not_corresponding_to_user": "",
+    "corresponding_user_not_found": "",
+    "email_password_not_match": "",
+    "name_required": "",
+    "email_already_exist": "",
+    "username_already_exist": "",
+    "terms_required": "",
+    "error_registering_user": "",
+    "account_confirmation_token_required": "",
+    "account_disabled": "",
+    "generic_error": ""
+  },
+  "footer": {
+    "title": "",
+    "subtitle": "",
+    "bottom_main": "",
+    "bottom_secondary": ""
+  },
+  "header": {
+    "title": ""
+  },
+  "tide": {
+    "tide": "",
+    "tide_table": "",
+    "button_tide_table": "",
+    "tide_always_good": "",
+    "tide_not_provided": "",
+    "best_tide": "",
+    "tides_all_good": "",
+    "tide_movement_always_good": "",
+    "tide_movement_good_at": "",
+    "weekly_tide_levels": "",
+    "low": "",
+    "low_to_medium": "",
+    "medium_to_high": "",
+    "high": "",
+    "medium": "",
+    "rising": "",
+    "falling": ""
+  },
+  "good_time": {
+    "share_text": "",
+    "share": "",
+    "share_wa_url": "",
+    "share_fb_url": "",
+    "share_whatsapp_btn": "",
+    "share_facebook_btn": "",
+    "copy_url_btn": ""
+  },
+  "home": {
+    "no_countries_found": "",
+    "countries_server_error": "",
+    "cta": {
+      "title": "",
+      "text": "",
+      "button": ""
+    },
+    "favourites": {
+      "not_logged_icon": "",
+      "not_logged_title": "",
+      "not_logged_text": "",
+      "no_favourites_text": "",
+      "no_favourites_subtext_1": "",
+      "no_favourites_subtext_2": "",
+      "no_favourites_button": "",
+      "title": "",
+      "no_good_times_icon": "",
+      "no_good_times_text": "",
+      "error": ""
+    },
+    "hero": {
+      "supertitle": "",
+      "title": "",
+      "text": "",
+      "button1": "",
+      "button2": ""
+    },
+    "near_spots_forecast": {
+      "search": "",
+      "near_spots_forecast_title": "",
+      "near_spots_forecast_empty": "",
+      "near_spots_title": "",
+      "near_spots_empty": "",
+      "geolocation_try_again": "",
+      "server_error": ""
+    },
+    "geolocation_unsupported": ""
+  },
+  "map_filters": {
+    "filter": "",
+    "reset": "",
+    "apply": ""
+  },
+  "seo": {
+    "password_change": {
+      "title": "",
+      "description": ""
+    },
+    "region_chart": {
+      "title": "",
+      "description": ""
+    },
+    "region_spots": {
+      "title": "",
+      "description": ""
+    },
+    "spot_forecast": {
+      "title": "",
+      "description": ""
+    },
+    "spot_info": {
+      "title": "",
+      "description": ""
+    },
+    "spot_near_spots": {
+      "title": "",
+      "description": ""
+    },
+    "spot_video": {
+      "title": "",
+      "description": ""
+    },
+    "countries": {
+      "title": "",
+      "description": ""
+    },
+    "country_regions": {
+      "title": "",
+      "description": ""
+    },
+    "country_map": {
+      "title": "",
+      "description": ""
+    },
+    "home": {
+      "title": "",
+      "description": ""
+    },
+    "map": {
+      "title": "",
+      "description": ""
+    },
+    "profile_details": {
+      "title": "",
+      "description": ""
+    },
+    "profile_favourites": {
+      "title": "",
+      "description": ""
+    },
+    "profile": {
+      "title": "",
+      "description": ""
+    },
+    "profile_settings": {
+      "title": "",
+      "description": ""
+    },
+    "region_map": {
+      "title": "",
+      "description": ""
+    },
+    "search": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "profile": {
+    "profile": "",
+    "password_change": "",
+    "password_change_text": "",
+    "profile_details_edit_text": "",
+    "your_timezone": "",
+    "set_timezone_auto": "",
+    "your_surfing_level": "",
+    "surfing_level_beginner": "",
+    "surfing_level_intermediate": "",
+    "surfing_level_advanced": "",
+    "your_surfing_from": "",
+    "your_surfboards": "",
+    "save_profile": "",
+    "profile_details_view_text": "",
+    "favourite_spots": "",
+    "edit_profile": "",
+    "your_sessions": "",
+    "coming_soon": "",
+    "surf_trips": "",
+    "add_a_spot": "",
+    "settings": "",
+    "you_are_not_logged_icon": "",
+    "you_are_not_logged": "",
+    "you_are_not_logged_subtext": "",
+    "please_verify_your_account_text": "",
+    "please_verify_your_account_subtext": "",
+    "send_verification_mail": "",
+    "profile_details": "",
+    "favourite_spots_text": "",
+    "favourite_spots_empty_title": "",
+    "favourite_spots_empty_text_1": "",
+    "favourite_spots_empty_text_2": "",
+    "favourite_spots_empty_subtext": "",
+    "favourite_spots_error_text": "",
+    "settings_text": "",
+    "favourite_spots_empty": ""
+  },
+  "surfboard_type": {
+    "softboard": "",
+    "short": "",
+    "mid_retro": "",
+    "long": "",
+    "gun": ""
+  },
+  "region_ai_text": {
+    "spots_number": "The majority of the surf spots have a {t('bottoms.' + multiBottomArray[multiBottomArray.length - 1][0])} bottom.",
+    "spotsBottom": "The majority of the surf spots have a <1>{{mostCommonBottom}}</1> bottom.",
+    "always_good": "",
+    "good_in_months": ""
+  },
+  "region": {
+    "server_error": "",
+    "no_results": ""
+  },
+  "surf_spot": {
+    "calendar_modal_title": "",
+    "calendar_modal_text": "",
+    "when_its_on": "",
+    "no_good_times": "",
+    "forecast_chart": "",
+    "all_days": "",
+    "forecast_last_update": "",
+    "windy": "",
+    "map_on_windy": "",
+    "calendar": {
+      "title": "",
+      "image_alt": "",
+      "text_1": "",
+      "text_2": "",
+      "button": "",
+      "modal_title": "",
+      "modal_text": "",
+      "button_login": ""
+    },
+    "forecast": {
+      "cta_title": "",
+      "cta_text": "Help us improve the forecast of <2>{{spotName}}</2> to get better forecast alerts and surf more.",
+      "cta_button": ""
+    },
+    "forecast_error": "",
+    "coordinates": "",
+    "open_in_google_maps": "",
+    "google_maps": "",
+    "see_on_map": "",
+    "wave_direction": "",
+    "best_swell": "",
+    "best_wind": "",
+    "best_size": "",
+    "wave_length": "",
+    "frequency": "",
+    "quality": "",
+    "experience": "",
+    "experience_good_for_all": "",
+    "boards": "",
+    "all_boards_are_good": "",
+    "crowd": "",
+    "beginners_good": "",
+    "beginners_not_good": "",
+    "surf_schools": "",
+    "adaptive_surfing": "",
+    "webcams": "",
+    "webcam": "",
+    "meteo_stations": "",
+    "info": {
+      "cta_title": "",
+      "cta_text": "",
+      "cta_button": ""
+    },
+    "info_error": "",
+    "no_near_spots": "",
+    "near_spots_error": "",
+    "no_videos": "",
+    "video_error": "",
+    "calendar_text_1": "",
+    "calendar_text_2": ""
+  },
+  "account_verify": {
+    "verify_account_title": "",
+    "error_title": "",
+    "no_token": "",
+    "send_verification_email_btn": "",
+    "back_btn": "",
+    "account_verified_title": "",
+    "account_verified": "",
+    "account_already_confirmed_title": "",
+    "account_already_confirmed": "",
+    "error": ""
+  },
+  "countries_layout": {
+    "no_countries_found": "",
+    "server_error": ""
+  },
+  "country": {
+    "no_results": "",
+    "server_error": ""
+  },
+  "search": {
+    "search_surf_spot": "",
+    "input_placeholder": "",
+    "empty": "",
+    "no_results": "",
+    "error": ""
+  },
+  "months_short": {
+    "1": "Jan",
+    "2": "Feb",
+    "3": "Mar",
+    "4": "Apr",
+    "5": "May",
+    "6": "Jun",
+    "7": "Jul",
+    "8": "Aug",
+    "9": "Sep",
+    "10": "Oct",
+    "11": "Nov",
+    "12": "Dec"
+  },
+  "months_long": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "wetsuits": {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+    "5": ""
+  },
+  "units": {
+    "meters": "",
+    "feet": "",
+    "meters_short": "",
+    "feet_short": "",
+    "kph": "",
+    "kn": "",
+    "kph_short": "",
+    "kn_short": ""
+  },
+  "wave_length": {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+    "5": ""
+  },
+  "frequency": {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": ""
+  },
+  "quality": {
+    "1": "",
+    "2": "",
+    "3": "",
+    "4": "",
+    "5": ""
+  },
+  "experience": {
+    "beginners": "",
+    "intermediate": "",
+    "advanced": "",
+    "beginner": ""
+  },
+  "crowd": {
+    "empty": "",
+    "few_surfers": "",
+    "crowded": "",
+    "ultra_crowded": ""
+  },
+  "toast": {
+    "favourites": {
+      "already_added_to_favourites": "",
+      "added_to_favourites_error": "",
+      "favourites_not_found_to_remove": "",
+      "removed_from_favourites": "",
+      "removed_from_favourites_error": "",
+      "already_added_to_favourites_": ""
+    },
+    "auth": {
+      "account_verification": {
+        "verification_email_sent": "",
+        "verification_email_sent_error": ""
+      }
+    },
+    "verify_account": {
+      "text": "",
+      "send_email_button": ""
+    }
+  },
+  "home_hero": {
+    "supertitle": "",
+    "title": "",
+    "text": "",
+    "button1": "",
+    "button2": ""
+  },
+  "tide_table": {
+    "weekly_tide_levels": "",
+    "low": "",
+    "low_to_medium": "",
+    "medium_to_high": "",
+    "high": ""
+  },
+  "country_layout": {
+    "server_error": ""
+  }
+}
