@@ -79,6 +79,7 @@ export interface ISurfSpotForecast {
     days: ISurfSpotForecastDay[];
     min_max_weekly: ISurfSpotForecastMinMax;
     compressed_days: ISurfSpotCompressedDays;
+    last_forecast_update: number;
 }
 
 export interface ISurfSpotForecastTideWeekly {
