@@ -1,7 +1,5 @@
-// Server
-
-import MondoLink from 'proxies/MondoLink';
 import Repeater from 'mondosurf-library/components/Repeater';
+import MondoLink from 'proxies/MondoLink';
 
 interface ITabs {
     links: {
@@ -14,7 +12,7 @@ interface ITabs {
     loading?: boolean;
 }
 
-const Tabs: React.FC<ITabs> = async (props: ITabs) => {
+const Tabs: React.FC<ITabs> = (props: ITabs) => {
     const classes = (key: number) => {
         let returnClasses = ' ms-tabs__link ';
         if (props.selectedTab === key + 1) returnClasses += ' is-active ';

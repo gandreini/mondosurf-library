@@ -1,10 +1,8 @@
-// Server
-
 import IVideoPreview from 'mondosurf-library/model/iVideoPreview';
 import MondoLink from 'proxies/MondoLink';
 
 // Component.
-const VideoPreview: React.FC<IVideoPreview> = async (props: IVideoPreview) => {
+const VideoPreview: React.FC<IVideoPreview> = (props: IVideoPreview) => {
     return (
         <>
             {props.url && !props.loading && (
