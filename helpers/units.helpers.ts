@@ -1,4 +1,4 @@
-import { store } from '../redux/store';
+import { store } from 'mondosurf-library/redux/store';
 
 /**
  * Converts size in meters of feet.

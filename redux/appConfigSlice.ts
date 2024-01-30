@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import ICountry from '../model/iCountry';
-import IRegionPreview from '../model/iRegionPreview';
-import ISurfSpotPreview from '../model/iSurfSpotPreview';
+import ICountry from 'mondosurf-library/model/iCountry';
+import IRegionPreview from 'mondosurf-library/model/iRegionPreview';
+import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 
 export interface IAppConfig {
     home_countries: ICountry[];

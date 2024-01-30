@@ -1,6 +1,6 @@
-import ICountry from "@/mondosurf-library/modelStrict/iCountry";
-import IRegionPreview from "@/mondosurf-library/modelStrict/iRegionPreview";
-import ISurfSpotPreview from "@/mondosurf-library/modelStrict/iSurfSpotPreview";
+import ICountry from "mondosurf-library/modelStrict/iCountry";
+import IRegionPreview from "mondosurf-library/modelStrict/iRegionPreview";
+import ISurfSpotPreview from "mondosurf-library/modelStrict/iSurfSpotPreview";
 
 export interface IAppConfig {
     home_countries: ICountry[];

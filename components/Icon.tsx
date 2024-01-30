@@ -1,6 +1,6 @@
 // Client and server
 
-import { IIcon } from '@/mondosurf-library/modelStrict/iIcon';
+import { IIcon } from 'mondosurf-library/modelStrict/iIcon';
 
 const Icon: React.FC<IIcon> = (props: IIcon) => {
     /**

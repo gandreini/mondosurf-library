@@ -1,4 +1,4 @@
-import IRegionPreview from "@/mondosurf-library/modelStrict/iRegionPreview";
+import IRegionPreview from 'mondosurf-library/modelStrict/iRegionPreview';
 
 export default interface ICountry {
     id: number;

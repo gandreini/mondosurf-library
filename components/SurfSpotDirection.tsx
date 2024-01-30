@@ -1,6 +1,6 @@
-import ChartDirectionMini from '../components/ChartDirectionMini';
-import { COLOR_VARIABLES } from '../constants/colorVariables';
-import { readableDirectionFromDegreesRange } from '../helpers/surfSpot.helpers';
+import ChartDirectionMini from 'mondosurf-library/components/ChartDirectionMini';
+import { COLOR_VARIABLES } from 'mondosurf-library/constants/colorVariables';
+import { readableDirectionFromDegreesRange } from 'mondosurf-library/helpers/surfSpot.helpers';
 
 interface ISurfSpotDirection {
     min: number;

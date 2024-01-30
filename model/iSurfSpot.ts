@@ -1,6 +1,6 @@
-import IGoodTime from './iGoodTime';
-import ISurfSpotPreview from './iSurfSpotPreview';
-import IVideoPreview from './iVideoPreview';
+import IGoodTime from 'mondosurf-library/model/iGoodTime';
+import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
+import IVideoPreview from 'mondosurf-library/model/iVideoPreview';
 
 export interface ISurfSpot {
     id: number;

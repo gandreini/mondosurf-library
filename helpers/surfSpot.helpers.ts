@@ -1,5 +1,3 @@
-import { removeDuplicatesFromArray } from "./arrays.helpers";
-
 /**
  * Returns an array of the directions strings (given a string like "SW-W-NW")
  * 

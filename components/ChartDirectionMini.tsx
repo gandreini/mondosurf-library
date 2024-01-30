@@ -1,4 +1,4 @@
-import { COLOR_VARIABLES } from '../constants/colorVariables';
+import { COLOR_VARIABLES } from 'mondosurf-library/constants/colorVariables';
 
 interface IChartDirectionMini {
     direction: string[];

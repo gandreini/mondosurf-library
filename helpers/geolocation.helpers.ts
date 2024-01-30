@@ -1,7 +1,7 @@
-import { FAKE_USER_LAT, FAKE_USER_LNG } from "../../constants/localConstants";
-import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "../helpers/localStorage.helpers";
-import { geolocationIsAuthorized } from "../redux/appConfigSlice";
-import { store } from "../redux/store";
+import { FAKE_USER_LAT, FAKE_USER_LNG } from "constants/localConstants";
+import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "mondosurf-library/helpers/localStorage.helpers";
+import { geolocationIsAuthorized } from "mondosurf-library/redux/appConfigSlice";
+import { store } from "mondosurf-library/redux/store";
 
 /**
  * Function that returns a promise to retrieve the user's device lat and lng.

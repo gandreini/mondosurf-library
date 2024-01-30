@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import ISurfSpotPreview from '../modelStrict/iSurfSpotPreview';
+import ISurfSpotPreview from 'mondosurf-library/modelStrict/iSurfSpotPreview';
 
 export interface IUserSliceValue {
     logged: 'yes' | 'no' | 'checking';

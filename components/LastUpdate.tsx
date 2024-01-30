@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { FORECAST_UPDATE_PERIOD } from '../constants/constants';
-import { hourMinFormat } from '../helpers/date.helpers';
+import { FORECAST_UPDATE_PERIOD } from 'mondosurf-library/constants/constants';
+import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
 
 interface ILastUpdate {
     lastUpdate: number;

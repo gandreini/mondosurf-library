@@ -1,4 +1,4 @@
-import ISurfSpotPreview from "@/mondosurf-library/modelStrict/iSurfSpotPreview";
+import ISurfSpotPreview from 'mondosurf-library/modelStrict/iSurfSpotPreview';
 
 export default interface IRegion {
     id: number;

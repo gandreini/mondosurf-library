@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "../constants/constants";
-import IGoodTime from "../model/iGoodTime";
-import { ISurfSpotForecast } from "../modelStrict/iSurfSpot";
-import { store } from "../redux/store";
-import { cloneObject } from "./object.helpers";
+import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
+import IGoodTime from "mondosurf-library/model/iGoodTime";
+import { ISurfSpotForecast } from "mondosurf-library/modelStrict/iSurfSpot";
+import { store } from "mondosurf-library/redux/store";
+import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 
 /**
  * Returns the number of forecast days to be displayed to the user, depending on the account type.

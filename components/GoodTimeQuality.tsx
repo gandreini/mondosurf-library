@@ -1,4 +1,4 @@
-import Icon from '../components/Icon';
+import Icon from 'mondosurf-library/components/Icon';
 
 interface IGoodTimeQuality {
     quality: number;

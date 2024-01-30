@@ -1,4 +1,4 @@
-import { removeItemFromArray } from './arrays.helpers';
+import { removeItemFromArray } from 'mondosurf-library/helpers/arrays.helpers';
 
 /**
  * Sets the local storage data.

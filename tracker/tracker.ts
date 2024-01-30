@@ -1,12 +1,12 @@
 import mixpanel from 'mixpanel-browser';
 
-import { TrackingEvent } from '../constants/trackingEvent';
-import { getCookie } from '../helpers/cookies.helpers';
-import { isDebug } from '../helpers/debug.helpers';
-import { getPlatform } from '../helpers/device.helpers';
-import { stringToBool } from '../helpers/strings.helpers';
-import { store } from '../redux/store';
-import { DEBUG_MODE, DISABLE_TRACKING } from '../../constants/localConstants';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { getCookie } from 'mondosurf-library/helpers/cookies.helpers';
+import { isDebug } from 'mondosurf-library/helpers/debug.helpers';
+import { getPlatform } from 'mondosurf-library/helpers/device.helpers';
+import { stringToBool } from 'mondosurf-library/helpers/strings.helpers';
+import { store } from 'mondosurf-library/redux/store';
+import { DEBUG_MODE, DISABLE_TRACKING } from 'constants/localConstants';
 
 type DestinationType = ('fb' | 'fbapp' | 'mp' | 'at' | 'ga' | 'sb')[];
 
