@@ -1,12 +1,14 @@
+import { postApiAuthCall } from 'communication/api';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-
+import { openLoginModal } from 'features/modal/modal.helpers';
+import toastService from 'features/toast/toastService';
 import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
+import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 import IGoodTime from "mondosurf-library/model/iGoodTime";
 import { ISurfSpotForecast } from "mondosurf-library/modelStrict/iSurfSpot";
 import { store } from "mondosurf-library/redux/store";
-import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 
 /**
  * Returns the number of forecast days to be displayed to the user, depending on the account type.
@@ -172,6 +174,78 @@ export function timeSpanToNextUpdate(): number {
     const nextUpdate = now.add(1, 'day').hour(FORECAST_UPDATES[0]).minute(0).second(0).millisecond(0);
     return nextUpdate.diff(now, 'seconds');
 }
+
+/**
+ * Initiates a forecast request process based on the user's login status. If not logged, the login modal is opened.
+ * Usually triggered when the user clicks on the forecast request button
+ * 
+ * @param {string} logged - The user's login status. Can be 'yes', 'no', or 'checking'.
+ * @param {string} spot_id - The id of the spot.
+ * @returns {Promise<string>} A promise that resolves with resolve or reject.
+ */
+// ! TODO Move copy to i18n
+export const requestForecastStep1 = (logged: "yes" | "no" | "checking", spot_id: string) => {
+    return new Promise((resolve, reject) => {
+        if (logged === 'yes') {
+            const state = store.getState();
+            const accessToken = state.user.accessToken;
+            requestForecastStep2(spot_id, accessToken).then((response: any) => {
+                resolve("Operation successful")
+            })
+                .catch((error) => {
+                    reject("Operation failed")
+                });
+        } else {
+            openLoginModal(
+                'spotForecastRequest',
+                'Login to request the forecast',
+                'You need to login or register to Mondo to send the forecast request',
+                (accessToken?: string) => {
+                    requestForecastStep2(spot_id, accessToken).then((response: any) => {
+                        resolve("Operation successful")
+                    })
+                        .catch((error) => {
+                            reject("Operation failed")
+                        });
+                }
+            );
+        }
+    });
+};
+
+/**
+ * Forwards a requests for the forecast to a spot to the Admin by calling the backend API.
+ *
+ * @param {string} spot_id - The id of the spot.
+ * @param {string} [accessToken] - An optional access token for authenticated requests. Optional but fails if not provided.
+ * @returns {Promise<string>} A promise
+ */
+// ! TODO Move copy to i18n
+const requestForecastStep2 = (spot_id: string, accessToken?: string) => {
+    return new Promise((resolve, reject) => {
+        if (accessToken) {
+            postApiAuthCall(
+                'user-request-spot-forecast',
+                accessToken,
+                {
+                    spot_id: spot_id
+                },
+                true
+            )
+                .then((response: any) => {
+                    toastService.success("Forecast request correctly sent. You'll receive and email from our team.");
+                    resolve("Operation successful")
+                })
+                .catch((error) => {
+                    toastService.error("The Forecast request could not be sent, pleas try again.");
+                    reject("Operation failed")
+                });
+        } else {
+            toastService.error("The Forecast request could not be sent, pleas try again.");
+            reject("Operation failed")
+        }
+    });
+};
 
 /**
  * 
