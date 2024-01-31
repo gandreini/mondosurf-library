@@ -1,4 +1,5 @@
 import Icon from 'mondosurf-library/components/Icon';
+import Loader from 'mondosurf-library/components/Loader';
 import { IIcon } from 'mondosurf-library/modelStrict/iIcon';
 import MondoLink from 'proxies/MondoLink';
 
@@ -11,6 +12,7 @@ interface IButton {
     size?: 'xl' | 'l' | 'm' | 's';
     icon?: IIcon['icon'];
     fullWidth?: boolean;
+    loading?: boolean;
 }
 
 const Button = (props: IButton) => {
@@ -23,6 +25,7 @@ const Button = (props: IButton) => {
         if (props.style && props.style === 'cta') cl += ' ms-btn-cta ';
         if (props.style && props.style === 'light') cl += ' ms-btn-light ';
         if (props.fullWidth) cl += ' ms-btn-full ';
+        if (props.loading) cl += ' disabled ';
         return cl;
     };
 
@@ -31,13 +34,15 @@ const Button = (props: IButton) => {
             {props.url && (
                 <MondoLink className={returnClass()} href={props.url}>
                     {props.icon && <Icon icon={props.icon} />}
-                    <span className="ms-btn__label">{props.label}</span>
+                    {!props.loading && <span className="ms-btn__label">{props.label}</span>}
+                    {props.loading && <Loader size="small" />}
                 </MondoLink>
             )}
             {props.callback && (
                 <button type="submit" className={returnClass()} onClick={props.callback}>
                     {props.icon && <Icon icon={props.icon} />}
-                    <span className="ms-btn__label">{props.label}</span>
+                    {!props.loading && <span className="ms-btn__label">{props.label}</span>}
+                    {props.loading && <Loader size="small" />}
                 </button>
             )}
         </>
