@@ -300,24 +300,24 @@
   "seo": {
     "image": "/images/seo/og-image.png",
     "home": {
-      "title": "Mondo Surf - Surf spots atlas and wave forecast calendar",
+      "title": "Mondo - Surf spots atlas and wave forecast calendar",
       "description": "Explore the most comprehensive atlas of surf spots on Mondo Surf. Receive accurate wave forecasts and integrate them into your calendar, like Google or Apple Calendar."
     },
     "countries": {
-      "title": "Explore surf spot guides and forecasts - Mondo Surf",
+      "title": "Surf spot guides and forecasts - 🌊 Mondo",
       "description": "Dive into Mondo Surf's extensive list of surf spots. Explore detailed guides and accurate forecasts for top surf spots around the world."
     },
     "country_regions": {
-      "title": "Explore the best surf regions in {country} - Mondo Surf",
-      "description": "Discover the best surf spots in {country}. Explore our comprehensive guides to top surfing regions, complete with up-to-date forecasts and local insights."
+      "title": "{{country}} - Best surf regions - 🌊 Mondo",
+      "description": "Discover the best surf spots in {{country}}. Explore our comprehensive guides to top surfing regions, complete with up-to-date forecasts and local insights."
     },
     "country_map": {
       "title": "",
       "description": " "
     },
     "region_spots": {
-      "title": "Explore surf spot guides and forecasts in {region} - Mondo Surf",
-      "description": "Browse a comprehensive list of surf spots in {region}. Find detailed information on each spot, including up-to-date surfing forecasts and essential spot details."
+      "title": "{{region}} - Surf spot guides and forecasts - 🌊 Mondo",
+      "description": "Browse a comprehensive list of surf spots in {{region}}. Find detailed information on each spot, including up-to-date surfing forecasts and essential spot details."
     },
     "region_map": {
       "title": "",
@@ -328,36 +328,36 @@
       "description": ""
     },
     "spot_guide": {
-      "title": "{spot} surf spot guide including, best swell, best wind, and tide  - Mondo Surf",
-      "description": "Discover everything about surfing in {spot}. Our guide covers spot characteristics, location, bottom, surf quality, crowd factor, and expert advice for surfers."
+      "title": "{{spot}} - Surf spot guide - 🌊 Mondo",
+      "description": "Discover everything about surfing in {{spot}}. Our guide covers spot characteristics, location, bottom, surf quality, crowd factor, and expert advice for surfers."
     },
     "spot_good_times": {
-      "title": "Best surfing times at {spot} surf spot - Mondo Surf",
-      "description": "Discover when to catch the best waves at {spot}. Our forecast highlights the upcoming good surf times, and you can add them to your calendar."
+      "title": "{{spot}} - Best surfing times - 🌊 Mondo",
+      "description": "Discover when to catch the best waves at {{spot}}. Our forecast highlights the upcoming good surf times, and you can add them to your calendar."
     },
     "spot_full_forecast": {
-      "title": "Hourly surf forecast at {spot} - Mondo Surf",
-      "description": "Explore the full hourly surf forecast for {spot}. Get in-depth details on swell and wind conditions and plan your best surf times."
+      "title": "{{spot}} - Hourly surf forecast - 🌊 Mondo",
+      "description": "Explore the full hourly surf forecast for {{spot}}. Get in-depth details on swell and wind conditions and plan your best surf times."
     },
     "spot_near_spots": {
-      "title": "Surf spots near {spot} - Mondo Surf",
-      "description": "Explore surf spots located near {spot}. Each nearby surf spot comes with complete guides, optimal surf times, and accurate swell and wind forecasts."
+      "title": "{{spot}} - Near surf spots - 🌊 Mondo",
+      "description": "Explore surf spots located near {{spot}}. Each nearby surf spot comes with complete guides, optimal surf times, and accurate swell and wind forecasts."
     },
     "spot_video": {
-      "title": "{spot} surf videos: see the surf in action - Mondo Surf",
-      "description": "Dive into the surf at {spot} through our collection of surf videos. Get a real feel for the waves and know what to expect when you hit the water."
+      "title": "{{spot}} - Surf videos - 🌊 Mondo",
+      "description": "Dive into the surf at {{spot}} through our collection of surf videos. Get a real feel for the waves and know what to expect when you hit the water."
     },
     "map": {
-      "title": "Worldwide surf spots map - Mondo Surf",
+      "title": "Worldwide surf spots map - 🌊 Mondo",
       "description": "Explore the world's best surf spots with our interactive map. Find detailed spot information, forecasts, and more with just a click."
     },
 
     "favorites": {
-      "title": "You favorite surf spots - Mondo Surf",
+      "title": "Your favorite surf spots - 🌊 Mondo",
       "description": "Find your favorite surf spots on Mondo Surf. Personalize your surfing experience with a list of spots you love, with latest forecasts and detailed spot information."
     },
     "search": {
-      "title": "Search for surf spots worldwide - Mondo Surf",
+      "title": "Surf spots search - 🌊 Mondo",
       "description": "From local favorites to international waves, explore surf locations worldwide, offering detailed spot guides and forecasts."
     }
   },
