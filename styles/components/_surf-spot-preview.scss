@@ -19,7 +19,7 @@
         display: flex;
         align-items: center;
         padding: $space * 0.75 $space * 1.5 $space * 0.4 $space * 1.5;
-        border-bottom: 1px solid $color-border-light;
+        border-bottom: 1px solid white-border-light;
     }
 
     &__breadcrumbs-flag {
@@ -103,25 +103,16 @@
 }
 
 /* ------------------------------------ *\
-   #IS-GOOD
+   #QUALITY
 \* ------------------------------------ */
-.ms-surf-spot-preview.is-good {
-    .ms-surf-spot-preview__icon {
-        .mondo-icon {
-            position: relative;
-
-            &:after {
-                position: absolute;
-                top: -1px;
-                right: 0px;
-                content: ' ';
-                width: $space;
-                height: $space;
-                background-color: var(--color-forecast-good);
-                border-radius: $space;
-                border: 2px solid var(--color-gray-00);
-            }
-        }
+.ms-surf-spot-preview {
+    .ms-surf-spot-preview-quality-icon {
+        position: absolute;
+        top: 8px;
+        left: 29px;
+        text-shadow: -2px -2px 0 $color-background-base, 0 -2px 0 $color-background-base,
+            2px -2px 0 $color-background-base, 2px 0 0 $color-background-base, 2px 2px 0 $color-background-base,
+            0 2px 0 $color-background-base, -2px 2px 0 $color-background-base, -2px 0 0 $color-background-base;
     }
 }
 

@@ -6,6 +6,7 @@ interface IGoodTimeQuality {
     vertical?: boolean;
     hideLabel?: boolean;
     size?: 's' | 'm';
+    singleStar?: boolean;
 }
 
 const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
@@ -28,8 +29,12 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                 <>
                     <div className="ms-good-time-quality__stars">
                         <Icon icon={'star'} />
-                        <Icon icon={'star'} />
-                        <Icon icon={'star'} />
+                        {!props.singleStar && (
+                            <>
+                                <Icon icon={'star'} />
+                                <Icon icon={'star'} />
+                            </>
+                        )}
                     </div>
                     {props.hideLabel !== true && (
                         <div className="ms-good-time-quality__text">
@@ -44,8 +49,12 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                 <>
                     <div className="ms-good-time-quality__stars">
                         <Icon icon={'star'} />
-                        <Icon icon={'star'} />
-                        <Icon icon={'star'} />
+                        {!props.singleStar && (
+                            <>
+                                <Icon icon={'star'} />
+                                <Icon icon={'star'} />
+                            </>
+                        )}
                     </div>
                     {props.hideLabel !== true && <div className="ms-good-time-quality__text">Good</div>}
                 </>
@@ -56,8 +65,12 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                 <>
                     <div className="ms-good-time-quality__stars">
                         <Icon icon={'star'} />
-                        <Icon icon={'star'} />
-                        <Icon icon={'star'} />
+                        {!props.singleStar && (
+                            <>
+                                <Icon icon={'star'} />
+                                <Icon icon={'star'} />
+                            </>
+                        )}
                     </div>
                     {props.hideLabel !== true && <div className="ms-good-time-quality__text">Very good</div>}
                 </>
@@ -68,8 +81,12 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
                 <>
                     <div className="ms-good-time-quality__stars">
                         <Icon icon={'star'} />
-                        <Icon icon={'star'} />
-                        <Icon icon={'star'} />
+                        {!props.singleStar && (
+                            <>
+                                <Icon icon={'star'} />
+                                <Icon icon={'star'} />
+                            </>
+                        )}
                     </div>
                     {props.hideLabel !== true && <div className="ms-good-time-quality__text">Epic</div>}
                 </>
