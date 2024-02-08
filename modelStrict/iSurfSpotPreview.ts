@@ -19,6 +19,9 @@ export default interface ISurfSpotPreview {
     forecast_is_good_long?: number;
     forecast_is_good_short?: number;
     showBreadcrumbs?: boolean;
+    showMetadata?: boolean;
+    showDirection?: boolean;
+    showForecast?: boolean;
     loading?: boolean;
     inFavourites?: boolean;
     context?: 'homeNearSpots' | 'subscriptionConfirmed' | 'region' | 'spotNearSpots' | 'search';

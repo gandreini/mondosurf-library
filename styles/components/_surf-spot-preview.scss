@@ -11,7 +11,7 @@
         position: relative;
         display: block;
         @include card;
-        padding: 0;
+        padding: 0 0 $space * 0.75 0;
     }
 
     // Breadcrumbs.
@@ -77,12 +77,11 @@
 
     // Content.
     &__content {
-        padding: $space * 0.5 $space * 2 $space * 0 $space * 2;
         overflow: hidden;
     }
 
     &__row {
-        margin-bottom: $space * 1.5;
+        padding: $space * 0.5 $space * 2 $space * 0.5 $space * 2;
     }
 
     &__label {
@@ -113,6 +112,19 @@
         text-shadow: -2px -2px 0 $color-background-base, 0 -2px 0 $color-background-base,
             2px -2px 0 $color-background-base, 2px 0 0 $color-background-base, 2px 2px 0 $color-background-base,
             0 2px 0 $color-background-base, -2px 2px 0 $color-background-base, -2px 0 0 $color-background-base;
+    }
+
+    .ms-surf-spot-preview-quality-row {
+        border-top: 1px solid $color-border-light;
+        display: flex;
+        align-items: center;
+        margin-top: $space * 0.5;
+        padding-top: $space * 1.5;
+        gap: $space;
+
+        .ms-small-text {
+            margin: 0;
+        }
     }
 }
 
