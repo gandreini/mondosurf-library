@@ -1,8 +1,8 @@
 import ICountry from 'mondosurf-library/model/iCountry';
-import { mondoTranslate } from 'proxies/mondoTranslate';
 import MondoLink from 'proxies/MondoLink';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 
-const CountryPreview: React.FC<ICountry> = async (props: ICountry) => {
+const CountryPreview: React.FC<ICountry> = (props: ICountry) => {
     return (
         <MondoLink
             className={props.loading ? 'ms-country-preview is-loading' : 'ms-country-preview'}

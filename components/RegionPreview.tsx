@@ -3,7 +3,7 @@ import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
 // Component.
-const RegionPreview: React.FC<IRegionPreview> = async (props: IRegionPreview) => {
+const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
     return (
         <MondoLink
             className={props.loading ? 'ms-region-preview is-loading' : 'ms-region-preview'}
@@ -25,7 +25,7 @@ const RegionPreview: React.FC<IRegionPreview> = async (props: IRegionPreview) =>
                 </span>
 
                 <span className="ms-region-preview__counters">
-                    {props.number_of_spots && props.number_of_spots > 0 && (
+                    {props.number_of_spots > 0 && (
                         <>
                             <span className="ms-value">{props.number_of_spots}</span>
                             <span className="ms-label">{mondoTranslate('basics.surf_spots')}</span>
