@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PUBLIC_API_URL_V1 } from 'constants/localConstants';
 import { isDebug } from 'mondosurf-library/helpers/debug.helpers';
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ interface IAxiosState {
     APIstatus?: string;
 }
 
-export default function useFetch(url: string, params?: any) {
+export default function useGetFetch(url: string, params?: any) {
 
     // Abort controller to abort the fetch request.
     const source = axios.CancelToken.source();
@@ -26,13 +27,13 @@ export default function useFetch(url: string, params?: any) {
         }
 
         // Debug.
-        if (isDebug()) console.log("useFetch", "url: " + url);
+        if (isDebug()) console.log("useGetFetch", "url: " + url);
 
         setState({ ...state, status: "loading" });
 
         axios({
             method: "get",
-            url: process.env.REACT_APP_API_BASE_URL! + url,
+            url: PUBLIC_API_URL_V1 + url,
             params: { ...params },
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
