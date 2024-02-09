@@ -1,5 +1,7 @@
+'use client';
+
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
-import useFetch from 'mondosurf-library/fetching/useFetch';
+import useGetFetch from 'mondosurf-library/fetching/useGetFetch';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +12,7 @@ interface ISurfSpotPreviewQualityIcon {
 const SurfSpotPreviewQualityIcon: React.FC<ISurfSpotPreviewQualityIcon> = (props: ISurfSpotPreviewQualityIcon) => {
     // Retrieves quality from the APIs.
     const [qualityQuery, setQualityQuery] = useState('');
-    const fetchedQuality = useFetch(qualityQuery);
+    const fetchedQuality = useGetFetch(qualityQuery);
     const [surfQualityShort, setSurfQualityShort] = useState<number | null>(null);
     const [surfQualityLong, setSurfQualityLong] = useState<number | null>(null);
 
