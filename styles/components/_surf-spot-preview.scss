@@ -11,7 +11,8 @@
         position: relative;
         display: block;
         @include card;
-        padding: 0 0 $space * 0.75 0;
+        padding: 0;
+        //border: 1px solid $color-border-light;
     }
 
     // Breadcrumbs.
@@ -78,6 +79,7 @@
     // Content.
     &__content {
         overflow: hidden;
+        padding-bottom: $space;
     }
 
     &__row {
@@ -115,15 +117,28 @@
     }
 
     .ms-surf-spot-preview-quality-row {
-        border-top: 1px solid $color-border-light;
         display: flex;
         align-items: center;
-        margin-top: $space * 0.5;
-        padding-top: $space * 1.5;
-        gap: $space;
+        gap: $space * 0.5;
+        height: $space * 4;
+        // padding-top: $space * 1.25;
+        padding-left: $space * 2;
+        border-top: 1px solid $color-border-light;
+        background-color: $color-background-ultralight;
+        border-radius: 0 0 $border-radius * 2 $border-radius * 2;
 
         .ms-small-text {
             margin: 0;
+        }
+
+        &__forecast-text {
+            color: var(--color-text);
+        }
+        &__no-forecast-text {
+        }
+
+        .ms-loader {
+            margin-left: $space;
         }
     }
 }

@@ -104,57 +104,60 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                         </div>
 
                         {/* Content */}
-                        <div className="ms-surf-spot-preview__content">
-                            {props.showMetadata && (
-                                <div className="ms-surf-spot-preview__row ms-grid-2-2">
-                                    {props.bottom && (
-                                        <div className="ms-surf-spot-preview__single-data">
-                                            <div className="ms-surf-spot-preview__label">
-                                                {mondoTranslate('basics.bottom')}
+                        {(props.showMetadata || props.showDirection) && (
+                            <div className="ms-surf-spot-preview__content">
+                                {props.showMetadata && (
+                                    <div className="ms-surf-spot-preview__row ms-grid-2-2">
+                                        {props.bottom && (
+                                            <div className="ms-surf-spot-preview__single-data">
+                                                <div className="ms-surf-spot-preview__label">
+                                                    {mondoTranslate('basics.bottom')}
+                                                </div>
+                                                <div className="ms-surf-spot-preview__value">
+                                                    {returnBottomLabel(props.bottom)}
+                                                </div>
                                             </div>
-                                            <div className="ms-surf-spot-preview__value">
-                                                {returnBottomLabel(props.bottom)}
-                                            </div>
-                                        </div>
-                                    )}
-                                    {props.tide && props.tide.length > 0 && (
-                                        <div className="ms-surf-spot-preview__single-data">
-                                            <div className="ms-surf-spot-preview__label">
-                                                {mondoTranslate('tide.tide')}
-                                            </div>
-                                            <div className="ms-surf-spot-preview__value">
-                                                {returnTideDetails(props.tide)}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            {props.showDirection && (
-                                <div className="ms-surf-spot-preview__row ms-grid-2-2">
-                                    {props.swell_direction_min !== undefined &&
-                                        props.swell_direction_max !== undefined && (
-                                            <SurfSpotDirection
-                                                min={props.swell_direction_min}
-                                                max={props.swell_direction_max}
-                                                type={'swell'}
-                                                label={mondoTranslate('basics.swell')}
-                                            />
                                         )}
-                                    {props.wind_direction_min !== undefined &&
-                                        props.wind_direction_max !== undefined && (
-                                            <SurfSpotDirection
-                                                min={props.wind_direction_min}
-                                                max={props.wind_direction_max}
-                                                type={'wind'}
-                                                label={mondoTranslate('basics.wind')}
-                                            />
+                                        {props.tide && props.tide.length > 0 && (
+                                            <div className="ms-surf-spot-preview__single-data">
+                                                <div className="ms-surf-spot-preview__label">
+                                                    {mondoTranslate('tide.tide')}
+                                                </div>
+                                                <div className="ms-surf-spot-preview__value">
+                                                    {returnTideDetails(props.tide)}
+                                                </div>
+                                            </div>
                                         )}
-                                </div>
-                            )}
+                                    </div>
+                                )}
 
-                            {props.showForecast && <SurfSpotPreviewQualityRow spotId={props.id} />}
-                        </div>
+                                {props.showDirection && (
+                                    <div className="ms-surf-spot-preview__row ms-grid-2-2">
+                                        {props.swell_direction_min !== undefined &&
+                                            props.swell_direction_max !== undefined && (
+                                                <SurfSpotDirection
+                                                    min={props.swell_direction_min}
+                                                    max={props.swell_direction_max}
+                                                    type={'swell'}
+                                                    label={mondoTranslate('basics.swell')}
+                                                />
+                                            )}
+                                        {props.wind_direction_min !== undefined &&
+                                            props.wind_direction_max !== undefined && (
+                                                <SurfSpotDirection
+                                                    min={props.wind_direction_min}
+                                                    max={props.wind_direction_max}
+                                                    type={'wind'}
+                                                    label={mondoTranslate('basics.wind')}
+                                                />
+                                            )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Forecast */}
+                        {props.showForecast && <SurfSpotPreviewQualityRow spotId={props.id} />}
                     </MondoLink>
                 </div>
             )}
