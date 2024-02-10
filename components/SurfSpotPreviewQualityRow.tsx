@@ -58,7 +58,7 @@ const SurfSpotPreviewQualityRow: React.FC<ISurfSpotPreviewQualityRow> = (props: 
                 !hasProPermissions() &&
                 surfQualityShort !== null && (
                     <div className="ms-surf-spot-preview__row ms-surf-spot-preview-quality-row">
-                        <span className="ms-small-text">Next 7 days:</span>
+                        <span className="ms-small-text">Next 3 days:</span>
                         <GoodTimeQuality quality={surfQualityShort} size="s" />
                     </div>
                 )}
