@@ -22,5 +22,5 @@ export const PRIVACY_POLICY_URL = "https://www.iubenda.com/privacy-policy/508515
 export const IOS_EULA_URL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
-export const APP_LATEST_VERSION = "4.3.0";
-export const APP_LATEST_VERSION_PROGRESSIVE = 49;
+export const APP_LATEST_VERSION = "4.4.0";
+export const APP_LATEST_VERSION_PROGRESSIVE = 50;
