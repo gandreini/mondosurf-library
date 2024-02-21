@@ -19,7 +19,9 @@
     box-sizing: border-box;
     z-index: $z-index-mobile-tab-bar;
     background-color: $mobile-tab-bar-color-background;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 -3px 15px rgba(0, 0, 0, 0.09);
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 -3px 15px rgba(0, 0, 0, 0.09);
     transition: all $transition-durations ease-out;
     // border-radius: $border-radius-hard $border-radius-hard 0 0;
 
@@ -80,14 +82,15 @@
     /* Pro */
     &__pro {
         position: absolute;
-        top: $space;
+        top: 0;
         left: calc(50% + 7px);
         padding: $space * 0.125 $space * 0.25;
         border-radius: 2px;
-        background-color: var(--color-first);
+        background-color: var(--color-favourites);
         color: var(--color-text-inverse);
         font-weight: $font-weight-bold;
-        @include font-size('xxxs');
+        font-size: 9px;
+        // @include font-size('xxxs');
     }
 }
 
