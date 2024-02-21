@@ -47,6 +47,7 @@ export interface IIcon {
     | 'tab-bar-active-map'
     | 'tab-bar-active-me'
     | 'tab-bar-active-search'
-    | 'tab-bar-active-home';
+    | 'tab-bar-active-home'
+    | 'mondo-logo';
     color?: string;
 }

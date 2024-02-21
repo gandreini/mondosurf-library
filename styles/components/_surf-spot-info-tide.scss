@@ -10,7 +10,9 @@
 .ms-surf-spot-info-tide {
     padding: $space * 2;
     margin-bottom: $space * 4;
-    background-color: $color-background-light;
+    background-color: $color-background-ultralight;
+    border-top: 1px solid var(--color-gray-03);
+    border-bottom: 1px solid var(--color-gray-03);
 
     &__title {
         margin-bottom: $space;

@@ -15,6 +15,7 @@ export interface ISurfSpot {
     country_id: string;
     country_slug: string;
     last_update: number;
+    hide_location: boolean;
     lat: number;
     lng: number;
     description?: string;
