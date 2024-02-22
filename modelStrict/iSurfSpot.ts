@@ -16,6 +16,7 @@ export interface ISurfSpot {
     country_slug: string;
     forecast_update: boolean;
     last_update: number;
+    hide_location: boolean;
     lat: number;
     lng: number;
     lat_parking?: number;
