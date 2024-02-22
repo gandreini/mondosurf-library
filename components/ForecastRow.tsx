@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-
 import DirectionArrow from 'mondosurf-library/components/DirectionArrow';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import Icon from 'mondosurf-library/components/Icon';
@@ -93,8 +92,10 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     props.row.swell_height > props.goodConditions.swellHeightMax &&
                     'is-no-good'
                 }`}>
-                <span className="ms-forecast-row__swell-size-value">{props.row.swell_height.toFixed(1)}</span>
-                <span className="ms-forecast-row__swell-size-unit">mt</span>
+                <div className="ms-forecast-row__swell-size-content">
+                    <span className="ms-forecast-row__swell-size-value">{props.row.swell_height.toFixed(1)}</span>
+                    <span className="ms-forecast-row__swell-size-unit">mt</span>
+                </div>
             </div>
 
             {/* Swell period */}
@@ -102,8 +103,10 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                 className={`ms-forecast-row__swell-period ${
                     props.row.swell_period < props.goodConditions.swellPeriodMin && 'is-no-good'
                 }`}>
-                <span className="ms-forecast-row__swell-period-value">{props.row.swell_period.toFixed(1)}</span>
-                <span className="ms-forecast-row__swell-period-unit">s</span>
+                <div className="ms-forecast-row__swell-period-content">
+                    <span className="ms-forecast-row__swell-period-value">{props.row.swell_period.toFixed(1)}</span>
+                    <span className="ms-forecast-row__swell-period-unit">s</span>
+                </div>
             </div>
 
             {/* Swell direction */}

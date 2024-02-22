@@ -11,25 +11,21 @@ $no-good-opacity: 0.5;
 \* ------------------------------------ */
 .ms-forecast-row {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    // border: 1px solid $color-border-light;
+    align-items: stretch;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     border-radius: $border-radius-soft;
 
     // Time
     &__time {
-        display: flex;
         align-items: center;
         justify-content: center;
         background-color: $color-background-mediumlight;
-        height: 100%;
         width: 20px;
+        display: flex;
         border-radius: $border-radius-soft 0 0 $border-radius-soft;
     }
     &__time-label {
-        display: block;
         transform: rotate(-90deg);
         white-space: nowrap;
         font-weight: $font-weight-bold;
@@ -39,6 +35,8 @@ $no-good-opacity: 0.5;
 
     // Quality
     &__quality {
+        display: flex;
+        align-items: center;
         width: 18%;
         padding: 0 $space * 1;
     }
@@ -46,7 +44,7 @@ $no-good-opacity: 0.5;
     // Height
     &__swell-size {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: center;
         gap: $space * 0.125;
         width: 54px;
@@ -61,7 +59,7 @@ $no-good-opacity: 0.5;
         color: var(--color-text-inverse);
     }
     &__swell-size-unit {
-        font-size: $font-size-xxs-fluid;
+        font-size: $font-size-xxxs-fluid;
         color: var(--color-text-inverse);
         opacity: 0.65;
     }
@@ -72,6 +70,8 @@ $no-good-opacity: 0.5;
 
     // Period
     &__swell-period {
+        display: flex;
+        align-items: center;
         width: 40px;
         margin: 0 0;
     }
@@ -81,7 +81,7 @@ $no-good-opacity: 0.5;
         color: var(--color-text);
     }
     &__swell-period-unit {
-        font-size: $font-size-xs-fluid;
+        font-size: $font-size-xxs-fluid;
         color: var(--color-text);
         opacity: 0.65;
     }
@@ -111,6 +111,7 @@ $no-good-opacity: 0.5;
     &__wind-speed {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         width: 44px;
         margin-left: $space * 2;
     }
