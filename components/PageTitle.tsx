@@ -13,7 +13,7 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
         <>
             {/* Loading */}
             {props.loading && (
-                <div className="ms-page-title ms-side-spacing is-loading">
+                <div className="ms-page-title is-loading">
                     <div className="ms-page-title__icon-wrapper"></div>
                     <div className="ms-page-title__flag-title-wrapper"></div>
                 </div>
