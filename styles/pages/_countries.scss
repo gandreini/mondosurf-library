@@ -29,21 +29,8 @@
         color: var(--color-text-light);
     }
 
-    &__description {
-    }
-
-    &__regions-list {
-        list-style: none;
-        padding: 0;
-        margin: $space 0 $space 0;
-    }
-
-    &__regions-list-item {
-        border-bottom: 1px solid $color-border-light;
-
-        &:last-child {
-            border-bottom: 0;
-        }
+    &__countries-list {
+        margin-bottom: $space * 3;
     }
 
     &__regions-list-link {

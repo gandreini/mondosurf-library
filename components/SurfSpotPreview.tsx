@@ -74,7 +74,11 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                     <MondoLink
                         itemProp="url"
                         className="ms-surf-spot-preview__link"
-                        href={`/surf-spot/${props.slug}/guide/${props.id}`}
+                        href={
+                            props.linkToGoodTimes
+                                ? `/surf-spot/${props.slug}/forecast/${props.id}`
+                                : `/surf-spot/${props.slug}/guide/${props.id}`
+                        }
                         data-test="surf-spot-preview-link"
                         onClickCallback={(e) => clickOnPreview(e)}>
                         {/* Breadcrumbs */}

@@ -132,7 +132,7 @@ $font-size-xxs: 12px;
 $font-size-xxxxl-fluid: fluid-size(48, 60); // Used for emoji
 $font-size-xxxl-fluid: fluid-size(36, 48); // clamp(32px, calc(1rem + 1.5vw), 48px);
 $font-size-xxl-fluid: fluid-size(28, 42); // clamp(26px, calc(1rem + 1.5vw), 42px);
-$font-size-xl-fluid: fluid-size(24, 34); // clamp(22px, calc(1rem + 1.5vw), 28px);
+$font-size-xl-fluid: fluid-size(22, 32); // clamp(22px, calc(1rem + 1.5vw), 28px);
 $font-size-l-fluid: fluid-size(18, 21); // clamp(17px, calc(1rem + 1.2vw), 24px);
 $font-size-m-fluid: fluid-size(16, 18); // clamp(14px, calc(1rem + 1.2vw), 18px);
 $font-size-s-fluid: fluid-size(14, 16); // clamp(1rem, calc(1rem + 1.2vw), 20px);
@@ -252,7 +252,8 @@ $header-height-desktop: 80px;
 // ------------------------------------ //
 // TAB BAR
 // ------------------------------------ //
-$mobile-tab-bar-color-background: $color-background-base;
+$tab-bar-height: 60px;
+$tab-bar-color-background: $color-background-base;
 
 // ------------------------------------ //
 // BREADCRUMBS
@@ -306,12 +307,12 @@ $z-index-floating-head: $z-index-base + 50;
 $z-index-spots-charts: $z-index-base + 60;
 $z-index-header: $z-index-base + 70;
 $z-index-chart-days-nav: $z-index-base + 80;
-$z-index-mobile-tab-bar: $z-index-base + 90;
-$z-index-map-page: $z-index-base + 100;
 $z-index-map-copyright: $z-index-base + 110;
 $z-index-filters-toggle: $z-index-base + 120;
 $z-index-map-center-button: $z-index-base + 130;
 $z-index-map-zoom-buttons: $z-index-base + 140;
+$z-index-mobile-tab-bar: $z-index-base + 145;
+$z-index-map-page: $z-index-base + 148;
 $z-index-filters: $z-index-base + 150;
 $z-index-modal: $z-index-base + 160;
 $z-index-debug: $z-index-base + 170;
@@ -366,7 +367,7 @@ $photo-gallery-thumbs-width: 140px;
 // ------------------------------------ //
 // TABS
 // ------------------------------------ //
-$tab-height: 44px;
+$tab-height: 2.75rem;
 
 // ------------------------------------ //
 // #MAP

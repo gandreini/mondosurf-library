@@ -17,7 +17,7 @@
         font-weight: $font-weight-bold;
         position: -webkit-sticky; /* For Safari */
         position: sticky;
-        top: 0;
+        top: $tab-height;
         background-color: $color-background-base;
         z-index: 10;
     }

@@ -13,7 +13,7 @@
     align-items: center;
     z-index: $z-index-filters-toggle;
     height: $map-control-size;
-    bottom: calc(var(--tab-bar-height) + #{$space});
+    bottom: calc(#{$tab-bar-height} + var(--ios-bottom-bar-margin) + #{$space}); // iOS spacing.
     right: $map-control-margin;
     padding: $map-control-margin;
     border-radius: $border-radius;

@@ -8,8 +8,8 @@
     #PROFILE FAVOURITES
 \* ------------------------------------ */
 .ms-favorites {
-    .ms-content {
-        margin-bottom: $space * 8;
+    &.ms-content {
+        padding-bottom: $space * 3;
     }
 }
 

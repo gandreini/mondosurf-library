@@ -11,11 +11,9 @@
     // Margin to add on top to avoid overlapping with the iPhone status bar.
     --ios-status-bar-margin: 0px;
     --ios-bottom-bar-margin: 0px;
-    --tab-bar-height: 60px;
 }
 
 .is-ios {
-    --ios-status-bar-margin: env(safe-area-inset-top);
-    --ios-bottom-bar-margin: env(safe-area-inset-bottom);
-    --tab-bar-height: calc(60px + var(--ios-bottom-bar-margin));
+    --ios-status-bar-margin: 50px; // env(safe-area-inset-top);
+    --ios-bottom-bar-margin: 50px; // env(safe-area-inset-bottom);
 }

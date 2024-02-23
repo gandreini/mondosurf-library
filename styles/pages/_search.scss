@@ -9,22 +9,8 @@
 \* ------------------------------------ */
 .ms-search {
     &__form {
-        margin-bottom: $space * 2;
-    }
-
-    /* &__form-label {
-        display: block;
-        margin-bottom: $space * 2;
-    } */
-
-    &__content-no-search,
-    &__content-loading,
-    &__content-error,
-    &__content-no-results {
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: relative;
+        margin-bottom: $space * 3;
     }
 }
 

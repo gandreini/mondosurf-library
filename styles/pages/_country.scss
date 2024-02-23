@@ -8,6 +8,8 @@
    #SINGLE-COUNTRY
 \* ------------------------------------ */
 .ms-country {
+    overflow-x: hidden;
+    overflow-y: scroll;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -29,7 +31,7 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: var(--tab-bar-height);
+    bottom: $tab-bar-height;
     display: flex;
     flex-direction: column;
 

@@ -7,11 +7,20 @@
 /* ------------------------------------ *\
    #LAYOUT
 \* ------------------------------------ */
-.ms-root,
-.ms-wrapper {
+.ms-root {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.ms-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    height: 100%;
+    padding-top: var(--ios-status-bar-margin);
+    padding-bottom: var(--ios-bottom-bar-margin);
+    box-sizing: border-box;
     // border: 2px solid red;
 }
 
@@ -20,42 +29,23 @@
     flex-direction: column;
     flex-grow: 2;
     z-index: $z-index-ms;
-    // margin-bottom: var(--tab-bar-height);
-    padding-bottom: var(--tab-bar-height);
+    padding-bottom: $tab-bar-height;
     overflow-y: auto;
     background-color: $color-background-base;
     // border: 2px solid gold;
 }
 
-/* .ms-content-wrapper {
-    position: relative;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    // border: 2px solid pink;
-} */
-
 .ms-content {
-    flex-grow: 1;
+    flex-grow: 2;
     display: flex;
     flex-direction: column;
     position: relative;
     max-width: $page-max-width;
-    margin: $space * 3 auto;
+    margin-top: $space * 3;
     width: 100%;
     //padding: calc(#{$space} * 1.5 + var(--ios-status-bar-margin)) 0 $space * 1.5
     //     0; // iOS spacing.
-    // border: 2px solid aqua;
-}
-
-.ms-mobile-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    // margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 var(--tab-bar-height) 0; // iOS spacing.
-    margin: calc(#{$mobile-top-margin} + var(--ios-status-bar-margin)) 0 0 0; // iOS spacing.
-    width: 100%;
+    // border: 2px solid blue;
 }
 
 /* ------------------------------------ *\
@@ -69,25 +59,17 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-    .ms-footer {
+    /* .ms-footer {
         display: block;
-    }
-
-    /* Sticky footer */
-    .ms {
-        flex: 1 0 auto;
-        margin-bottom: 0;
-    }
-
-    /* .ms-content-wrapper {
-        // flex: 1 0 auto;
     } */
 
-    .ms-content {
-        margin: 0 auto $space * 10 auto;
-    }
+    /* Sticky footer */
+    /* .ms {
+        flex: 1 0 auto;
+        margin-bottom: 0;
+    } */
 
-    .ms-footer {
-        // flex-shrink: 0;
-    }
+    /* .ms-content {
+        margin: 0 auto $space * 10 auto;
+    } */
 }

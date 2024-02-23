@@ -14,7 +14,7 @@
         top: 0;
         left: 0;
         right: 0;
-        bottom: var(--tab-bar-height);
+        bottom: $tab-bar-height;
         height: auto;
     }
 
@@ -31,7 +31,7 @@
 }
 
 /* ------------------------------------ *\
-   #LOADING-CONTENT
+   #CONTENT
 \* ------------------------------------ */
 .ms-map {
     &__content {
@@ -42,38 +42,12 @@
         top: 0;
         left: 0;
         right: 0;
-        bottom: var(--tab-bar-height);
+        bottom: calc(#{$tab-bar-height} + var(--ios-bottom-bar-margin)); // iOS spacing.
         height: auto;
         z-index: $z-index-map-page;
 
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-}
-
-/* ------------------------------------ *\
-   #MEDIA-QUERIES
-\* ------------------------------------ */
-@media all and (min-width: $breakpoint-desktop) {
-    /* Body class */
-    .page-template-template-map {
-        .ms-header {
-            display: block;
-        }
-    }
-
-    .ms-map {
-        .ms-map-global {
-            top: $header-height-desktop;
-            bottom: 0;
-        }
-    }
-
-    .ms-map {
-        &__content {
-            top: $header-height-desktop;
-            bottom: 0;
-        }
     }
 }

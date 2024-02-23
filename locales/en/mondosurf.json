@@ -597,7 +597,7 @@
     "empty": "Looking for a surf spot?\nStart writing the name in the field above!",
     "no_results_emoji": "🧟",
     "no_results": "There are no surf spots corresponding to your search.\nTry another search!",
-    "error": "Ops, there was some sort of error, pleas try  reloading the page."
+    "error": "Ops, there was some sort of error, please try reloading the page."
   },
   "months_short": {
     "1": "Jan",
