@@ -41,7 +41,7 @@
     flex-direction: column;
     position: relative;
     max-width: $page-max-width;
-    margin-top: $space * 3;
+    margin: $space * 3 auto 0 auto;
     width: 100%;
     //padding: calc(#{$space} * 1.5 + var(--ios-status-bar-margin)) 0 $space * 1.5
     //     0; // iOS spacing.
@@ -59,15 +59,19 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-    /* .ms-footer {
+    .ms {
+        // padding-bottom: 0;
+    }
+
+    .ms-footer {
         display: block;
-    } */
+    }
 
     /* Sticky footer */
-    /* .ms {
+    .ms {
         flex: 1 0 auto;
         margin-bottom: 0;
-    } */
+    }
 
     /* .ms-content {
         margin: 0 auto $space * 10 auto;

@@ -404,6 +404,7 @@
   "pro": {
     "yearly": "Yearly",
     "monthly": "Monthly",
+    "notset": "Missing info",
     "slash_year": "/year",
     "slash_month": "/month",
     "yearly_saving": "save 16%",
