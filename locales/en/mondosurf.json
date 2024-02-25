@@ -75,7 +75,7 @@
     "profile": "Profile",
     "info": "Info",
     "forecast": "Forecast",
-    "good_times": "Good Times",
+    "good_times": "Good Surf",
     "forecast_edit": "Forecast edit",
     "near_spots": "Near spots",
     "videos": "Video",
@@ -232,7 +232,7 @@
     },
     "near_spots_forecast": {
       "title": "Surf spots around you",
-      "text": "Check out the next Good Times near you, or explore nearby surf spots",
+      "text": "Check out the next Good Surf near you, or explore nearby surf spots",
       "button": "See local forecast",
       "loading_geolocation": "Retrieving your location",
       "loading_spots": "Looking for spots around you",
