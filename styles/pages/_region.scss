@@ -103,7 +103,7 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-    .ms-region {
+    .is-web .ms-region {
         padding: 0 0 $space * 8 0;
     }
 }

@@ -132,7 +132,7 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-    .ms-country {
+    .is-web .ms-country {
         padding: 0 0 $space * 8 0;
     }
     /* .ms-country {

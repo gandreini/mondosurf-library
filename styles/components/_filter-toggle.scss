@@ -61,7 +61,7 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-    .ms-filter-toggle {
+    .is-web .ms-filter-toggle {
         bottom: $space;
     }
 }

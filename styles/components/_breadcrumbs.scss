@@ -80,7 +80,7 @@
 @media all and (min-width: $breakpoint-desktop) {
     .ms-breadcrumbs {
         display: block;
-        margin: $space * 3 0 $space * 2 0;
+        margin: 0 0 $space * 2 0;
         padding: 0 0 $space * 1.5 0;
         border-bottom: 1px solid $color-border-normal;
 
@@ -115,5 +115,9 @@
                 }
             }
         }
+    }
+
+    .is-web .ms-breadcrumbs {
+        margin: $space * 3 0 $space * 2 0;
     }
 }
