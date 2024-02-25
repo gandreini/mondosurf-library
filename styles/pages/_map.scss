@@ -51,3 +51,15 @@
         justify-content: center;
     }
 }
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .is-web {
+        .ms-map__content {
+            top: $header-height-desktop;
+            bottom: 0;
+        }
+    }
+}
