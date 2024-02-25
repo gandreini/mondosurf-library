@@ -14,6 +14,6 @@
 }
 
 .is-ios {
-    --ios-status-bar-margin: 50px; // env(safe-area-inset-top);
-    --ios-bottom-bar-margin: 50px; // env(safe-area-inset-bottom);
+    --ios-status-bar-margin: env(safe-area-inset-top);
+    --ios-bottom-bar-margin: env(safe-area-inset-bottom);
 }
