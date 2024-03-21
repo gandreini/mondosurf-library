@@ -269,22 +269,22 @@
       "register": {
         "text": "Register to Mondo Surf and get full access to:",
         "button_text_1": "Register to Mondo Surf",
-        "button_text_2": "and start your 30 days free trial"
+        "button_text_2": "and start your {{duration}} days free trial"
       },
       "trial": {
         "icon": "🏄‍♀️",
         "title": "Want to surf more?",
         "text": "Unlock <strong>Mondo Surf Pro</strong>\nand get full access to:",
-        "button_text_1": "Start 30 days free trial",
+        "button_text_1": "Start {{duration}} days free trial",
         "button_text_2": "No credit card required",
         "sub_text": "Already a member?"
       },
       "pro": {
         "icon": "🏄‍♀️",
         "title": "Subscribe to\nMondo Surf Pro",
-        "text_expired": "Your 30 days trial period has expired, subscribe to the paid membership to keep using the Pro features.",
+        "text_expired": "Your trial period has expired, subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_days": "Your trial period will expire in {{days}} days. Subscribe to the paid membership to keep using the Pro features.",
-        "text_expiring_in_hours": "Your 30 days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
+        "text_expiring_in_hours": "Your {{duration}} days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
         "button_text_1": "Get Pro",
         "button_text_2": "Starting at {{price}}/month",
         "sub_text": "Cancel anytime"
@@ -409,7 +409,7 @@
     "slash_month": "/month",
     "yearly_saving": "save 16%",
     "get_mondo_pro": "Subscribe to Mondo Surf Pro",
-    "start_trial": "Start your 30 day trial",
+    "start_trial": "Start your {{duration}} day trial",
     "start_trial_modal_text": "Get full access to all the Pro membership features for free!",
     "become_pro": "Become a Pro member",
     "text_1": "Pro members exclusive features:",
@@ -418,7 +418,7 @@
     "trial_membership": "Pro membership (currently in trial)",
     "subscription": "Subscription",
     "your_current_plan": "Your current plan",
-    "switch_to_trial": "Start the 30 days free trial to use all the features of Mondo Surf Pro.",
+    "switch_to_trial": "Start the {{duration}} days free trial to use all the features of Mondo Surf Pro.",
     "switch_to_pro": "Switch to Pro to use all the features of Mondo Surf Pro.",
     "currently_trial": "Currently in trial",
     "trial_expires_on": "Trial expires on",
@@ -434,8 +434,8 @@
     "delete_account_toast_success": "Account deletion request successfully sent. Your account will be deleted within 24 hours.",
     "delete_account_toast_error": "Error while sending your account deletion request, please try again later or contact us at hello@mondo.surf",
     "already_owner_toast": "It seems that you already own this product: try to relaunch the app",
-    "pro_button_text_1": "Log In or Register to start your 30 days free trial",
-    "pro_button_text_2": "Start your 30 days free trial",
+    "pro_button_text_1": "Log In or Register to start your {{duration}} days free trial",
+    "pro_button_text_2": "Start your {{duration}} days free trial",
     "features_list": {
       "icon_1": "🌬",
       "text_1": "7 days forecast",
@@ -448,7 +448,7 @@
     },
     "login_modal": {
       "trial_title": "Log In or Register",
-      "trial_text": "Please Log In or Register to start your 30 days free trial",
+      "trial_text": "Please Log In or Register to start your {{duration}} days free trial",
       "automatic_trial_title": "Log In or Register",
       "automatic_trial_text": "Please Log In or Register to use all the features of Mondo Surf"
     },
@@ -458,7 +458,7 @@
       "button_1": "Start 30 days free trial",
       "button_2": "No credit card required",
       "smalltext_1": "By starting the trial you will access all the Pro features of Mondo Surf for 30 days for free.",
-      "smalltext_2": "After 30 days you can choose to pay for the yearly subscription ({{price_year}}/year), the monthly subscription ({{price_month}}/month), or let the trial period end without renewing your subscription.",
+      "smalltext_2": "After your trial expires you can choose to pay for the yearly subscription ({{price_year}}/year), the monthly subscription ({{price_month}}/month), or let the trial period end without renewing your subscription.",
       "toast_success": "Trial started! Welcome to Mondo Surf Pro!",
       "toast_error": "Something went wrong while activating your trial. Please contact us at hello@mondo.surf",
       "text_error": "Something went wrong while activating your trial. Check your profile plan to verify if the trial is already active."
@@ -466,7 +466,7 @@
     "pro_modal": {
       "text_1": "Subscribe today and unlock these features:",
       "text_2": "Cancel anytime.",
-      "subtext": "You already used the 30 day trial. To keep using all the Pro membership features please subscribe to the yearly or monthly plan. Your subscription will be renewed yearly or monthly depending your plan.\n\nThe Pro membership can be closed at any time, just send an email to hello@mondo.surf.",
+      "subtext": "You already used the free trial. To keep using all the Pro membership features please subscribe to the yearly or monthly plan. Your subscription will be renewed yearly or monthly depending your plan.\n\nThe Pro membership can be closed at any time, just send an email to hello@mondo.surf.",
       "already_pro": "You're already a Pro member, no need to purchase a subscription. Enjoy your Mondo Surf Pro membership!",
       "ios_inconsistency_1": "Sorry, we found some inconsistencies in your profile.\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at",
       "ios_inconsistency_2": "and we'll provide some support.",

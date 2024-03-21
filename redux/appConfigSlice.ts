@@ -16,6 +16,7 @@ export interface IAppConfig {
     latest_version: string;
     latest_version_progressive: number;
     automatic_trial: boolean;
+    trial_duration: number;
     tutorial_video_url_google_cal: string;
     tutorial_video_url_apple_cal: string;
 }
@@ -32,6 +33,7 @@ const initialState: IAppConfig = {
     latest_version: "",
     latest_version_progressive: 0,
     automatic_trial: false,
+    trial_duration: 30,
     tutorial_video_url_google_cal: "",
     tutorial_video_url_apple_cal: ""
 };

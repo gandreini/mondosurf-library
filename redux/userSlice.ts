@@ -27,6 +27,7 @@ export interface IUserSliceValue {
     subscriptionExpiration: number;
     subscriptionDuration: 'notset' | 'yearly' | 'monthly';
     trialActivation: number;
+    trialDuration: number;
     trialBurned: boolean;
 }
 
@@ -56,6 +57,7 @@ const initialState: IUserSliceValue = {
     subscriptionExpiration: -1,
     subscriptionDuration: 'notset',
     trialActivation: -1,
+    trialDuration: 30,
     trialBurned: false
 };
 
@@ -155,6 +157,9 @@ export const userSlice = createSlice({
         setTrialActivation: (state, action) => {
             return { ...state, trialActivation: action.payload };
         },
+        setTrialDuration: (state, action) => {
+            return { ...state, trialDuration: action.payload };
+        },
         setTrialBurned: (state, action) => {
             return { ...state, trialBurned: action.payload };
         },
@@ -216,6 +221,7 @@ export const { setLogin,
     setSubscriptionExpiration,
     setTrialBurned,
     setTrialActivation,
+    setTrialDuration,
     setSubscriptionDuration,
     logOut } = userSlice.actions;
 export default userSlice.reducer;
