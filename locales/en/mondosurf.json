@@ -91,7 +91,8 @@
     "search_spot": "Search surf spot",
     "and": "and",
     "move": "move",
-    "today": "today"
+    "today": "today",
+    "browse_spots": "Browse spots"
   },
   "app": {
     "offline_icon": "🤷",
@@ -259,7 +260,6 @@
       "no_favourites_text": "No favorite spots yet?",
       "no_favourites_subtext_1": "Browse Mondo and click on the icon",
       "no_favourites_subtext_2": "to add all your local spots to your favorites",
-      "no_favourites_button": "Browse the spots",
       "title": "Your forecast",
       "no_good_times_icon": "🧘‍♀️",
       "no_good_times_text": "Sorry, no good surf forecast for your favorite spots",
@@ -267,17 +267,12 @@
     },
     "pro_cta": {
       "register": {
-        "text": "Register to Mondo Surf and get full access to:",
-        "button_text_1": "Register to Mondo Surf",
-        "button_text_2": "and start your {{duration}} days free trial"
-      },
-      "trial": {
         "icon": "🏄‍♀️",
         "title": "Want to surf more?",
-        "text": "Unlock <strong>Mondo Surf Pro</strong>\nand get full access to:",
-        "button_text_1": "Start {{duration}} days free trial",
-        "button_text_2": "No credit card required",
-        "sub_text": "Already a member?"
+        "text": "Register to Mondo Surf and get full access to:",
+        "button_text_1": "Register to Mondo Surf",
+        "button_text_2": "and start your {{duration}} days free trial",
+        "sub_text": "Already a member? Click to log in"
       },
       "pro": {
         "icon": "🏄‍♀️",
@@ -480,7 +475,7 @@
     "subscription_confirmed": {
       "success_title": "Welcome to Mondo Surf Pro",
       "cancel_title": "Subscription not completed",
-      "trial_started": "🎉 Your 30 days free trial has started!",
+      "trial_started": "🎉 Your {{duration}} days free trial has started!",
       "subscription_started": "🎉 Your subscription was confirmed!",
       "cancel_text_1": "🤔 Something went wrong. The subscription was not successful either for an error or because you didn't complete the process.",
       "cancel_text_2": "Please login to Mondo Surf or go back to the App to try subscribing to the Pro membership again.",

@@ -9,7 +9,7 @@
 \* ------------------------------------ */
 .ms-home-pro-cta {
     position: relative;
-    z-index: 1000;
+    // z-index: 1000;
     display: flex;
     justify-content: center;
     // padding: $space * 3 0 0 0;
@@ -24,14 +24,8 @@
         margin-right: $space * 2;
     }
 
-    .ms-emoji {
-    }
-
-    .ms-h2-title {
-    }
-
     .ms-body-text {
-        margin-bottom: $space * 5;
+        margin-bottom: $space * 2;
     }
 
     .ms-pro-features-list {
@@ -43,10 +37,11 @@
     }
 
     &__subtext {
-        margin-top: $space * 2;
+        margin-top: $space * 3;
     }
 
-    &__subtext-link {
+    &__subtext-link.ms-small-text {
+        color: var(--color-text-link);
         text-decoration: underline;
         cursor: pointer;
     }

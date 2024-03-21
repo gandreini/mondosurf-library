@@ -13,7 +13,6 @@ export interface IAppConfig {
     geolocationAuthorized: boolean;
     latest_version: string;
     latest_version_progressive: number;
-    automatic_trial: boolean;
     trial_duration: number;
     tutorial_video_url_google_cal: string;
     tutorial_video_url_apple_cal: string;
