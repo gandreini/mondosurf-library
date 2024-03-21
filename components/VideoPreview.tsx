@@ -6,7 +6,7 @@ const VideoPreview: React.FC<IVideoPreview> = (props: IVideoPreview) => {
     return (
         <>
             {props.url && !props.loading && (
-                <MondoLink href={props.url} target="_blank" className="ms-video-preview" rel="noreferrer">
+                <MondoLink href={props.url} target="_blank" className="ms-video-preview" rel="nofollow">
                     {props.thumb && (
                         <div
                             className="ms-video-preview__thumb"

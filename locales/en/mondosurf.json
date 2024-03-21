@@ -301,11 +301,11 @@
     "image": "/images/seo/og-image.png",
     "home": {
       "title": "Mondo - Surf spots atlas and wave forecast calendar",
-      "description": "Explore the most comprehensive atlas of surf spots on Mondo Surf. Receive accurate wave forecasts and integrate them into your calendar, like Google or Apple Calendar."
+      "description": "Explore the most comprehensive atlas of surf spots. Receive accurate wave forecasts and integrate them into your calendar, like Google or Apple Calendar."
     },
     "countries": {
       "title": "Surf spot guides and forecasts - 🌊 Mondo",
-      "description": "Dive into Mondo Surf's extensive list of surf spots. Explore detailed guides and accurate forecasts for top surf spots around the world."
+      "description": "Dive into Mondo's extensive list of surf spots. Explore detailed guides and accurate forecasts for top surf spots around the world."
     },
     "country_regions": {
       "title": "{{country}} - Best surf regions - 🌊 Mondo",
@@ -329,11 +329,11 @@
     },
     "spot_guide": {
       "title": "{{spot}} - Surf spot guide - 🌊 Mondo",
-      "description": "Discover everything about surfing in {{spot}}. Our guide covers spot characteristics, location, bottom, surf quality, crowd factor, and expert advice for surfers."
+      "description": "Discover everything about surfing in {{spot}} including location, bottom, surf quality, crowd factor, and expert advice for surfers."
     },
     "spot_good_times": {
-      "title": "{{spot}} - Best surfing times - 🌊 Mondo",
-      "description": "Discover when to catch the best waves at {{spot}}. Our forecast highlights the upcoming good surf times, and you can add them to your calendar."
+      "title": "{{spot}} - Good surf next 7 days - 🌊 Mondo",
+      "description": "Discover when to catch the best waves at {{spot}}. Our forecast highlights the upcoming good surf, and you can add them to your calendar."
     },
     "spot_full_forecast": {
       "title": "{{spot}} - Hourly surf forecast - 🌊 Mondo",
@@ -341,7 +341,7 @@
     },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - 🌊 Mondo",
-      "description": "Explore surf spots located near {{spot}}. Each nearby surf spot comes with complete guides, optimal surf times, and accurate swell and wind forecasts."
+      "description": "Explore surf spots near {{spot}}. Each nearby surf spot comes with complete guides, good surf, and accurate swell and wind forecasts."
     },
     "spot_video": {
       "title": "{{spot}} - Surf videos - 🌊 Mondo",

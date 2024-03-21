@@ -129,6 +129,10 @@ $mapToolHeight: 600px;
         }
     }
 
+    &__ai-text-counter {
+        margin-bottom: $space * 2;
+    }
+
     &__ai-text-form-buttons {
         display: flex;
         flex-direction: row;
