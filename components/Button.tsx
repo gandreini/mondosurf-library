@@ -1,6 +1,6 @@
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
-import { IIcon } from 'mondosurf-library/modelStrict/iIcon';
+import { IIcon } from 'mondosurf-library/model/iIcon';
 import MondoLink from 'proxies/MondoLink';
 
 interface IButton {

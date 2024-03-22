@@ -5,7 +5,7 @@ import DirectionArrow from 'mondosurf-library/components/DirectionArrow';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import Icon from 'mondosurf-library/components/Icon';
 import { directionIsWithinRange } from 'mondosurf-library/helpers/forecast.helpers';
-import { ISurfForecastRow } from 'mondosurf-library/modelStrict/iSurfSpot';
+import { ISurfForecastRow } from 'mondosurf-library/model/iSurfSpot';
 
 interface IForecastRow {
     row: ISurfForecastRow;

@@ -8,6 +8,7 @@ export default interface IRegion {
     country_id: number;
     country_name: string;
     country_slug: string;
+    countrySlug: string;
     number_of_spots: number;
     best_months?: number[];
     wetsuit?: number[];
@@ -19,5 +20,5 @@ export default interface IRegion {
     wind_speed?: number[];
     spots_direction?: number[];
     spots_bottom?: number[];
-    surf_spots?: ISurfSpotPreview[];
+    surf_spots: ISurfSpotPreview[];
 }

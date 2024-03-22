@@ -6,7 +6,7 @@ import SurfSpotDirection from 'mondosurf-library/components/SurfSpotDirection';
 import SurfSpotPreviewQualityIcon from 'mondosurf-library/components/SurfSpotPreviewQualityIcon';
 import SurfSpotPreviewQualityRow from 'mondosurf-library/components/SurfSpotPreviewQualityRow';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
-import ISurfSpotPreview from 'mondosurf-library/modelStrict/iSurfSpotPreview';
+import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';

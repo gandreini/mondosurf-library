@@ -7,7 +7,7 @@ import toastService from 'features/toast/toastService';
 import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
 import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 import IGoodTime from "mondosurf-library/model/iGoodTime";
-import { ISurfSpotForecast } from "mondosurf-library/modelStrict/iSurfSpot";
+import { ISurfSpotForecast } from "mondosurf-library/model/iSurfSpot";
 import { store } from "mondosurf-library/redux/store";
 
 /**

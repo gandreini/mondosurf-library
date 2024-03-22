@@ -1,4 +1,4 @@
-import IRegionPreview from 'mondosurf-library/modelStrict/iRegionPreview';
+import IRegionPreview from 'mondosurf-library/model/iRegionPreview';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 

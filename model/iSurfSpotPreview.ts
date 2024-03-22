@@ -1,7 +1,12 @@
 export default interface ISurfSpotPreview {
-    id?: number;
-    name?: string;
-    slug?: string;
+    id: number;
+    name: string;
+    slug: string;
+    country: string;
+    countrySlug: string;
+    region: string;
+    regionSlug: string;
+    flag?: string;
     direction?: string;
     bottom?: string;
     swell_direction_min?: number;
@@ -10,12 +15,15 @@ export default interface ISurfSpotPreview {
     wind_direction_max?: number;
     size?: number[];
     tide?: string[];
-    forecast_is_good?: number;
-    flag?: string;
-    country?: string;
-    region?: string;
+    forecast_is_good?: number; // Deprecated
+    forecast_is_good_long?: number;
+    forecast_is_good_short?: number;
     showBreadcrumbs?: boolean;
+    showMetadata?: boolean;
+    showDirection?: boolean;
+    showForecast?: boolean;
     loading?: boolean;
     inFavourites?: boolean;
+    linkToGoodTimes?: boolean;
     context?: 'homeNearSpots' | 'subscriptionConfirmed' | 'region' | 'spotNearSpots' | 'search';
 }

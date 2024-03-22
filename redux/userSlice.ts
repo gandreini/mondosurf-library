@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import ISurfSpotPreview from 'mondosurf-library/modelStrict/iSurfSpotPreview';
+import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 
 export interface IUserSliceValue {
     logged: 'yes' | 'no' | 'checking';
@@ -28,7 +28,6 @@ export interface IUserSliceValue {
     subscriptionDuration: 'notset' | 'yearly' | 'monthly';
     trialActivation: number;
     trialDuration: number;
-    trialBurned: boolean;
 }
 
 const initialState: IUserSliceValue = {
@@ -57,8 +56,7 @@ const initialState: IUserSliceValue = {
     subscriptionExpiration: -1,
     subscriptionDuration: 'notset',
     trialActivation: -1,
-    trialDuration: 30,
-    trialBurned: false
+    trialDuration: 30
 };
 
 export const userSlice = createSlice({
@@ -160,9 +158,6 @@ export const userSlice = createSlice({
         setTrialDuration: (state, action) => {
             return { ...state, trialDuration: action.payload };
         },
-        setTrialBurned: (state, action) => {
-            return { ...state, trialBurned: action.payload };
-        },
         logOut: (state) => {
             return {
                 ...state,
@@ -189,8 +184,7 @@ export const userSlice = createSlice({
                 stripeSubscriptionId: '',
                 subscriptionExpiration: -1,
                 subscriptionDuration: 'notset',
-                trialActivation: -1,
-                trialBurned: false
+                trialActivation: -1
             }
         }
     }
@@ -219,7 +213,6 @@ export const { setLogin,
     setProductId,
     setStripeSubscriptionId,
     setSubscriptionExpiration,
-    setTrialBurned,
     setTrialActivation,
     setTrialDuration,
     setSubscriptionDuration,

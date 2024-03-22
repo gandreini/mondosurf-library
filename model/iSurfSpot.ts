@@ -14,10 +14,13 @@ export interface ISurfSpot {
     country_name: string;
     country_id: string;
     country_slug: string;
+    forecast_update: boolean;
     last_update: number;
     hide_location: boolean;
     lat: number;
     lng: number;
+    lat_parking?: number;
+    lng_parking?: number;
     description?: string;
     timezone: string;
     calendar_url: string;
@@ -48,14 +51,16 @@ export interface ISurfSpot {
     hide_secondary_swell?: boolean;
     spot_forecast?: ISurfSpotForecast;
     daily_forecast?: ISurfSpotDailyForecast;
-    forecast_conditions_swell_direction_min?: number;
-    forecast_conditions_swell_direction_max?: number;
-    forecast_conditions_swell_height_min?: number;
+    forecast_conditions_swell_best_direction?: number;
+    forecast_conditions_swell_direction_min: number;
+    forecast_conditions_swell_direction_max: number;
+    forecast_conditions_swell_height_min: number;
     forecast_conditions_swell_height_max?: number;
-    forecast_conditions_swell_period_min?: number;
-    forecast_conditions_wind_direction_min?: number;
-    forecast_conditions_wind_direction_max?: number;
+    forecast_conditions_swell_period_min: number;
+    forecast_conditions_wind_direction_min: number;
+    forecast_conditions_wind_direction_max: number;
     forecast_conditions_wind_speed_max?: number;
+    forecast_conditions_on_shore_wind_speed_max?: number;
 }
 
 export interface ISurfSpotWebcam {
@@ -76,6 +81,7 @@ export interface ISurfSpotForecast {
     days: ISurfSpotForecastDay[];
     min_max_weekly: ISurfSpotForecastMinMax;
     compressed_days: ISurfSpotCompressedDays;
+    last_forecast_update: number;
 }
 
 export interface ISurfSpotForecastTideWeekly {
@@ -107,10 +113,37 @@ export interface ISurfSpotForecastDay extends ISurfSpotDayForecastBasics {
     civil_dusk: string;
     tide: ISurfSpotForecastDayTide;
     good: number;
+    hourly_data: ISurfForecastRow[];
 }
 
 export interface ISurfSpotCompressedDays extends ISurfSpotDayForecastBasics {
+    days: ICompressedData[];
 }
+
+export interface ICompressedData {
+    time: string;
+    civil_dawn: string;
+    sunrise: string;
+    sunset: string;
+    civil_dusk: string;
+    good: number;
+    compressed_data: ISurfForecastRow[];
+}
+
+export interface ISurfForecastRow {
+    time: string;
+    is_good: number;
+    is_light: boolean;
+    swell_direction: number;
+    swell_period: number;
+    swell_height: number;
+    secondary_swell_direction: number;
+    secondary_swell_period: number;
+    secondary_swell_height: number;
+    wind_direction: number;
+    wind_speed: number;
+}
+
 
 export interface ISurfSpotForecastDayTide {
     high_low: ISurfSpotForecastDayTideHighLow[];
