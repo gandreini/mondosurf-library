@@ -12,7 +12,6 @@ export interface IUserSliceValue {
     approvedTerms: boolean;
     authorizedTracking: boolean;
     registrationDate: number;
-    favoriteSpotsIds: number[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
     favoriteSpots: ISurfSpotPreview[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
     timezoneId: string;
     timezoneUTC: number | null;
@@ -41,7 +40,6 @@ const initialState: IUserSliceValue = {
     approvedTerms: true,
     authorizedTracking: true,
     registrationDate: -1,
-    favoriteSpotsIds: null,
     favoriteSpots: null,
     timezoneId: '',
     timezoneUTC: null,
@@ -97,13 +95,6 @@ export const userSlice = createSlice({
         },
         setRegistrationDate: (state, action) => {
             return { ...state, registrationDate: action.payload };
-        },
-        setFavoriteSpotsIds: (state, action) => {
-            if (action.payload && action.payload != null && Array.isArray(action.payload) && action.payload.length > 0) {
-                return { ...state, favoriteSpotsIds: action.payload };
-            } else {
-                return { ...state, favoriteSpotsIds: [] };
-            }
         },
         setFavoriteSpots: (state, action) => {
             if (action.payload && action.payload != null && Array.isArray(action.payload) && action.payload.length > 0) {
@@ -171,7 +162,7 @@ export const userSlice = createSlice({
                 approvedTerms: true,
                 authorizedTracking: true,
                 registrationDate: -1,
-                favoriteSpotsIds: null,
+                favoriteSpots: null,
                 timezoneId: '',
                 timezoneUTC: null,
                 timezoneDST: null,
@@ -200,7 +191,6 @@ export const { setLogin,
     setApprovedTerms,
     setAuthorizedTracking,
     setRegistrationDate,
-    setFavoriteSpotsIds,
     setFavoriteSpots,
     setTimezoneId,
     setTimezoneUTC,
