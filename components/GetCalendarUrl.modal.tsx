@@ -1,6 +1,6 @@
 import { postApiAuthCall } from 'communication/api';
 import modalService from 'features/modal/modalService';
-import toastService from 'features/toast/toastService';
+import toastService from 'mondosurf-library/services/toastService';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
