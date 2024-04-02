@@ -1,4 +1,4 @@
-import FavoriteAddButton from 'features/favorites/FavoriteAddButton';
+import FavoriteAddButton from 'mondosurf-library/components/FavoriteAddButton';
 import { returnTideDetails } from 'features/surfSpot/surfSpot.helpers';
 import { returnBottomLabel } from 'helpers/labels.helpers';
 import Icon from 'mondosurf-library/components/Icon';

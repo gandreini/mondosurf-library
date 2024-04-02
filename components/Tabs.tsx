@@ -33,7 +33,7 @@ const Tabs: React.FC<ITabs> = (props: ITabs) => {
                                     {/* Active link */}
                                     {!value.disabled && (
                                         <MondoLink
-                                            key={key.toString()}
+                                            customKey={key.toString()}
                                             className={classes(key)}
                                             {...(value.dataTest && {
                                                 'data-test': value.dataTest

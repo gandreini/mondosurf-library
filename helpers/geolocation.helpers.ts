@@ -1,5 +1,5 @@
 import { FAKE_USER_LAT, FAKE_USER_LNG } from "constants/localConstants";
-import { getLocalStorageDataWeb, setLocalStorageDataWeb } from "mondosurf-library/helpers/localStorage.helpers";
+import { getLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { geolocationIsAuthorized } from "mondosurf-library/redux/appConfigSlice";
 import { store } from "mondosurf-library/redux/store";
 
@@ -37,7 +37,7 @@ export function getUserPositionWeb(): Promise<GeolocationPosition> {
 
     geoPromise = new Promise((resolve, reject) =>
         navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
-            setLocalStorageDataWeb('geolocation_authorization', 'true');
+            setLocalStorageData('geolocation_authorization', 'true');
             store.dispatch(geolocationIsAuthorized());
             resolve(pos);
         }, reject, {
@@ -55,8 +55,9 @@ export function getUserPositionWeb(): Promise<GeolocationPosition> {
  * @returns {void}
  */
 export const retrieveGeolocationAuthWeb = () => {
-    const geolocationAuth = getLocalStorageDataWeb('geolocation_authorization');
-    if (geolocationAuth !== null && geolocationAuth === 'true') {
-        store.dispatch(geolocationIsAuthorized());
-    }
+    getLocalStorageData('geolocation_authorization').then(geolocationAuth => {
+        if (geolocationAuth !== null && geolocationAuth === 'true') {
+            store.dispatch(geolocationIsAuthorized());
+        }
+    });
 }
