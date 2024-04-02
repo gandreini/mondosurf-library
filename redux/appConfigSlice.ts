@@ -17,6 +17,7 @@ export interface IAppConfig {
     trial_duration: number;
     tutorial_video_url_google_cal: string;
     tutorial_video_url_apple_cal: string;
+    device_id: string;
 }
 
 const initialState: IAppConfig = {
@@ -32,7 +33,8 @@ const initialState: IAppConfig = {
     latest_version_progressive: 0,
     trial_duration: 30,
     tutorial_video_url_google_cal: "",
-    tutorial_video_url_apple_cal: ""
+    tutorial_video_url_apple_cal: "",
+    device_id: ""
 };
 
 export const appConfigSlice = createSlice({
@@ -50,9 +52,13 @@ export const appConfigSlice = createSlice({
         },
         updateStatus: (state, action) => {
             return { ...state, status: action.payload.status };
-        }
+        },
+        updateDeviceId: (state, action) => {
+            return { ...state, device_id: action.payload };
+        },
+
     }
 })
 
-export const { updateAppConfig, updateStatus, updateAppPlatform, geolocationIsAuthorized } = appConfigSlice.actions;
+export const { updateAppConfig, updateStatus, updateAppPlatform, geolocationIsAuthorized, updateDeviceId } = appConfigSlice.actions;
 export default appConfigSlice.reducer;
