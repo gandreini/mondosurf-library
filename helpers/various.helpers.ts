@@ -52,22 +52,6 @@ export function oneDecimal(numberToFix: number): number {
 }
 
 /**
- * Copy to clipboard function only for web applications (non apps).
- * 
- * @param   {element} elementToGetStringId Id of the form element (like an input or textarea) to copy the text from.
- * @param   {Function} callbackFunction Callback function to be called after the text has been copied.
- */
-export function copyToClipboardWeb(textToCopy: string, callbackFunction?: Function): void {
-    navigator.clipboard.writeText(
-        textToCopy
-    ).then(function () {
-        if (callbackFunction) callbackFunction();
-    }, function () {
-        /* clipboard write failed */
-    });
-}
-
-/**
 * Function that send the cursor at the end of the input, when there's some text.
 *
 * @param   {HTMLInputElement} input Input field as HTML element.
