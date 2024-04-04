@@ -56,6 +56,16 @@
             &:hover {
                 color: var(--color-first);
             }
+
+            &:hover,
+            &:active,
+            &:active:focus,
+            &:focus:hover,
+            &:focus:hover,
+            &:focus {
+                background-color: transparent;
+                border: 0;
+            }
         }
     }
 
