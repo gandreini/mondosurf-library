@@ -1,6 +1,6 @@
 import { requestAccountVerificationEmail } from 'features/auth/auth.helpers';
-import i18n from 'i18next';
 import { TOAST_DURATION } from 'mondosurf-library/constants/constants';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 import toast from 'react-hot-toast';
 
 const toastService = {
@@ -50,7 +50,7 @@ const toastService = {
             (t) => (
                 <div>
                     <div>
-                        {i18n.t('mondosurf:toast.auth.verify_account') as string}
+                        {mondoTranslate('mondosurf:toast.auth.verify_account') as string}
 
                         <div className="ms-toast__buttons">
                             <button
@@ -60,7 +60,7 @@ const toastService = {
                                     e.preventDefault();
                                     e.stopPropagation();
                                 }}>
-                                {i18n.t('mondosurf:basics.close') as string}
+                                {mondoTranslate('mondosurf:basics.close') as string}
                             </button>
                             <button
                                 className="ms-toast__buttons-text-link"
@@ -70,7 +70,7 @@ const toastService = {
                                     e.preventDefault();
                                     e.stopPropagation();
                                 }}>
-                                {i18n.t('mondosurf:toast.auth.send_verification_email_button') as string}
+                                {mondoTranslate('mondosurf:toast.auth.send_verification_email_button') as string}
                             </button>
                         </div>
                     </div>
