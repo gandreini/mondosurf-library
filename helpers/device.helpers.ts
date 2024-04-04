@@ -27,13 +27,3 @@ export function isMobile(): boolean {
         return false;
     }
 }
-
-/**
- * Returns the type of platform that react is running on from Redux.
- * Values can be "web".
- * 
- * @returns {"web"} "web".
- */
-export function getPlatform(): "web" {
-    return "web";
-}

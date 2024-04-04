@@ -1,32 +1,37 @@
+'use client';
+
+import { getPlatform } from 'helpers/device.helpers';
 import { TOAST_DURATION } from 'mondosurf-library/constants/constants';
+import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
 import { Toaster } from 'react-hot-toast';
 
-interface IToast {
-    toasterPosition?: 'top-center' | 'bottom-left';
-}
+const Toast: React.FC = () => {
+    // Sets the position of the toast for larger screens
+    const toastPosition = typeof window !== 'undefined' && screenWiderThan(600) ? 'bottom-left' : 'top-center';
 
-const Toast: React.FC<IToast> = (props: IToast) => {
-    /**
-     * Returns the top position of the Toast.
-     */
+    // Returns the top position of the Toast
     const modalTopPosition = () => {
-        // Retrieves the CSS property "--ios-status-bar-margin".
-        const msWrapperElement = document.querySelector('.ms-wrapper');
-        const msWrapperStyle = msWrapperElement ? getComputedStyle(msWrapperElement) : null;
-        const cssIOSStatusBarMargin = msWrapperStyle
-            ? msWrapperStyle.getPropertyValue('--ios-status-bar-margin').trim()
-            : '0px';
+        if (typeof window !== 'undefined' && getPlatform() === 'ios') {
+            // Retrieves the CSS property "--ios-status-bar-margin".
+            const msWrapperElement = document.querySelector('.ms-wrapper');
+            const msWrapperStyle = msWrapperElement ? getComputedStyle(msWrapperElement) : null;
+            const cssIOSStatusBarMargin = msWrapperStyle
+                ? msWrapperStyle.getPropertyValue('--ios-status-bar-margin').trim()
+                : '0px';
 
-        if (cssIOSStatusBarMargin === '0' || cssIOSStatusBarMargin === '0px') {
-            return 20; // Hot Toast default.
+            if (cssIOSStatusBarMargin === '0' || cssIOSStatusBarMargin === '0px') {
+                return 20; // Hot Toast default
+            } else {
+                return cssIOSStatusBarMargin;
+            }
         } else {
-            return cssIOSStatusBarMargin;
+            return 20; // Hot Toast default
         }
     };
 
     return (
         <Toaster
-            position={props.toasterPosition}
+            position={toastPosition}
             reverseOrder={false}
             gutter={8}
             containerClassName=""
