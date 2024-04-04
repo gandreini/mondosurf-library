@@ -3,7 +3,7 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import GoodTimeShare from 'features/goodTime/GoodTimeShare';
 import modalService from 'features/modal/modalService';
-import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'helpers/labels.helpers';
+import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { extDayMonthFormat, hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
