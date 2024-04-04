@@ -1,4 +1,4 @@
-import { FAKE_USER_LAT, FAKE_USER_LNG } from "constants/localConstants";
+import { FAKE_USER_LAT, FAKE_USER_LNG } from "proxies/localConstants";
 import { getLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { geolocationIsAuthorized } from "mondosurf-library/redux/appConfigSlice";
 import { store } from "mondosurf-library/redux/store";
