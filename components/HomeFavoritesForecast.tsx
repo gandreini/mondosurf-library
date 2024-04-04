@@ -1,4 +1,4 @@
-import useAuthFetch from 'communication/useAuthFetch';
+import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import List from 'components/List';
 import { getPlatform, isApp } from 'helpers/device.helpers';
 import EmptyState from 'mondosurf-library/components/EmptyState';
@@ -59,7 +59,7 @@ const HomeFavoritesForecast: React.FC = () => {
 
     const [favouriteSpotsQuery, setFavoriteSpotsQuery] = useState('');
     const [goodTimesFiltered, setGoodTimesFiltered] = useState<IGoodTime[]>([]);
-    const fetchedFavoriteSpotsForecast = useAuthFetch(favouriteSpotsQuery, {}, true);
+    const fetchedFavoriteSpotsForecast = useAuthGetFetch(favouriteSpotsQuery, {}, true);
 
     const platform = getPlatform();
 

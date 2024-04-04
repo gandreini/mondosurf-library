@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 import { isDebug } from 'mondosurf-library/helpers/debug.helpers';
+import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 import { useEffect, useState } from "react";
 
 interface IAxiosState {
