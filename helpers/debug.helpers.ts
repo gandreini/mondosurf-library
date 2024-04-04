@@ -1,4 +1,4 @@
-import { DEBUG_MODE } from "constants/localConstants";
+import { DEBUG_MODE } from "proxies/localConstants";
 
 /**
  * Return true if the debug is active.

@@ -1,4 +1,4 @@
-import { DEBUG_MODE, DISABLE_TRACKING } from 'constants/localConstants';
+import { DEBUG_MODE, DISABLE_TRACKING } from 'proxies/localConstants';
 import { getPlatform } from 'helpers/device.helpers';
 import mixpanel from 'mixpanel-browser';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
