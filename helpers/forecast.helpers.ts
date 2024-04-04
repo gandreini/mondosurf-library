@@ -1,4 +1,4 @@
-import { postApiAuthCall } from 'communication/api';
+import { postApiAuthCall } from 'mondosurf-library/api/api';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';

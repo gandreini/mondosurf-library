@@ -1,4 +1,4 @@
-import { postApiAuthCall } from 'communication/api';
+import { postApiAuthCall } from 'mondosurf-library/api/api';
 import modalService from 'features/modal/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import Loader from 'mondosurf-library/components/Loader';

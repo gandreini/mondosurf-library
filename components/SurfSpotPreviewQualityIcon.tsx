@@ -1,7 +1,7 @@
 'use client';
 
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
-import useGetFetch from 'mondosurf-library/fetching/useGetFetch';
+import useGetFetch from 'mondosurf-library/api/useGetFetch';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { useEffect, useState } from 'react';
 
