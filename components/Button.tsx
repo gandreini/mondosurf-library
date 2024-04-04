@@ -13,6 +13,7 @@ interface IButton {
     icon?: IIcon['icon'];
     fullWidth?: boolean;
     loading?: boolean;
+    dataTest?: string;
 }
 
 const Button = (props: IButton) => {
@@ -32,14 +33,18 @@ const Button = (props: IButton) => {
     return (
         <>
             {props.url && (
-                <MondoLink className={returnClass()} href={props.url}>
+                <MondoLink className={returnClass()} href={props.url} dataTest={props.dataTest || undefined}>
                     {props.icon && <Icon icon={props.icon} />}
                     {!props.loading && <span className="ms-btn__label">{props.label}</span>}
                     {props.loading && <Loader size="small" />}
                 </MondoLink>
             )}
             {props.callback && (
-                <button type="submit" className={returnClass()} onClick={props.callback}>
+                <button
+                    type="submit"
+                    className={returnClass()}
+                    onClick={props.callback}
+                    data-test={props.dataTest || undefined}>
                     {props.icon && <Icon icon={props.icon} />}
                     {!props.loading && <span className="ms-btn__label">{props.label}</span>}
                     {props.loading && <Loader size="small" />}
