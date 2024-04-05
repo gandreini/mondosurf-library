@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import { revoke } from 'features/auth/auth.helpers';
+import { revoke } from 'mondosurf-library/helpers/auth.helpers';
 import Button from 'mondosurf-library/components/Button';
 import { RootState } from 'mondosurf-library/redux/store';
 import { mondoTranslate } from 'proxies/mondoTranslate';

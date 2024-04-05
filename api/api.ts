@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { refreshToken } from 'features/auth/auth.helpers';
+import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp } from 'helpers/device.helpers';
 import jwt_decode from 'jwt-decode';
