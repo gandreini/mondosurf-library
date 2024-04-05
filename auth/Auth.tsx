@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
-import { auth, mailCheck, requestPasswordResetEmailApi, userRegister } from 'features/auth/auth.helpers';
+import { auth, mailCheck, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import modalService from 'features/modal/modalService';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';

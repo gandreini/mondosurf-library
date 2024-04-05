@@ -1,0 +1,526 @@
+import axios from 'axios';
+import { AxiosResponse } from 'axios';
+import formurlencoded from 'form-urlencoded';
+import { getPlatform, isApp } from 'helpers/device.helpers';
+import { addDebugLogItem } from 'mondosurf-library/redux/debugSlice';
+import { store } from 'mondosurf-library/redux/store';
+import {
+    logOut,
+    setAccessToken,
+    setAccountType,
+    setAccountVerified,
+    setApprovedTerms,
+    setAuthorizedTracking,
+    setCapacitorRefreshToken,
+    setFavoriteSpots,
+    setLevel,
+    setLogin,
+    setProductId,
+    setRegistrationDate,
+    setStripeSubscriptionId,
+    setStripeUserId,
+    setSubscriptionDuration,
+    setSubscriptionExpiration,
+    setSurfboards,
+    setSurfingFrom,
+    setTimezoneDST,
+    setTimezoneId,
+    setTimezoneUTC,
+    setTrialActivation,
+    setTrialDuration,
+    setUserEmail,
+    setUserId,
+    setUserName
+} from 'mondosurf-library/redux/userSlice';
+import toastService from 'mondosurf-library/services/toastService';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { JWT_API_URL } from 'proxies/localConstants';
+import { deleteLocalStorageData, setLocalStorageData } from 'proxies/localStorage.helpers';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+
+/**
+ * Calls the API to check if the sent email is existing or not.
+ * If it is existing the user wants to login.
+ * It it is not existing the user wants to register.
+ *
+ * Endpoint: 'mail-check'
+ *
+ * @param   {string} email Email that must be checked to see if it exists.
+ * @returns {Promise} Response is true if the mail exists, false if it doesn't exist.
+ */
+export function mailCheck(email: string) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'mail-check',
+        data: formurlencoded({
+            email: email
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response: AxiosResponse) => {
+            if (response.status === 200) {
+                return response;
+            }
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+/**
+ * Calls the API to authorize the user, creating the auth and refresh tokens.
+ * Used to login the user.
+ *
+ * Endpoint: 'auth'
+ *
+ * @param   {string} email Email of the user.
+ * @param   {string} password Password.
+ * @param   {string} deviceId Unique id of the device.
+ * @returns {Promise} Response contains all the users's data if he was correctly logged in.
+ */
+export function auth(email: string, password: string, deviceId: string) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'auth',
+        data: formurlencoded({
+            email: email,
+            password: password,
+            device_id: deviceId,
+            platform: getPlatform()
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                updateUserStatus(response);
+                if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                return response;
+            } else {
+                store.dispatch(setLogin('no'));
+            }
+        })
+        .catch(function (error) {
+            store.dispatch(setLogin('no'));
+            throw error;
+        });
+}
+
+/**
+ * Revokes the user authentication corresponding to the provided refresh token and device id.
+ * Used to logout the user.
+ *
+ * Endpoint: 'revoke'
+ *
+ * @param   {string} accessToken Access JWT token stored in Redux.
+ * @param   {string} deviceId Unique id of the device.
+ * @returns {Promise} Response.success is true if the user was correctly logged out.
+ */
+export function revoke(accessToken: string, deviceId: string) {
+    // iOs and Android refresh token handling.
+    const state = store.getState();
+    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
+
+    store.dispatch(
+        addDebugLogItem(
+            'Calling revoke. access_token: ' +
+                accessToken +
+                ', device_id: ' +
+                deviceId +
+                ', platform: ' +
+                getPlatform() +
+                ', storageRefreshToken: ' +
+                storageRefreshToken
+        )
+    );
+
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'revoke',
+        withCredentials: true, // ! TODO Verify when needed
+        data: formurlencoded({
+            access_token: accessToken,
+            device_id: deviceId,
+            platform: getPlatform(),
+            refresh_token: storageRefreshToken
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                store.dispatch(logOut()); // To redux state
+                if (isApp()) {
+                    deleteLocalStorageData('refresh_token');
+                    store.dispatch(setCapacitorRefreshToken('')); // To redux state
+                }
+                return response;
+            }
+        })
+        .catch(function (error) {
+            // Logged out in any case.
+            store.dispatch(logOut()); // To redux state
+            if (isApp()) {
+                deleteLocalStorageData('refresh_token');
+                store.dispatch(setCapacitorRefreshToken('')); // To redux state
+            }
+            throw error;
+        });
+}
+
+/**
+ * Refreshes the access and refresh token.
+ *
+ * Endpoint: 'refresh-token'
+ *
+ * @param   {string} accessToken Access JWT token stored in Redux.
+ * @param   {string} deviceId Unique id of the device.
+ * @returns {Promise} Response.success is true if the the token was refreshed correctly. All needed data are sent with response.
+ */
+export function refreshToken(accessToken: string, deviceId: string) {
+    const state = store.getState();
+    // iOs and Android refresh token handling.
+    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
+    const appIsOnline: boolean = state.appStatus.online; // Redux
+
+    if (isApp() && !appIsOnline) {
+        toastService.error(mondoTranslate('toast.offline'), 'data-test-offline', 4000);
+        return Promise.reject('App offline');
+    } else {
+        return axios({
+            method: 'post',
+            url: JWT_API_URL! + 'refresh-token',
+            withCredentials: true, // ! TODO Verify when needed
+            data: formurlencoded({
+                access_token: accessToken,
+                device_id: deviceId,
+                platform: getPlatform(),
+                refresh_token: storageRefreshToken
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    if (response && response.data.success === true) {
+                        store.dispatch(setAccessToken(response.data.access_token)); // To redux state
+                        if (isApp()) {
+                            setLocalStorageData('refresh_token', response.data.refresh_token);
+                            store.dispatch(setCapacitorRefreshToken(response.data.refresh_token)); // To redux state
+                        }
+                    } else {
+                        store.dispatch(logOut()); // To redux state
+                        if (isApp()) {
+                            deleteLocalStorageData('refresh_token');
+                        }
+                    }
+                    return response;
+                }
+            })
+            .catch(function (error) {
+                store.dispatch(logOut()); // To redux state
+                if (isApp()) {
+                    deleteLocalStorageData('refresh_token');
+                }
+                throw error;
+            });
+    }
+}
+
+/**
+ * Checks if the user is already logged into the application at applications startup.
+ * This is needed to keep the user logged also when the app is closed and then reopened.
+ *
+ * Endpoint: 're-auth'
+ *
+ * @param   {string} deviceId Unique id of the device.
+ * @returns {void}
+ */
+export function checkIfUserIsLoggedOnOpen(deviceId: string) {
+    if (deviceId !== '') {
+        // iOs and Android refresh token handling.
+        const state = store.getState();
+        const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
+
+        return axios({
+            method: 'post',
+            url: JWT_API_URL! + 're-auth',
+            withCredentials: true, // ! TODO Verify when needed
+            data: formurlencoded({
+                device_id: deviceId,
+                platform: getPlatform(),
+                refresh_token: storageRefreshToken
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then((response) => {
+                if (response.status === 200 && response.data.success === true) {
+                    updateUserStatus(response);
+                    if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                } else {
+                    store.dispatch(logOut()); // To redux state
+                    if (isApp()) {
+                        // deleteLocalStorageData('refresh_token');
+                    }
+                }
+            })
+            .catch(function (error) {
+                store.dispatch(logOut()); // To redux state
+                if (isApp()) {
+                    // deleteLocalStorageData('refresh_token');
+                }
+            });
+    }
+}
+
+/**
+ * Calls the API to register the user.
+ * The newly created user is also logged, creating the auth and refresh tokens.
+ *
+ * Endpoint: 'user-register'
+ *
+ * @param   {string} name Name of the user.
+ * @param   {string} email The email of the user.
+ * @param   {string} password The password of the user.
+ * @param   {string} deviceId Unique id of the device.
+ * @returns {Promise} Promise object where response has all the data of the user.
+ */
+export function userRegister(
+    name: string,
+    email: string,
+    password: string,
+    termsConditions: boolean,
+    deviceId: string
+) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'user-register',
+        data: formurlencoded({
+            name: name,
+            email: email,
+            password: password,
+            terms: termsConditions,
+            device_id: deviceId,
+            platform: getPlatform()
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                updateUserStatus(response, true);
+                if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                return response;
+            } else {
+                store.dispatch(logOut()); // To redux state
+                if (isApp()) {
+                    deleteLocalStorageData('refresh_token');
+                }
+            }
+        })
+        .catch(function (error) {
+            store.dispatch(logOut()); // To redux state
+            if (isApp()) {
+                deleteLocalStorageData('refresh_token');
+            }
+            throw error;
+        });
+}
+
+/**
+ * Calls the API to confirm the user account, given the one time token passed in the URL.
+ *
+ * Endpoint: 'confirm-account'
+ *
+ * @param   {string} token One time token.
+ * @returns {Promise} Promise object where response.success is true if the account was confirmed.
+ */
+export function confirmAccount(token: string) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'confirm-account',
+        data: formurlencoded({
+            token: token
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            return response;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+/**
+ * The user is requesting another email to confirm the account.
+ * Usually triggered by the toast which says the user that the account must be confirmed.
+ *
+ * Endpoint: 'request-account-confirmation-email'
+ *
+ * @param   {number} userId Id of the user.
+ * @returns {Promise} Promise object where response.success is true if the email was sent correctly.
+ */
+export function requestAccountConfirmationEmail(userId: number) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'request-account-confirmation-email',
+        data: formurlencoded({
+            user_id: userId
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            return response;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+/**
+ * Calls the API to send the user an email to reset the password.
+ *
+ * Endpoint: 'request-password-reset'
+ *
+ * @param   {string} email The email of the user.
+ * @returns {Promise} Promise object where response.success is true if the email was sent correctly.
+ */
+export function requestPasswordResetEmailApi(email: string) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'request-password-reset',
+        data: formurlencoded({
+            email: email
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            return response;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+/**
+ * Calls the API create a new password for the user.
+ * The user is retrieved by the one time JWT token.
+ *
+ * Endpoint: 'password-reset'
+ *
+ * @param   {string} token One time JWT token (not the access token).
+ * @param   {string} newPassword The new password for the user.
+ * @returns {Promise} Promise object where response.success is true if the password was changed.
+ */
+export function passwordReset(token: string, newPassword: string) {
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 'password-reset',
+        data: formurlencoded({
+            token: token,
+            new_password: newPassword
+        }),
+        withCredentials: true, // ! TODO Verify when needed
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            return response;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+/**
+ * Updates the user Redux status with the response from the server after authentication, re-authentication and registration.
+ *
+ * @param   {AxiosResponse<any>} response The response coming from the server.
+ * @param   {boolean} registration True if the function is used during the user registration.
+ * @returns {returnType} Return description.
+ */
+export const updateUserStatus = (response: AxiosResponse<any>, registration: boolean = false) => {
+    // To redux state.
+    store.dispatch(setAccessToken(response.data.access_token));
+    store.dispatch(setUserId(response.data.user_id));
+    store.dispatch(setUserName(response.data.user_name));
+    store.dispatch(setUserEmail(response.data.user_email));
+    store.dispatch(setAccountVerified(response.data.account_verified));
+    store.dispatch(setApprovedTerms(response.data.approved_terms));
+    store.dispatch(setAuthorizedTracking(response.data.authorized_tracking));
+    store.dispatch(setRegistrationDate(response.data.registration_date));
+    store.dispatch(setAccountType(response.data.account_type));
+    if (response.data.user_trial_activation_date)
+        store.dispatch(setTrialActivation(response.data.user_trial_activation_date));
+    if (response.data.user_trial_duration) store.dispatch(setTrialDuration(response.data.user_trial_duration));
+
+    // Only if first time registration
+    if (registration) {
+        store.dispatch(setFavoriteSpots([])); // Always inits an empty array (to replace null value)
+    }
+
+    // Data available only for users who login (and don't register for the first time)
+    if (!registration) {
+        store.dispatch(setFavoriteSpots(response.data.favourite_spots ? response.data.favourite_spots : []));
+        if (response.data.timezone_id) store.dispatch(setTimezoneId(response.data.timezone_id));
+        if (response.data.timezone_utc) store.dispatch(setTimezoneUTC(response.data.timezone_utc));
+        if (response.data.timezone_dst) store.dispatch(setTimezoneDST(response.data.timezone_dst));
+        if (response.data.user_level) store.dispatch(setLevel(response.data.user_level));
+        if (response.data.user_surfing_from) store.dispatch(setSurfingFrom(response.data.user_surfing_from));
+        if (response.data.user_surfboards) store.dispatch(setSurfboards(response.data.user_surfboards));
+        if (response.data.user_stripe_user_id) store.dispatch(setStripeUserId(response.data.user_stripe_user_id));
+        if (response.data.user_product_id) store.dispatch(setProductId(response.data.user_product_id));
+        if (response.data.user_stripe_subscription_id)
+            store.dispatch(setStripeSubscriptionId(response.data.user_stripe_subscription_id));
+        if (response.data.user_subscription_expiration_date)
+            store.dispatch(setSubscriptionExpiration(response.data.user_subscription_expiration_date));
+        if (response.data.user_subscription_duration)
+            store.dispatch(setSubscriptionDuration(response.data.user_subscription_duration));
+    }
+
+    // Handling of the refresh token is different on mobile App.
+    if (isApp()) {
+        setLocalStorageData('refresh_token', response.data.refresh_token);
+        store.dispatch(setCapacitorRefreshToken(response.data.refresh_token));
+    }
+
+    store.dispatch(setLogin('yes'));
+};
+
+/**
+ * Requests a new confirmation email to be sent.
+ */
+export const requestAccountVerificationEmail = (): void => {
+    const state = store.getState();
+    const userId: number = state.user.userId; // Redux.
+    if (userId !== -1) {
+        requestAccountConfirmationEmail(userId)
+            .then((response) => {
+                toastService.success(mondoTranslate('toast.auth.verification_email_sent'));
+            })
+            .catch((error) => {
+                toastService.error(mondoTranslate('toast.auth.verification_email_sent_error'));
+            });
+    }
+};
