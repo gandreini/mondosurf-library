@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
-import { login, emailCheck, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import modalService from 'features/modal/modalService';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
+import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
