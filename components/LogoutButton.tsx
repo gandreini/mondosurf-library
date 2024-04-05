@@ -1,8 +1,8 @@
 // Client
 'use client';
 
-import { revoke } from 'mondosurf-library/helpers/auth.helpers';
 import Button from 'mondosurf-library/components/Button';
+import { logout } from 'mondosurf-library/helpers/auth.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ const LogoutButton: React.FC<ILogoutButton> = (props) => {
 
     // Revokes the token and logs out the user
     const onLogout = () => {
-        revoke(accessToken, deviceId)
+        logout(accessToken, deviceId)
             .then((response) => {
                 if (response && response.data.success === true) {
                     if (props.parentFunction) props.parentFunction();

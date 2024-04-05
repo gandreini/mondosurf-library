@@ -48,7 +48,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
  * @param   {string} email Email that must be checked to see if it exists.
  * @returns {Promise} Response is true if the mail exists, false if it doesn't exist.
  */
-export function mailCheck(email: string) {
+export const emailCheck = (email: string) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'mail-check',
@@ -67,11 +67,10 @@ export function mailCheck(email: string) {
         .catch(function (error) {
             throw error;
         });
-}
+};
 
 /**
- * Calls the API to authorize the user, creating the auth and refresh tokens.
- * Used to login the user.
+ * Calls the API to login the user, creating the auth and refresh tokens.
  *
  * Endpoint: 'auth'
  *
@@ -80,7 +79,7 @@ export function mailCheck(email: string) {
  * @param   {string} deviceId Unique id of the device.
  * @returns {Promise} Response contains all the users's data if he was correctly logged in.
  */
-export function auth(email: string, password: string, deviceId: string) {
+export const login = (email: string, password: string, deviceId: string) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'auth',
@@ -108,11 +107,10 @@ export function auth(email: string, password: string, deviceId: string) {
             store.dispatch(setLogin('no'));
             throw error;
         });
-}
+};
 
 /**
- * Revokes the user authentication corresponding to the provided refresh token and device id.
- * Used to logout the user.
+ * Logs out the user.
  *
  * Endpoint: 'revoke'
  *
@@ -120,7 +118,7 @@ export function auth(email: string, password: string, deviceId: string) {
  * @param   {string} deviceId Unique id of the device.
  * @returns {Promise} Response.success is true if the user was correctly logged out.
  */
-export function revoke(accessToken: string, deviceId: string) {
+export const logout = (accessToken: string, deviceId: string) => {
     // iOs and Android refresh token handling.
     const state = store.getState();
     const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
@@ -171,7 +169,7 @@ export function revoke(accessToken: string, deviceId: string) {
             }
             throw error;
         });
-}
+};
 
 /**
  * Refreshes the access and refresh token.
@@ -182,7 +180,7 @@ export function revoke(accessToken: string, deviceId: string) {
  * @param   {string} deviceId Unique id of the device.
  * @returns {Promise} Response.success is true if the the token was refreshed correctly. All needed data are sent with response.
  */
-export function refreshToken(accessToken: string, deviceId: string) {
+export const refreshToken = (accessToken: string, deviceId: string) => {
     const state = store.getState();
     // iOs and Android refresh token handling.
     const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
@@ -231,7 +229,7 @@ export function refreshToken(accessToken: string, deviceId: string) {
                 throw error;
             });
     }
-}
+};
 
 /**
  * Checks if the user is already logged into the application at applications startup.
@@ -242,7 +240,7 @@ export function refreshToken(accessToken: string, deviceId: string) {
  * @param   {string} deviceId Unique id of the device.
  * @returns {void}
  */
-export function checkIfUserIsLoggedOnOpen(deviceId: string) {
+export const checkIfUserIsLoggedOnOpen = (deviceId: string) => {
     if (deviceId !== '') {
         // iOs and Android refresh token handling.
         const state = store.getState();
@@ -279,7 +277,7 @@ export function checkIfUserIsLoggedOnOpen(deviceId: string) {
                 }
             });
     }
-}
+};
 
 /**
  * Calls the API to register the user.
@@ -293,13 +291,13 @@ export function checkIfUserIsLoggedOnOpen(deviceId: string) {
  * @param   {string} deviceId Unique id of the device.
  * @returns {Promise} Promise object where response has all the data of the user.
  */
-export function userRegister(
+export const userRegister = (
     name: string,
     email: string,
     password: string,
     termsConditions: boolean,
     deviceId: string
-) {
+) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'user-register',
@@ -335,7 +333,7 @@ export function userRegister(
             }
             throw error;
         });
-}
+};
 
 /**
  * Calls the API to confirm the user account, given the one time token passed in the URL.
@@ -345,7 +343,7 @@ export function userRegister(
  * @param   {string} token One time token.
  * @returns {Promise} Promise object where response.success is true if the account was confirmed.
  */
-export function confirmAccount(token: string) {
+export const confirmAccount = (token: string) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'confirm-account',
@@ -363,7 +361,7 @@ export function confirmAccount(token: string) {
         .catch(function (error) {
             throw error;
         });
-}
+};
 
 /**
  * The user is requesting another email to confirm the account.
@@ -374,7 +372,7 @@ export function confirmAccount(token: string) {
  * @param   {number} userId Id of the user.
  * @returns {Promise} Promise object where response.success is true if the email was sent correctly.
  */
-export function requestAccountConfirmationEmail(userId: number) {
+export const requestAccountConfirmationEmail = (userId: number) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'request-account-confirmation-email',
@@ -392,7 +390,7 @@ export function requestAccountConfirmationEmail(userId: number) {
         .catch(function (error) {
             throw error;
         });
-}
+};
 
 /**
  * Calls the API to send the user an email to reset the password.
@@ -402,7 +400,7 @@ export function requestAccountConfirmationEmail(userId: number) {
  * @param   {string} email The email of the user.
  * @returns {Promise} Promise object where response.success is true if the email was sent correctly.
  */
-export function requestPasswordResetEmailApi(email: string) {
+export const requestPasswordResetEmailApi = (email: string) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'request-password-reset',
@@ -420,7 +418,7 @@ export function requestPasswordResetEmailApi(email: string) {
         .catch(function (error) {
             throw error;
         });
-}
+};
 
 /**
  * Calls the API create a new password for the user.
@@ -432,7 +430,7 @@ export function requestPasswordResetEmailApi(email: string) {
  * @param   {string} newPassword The new password for the user.
  * @returns {Promise} Promise object where response.success is true if the password was changed.
  */
-export function passwordReset(token: string, newPassword: string) {
+export const passwordReset = (token: string, newPassword: string) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'password-reset',
@@ -451,7 +449,7 @@ export function passwordReset(token: string, newPassword: string) {
         .catch(function (error) {
             throw error;
         });
-}
+};
 
 /**
  * Updates the user Redux status with the response from the server after authentication, re-authentication and registration.

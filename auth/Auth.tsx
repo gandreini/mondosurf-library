@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
-import { auth, mailCheck, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import modalService from 'features/modal/modalService';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
+import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
@@ -150,7 +150,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         setFormState('email_waiting');
         //Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalEmailTap, { context: props.context });
-        mailCheck(emailValue)
+        emailCheck(emailValue)
             .then((response: AxiosResponse<any, any> | undefined) => {
                 if (response && response.data) {
                     //Tracking.
@@ -214,7 +214,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             setFormState('login_loading');
             //Tracking.
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalLoginTap, { context: props.context });
-            auth(loginEmail, loginPassword, deviceId)
+            login(loginEmail, loginPassword, deviceId)
                 .then((response) => {
                     if (response && response.data) {
                         modalService.closeModal();
