@@ -1,3 +1,6 @@
+// Client
+'use client';
+
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 import modalService from 'features/modal/modalService';
 import toastService from 'mondosurf-library/services/toastService';

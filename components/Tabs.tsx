@@ -36,7 +36,7 @@ const Tabs: React.FC<ITabs> = (props: ITabs) => {
                                             customKey={key.toString()}
                                             className={classes(key)}
                                             {...(value.dataTest && {
-                                                'data-test': value.dataTest
+                                                dataTest: value.dataTest
                                             })}
                                             href={value.url}>
                                             {value.label}
