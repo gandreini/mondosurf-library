@@ -29,7 +29,9 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
                     )}
                     <div className="ms-page-title__flag-title-wrapper">
                         {props.flag && <span className="ms-page-title__flag">{props.flag}</span>}
-                        <h1 className="ms-page-title__title">{props.title}</h1>
+                        <h1 className="ms-page-title__title" data-test="page-title">
+                            {props.title}
+                        </h1>
                     </div>
                 </div>
             )}

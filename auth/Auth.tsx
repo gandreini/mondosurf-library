@@ -1,3 +1,6 @@
+// Client
+'use client';
+
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
 import modalService from 'features/modal/modalService';

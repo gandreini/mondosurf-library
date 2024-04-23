@@ -1,3 +1,6 @@
+// Client
+'use client';
+
 import { useRouterProxy } from 'proxies/useRouter';
 
 interface IBanner {

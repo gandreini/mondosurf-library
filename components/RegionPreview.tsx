@@ -11,7 +11,7 @@ const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
             itemType="https://schema.org/Place"
             itemProp="url"
             href={`/surf-spots-in/${props.countrySlug}/${props.slug}/${props.id}`}
-            data-test="region-preview">
+            dataTest="region-preview">
             <div className="ms-region-preview__contents">
                 <span className="ms-region-preview__title-wrapper" itemProp="name">
                     <span
