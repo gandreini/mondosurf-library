@@ -1,6 +1,11 @@
 // Client
 'use client';
 
+import { openModalToExecuteProAction } from 'features/modal/modal.helpers';
+import modalService from 'features/modal/modalService';
+import Icon from 'mondosurf-library/components/Icon';
+import Loader from 'mondosurf-library/components/Loader';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import {
     addFavoriteFromSuspendedFavorite,
     addSpotToFavourites,
@@ -8,11 +13,6 @@ import {
     removeSpotFromFavourites,
     setSuspendedFavorite
 } from 'mondosurf-library/helpers/favorites.helpers';
-import { openModalToExecuteProAction } from 'features/modal/modal.helpers';
-import modalService from 'features/modal/modalService';
-import Icon from 'mondosurf-library/components/Icon';
-import Loader from 'mondosurf-library/components/Loader';
-import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
@@ -93,9 +93,7 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
             });
     };
 
-    /**
-     * Opens the login modal and add the spots to the favourites as a result.
-     */
+    // Opens the login modal and add the spots to the favourites as a result
     const onAddToFavouritesNotLogged = (e: React.MouseEvent<HTMLButtonElement>) => {
         // Tracking.
         Tracker.trackEvent(['mp'], TrackingEvent.FavIconTap, {

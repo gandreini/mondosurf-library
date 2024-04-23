@@ -10,7 +10,7 @@ const CountryPreview: React.FC<ICountry> = (props: ICountry) => {
             itemType="https://schema.org/Place"
             itemProp="url"
             href={`/surf-regions-in/${props.slug}/${props.id}`}
-            data-test="country-preview">
+            dataTest="country-preview">
             <div className="ms-country-preview__contents">
                 <span className="ms-country-preview__title-flag" itemProp="name">
                     <span className="ms-country-preview__flag">{props.flag}</span>

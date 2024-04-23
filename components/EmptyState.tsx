@@ -9,6 +9,7 @@ interface IEmptyState {
     buttonStyle?: 'cta' | 'light' | 'normal';
     buttonSize?: 'xl' | 'l' | 'm' | 's';
     buttonCallback?: () => void;
+    buttonDataTest?: string;
     children?: React.ReactNode;
 }
 
@@ -24,6 +25,7 @@ const EmptyState: React.FC<IEmptyState> = (props) => {
                     callback={props.buttonCallback}
                     size={props.buttonSize ? props.buttonSize : 'm'}
                     style={props.buttonStyle ? props.buttonStyle : 'normal'}
+                    dataTest={props.buttonDataTest ? props.buttonDataTest : undefined}
                 />
             )}
             {props.buttonLabel && props.buttonUrl && (
@@ -32,6 +34,7 @@ const EmptyState: React.FC<IEmptyState> = (props) => {
                     url={props.buttonUrl}
                     size={props.buttonSize ? props.buttonSize : 'm'}
                     style={props.buttonStyle ? props.buttonStyle : 'normal'}
+                    dataTest={props.buttonDataTest ? props.buttonDataTest : undefined}
                 />
             )}
             {props.children}

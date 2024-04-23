@@ -1,9 +1,9 @@
 import { postApiAuthCall } from "mondosurf-library/api/api";
-import toastService from 'mondosurf-library/services/toastService';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { store } from "mondosurf-library/redux/store";
 import { setFavoriteSpots } from "mondosurf-library/redux/userSlice";
+import toastService from 'mondosurf-library/services/toastService';
 import { deleteLocalStorageData, getLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { mondoTranslate } from "proxies/mondoTranslate";
 

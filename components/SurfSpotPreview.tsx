@@ -79,7 +79,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                                 ? `/surf-spot/${props.slug}/forecast/${props.id}`
                                 : `/surf-spot/${props.slug}/guide/${props.id}`
                         }
-                        data-test="surf-spot-preview-link"
+                        dataTest="surf-spot-preview-link"
                         onClickCallback={(e) => clickOnPreview(e)}>
                         {/* Breadcrumbs */}
                         {props.showBreadcrumbs && (
