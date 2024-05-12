@@ -9,7 +9,7 @@
 \* ------------------------------------ */
 .ms-home-near-spots-forecast {
     // margin-bottom: $space * 5;
-    padding: $space * 5 0 $space * 3 0;
+    padding: $space * 5 0;
     background-color: $color-background-ultralight;
 
     // Loading.
@@ -27,8 +27,12 @@
     }
 
     &__title.ms-h2-title {
-        margin-bottom: $space * 3;
+        margin-bottom: $space * 1.5;
         text-align: center;
+    }
+
+    .ms-large-text {
+        margin-bottom: $space * 2.5;
     }
 
     .ms-home-near-spots-forecast__forecast-empty,

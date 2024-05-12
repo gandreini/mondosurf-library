@@ -9,11 +9,10 @@
 \* ------------------------------------ */
 .ms-footer {
     width: 100%;
-    // max-width: $page-max-width;
     padding: 0 $space * 2;
     box-sizing: border-box;
     background-color: $footer-background-color;
-    // border-radius: $border-radius-hard $border-radius-hard 0 0;
+    border-top: 1px solid $color-border-light;
 
     &__content {
         position: relative;
@@ -42,20 +41,23 @@
     &__column-title {
         margin-bottom: $space * 2.5;
         font-weight: $font-weight-bold;
-        // color: var(--color-text-inverse);
         font-size: $font-size-m-fluid;
+        line-height: 1.1;
     }
 
-    &__column-text {
+    &__column-text,
+    &__column-text-love {
         margin-bottom: $space * 1.5;
-        // color: var(--color-text-inverse);
         font-size: $font-size-xs-fluid;
 
         p {
             margin: 0;
-            // color: var(--color-text-inverse);
             font-size: $font-size-xs-fluid;
         }
+    }
+
+    &__column-text-love {
+        color: var(--color-text-light);
     }
 
     /* Lists */
@@ -70,14 +72,20 @@
         padding: 0;
     }
 
-    &__list-link {
-        padding: $space/2 0;
-        // color: var(--color-text-inverse);
-        font-size: $font-size-xs-fluid;
-        text-decoration: underline;
+    &__list-item:not(:last-child) {
+        margin-bottom: $space * 0.5;
     }
 
-    /* Bottom */
+    &__list-link {
+        color: var(--color-text-light);
+        font-size: $font-size-s-fluid;
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+
+    // Bottom
     &__bottom {
         max-width: $page-max-width;
         margin-left: auto;
@@ -102,13 +110,21 @@
     &__bottom-secondary {
         color: var(--color-text-light);
         font-size: $font-size-xxs-fluid;
+
+        a {
+            color: var(--color-text-light);
+
+            &:hover {
+                color: var(--color-text-link);
+            }
+        }
     }
 }
 
 /* ------------------------------------ *\
    #LANGUAGE-SELECTOR
 \* ------------------------------------ */
-.ms-footer {
+/* .ms-footer {
     &__column-language {
         background-color: $footer-background-color;
     }
@@ -118,7 +134,7 @@
     margin: 0 0 $space * 3 0;
     padding: 0;
     list-style: none;
-}
+} */
 
 /* ------------------------------------ *\
    #MEDIA-QUERIES

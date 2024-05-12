@@ -1,0 +1,23 @@
+/**
+ * HOME MISSION
+ *
+ * Mission block in homepage.
+ *
+ */
+
+/* ------------------------------------ *\
+   #HOME-MISSION
+\* ------------------------------------ */
+.ms-home-mission {
+    padding: $space * 4 $space * 4;
+    text-align: center;
+    background-color: $color-background-mediumlight;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-home-mission {
+    }
+}

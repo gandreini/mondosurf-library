@@ -124,7 +124,10 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
         <>
             {/* Loading */}
             {loading && (
-                <button className="ms-favourite-add-button is-loading">
+                <button
+                    aria-label={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
+                    title={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
+                    className="ms-favourite-add-button is-loading">
                     <Loader size="small" />
                 </button>
             )}
@@ -134,6 +137,8 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
                 <button
                     className="ms-favourite-add-button ms-favourite-add-button-add-not-logged"
                     onClick={(e) => onAddToFavouritesNotLogged(e)}
+                    aria-label={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
+                    title={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
                     data-test="favorite-add-button">
                     <Icon icon="heart-empty" />
                 </button>
@@ -144,6 +149,8 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
                 <button
                     className="ms-favourite-add-button ms-favourite-add-button-add"
                     onClick={(e) => onAddToFavourites(e)}
+                    aria-label={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
+                    title={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
                     data-test="favorite-add-button">
                     <Icon icon="heart-empty" />
                 </button>
@@ -154,6 +161,8 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
                 <button
                     className="ms-favourite-add-button ms-favourite-add-button-remove"
                     onClick={(e) => onRemoveFromFavourites(e)}
+                    aria-label={mondoTranslate('favorites.remove_from_favorites', { spotName: props.spotName })}
+                    title={mondoTranslate('favorites.remove_from_favorites', { spotName: props.spotName })}
                     data-test="favorite-remove-button">
                     <Icon icon="heart" />
                 </button>

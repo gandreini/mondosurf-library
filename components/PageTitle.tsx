@@ -5,6 +5,7 @@ interface IPageTitle {
     title: string;
     flag?: string;
     backlink?: string;
+    backlinkTitle?: string;
     loading?: boolean;
 }
 
@@ -23,7 +24,10 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
             {!props.loading && (
                 <div className="ms-page-title">
                     {props.backlink && (
-                        <MondoLink className="ms-page-title__icon-wrapper" href={props.backlink}>
+                        <MondoLink
+                            className="ms-page-title__icon-wrapper"
+                            title={props.backlinkTitle || undefined}
+                            href={props.backlink}>
                             <Icon icon="arrow-left" />
                         </MondoLink>
                     )}

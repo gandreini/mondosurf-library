@@ -186,9 +186,9 @@
     "generic_error": "This is weird! There was an error, please try again and contact the administrator if the problem persists."
   },
   "footer": {
-    "title": "Mondo",
-    "subtitle": "Your favorite surf spots' forecast in your inbox and calendar. Mondo is a growing worldwide surf spot atlas and forecast service.",
-    "bottom_main": "@ 2024 Mondo",
+    "title": "Mondo Surf Atlas and Forecast",
+    "subtitle": "Every surf spot, with forecast. Discover surf spots and get accurate 7-day forecasts directly in your Google or Apple calendar.",
+    "bottom_main": "© 2024 Mondo",
     "love": "Made with 🌊 in Tuscany"
   },
   "tide": {
@@ -226,14 +226,14 @@
     "countries_server_error": "Ops, there was an error loading the countries, try reloading the page",
     "hero": {
       "supertitle": "Mondo Surf Atlas and Forecast",
-      "title": "Your surf forecast calendar",
-      "text-1": "The most accurate surf guide and forecast, directly in your Google or Apple calendar.",
+      "title": "Every surf spot, with forecast",
+      "text-1": "Discover surf spots and get accurate 7-day forecasts directly in your Google or Apple calendar",
       "text-2": "directly in your Google or Apple calendar.",
-      "text-3": "Never miss a surf session again."
+      "text-3": "Good surf anytime, anywhere."
     },
     "near_spots_forecast": {
       "title": "Surf spots around you",
-      "text": "Check out the next Good Surf near you, or explore nearby surf spots",
+      "text": "Check out the good surf near you, or explore nearby surf spots",
       "button": "See local forecast",
       "loading_geolocation": "Retrieving your location",
       "loading_spots": "Looking for spots around you",
@@ -709,7 +709,9 @@
     "trial_modal_title": "Start your free trial to add favorites",
     "trial_modal_text": "Activate the 30-days free trial to add {{spotName}} to your favourites.",
     "subscribe_modal_title": "Subscribe to Mondo Surf Pro to add favorites",
-    "subscribe_modal_text": "Subscribe to a Pro membership to add {{spotName}} to your favourites."
+    "subscribe_modal_text": "Subscribe to a Pro membership to add {{spotName}} to your favourites.",
+    "add_to_favorites": "Add {{spotName}} to your favorites",
+    "remove_from_favorites": "Remove {{spotName}} from your favorites"
   },
   "calendar": {
     "title": "Never miss out a session at {{spotName}}, use the calendar!",

@@ -54,7 +54,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap');
 
 // ------------------------------------ //
 // #CSS-PROPERTIES
@@ -268,7 +268,7 @@ $floating-head-height: 140px;
 // ------------------------------------ //
 // #FOOTER
 // ------------------------------------ //
-$footer-background-color: $color-background-mediumlight;
+$footer-background-color: $color-background-ultralight; // $color-background-mediumlight;
 
 // ------------------------------------ //
 // #HELP
@@ -334,10 +334,15 @@ $loader-btn-height: 26px;
 // #MODAL
 // ------------------------------------ //
 $modal-bg-color: $color-background-base;
-$modal-box-shadow: 0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08), 0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
-    0 $space * 0.5 $space * 2 rgba(#000000, 0.08), 0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
-$modal-from-bottom-box-shadow: 0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
-    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04), 0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
+$modal-box-shadow:
+    0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 2 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
+$modal-from-bottom-box-shadow:
+    0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
+    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04),
+    0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
     0 (-$space * 0.5) $space * 6 rgba(#000000, 0.04);
 $modal-width: 500px;
 
