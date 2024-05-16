@@ -26,6 +26,63 @@
 }
 
 /* ------------------------------------ *\
+   #MARKERS/ICONS
+\* ------------------------------------ */
+.leaflet-marker-icon.leaflet-div-icon {
+    background: transparent;
+    border: 0;
+}
+
+.leaflet-marker-icon {
+    background: transparent;
+    border: 0;
+
+    .ms-map-marker-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__image {
+            height: 44px;
+            width: auto;
+        }
+    }
+
+    [class='quality-'] {
+        position: relative;
+
+        svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            stroke: white;
+            stroke-width: 1px;
+        }
+    }
+
+    .ms-map-marker-icon.quality-0 {
+        svg {
+            fill: var(--color-forecast-poor);
+        }
+    }
+    .ms-map-marker-icon.quality-1 {
+        svg {
+            fill: var(--color-forecast-good);
+        }
+    }
+    .ms-map-marker-icon.quality-2 {
+        svg {
+            fill: var(--color-forecast-very-good);
+        }
+    }
+    .ms-map-marker-icon.quality-3 {
+        svg {
+            fill: var(--color-forecast-epic);
+        }
+    }
+}
+
+/* ------------------------------------ *\
    #CLUSTER
 \* ------------------------------------ */
 .ms-map-cluster {
@@ -159,6 +216,16 @@
 .ms-map-global__container {
     .leaflet-top {
         z-index: $z-index-map-copyright;
+    }
+}
+
+/* ------------------------------------ *\
+   #HIDE MAPTILER LOGO
+\* ------------------------------------ */
+.ms-map-global,
+.ms-map-global__container {
+    a[href*='www.maptiler.com'] {
+        display: none !important;
     }
 }
 

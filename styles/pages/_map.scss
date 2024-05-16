@@ -42,7 +42,7 @@
         top: 0;
         left: 0;
         right: 0;
-        bottom: calc(#{$tab-bar-height} + var(--ios-bottom-bar-margin)); // iOS spacing.
+        bottom: calc(#{$tab-bar-height} + var(--ios-bottom-bar-margin)); // iOS spacing
         height: auto;
         z-index: $z-index-map-page;
 

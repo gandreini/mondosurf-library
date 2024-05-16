@@ -1,0 +1,323 @@
+'use client';
+
+import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+    Map as LeafletMap,
+    tileLayer,
+    TileLayer,
+    control as LeafletControl,
+    GeoJSON,
+    LatLng,
+    MarkerClusterGroup as LeafletMarkerClusterGroup
+} from 'leaflet';
+import { Feature, FeatureCollection } from 'geojson';
+
+import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
+
+import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import Icon from 'mondosurf-library/components/Icon';
+import {
+    placeIcon,
+    createMarker,
+    positionMap,
+    tilesLayerToggle,
+    addMarkersOnMap
+} from 'mondosurf-library/helpers/map.helpers';
+import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
+import { RootState, store } from 'mondosurf-library/redux/store';
+import { useSelector } from 'react-redux';
+
+interface IMap {
+    lat?: number;
+    lng?: number;
+    advancedFilters?: boolean;
+    hideGeolocationButton?: boolean;
+    geojson?: FeatureCollection;
+    draggableMarker?: boolean;
+    topPadding?: number;
+    cluster?: boolean;
+    customIcon?: string;
+    updateLatLngCallback?: (lat: number, lng: number) => void;
+}
+
+const Map: React.FC<IMap> = (props: IMap) => {
+    // Constants
+    const mapLatLngZoom: number = 15;
+    const maxZoom: number = 30;
+    // const zoomSnap: number = 0.1; // By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater zoom granularity
+    const defaultPadding = 70;
+    const topPadding: number = props.topPadding ? props.topPadding : defaultPadding;
+    const cluster: boolean = props.cluster === false ? false : true;
+
+    // The map style: vector or satellite.
+    const [mapStyle, setMapStyle] = useState<'satellite1' | 'satellite2' | 'vector'>('vector');
+
+    // Lat and long to center the map
+    const lat: number | null = props.lat ? props.lat : getUrlParameter('lat') ? Number(getUrlParameter('lat')) : null;
+    const lng: number | null = props.lng ? props.lng : getUrlParameter('lng') ? Number(getUrlParameter('lng')) : null;
+
+    // If the map is draggable
+    const [isDraggable, setIsDraggable] = useState<boolean>(true);
+
+    // Used to avoid the error "Map container is already initialized.".
+    let map = useRef<LeafletMap | null>(null);
+
+    const geojsonLayer = useRef<GeoJSON | null>(null);
+    const markers = useRef<LeafletMarkerClusterGroup | null>(null);
+
+    const [userIsPro, setUserIsPro] = useState<boolean | 'checking'>('checking');
+
+    // Redux.
+    const logged = useSelector((state: RootState) => state.user.logged);
+    const accountType = useSelector((state: RootState) => state.user.accountType);
+
+    // We check if the user is pro before initializing the map
+    useEffect(() => {
+        if (logged === 'no') setUserIsPro(false);
+        if (logged === 'yes') {
+            if (accountType === 'admin' || accountType === 'pro' || accountType === 'trial') {
+                setUserIsPro(true);
+            } else {
+                setUserIsPro(true);
+            }
+        }
+    }, [accountType, logged]);
+
+    // Tiles
+    /* const vectorTiles = useRef<TileLayer>(
+        tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'], // Only for Google stuff
+            noWrap: true,
+            attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+        })
+    ); */
+
+    const vectorTiles = useRef<TileLayer>(
+        new MaptilerLayer({
+            // Get your free API key at https://cloud.maptiler.com
+            apiKey: 'jkkNWMxIibSduqPbQtcw'
+        })
+    );
+
+    const satelliteTiles1 = useRef<TileLayer>(
+        tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'], // Only for Google stuff
+            noWrap: true,
+            attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+        })
+    );
+    const satelliteTiles2 = useRef<TileLayer>(
+        tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            noWrap: true,
+            attribution: 'Tiles &copy; Esri'
+        })
+    );
+
+    useEffect(() => {
+        // Removes the map when leaving the page
+        return () => {
+            if (map.current) {
+                map.current.remove();
+                map.current = null;
+            }
+        };
+    }, []);
+
+    const initializeMap = useCallback(
+        (mapNode: HTMLDivElement | null) => {
+            if (typeof window !== 'undefined' && mapNode !== null && !map.current) {
+                // Wrap the createMarker function to pass the additional parameter
+                const wrappedCreateMarker = (feature: Feature, latlng: LatLng) => {
+                    return createMarker(feature, latlng, userIsPro);
+                };
+
+                // Map creation
+                map.current = new LeafletMap(mapNode, {
+                    dragging: isDraggable,
+                    zoomControl: false,
+                    attributionControl: false,
+                    maxZoom: maxZoom, // Depends on the tiles you use
+                    touchZoom: true,
+                    // zoomSnap: zoomSnap,
+                    wheelPxPerZoomLevel: 20, // Smaller values will make wheel-zooming faster
+                    maxBoundsViscosity: 1.0
+                });
+
+                // Sets the bounds for the dragging of the map
+                map.current.setMaxBounds([
+                    [-90, -180],
+                    [90, 180]
+                ]);
+
+                // Attribution/Copyright position
+                LeafletControl.attribution({
+                    position: 'topright'
+                }).addTo(map.current);
+
+                // Adds map layer based on user preferences set in local storage
+                if (localStorage.getItem('ms_map_style') === 'satellite1') {
+                    map.current.addLayer(satelliteTiles1.current);
+                    setMapStyle('satellite1');
+                } else if (localStorage.getItem('ms_map_style') === 'satellite2') {
+                    map.current.addLayer(satelliteTiles2.current);
+                    setMapStyle('satellite2');
+                } else {
+                    map.current.addLayer(vectorTiles.current);
+                    setMapStyle('vector');
+                }
+
+                if (lat && lng && props.draggableMarker) {
+                    // Edit surf spot: centers on a spot and draggable marker
+
+                    // Map positioning
+                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
+
+                    // Draggable marker
+                    const callbackFunction =
+                        props.updateLatLngCallback !== undefined ? props.updateLatLngCallback(lat, lng) : undefined;
+                    placeIcon(map.current, lat, lng, props.draggableMarker, props.customIcon, () => callbackFunction);
+                } else if (lat && lng && !props.draggableMarker) {
+                    // Surf spot page: loads the JSON and centers the map
+
+                    // Adds spots
+                    geojsonLayer.current = new GeoJSON(props.geojson, {
+                        // Swaps Lat and Lng in case they are swapped
+                        coordsToLatLng: function (coords: number[]) {
+                            return new LatLng(coords[0], coords[1], coords[2]);
+                        },
+                        pointToLayer: wrappedCreateMarker
+                        // onEachFeature: customPopUp // Popover
+                        // Filter
+                        /* filter: (feature) => {
+                            return basicMapFiltersCheck(feature, props.countryId, props.regionId);
+                        } */
+                    });
+
+                    // Add the actual markers and clusters on the map
+                    addMarkersOnMap(
+                        map.current,
+                        geojsonLayer.current,
+                        markers.current,
+                        defaultPadding,
+                        topPadding,
+                        userIsPro,
+                        false
+                    );
+
+                    // Map positioning
+                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
+                } else if (props.geojson && props.geojson.features && props.geojson.features.length > 0) {
+                    // Map page: GeoJson layer with all surf spots
+                    geojsonLayer.current = new GeoJSON(props.geojson, {
+                        // Swaps Lat and Lng in case they are swapped
+                        coordsToLatLng: function (coords: number[]) {
+                            return new LatLng(coords[0], coords[1], coords[2]);
+                        },
+                        pointToLayer: wrappedCreateMarker
+                        // onEachFeature: customPopUp // Popover
+                        // Filter
+                        /* filter: (feature) => {
+                            return basicMapFiltersCheck(feature, props.countryId, props.regionId);
+                        } */
+                    });
+
+                    // Add the actual markers and clusters on the map
+                    addMarkersOnMap(
+                        map.current,
+                        geojsonLayer.current,
+                        markers.current,
+                        defaultPadding,
+                        topPadding,
+                        userIsPro,
+                        cluster
+                    );
+
+                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
+                }
+            }
+        },
+        [cluster, isDraggable, lat, lng, props, topPadding, userIsPro]
+    );
+
+    // We check if the user is pro before initializing the map
+    const mapRef = useCallback(
+        (mapNode: HTMLDivElement | null) => {
+            if (userIsPro !== 'checking') {
+                initializeMap(mapNode);
+            }
+        },
+        [initializeMap, userIsPro]
+    );
+
+    return (
+        <>
+            {/* The map */}
+            <div
+                ref={mapRef}
+                className="ms-map-global__container"
+                itemScope
+                itemProp="hasMap"
+                itemType="http://schema.org/Map"
+                data-test="surf-spot-map"
+            />
+
+            {/* Controls */}
+            <div className="ms-map__controls" data-test="surf-spot-map-controls">
+                <div className="ms-map__zoom">
+                    <div
+                        id="map_zoom_in"
+                        className="ms-map__zoom-in"
+                        onClick={() => {
+                            if (map.current) map.current.setZoom(map.current.getZoom() + 1);
+                        }}>
+                        <Icon icon="plus" />
+                    </div>
+                    <div
+                        id="map_zoom_out"
+                        className="ms-map__zoom-out"
+                        onClick={() => {
+                            if (map.current) map.current.setZoom(map.current.getZoom() - 1);
+                        }}>
+                        <Icon icon="minus" />
+                    </div>
+                </div>
+                <div
+                    id="map_global_switch-button"
+                    className={
+                        mapStyle === 'satellite1' || mapStyle === 'satellite2'
+                            ? 'ms-map__switch is-active'
+                            : 'ms-map__switch'
+                    }
+                    onClick={() => {
+                        tilesLayerToggle(
+                            map.current,
+                            vectorTiles.current,
+                            satelliteTiles1.current,
+                            satelliteTiles2.current,
+                            setMapStyle
+                        );
+                    }}>
+                    <Icon icon="image" />
+                </div>
+            </div>
+
+            {/* {!props.hideGeolocationButton && (
+                <div className="ms-map__center is-displayed" onClick={onCenterMap} data-test="surf-spot-map-center">
+                    {geolocationStatus === 'REQUESTING' && <Loader size="small" />}
+                    {geolocationStatus !== 'REQUESTING' && <Icon icon="crosshair" />}
+                </div>
+            )}
+            */}
+
+            {/* {props.advancedFilters && (
+                <I18nProviderClient locale="en">
+                    <MapFilters callbackFunction={updateAdvancedFilters} />
+                </I18nProviderClient>
+            )} */}
+        </>
+    );
+};
+export default Map;
