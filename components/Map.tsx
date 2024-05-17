@@ -24,22 +24,27 @@ import {
     createMarker,
     positionMap,
     tilesLayerToggle,
-    addMarkersOnMap
+    addMarkersOnMap,
+    createPopUp,
+    centerMapOnUserPosition
 } from 'mondosurf-library/helpers/map.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState, store } from 'mondosurf-library/redux/store';
 import { useSelector } from 'react-redux';
+import Loader from 'mondosurf-library/components/Loader';
+import toastService from 'mondosurf-library/services/toastService';
+import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
 
 interface IMap {
     lat?: number;
     lng?: number;
-    advancedFilters?: boolean;
+    // advancedFilters?: boolean;
     hideGeolocationButton?: boolean;
     geojson?: FeatureCollection;
     draggableMarker?: boolean;
     topPadding?: number;
     cluster?: boolean;
     customIcon?: string;
+    noDragOnMobile?: boolean;
     updateLatLngCallback?: (lat: number, lng: number) => void;
 }
 
@@ -47,7 +52,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
     // Constants
     const mapLatLngZoom: number = 15;
     const maxZoom: number = 30;
-    // const zoomSnap: number = 0.1; // By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater zoom granularity
+    const zoomSnap: number = 0.1; // By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater zoom granularity
     const defaultPadding = 70;
     const topPadding: number = props.topPadding ? props.topPadding : defaultPadding;
     const cluster: boolean = props.cluster === false ? false : true;
@@ -60,7 +65,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
     const lng: number | null = props.lng ? props.lng : getUrlParameter('lng') ? Number(getUrlParameter('lng')) : null;
 
     // If the map is draggable
-    const [isDraggable, setIsDraggable] = useState<boolean>(true);
+    const isDraggable = !screenWiderThan(760) && props.noDragOnMobile ? false : true;
 
     // Used to avoid the error "Map container is already initialized.".
     let map = useRef<LeafletMap | null>(null);
@@ -69,6 +74,11 @@ const Map: React.FC<IMap> = (props: IMap) => {
     const markers = useRef<LeafletMarkerClusterGroup | null>(null);
 
     const [userIsPro, setUserIsPro] = useState<boolean | 'checking'>('checking');
+
+    // Geolocation request status: used to show a loader inside the button.
+    const [geolocationStatus, setGeolocationStatus] = useState<
+        'INIT' | 'REQUESTING' | 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT'
+    >('INIT');
 
     // Redux.
     const logged = useSelector((state: RootState) => state.user.logged);
@@ -85,6 +95,16 @@ const Map: React.FC<IMap> = (props: IMap) => {
             }
         }
     }, [accountType, logged]);
+
+    useEffect(() => {
+        // Removes the map when leaving the page
+        return () => {
+            if (map.current) {
+                map.current.remove();
+                map.current = null;
+            }
+        };
+    }, []);
 
     // Tiles
     /* const vectorTiles = useRef<TileLayer>(
@@ -116,16 +136,6 @@ const Map: React.FC<IMap> = (props: IMap) => {
         })
     );
 
-    useEffect(() => {
-        // Removes the map when leaving the page
-        return () => {
-            if (map.current) {
-                map.current.remove();
-                map.current = null;
-            }
-        };
-    }, []);
-
     const initializeMap = useCallback(
         (mapNode: HTMLDivElement | null) => {
             if (typeof window !== 'undefined' && mapNode !== null && !map.current) {
@@ -141,7 +151,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     attributionControl: false,
                     maxZoom: maxZoom, // Depends on the tiles you use
                     touchZoom: true,
-                    // zoomSnap: zoomSnap,
+                    zoomSnap: zoomSnap,
                     wheelPxPerZoomLevel: 20, // Smaller values will make wheel-zooming faster
                     maxBoundsViscosity: 1.0
                 });
@@ -188,8 +198,8 @@ const Map: React.FC<IMap> = (props: IMap) => {
                         coordsToLatLng: function (coords: number[]) {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
-                        pointToLayer: wrappedCreateMarker
-                        // onEachFeature: customPopUp // Popover
+                        pointToLayer: wrappedCreateMarker,
+                        onEachFeature: createPopUp // Popover
                         // Filter
                         /* filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);
@@ -216,8 +226,8 @@ const Map: React.FC<IMap> = (props: IMap) => {
                         coordsToLatLng: function (coords: number[]) {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
-                        pointToLayer: wrappedCreateMarker
-                        // onEachFeature: customPopUp // Popover
+                        pointToLayer: wrappedCreateMarker,
+                        onEachFeature: createPopUp // Popover
                         // Filter
                         /* filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);
@@ -251,6 +261,14 @@ const Map: React.FC<IMap> = (props: IMap) => {
         },
         [initializeMap, userIsPro]
     );
+
+    // Gets feedback about user geolocation from centerMapOnUserPosition
+    const updateUserGeolocation = (outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => {
+        if (outcome === 'PERMISSION_DENIED' || outcome === 'POSITION_UNAVAILABLE' || outcome === 'TIMEOUT') {
+            toastService.error('There was a problem retrieving your position');
+        }
+        setGeolocationStatus(outcome);
+    };
 
     return (
         <>
@@ -304,13 +322,20 @@ const Map: React.FC<IMap> = (props: IMap) => {
                 </div>
             </div>
 
-            {/* {!props.hideGeolocationButton && (
-                <div className="ms-map__center is-displayed" onClick={onCenterMap} data-test="surf-spot-map-center">
+            {!props.hideGeolocationButton && (
+                <div
+                    className="ms-map__center is-displayed"
+                    onClick={() => {
+                        if (map.current) {
+                            setGeolocationStatus('REQUESTING');
+                            centerMapOnUserPosition(map.current, updateUserGeolocation);
+                        }
+                    }}
+                    data-test="surf-spot-map-center">
                     {geolocationStatus === 'REQUESTING' && <Loader size="small" />}
                     {geolocationStatus !== 'REQUESTING' && <Icon icon="crosshair" />}
                 </div>
             )}
-            */}
 
             {/* {props.advancedFilters && (
                 <I18nProviderClient locale="en">

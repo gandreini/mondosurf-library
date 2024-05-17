@@ -34,6 +34,18 @@
         }
     }
 
+    &__content {
+        display: block;
+        padding: $space * 1.5 0;
+        margin: 0 $space * 3.5 0 $space * 1.5;
+
+        &:hover {
+            .ms-map-tooltip__title {
+                color: var(--color-text-link);
+            }
+        }
+    }
+
     &__detail {
         display: block;
     }
@@ -65,11 +77,8 @@
         span {
             font-size: $font-size-l-fluid;
         }
-    }
 
-    // Hover
-    &:hover {
-        .ms-map-tooltip__title {
+        &:hover {
             color: var(--color-text-link);
         }
     }

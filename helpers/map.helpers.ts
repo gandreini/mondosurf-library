@@ -2,7 +2,9 @@ import { Feature } from 'geojson';
 import {
     Map as LeafletMap,
     Marker as LeafletMarker,
+    marker as LeafletMarker2,
     Icon as LeafletIcon,
+    icon as LeafletIcon2,
     LatLng,
     TileLayer,
     marker as Marker,
@@ -14,8 +16,8 @@ import {
 } from 'leaflet';
 import 'leaflet.markercluster';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { returnBottomLabel, returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
+import { getUserPositionWeb } from 'mondosurf-library/helpers/geolocation.helpers';
 
 /**
  * Provides the right icon for each point.
@@ -102,11 +104,11 @@ export const tilesLayerToggle = (
  * @param {any} feature Single feature from GeoJSON corresponding to each pin on the map.
  * @param {any} layer   ?
  */
-export function customPopUp(
+export function createPopUp(
     feature: any,
     layer: any
 ): any {
-    var customPopup = '<div id="ms_map_popover" data-id="' + feature.properties.id + '" data-slug="' + feature.properties.sg + '" data-regionslug="' + feature.properties.rs + '" data-countryslug="' + feature.properties.cs + '" class="ms-map-tooltip__content">';
+    var customPopup = '<a href="/surf-spot/' + feature.properties.sg + '/guide/' + feature.properties.id + '" id="ms_map_popover" data-id="' + feature.properties.id + '" data-slug="' + feature.properties.sg + '" data-regionslug="' + feature.properties.rs + '" data-countryslug="' + feature.properties.cs + '" class="ms-map-tooltip__content">';
     customPopup += '<div class="ms-map-tooltip__title">' + feature.properties.nm + '</div>';
     customPopup += '<div class="ms-map-tooltip__details">';
     if (feature.properties.di !== '' && feature.properties.di !== '0' && feature.properties.di !== null) {
@@ -117,7 +119,7 @@ export function customPopUp(
         customPopup += '<span class="ms-label-value"><span class="ms-label">' + mondoTranslate('basics.bottom') + '</span> <span class="ms-value">' +
             returnBottomLabel(feature.properties.bo) + '</span></span>';
     }
-    customPopup += '</div></div>';
+    customPopup += '</div></a>';
     var customOptions = { minWidth: '180', maxWidth: '500', className: 'ms-map-tooltip' };
     layer.bindPopup(customPopup, customOptions);
 }
@@ -128,7 +130,7 @@ export function customPopUp(
  * @param {LeafletMap} map           The map.
  * @param {AppRouterInstance} router   Object representing the navigation history.
  */
-export function handleClickOnPopover(
+/* export function handleClickOnPopover(
     map: LeafletMap,
     router: AppRouterInstance
 ) {
@@ -142,7 +144,7 @@ export function handleClickOnPopover(
             }, false);
         }
     });
-}
+} */
 
 /**
  * Positions the Leaflet map. Various options available:
@@ -234,25 +236,16 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
         // Custom icons for clusters, with 'is-good' if there's some surf
         markers = markerClusterGroup2({
             iconCreateFunction: function (cluster) {
+                let highestMarkerQuality = -1;
                 for (let i = 0; i < cluster.getAllChildMarkers().length; i++) {
                     const currentMarker = cluster.getAllChildMarkers()[i];
-                    const surfQuality = userIsPro === true ? "quality-" + currentMarker.feature!.properties.gd : "quality-" + currentMarker.feature!.properties.gds;
-                    if (
-                        currentMarker &&
-                        currentMarker.feature &&
-                        currentMarker.feature!.properties
-                    ) {
-                        return LeafletDivIcon({
-                            html:
-                                '<div class="ms-map-cluster quality-' + surfQuality + '"><span class="ms-map-cluster__text">' +
-                                cluster.getChildCount() +
-                                '</span></div>'
-                        });
-                    }
+                    const spotSurfQuality = userIsPro === true ? currentMarker.feature!.properties.gd : currentMarker.feature!.properties.gds;
+                    if (spotSurfQuality !== "null" && spotSurfQuality !== null && Number(spotSurfQuality) > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
+
                 }
                 return LeafletDivIcon({
                     html:
-                        '<div class="ms-map-cluster"><span class="ms-map-cluster__text">' +
+                        '<div class="ms-map-cluster quality-' + highestMarkerQuality.toString() + '"><span class="ms-map-cluster__text">' +
                         cluster.getChildCount() +
                         '</span></div>'
                 });
@@ -279,4 +272,41 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
         }
     }
     positionMap(map, 10, defaultPadding, topPadding, geojsonLayer);
+}
+
+/**
+ * Centers the given Leaflet map on the user's current position and places a marker at that location.
+ * 
+ * @param {LeafletMap} map - The Leaflet map instance to be centered on the user's position.
+ * @param {(outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => void} [callbackFunction] - 
+ * Optional callback function to handle the outcome of the geolocation request.
+ * 
+ */
+export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => void): void => {
+    getUserPositionWeb()
+        .then((response) => {
+            if (map) {
+                // Centering map on user position.
+                map.setView(new LatLng(response.coords.latitude, response.coords.longitude), 16);
+
+                // Adding an icon where the user is.
+                const userIcon = LeafletIcon2({
+                    iconUrl: process.env.NEXT_PUBLIC_IMAGES_URL + 'map-pins/current-location.png',
+                    iconSize: [35, 55], // size of the icon
+                    iconAnchor: [17, 55] // point of the icon which will correspond to marker's location
+                });
+                LeafletMarker2([response.coords.latitude, response.coords.longitude], { icon: userIcon }).addTo(
+                    map
+                );
+
+                if (callbackFunction) callbackFunction('RETRIEVED');
+            }
+        })
+        .catch((error) => {
+            if (callbackFunction) {
+                if (error.code === 1) callbackFunction('PERMISSION_DENIED');
+                if (error.code === 2) callbackFunction('POSITION_UNAVAILABLE');
+                if (error.code === 3) callbackFunction('TIMEOUT');
+            }
+        });
 }

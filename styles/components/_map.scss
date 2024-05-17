@@ -48,15 +48,17 @@
         }
     }
 
-    [class='quality-'] {
+    [class*='quality-'] {
         position: relative;
 
         svg {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: -2px;
+            right: 2px;
             stroke: white;
             stroke-width: 1px;
+            transform: scale(1.5);
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
         }
     }
 
@@ -108,8 +110,25 @@
         color: var(--color-text-inverse);
     }
 
-    &.is-good {
+    &.quality-0 {
+        background-color: var(--color-forecast-poor);
+    }
+    &.quality-1 {
         background-color: var(--color-forecast-good);
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.quality-2 {
+        background-color: var(--color-forecast-very-good);
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.quality-3 {
+        background-color: var(--color-forecast-epic);
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
