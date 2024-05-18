@@ -119,8 +119,8 @@ const Map: React.FC<IMap> = (props: IMap) => {
 
     const vectorTiles = useRef<TileLayer>(
         new MaptilerLayer({
-            // Get your free API key at https://cloud.maptiler.com
-            apiKey: 'jkkNWMxIibSduqPbQtcw'
+            apiKey: 'jkkNWMxIibSduqPbQtcw',
+            style: '51fb4646-7688-4b5d-a227-09837b7b7770'
         })
     );
 
