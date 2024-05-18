@@ -45,16 +45,16 @@ interface IMap {
     cluster?: boolean;
     customIcon?: string;
     noDragOnMobile?: boolean;
-    updateLatLngCallback?: (lat: number, lng: number) => void;
     regionId?: number;
     countryId?: number;
+    updateLatLngCallback?: (lat: number, lng: number) => void;
 }
 
 const Map: React.FC<IMap> = (props: IMap) => {
     // Constants
     const mapLatLngZoom: number = 15;
-    const maxZoom: number = 30;
-    const zoomSnap: number = 0.1; // By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater zoom granularity
+    const maxZoom: number = 18;
+    // const zoomSnap: number = 0.1; // By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater zoom granularity
     const defaultPadding = 70;
     const topPadding: number = props.topPadding ? props.topPadding : defaultPadding;
     const cluster: boolean = props.cluster === false ? false : true;
@@ -153,7 +153,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     attributionControl: false,
                     maxZoom: maxZoom, // Depends on the tiles you use
                     touchZoom: true,
-                    zoomSnap: zoomSnap,
+                    // zoomSnap: zoomSnap,
                     wheelPxPerZoomLevel: 20, // Smaller values will make wheel-zooming faster
                     maxBoundsViscosity: 1.0
                 });
@@ -183,7 +183,6 @@ const Map: React.FC<IMap> = (props: IMap) => {
 
                 if (lat && lng && props.draggableMarker) {
                     // Edit surf spot: centers on a spot and draggable marker
-
                     // Map positioning
                     positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
 
@@ -196,38 +195,9 @@ const Map: React.FC<IMap> = (props: IMap) => {
                         props.customIcon,
                         props.updateLatLngCallback
                     );
-                } else if (lat && lng && !props.draggableMarker) {
-                    // Surf spot page: loads the JSON and centers the map
-
+                } else {
+                    // Other maps
                     // Adds spots
-                    geojsonLayer.current = new GeoJSON(props.geojson, {
-                        // Swaps Lat and Lng in case they are swapped
-                        coordsToLatLng: function (coords: number[]) {
-                            return new LatLng(coords[0], coords[1], coords[2]);
-                        },
-                        pointToLayer: wrappedCreateMarker,
-                        onEachFeature: createPopUp, // Popover
-                        // Filter
-                        filter: (feature) => {
-                            return basicMapFiltersCheck(feature, props.countryId, props.regionId);
-                        }
-                    });
-
-                    // Add the actual markers and clusters on the map
-                    addMarkersOnMap(
-                        map.current,
-                        geojsonLayer.current,
-                        markers.current,
-                        defaultPadding,
-                        topPadding,
-                        userIsPro,
-                        false
-                    );
-
-                    // Map positioning
-                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
-                } else if (props.geojson && props.geojson.features && props.geojson.features.length > 0) {
-                    // Map page: GeoJson layer with all surf spots
                     geojsonLayer.current = new GeoJSON(props.geojson, {
                         // Swaps Lat and Lng in case they are swapped
                         coordsToLatLng: function (coords: number[]) {
