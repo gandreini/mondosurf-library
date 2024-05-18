@@ -152,6 +152,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     zoomControl: false,
                     attributionControl: false,
                     maxZoom: maxZoom, // Depends on the tiles you use
+                    minZoom: 1.5,
                     touchZoom: true,
                     // zoomSnap: zoomSnap,
                     wheelPxPerZoomLevel: 20, // Smaller values will make wheel-zooming faster
