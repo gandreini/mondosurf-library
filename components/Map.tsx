@@ -1,38 +1,38 @@
 'use client';
 
-import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-    Map as LeafletMap,
-    tileLayer,
-    TileLayer,
-    control as LeafletControl,
-    GeoJSON,
-    LatLng,
-    MarkerClusterGroup as LeafletMarkerClusterGroup
-} from 'leaflet';
-import { Feature, FeatureCollection } from 'geojson';
-
-import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
-
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import Icon from 'mondosurf-library/components/Icon';
+
+import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
+import { basicMapFiltersCheck } from 'features/map/mapFilters.helpers';
+import { Feature, FeatureCollection } from 'geojson';
 import {
-    placeIcon,
-    createMarker,
-    positionMap,
-    tilesLayerToggle,
-    addMarkersOnMap,
-    createPopUp,
-    centerMapOnUserPosition
-} from 'mondosurf-library/helpers/map.helpers';
-import { RootState, store } from 'mondosurf-library/redux/store';
-import { useSelector } from 'react-redux';
+    control as LeafletControl,
+    GeoJSON,
+    LatLng,
+    Map as LeafletMap,
+    MarkerClusterGroup as LeafletMarkerClusterGroup,
+    TileLayer,
+    tileLayer
+} from 'leaflet';
+import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
-import toastService from 'mondosurf-library/services/toastService';
 import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
+import {
+    addMarkersOnMap,
+    centerMapOnUserPosition,
+    createMarker,
+    createPopUp,
+    placeIcon,
+    positionMap,
+    tilesLayerToggle
+} from 'mondosurf-library/helpers/map.helpers';
+import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
+import { RootState } from 'mondosurf-library/redux/store';
+import toastService from 'mondosurf-library/services/toastService';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface IMap {
     lat?: number;
@@ -46,6 +46,8 @@ interface IMap {
     customIcon?: string;
     noDragOnMobile?: boolean;
     updateLatLngCallback?: (lat: number, lng: number) => void;
+    regionId?: number;
+    countryId?: number;
 }
 
 const Map: React.FC<IMap> = (props: IMap) => {
@@ -199,11 +201,11 @@ const Map: React.FC<IMap> = (props: IMap) => {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
                         pointToLayer: wrappedCreateMarker,
-                        onEachFeature: createPopUp // Popover
+                        onEachFeature: createPopUp, // Popover
                         // Filter
-                        /* filter: (feature) => {
+                        filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);
-                        } */
+                        }
                     });
 
                     // Add the actual markers and clusters on the map
@@ -227,11 +229,11 @@ const Map: React.FC<IMap> = (props: IMap) => {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
                         pointToLayer: wrappedCreateMarker,
-                        onEachFeature: createPopUp // Popover
+                        onEachFeature: createPopUp, // Popover
                         // Filter
-                        /* filter: (feature) => {
+                        filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);
-                        } */
+                        }
                     });
 
                     // Add the actual markers and clusters on the map

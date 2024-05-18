@@ -1,23 +1,25 @@
+import 'leaflet.markercluster';
+
 import { Feature } from 'geojson';
 import {
+    divIcon as LeafletDivIcon,
+    GeoJSON,
+    Icon as LeafletIcon,
+    icon as LeafletIcon2,
+    IconOptions,
+    LatLng,
     Map as LeafletMap,
     Marker as LeafletMarker,
     marker as LeafletMarker2,
-    Icon as LeafletIcon,
-    icon as LeafletIcon2,
-    LatLng,
-    TileLayer,
     marker as Marker,
-    GeoJSON,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     markerClusterGroup as markerClusterGroup2,
-    divIcon as LeafletDivIcon,
-    IconOptions
+    TileLayer
 } from 'leaflet';
-import 'leaflet.markercluster';
-import { mondoTranslate } from 'proxies/mondoTranslate';
-import { returnBottomLabel, returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { getUserPositionWeb } from 'mondosurf-library/helpers/geolocation.helpers';
+import { returnBottomLabel, returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
+import { IMAGES_URL } from 'proxies/localConstants';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 
 /**
  * Provides the right icon for each point.
@@ -36,7 +38,7 @@ export function createMarker(
     const properties = feature.properties || {};
 
     // Determine the base icon URL based on the direction
-    const baseUrl = process.env.NEXT_PUBLIC_IMAGES_URL + "map-pins/";
+    const baseUrl = IMAGES_URL + "map-pins/";
     const iconUrl = properties.di === 'A' ? `${baseUrl}map-pin-a-frame.svg` :
         properties.di === 'L' ? `${baseUrl}map-pin-left.svg` :
             properties.di === 'R' ? `${baseUrl}map-pin-right.svg` :
@@ -193,8 +195,8 @@ export const placeIcon = (map: LeafletMap, lat: number, lng: number, draggable?:
         iconAnchor: [22, 44],
         popupAnchor: [1, -44],
         iconUrl: customIcon
-            ? process.env.NEXT_PUBLIC_IMAGES_URL + 'map-pins/' + customIcon
-            : process.env.NEXT_PUBLIC_IMAGES_URL + 'map-pins/map-pin-a-frame.svg',
+            ? IMAGES_URL + 'map-pins/' + customIcon
+            : IMAGES_URL + 'map-pins/map-pin-a-frame.svg',
         className: "no-custom-class" || ''
     };
 
@@ -291,7 +293,7 @@ export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (out
 
                 // Adding an icon where the user is.
                 const userIcon = LeafletIcon2({
-                    iconUrl: process.env.NEXT_PUBLIC_IMAGES_URL + 'map-pins/current-location.png',
+                    iconUrl: IMAGES_URL + 'map-pins/current-location.png',
                     iconSize: [35, 55], // size of the icon
                     iconAnchor: [17, 55] // point of the icon which will correspond to marker's location
                 });
