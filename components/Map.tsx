@@ -188,9 +188,14 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
 
                     // Draggable marker
-                    const callbackFunction =
-                        props.updateLatLngCallback !== undefined ? props.updateLatLngCallback(lat, lng) : undefined;
-                    placeIcon(map.current, lat, lng, props.draggableMarker, props.customIcon, () => callbackFunction);
+                    placeIcon(
+                        map.current,
+                        lat,
+                        lng,
+                        props.draggableMarker,
+                        props.customIcon,
+                        props.updateLatLngCallback
+                    );
                 } else if (lat && lng && !props.draggableMarker) {
                     // Surf spot page: loads the JSON and centers the map
 
