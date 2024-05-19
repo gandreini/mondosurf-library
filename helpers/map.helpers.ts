@@ -101,32 +101,6 @@ export const tilesLayerToggle = (
 }
 
 /**
- * Creates the popover that is displayed when clicking on a marker.
- * 
- * @param {any} feature Single feature from GeoJSON corresponding to each pin on the map.
- * @param {any} layer   ?
- */
-export function createPopUp(
-    feature: any,
-    layer: any
-): any {
-    var customPopup = '<a href="/surf-spot/' + feature.properties.sg + '/guide/' + feature.properties.id + '" id="ms_map_popover" data-id="' + feature.properties.id + '" data-slug="' + feature.properties.sg + '" data-regionslug="' + feature.properties.rs + '" data-countryslug="' + feature.properties.cs + '" class="ms-map-tooltip__content">';
-    customPopup += '<div class="ms-map-tooltip__title">' + feature.properties.nm + '</div>';
-    customPopup += '<div class="ms-map-tooltip__details">';
-    if (feature.properties.di !== '' && feature.properties.di !== '0' && feature.properties.di !== null) {
-        customPopup += '<span class="ms-label-value"><span class="ms-label">' + mondoTranslate('basics.direction') + '</span> <span class="ms-value">' +
-            returnDirectionLabel(feature.properties.di) + '</span></span>';
-    }
-    if (feature.properties.bo !== '' && feature.properties.bo !== '0' && feature.properties.bo !== null) {
-        customPopup += '<span class="ms-label-value"><span class="ms-label">' + mondoTranslate('basics.bottom') + '</span> <span class="ms-value">' +
-            returnBottomLabel(feature.properties.bo) + '</span></span>';
-    }
-    customPopup += '</div></a>';
-    var customOptions = { minWidth: '180', maxWidth: '500', className: 'ms-map-tooltip' };
-    layer.bindPopup(customPopup, customOptions);
-}
-
-/**
  * Handles the click each popover, and links to the destination.
  * 
  * @param {LeafletMap} map           The map.

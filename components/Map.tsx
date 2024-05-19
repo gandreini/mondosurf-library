@@ -14,25 +14,28 @@ import {
     Map as LeafletMap,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     TileLayer,
-    tileLayer
+    tileLayer,
+    Layer
 } from 'leaflet';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
-import {
-    addMarkersOnMap,
-    centerMapOnUserPosition,
-    createMarker,
-    createPopUp,
-    placeIcon,
-    positionMap,
-    tilesLayerToggle
-} from 'mondosurf-library/helpers/map.helpers';
+
 import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import {
+    addMarkersOnMap,
+    centerMapOnUserPosition,
+    createMarker,
+    placeIcon,
+    positionMap,
+    tilesLayerToggle
+} from 'mondosurf-library/helpers/map.helpers';
+import { useRouterProxy } from 'proxies/useRouter';
+import { createPopUp } from 'mondosurf-library/helpers/mapPopUpHelper';
 
 interface IMap {
     lat?: number;
@@ -51,6 +54,9 @@ interface IMap {
 }
 
 const Map: React.FC<IMap> = (props: IMap) => {
+    // React router.
+    const router = useRouterProxy();
+
     // Constants
     const mapLatLngZoom: number = 15;
     const maxZoom: number = 18;
@@ -146,6 +152,11 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     return createMarker(feature, latlng, userIsPro);
                 };
 
+                // Wrap the createMarker function to pass the additional parameter
+                const wrappedCreatePopUp = (feature: Feature, layer: Layer) => {
+                    return createPopUp(feature, layer, router);
+                };
+
                 // Map creation
                 map.current = new LeafletMap(mapNode, {
                     dragging: isDraggable,
@@ -205,7 +216,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
                         pointToLayer: wrappedCreateMarker,
-                        onEachFeature: createPopUp, // Popover
+                        onEachFeature: wrappedCreatePopUp, // Popover
                         // Filter
                         filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);

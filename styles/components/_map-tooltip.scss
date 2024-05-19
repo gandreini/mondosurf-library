@@ -5,6 +5,8 @@
  *
  */
 
+// .leaflet-container .ms-map-tooltip .leaflet-popup-content > div
+
 /* ------------------------------------ *\
    #MAP-TOOLTIP
 \* ------------------------------------ */
@@ -12,7 +14,8 @@
     font-family: var(--font-family-main);
 
     .leaflet-popup-content-wrapper {
-        padding: 0;
+        padding-top: $space * 1.5;
+        padding-bottom: $space * 1.5;
         border-radius: $border-radius;
         @include card-box-shadow;
     }
@@ -27,17 +30,13 @@
 
     .leaflet-popup-content {
         margin: 0;
-
-        > div {
-            padding: $space * 2;
-            cursor: pointer;
-        }
     }
 
     &__content {
         display: block;
-        padding: $space * 1.5 0;
+        padding: 0;
         margin: 0 $space * 3.5 0 $space * 1.5;
+        cursor: pointer;
 
         &:hover {
             .ms-map-tooltip__title {
@@ -53,7 +52,7 @@
     &__title {
         margin-bottom: $space/2;
         font-weight: $font-weight-bold;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         color: var(--color-text);
     }
 
@@ -64,7 +63,7 @@
         .ms-label-value {
             display: block;
             span {
-                font-size: $font-size-xs-fluid;
+                font-size: $font-size-xxs-fluid;
                 text-transform: capitalize;
             }
         }
