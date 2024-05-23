@@ -99,12 +99,11 @@
     width: $map-cluster-size;
     height: $map-cluster-size;
     border-radius: $map-cluster-size;
-    // border: 1.5px solid var(--color-gray-00);
     box-shadow:
         0 0 0 1.5px var(--color-gray-00),
-        0 1px 3px 1px rgba(0, 0, 0, 0.1);
+        0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        0 0 0 1.5px var(--color-gray-04) inset;
     background-color: var(--color-gray-00);
-    border: 2px solid var(--color-gray-04);
 
     &__text {
         text-align: center;
@@ -115,12 +114,18 @@
 
     &.quality-0 {
         background-color: var(--color-gray-00);
-        border: 2px solid var(--color-forecast-poor);
+        box-shadow:
+            0 0 0 1.5px var(--color-gray-00),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 1.5px var(--color-forecast-poor) inset;
     }
 
     &.quality-1 {
         background-color: var(--color-forecast-good);
-        border: 2px solid var(--color-forecast-good-border);
+        box-shadow:
+            0 0 0 1.5px var(--color-gray-00),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 1.5px rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -128,7 +133,10 @@
     }
     &.quality-2 {
         background-color: var(--color-forecast-very-good);
-        border: 2px solid var(--color-forecast-very-good-border);
+        box-shadow:
+            0 0 0 1.5px var(--color-gray-00),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 1.5px rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -136,7 +144,10 @@
     }
     &.quality-3 {
         background-color: var(--color-forecast-epic);
-        border: 2px solid var(--color-forecast-epic-border);
+        box-shadow:
+            0 0 0 1.5px var(--color-gray-00),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 1.5px rgba(0, 0, 0, 0.3) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
