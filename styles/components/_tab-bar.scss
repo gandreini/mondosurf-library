@@ -59,7 +59,7 @@
         justify-content: center;
         flex-direction: column;
         width: 100%;
-        padding: 0;
+        padding: $space * 0.5 0 0 0;
     }
 
     &__item-label {
@@ -104,7 +104,6 @@
             a.is-active {
                 display: flex;
                 gap: 1px;
-                padding-top: $space * 0.5;
                 font-weight: $font-weight-bold;
 
                 .ms-tab-bar__item-label {
