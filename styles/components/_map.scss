@@ -94,27 +94,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-gray-05);
     padding: 0;
     box-sizing: border-box;
     width: $map-cluster-size;
     height: $map-cluster-size;
     border-radius: $map-cluster-size;
-    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.075);
+    // border: 1.5px solid var(--color-gray-00);
+    box-shadow:
+        0 0 0 1.5px var(--color-gray-00),
+        0 1px 3px 1px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-gray-00);
+    border: 2px solid var(--color-gray-04);
 
     &__text {
         text-align: center;
         font-size: $font-size-m;
         font-weight: $font-weight-bold;
-        text-shadow: 0 2px 2px rgba(0, 0, 0, 0.075);
-        color: var(--color-text-inverse);
+        color: var(--color-text);
     }
 
     &.quality-0 {
-        background-color: var(--color-forecast-poor);
+        background-color: var(--color-gray-00);
+        border: 2px solid var(--color-forecast-poor);
     }
+
     &.quality-1 {
         background-color: var(--color-forecast-good);
+        border: 2px solid var(--color-forecast-good-border);
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -122,6 +128,7 @@
     }
     &.quality-2 {
         background-color: var(--color-forecast-very-good);
+        border: 2px solid var(--color-forecast-very-good-border);
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -129,6 +136,7 @@
     }
     &.quality-3 {
         background-color: var(--color-forecast-epic);
+        border: 2px solid var(--color-forecast-epic-border);
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
