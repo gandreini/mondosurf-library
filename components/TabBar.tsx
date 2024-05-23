@@ -1,7 +1,7 @@
 import Icon from 'mondosurf-library/components/Icon';
-import { mondoTranslate } from 'proxies/mondoTranslate';
-import MondoLink from 'proxies/MondoLink';
 import TabBarUser from 'mondosurf-library/components/TabBarUser';
+import MondoLink from 'proxies/MondoLink';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 
 interface ITabBar {
     active?: 'home' | 'favorites' | 'spots' | 'search' | 'map' | 'user';
