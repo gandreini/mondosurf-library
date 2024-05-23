@@ -163,7 +163,6 @@
         margin-bottom: $space * 3.5;
         padding-bottom: $space * 3;
         border-bottom: 1px solid $color-border-normal;
-        // @include consistent;
 
         .ms-surf-spot__metadata {
             display: flex;
@@ -185,6 +184,7 @@
             flex: 1 1;
             font-size: $font-size-m-fluid;
             @include first-letter-capital;
+            line-height: 1.2;
 
             strong {
                 font-weight: $font-weight-normal;
@@ -208,6 +208,7 @@
         }
 
         .ms-surf-spot-direction__value {
+            font-size: $font-size-m-fluid;
             color: var(--color-text);
         }
     }
