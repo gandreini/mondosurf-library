@@ -754,5 +754,9 @@
     "1": "Good",
     "2": "Very good",
     "3": "Epic"
+  },
+  "invasive_banner": {
+    "text": "Please verify your account by clicking the verification link we sent you via email",
+    "button": "Re-send verification email"
   }
 }

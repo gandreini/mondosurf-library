@@ -25,13 +25,13 @@ const TabBarUser: React.FC<ITabBarUser> = (props: ITabBarUser) => {
     };
 
     return (
-        <div className="ms-tab-bar-user">
+        <>
             {logged === 'checking' && <Loader size="small" />}
 
             {logged === 'no' && (
                 <div className="ms-tab-bar__item-link" onClick={onLoginClick} data-test="login-tab-bar">
                     <Icon icon="tab-bar-me" />
-                    <span className="ms-tab-bar__item-label">{mondoTranslate('basics.login')}</span>
+                    {props.active && <span className="ms-tab-bar__item-label">{mondoTranslate('basics.login')}</span>}
                 </div>
             )}
 
@@ -44,13 +44,13 @@ const TabBarUser: React.FC<ITabBarUser> = (props: ITabBarUser) => {
                         dataTest="user-tab-bar">
                         <>
                             <Icon icon={props.active ? 'tab-bar-active-me' : 'tab-bar-me'} />
-                            <span className="ms-tab-bar__item-label">{userName}</span>
+                            {props.active && <span className="ms-tab-bar__item-label">{userName}</span>}
                             {hasProPermissions() && <span className="ms-tab-bar__pro">PRO</span>}
                         </>
                     </MondoLink>
                 </>
             )}
-        </div>
+        </>
     );
 };
 export default TabBarUser;
