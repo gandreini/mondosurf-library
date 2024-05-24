@@ -144,6 +144,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                                                     max={props.swell_direction_max}
                                                     type={'swell'}
                                                     label={mondoTranslate('basics.swell')}
+                                                    hideDegrees={true}
                                                 />
                                             )}
                                         {props.wind_direction_min !== undefined &&
@@ -153,6 +154,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                                                     max={props.wind_direction_max}
                                                     type={'wind'}
                                                     label={mondoTranslate('basics.wind')}
+                                                    hideDegrees={true}
                                                 />
                                             )}
                                     </div>

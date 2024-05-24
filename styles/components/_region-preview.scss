@@ -9,7 +9,7 @@
 \* ------------------------------------ */
 .ms-region-preview {
     @include card;
-    padding-bottom: $space * 1.5;
+    // padding-bottom: $space * 1.5;
 
     &__title-wrapper {
         display: block;
@@ -26,21 +26,26 @@
         text-overflow: ellipsis;
     }
 
-    &__counters {
-        display: block;
-    }
+    &__counter {
+        display: flex;
+        gap: $space * 0.5;
 
-    .ms-label {
-        margin: $space/2;
-        font-size: $font-size-s-fluid;
-        font-weight: $font-weight-normal;
-        color: var(--color-text-light);
+        &:not(:last-child) {
+            margin-right: $space/2;
+        }
     }
 
     .ms-value {
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         font-weight: $font-weight-bold;
         color: var(--color-text);
+    }
+
+    .ms-label {
+        font-size: $font-size-s-fluid;
+        font-weight: $font-weight-normal;
+        color: var(--color-text-light);
+        text-transform: lowercase;
     }
 }
 

@@ -8,6 +8,7 @@ interface ISurfSpotDirection {
     label: string;
     type: 'swell' | 'wind';
     hideLabel?: boolean;
+    hideDegrees?: boolean;
 }
 
 const SurfSpotDirection: React.FC<ISurfSpotDirection> = (props: ISurfSpotDirection) => {
@@ -30,7 +31,9 @@ const SurfSpotDirection: React.FC<ISurfSpotDirection> = (props: ISurfSpotDirecti
                 <div className="ms-surf-spot-direction__value">
                     {readableDirectionFromDegreesRange(props.min, props.max).join(', ')}
                 </div>
-                <div className="ms-surf-spot-direction__small-text">{props.min + '°-' + props.max + '°'}</div>
+                {!props.hideDegrees && (
+                    <div className="ms-surf-spot-direction__small-text">{props.min + '°-' + props.max + '°'}</div>
+                )}
             </div>
         </div>
     );

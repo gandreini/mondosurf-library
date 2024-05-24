@@ -88,6 +88,9 @@
    #CLUSTER
 \* ------------------------------------ */
 .ms-map-cluster {
+    --internal-border: 2.5px;
+    --external-border: 1.5px;
+
     position: absolute;
     left: -($map-cluster-size/2);
     top: -($map-cluster-size/2);
@@ -99,10 +102,8 @@
     width: $map-cluster-size;
     height: $map-cluster-size;
     border-radius: $map-cluster-size;
-    box-shadow:
-        0 0 0 1.5px var(--color-gray-00),
-        0 1px 5px 1px rgba(0, 0, 0, 0.1),
-        0 0 0 1.5px var(--color-gray-04) inset;
+    box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        0 0 0 var(--internal-border) var(--color-gray-04) inset;
     background-color: var(--color-gray-00);
 
     &__text {
@@ -114,18 +115,14 @@
 
     &.quality-0 {
         background-color: var(--color-gray-00);
-        box-shadow:
-            0 0 0 1.5px var(--color-gray-00),
-            0 1px 5px 1px rgba(0, 0, 0, 0.1),
-            0 0 0 1.5px var(--color-forecast-poor) inset;
+        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) var(--color-forecast-poor) inset;
     }
 
     &.quality-1 {
         background-color: var(--color-forecast-good);
-        box-shadow:
-            0 0 0 1.5px var(--color-gray-00),
-            0 1px 5px 1px rgba(0, 0, 0, 0.1),
-            0 0 0 1.5px rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -133,10 +130,8 @@
     }
     &.quality-2 {
         background-color: var(--color-forecast-very-good);
-        box-shadow:
-            0 0 0 1.5px var(--color-gray-00),
-            0 1px 5px 1px rgba(0, 0, 0, 0.1),
-            0 0 0 1.5px rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);
@@ -144,10 +139,8 @@
     }
     &.quality-3 {
         background-color: var(--color-forecast-epic);
-        box-shadow:
-            0 0 0 1.5px var(--color-gray-00),
-            0 1px 5px 1px rgba(0, 0, 0, 0.1),
-            0 0 0 1.5px rgba(0, 0, 0, 0.3) inset;
+        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.3) inset;
 
         .ms-map-cluster__text {
             color: var(--color-text-inverse);

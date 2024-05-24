@@ -25,12 +25,14 @@ const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
                 </span>
 
                 <span className="ms-region-preview__counters">
-                    {props.number_of_spots > 0 && (
-                        <>
-                            <span className="ms-value">{props.number_of_spots}</span>
-                            <span className="ms-label">{mondoTranslate('basics.surf_spots')}</span>
-                        </>
-                    )}
+                    <span className="ms-region-preview__counter">
+                        {props.number_of_spots > 0 && (
+                            <>
+                                <span className="ms-value">{props.number_of_spots}</span>
+                                <span className="ms-label">{mondoTranslate('basics.surf_spots')}</span>
+                            </>
+                        )}
+                    </span>
                 </span>
             </div>
         </MondoLink>

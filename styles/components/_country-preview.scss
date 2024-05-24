@@ -9,16 +9,23 @@
 \* ------------------------------------ */
 .ms-country-preview {
     @include card;
-    padding-top: $space * 1.5;
+    // padding-top: $space * 1.5;
+
+    &__contents {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 0.125;
+    }
 
     &__title-flag {
         display: flex;
         align-items: center;
+        gap: $space * 1;
     }
 
     &__flag {
         margin-top: 2px;
-        margin-right: $space/2;
+        // margin-right: $space/2;
         font-size: $font-size-xl;
         line-height: 1;
     }
@@ -34,11 +41,13 @@
     }
 
     &__counters {
-        // display: flex;
+        display: flex;
+        gap: $space;
     }
 
     &__counter {
-        display: block;
+        display: flex;
+        gap: $space * 0.5;
 
         &:not(:last-child) {
             margin-right: $space/2;
@@ -46,7 +55,7 @@
     }
 
     .ms-value {
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         font-weight: $font-weight-bold;
         color: var(--color-text);
     }
@@ -55,6 +64,7 @@
         font-size: $font-size-s-fluid;
         font-weight: $font-weight-normal;
         color: var(--color-text-light);
+        text-transform: lowercase;
     }
 }
 
