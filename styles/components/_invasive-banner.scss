@@ -8,11 +8,18 @@
     #INVASIVE BANNER
 \* ------------------------------------ */
 .ms-invasive-banner {
-    padding: $space * 2;
+    display: flex;
+    flex-direction: column;
+    gap: $space;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: $space * 1.5 $space * 2;
     background-color: var(--color-warning-light);
     border-bottom: 2px solid var(--color-warning);
 
     &__text.ms-body-text {
+        margin-bottom: 0;
         color: var(--color-text);
         font-weight: $font-weight-bold;
     }
@@ -23,14 +30,8 @@
 \* ------------------------------------ */
 @media all and (min-width: 1020px) {
     .ms-invasive-banner {
-        display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
         gap: $space * 2;
-
-        &__text.ms-body-text {
-            margin: 0;
-        }
     }
 }
