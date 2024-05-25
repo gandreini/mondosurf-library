@@ -15,10 +15,12 @@
     border-top: 1px solid $color-border-light;
 
     &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr;
+        gap: $space * 2;
         position: relative;
         max-width: $page-max-width;
-        display: flex;
-        padding: 0;
+        padding: $space * 5 0;
         margin-left: auto;
         margin-right: auto;
         color: var(--color-text);
@@ -27,44 +29,31 @@
     &__column {
         flex-basis: 1px;
         flex-grow: 2;
-        padding: $space * 5 $space * 3;
-
-        &:first-child {
-            padding-left: 0;
-        }
-
-        &:last-child {
-            padding-right: 0;
-        }
     }
 
     &__column-title {
         margin-bottom: $space * 2.5;
         font-weight: $font-weight-bold;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-l-fluid;
         line-height: 1.1;
     }
 
-    &__column-text,
-    &__column-text-love {
-        margin-bottom: $space * 1.5;
-        font-size: $font-size-xs-fluid;
-
-        p {
-            margin: 0;
-            font-size: $font-size-xs-fluid;
-        }
-    }
-
-    &__column-text-love {
-        color: var(--color-text-light);
-    }
-
-    /* Lists */
+    // Lists
     &__list {
         list-style: none;
         margin: 0;
         padding: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: $space * 2;
+        row-gap: $space * 1;
+    }
+
+    &__list-spots {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: $space * 2;
+        row-gap: $space * 1;
     }
 
     &__list-item {
@@ -72,13 +61,9 @@
         padding: 0;
     }
 
-    &__list-item:not(:last-child) {
-        margin-bottom: $space * 0.5;
-    }
-
     &__list-link {
         color: var(--color-text-light);
-        font-size: $font-size-s-fluid;
+        font-size: $font-size-m-fluid;
 
         &:hover {
             color: var(--color-text-link);
@@ -119,29 +104,4 @@
             }
         }
     }
-}
-
-/* ------------------------------------ *\
-   #LANGUAGE-SELECTOR
-\* ------------------------------------ */
-/* .ms-footer {
-    &__column-language {
-        background-color: $footer-background-color;
-    }
-}
-
-.ms-footer__language-selector {
-    margin: 0 0 $space * 3 0;
-    padding: 0;
-    list-style: none;
-} */
-
-/* ------------------------------------ *\
-   #MEDIA-QUERIES
-\* ------------------------------------ */
-@media all and (min-width: $breakpoint-desktop) {
-}
-
-/* Retina */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 }
