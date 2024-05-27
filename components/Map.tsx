@@ -48,8 +48,8 @@ interface IMap {
     cluster?: boolean;
     customIcon?: string;
     noDragOnMobile?: boolean;
-    regionId?: number;
-    countryId?: number;
+    // regionId?: number;
+    // countryId?: number;
     updateLatLngCallback?: (lat: number, lng: number) => void;
 }
 
@@ -71,6 +71,8 @@ const Map: React.FC<IMap> = (props: IMap) => {
     // Lat and long to center the map
     const lat: number | null = props.lat ? props.lat : getUrlParameter('lat') ? Number(getUrlParameter('lat')) : null;
     const lng: number | null = props.lng ? props.lng : getUrlParameter('lng') ? Number(getUrlParameter('lng')) : null;
+    const countryId: number | null = Number(getUrlParameter('country')) ?? null;
+    const regionId: number | null = Number(getUrlParameter('region')) ?? null;
 
     // If the map is draggable
     const isDraggable = !screenWiderThan(760) && props.noDragOnMobile ? false : true;
@@ -216,11 +218,11 @@ const Map: React.FC<IMap> = (props: IMap) => {
                             return new LatLng(coords[0], coords[1], coords[2]);
                         },
                         pointToLayer: wrappedCreateMarker,
-                        onEachFeature: wrappedCreatePopUp, // Popover
+                        onEachFeature: wrappedCreatePopUp // Popover
                         // Filter
-                        filter: (feature) => {
+                        /* filter: (feature) => {
                             return basicMapFiltersCheck(feature, props.countryId, props.regionId);
-                        }
+                        } */
                     });
 
                     // Add the actual markers and clusters on the map
@@ -234,7 +236,17 @@ const Map: React.FC<IMap> = (props: IMap) => {
                         cluster
                     );
 
-                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
+                    positionMap(
+                        map.current,
+                        mapLatLngZoom,
+                        defaultPadding,
+                        topPadding,
+                        geojsonLayer.current,
+                        lat,
+                        lng,
+                        countryId,
+                        regionId
+                    );
                 }
             }
         },

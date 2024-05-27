@@ -8,32 +8,11 @@
    #COUNTRIES
 \* ------------------------------------ */
 .ms-countries {
-    .ms-breadcrumbs {
-        // flex-grow: 1;
-    }
-
-    &__title-buttons-wrapper {
-        display: flex;
-        direction: row;
-        margin-bottom: $space * 3;
-        justify-content: space-between;
-
-        .ms-page-title {
-            margin-bottom: 0;
-        }
-    }
-
-    &__regions-number {
-        display: inline;
-        margin-left: $space;
-        color: var(--color-text-light);
-    }
-
     &__countries-list {
         margin-bottom: $space * 3;
     }
 
-    &__regions-list-link {
+    /* &__regions-list-link {
         display: block;
         padding-top: $space;
         padding-bottom: $space;
@@ -44,7 +23,7 @@
         &:hover {
             color: var(--color-text-link);
         }
-    }
+    } */
 
     &__regions-list-count {
         margin-left: $space;

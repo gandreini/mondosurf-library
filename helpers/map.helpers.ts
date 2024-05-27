@@ -14,12 +14,12 @@ import {
     marker as Marker,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     markerClusterGroup as markerClusterGroup2,
-    TileLayer
+    TileLayer,
+    latLngBounds,
+    LatLngBounds
 } from 'leaflet';
 import { getUserPositionWeb } from 'mondosurf-library/helpers/geolocation.helpers';
-import { returnBottomLabel, returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { IMAGES_URL } from 'proxies/localConstants';
-import { mondoTranslate } from 'proxies/mondoTranslate';
 
 /**
  * Provides the right icon for each point.
@@ -135,14 +135,49 @@ export const tilesLayerToggle = (
  * @param   {L.GeoJSON | null} geojsonLayer GeoJson layer with all the markers..
  * @param   {number | null} lat Latitude of the map: provided only if the Map position must be forced.
  * @param   {number | null} lng Longitude of the map: provided only if the Map position must be forced.
+ * @param   {number | null} countryId Id of the country to focus on.
+ * @param   {number | null} regionId Id of the region to focus on
  */
-export const positionMap = (map: LeafletMap, mapLatLngZoom: number, defaultPadding: number, topPadding: number, geojsonLayer: L.GeoJSON | null, lat?: number | null, lng?: number | null) => {
+export const positionMap = (map: LeafletMap, mapLatLngZoom: number, defaultPadding: number, topPadding: number, geojsonLayer: L.GeoJSON | null, lat?: number | null, lng?: number | null, countryId?: number | null, regionId?: number | null) => {
     if (lat && lng) {
         // 1. Lat and Lng are provided via props or via url parameters: the position of the map is forced.
         map.setView([lat, lng], mapLatLngZoom);
     } else if (geojsonLayer && geojsonLayer.getLayers().length > 0 && geojsonLayer.getBounds() !== null) {
-        // 2. The map is positioned to fit all the markers on it.
-        map.fitBounds(geojsonLayer.getBounds(), {
+
+        let mapBounds: LatLngBounds;
+
+        if (countryId) {
+            // 2. The map is positioned to fit the markers in a given country.
+            let countryFeatures: LatLng[] = [];
+            geojsonLayer.eachLayer(function (layer) {
+                if (layer instanceof LeafletMarker && layer.feature && layer.feature.properties.ci === countryId) {
+                    countryFeatures.push(layer.getLatLng());
+                }
+            });
+            if (countryFeatures.length === 0) {
+                mapBounds = geojsonLayer.getBounds();
+            } else {
+                mapBounds = latLngBounds(countryFeatures);
+            }
+        } else if (regionId) {
+            // 2. The map is positioned to fit the markers in a given region.
+            let regionFeatures: LatLng[] = [];
+            geojsonLayer.eachLayer(function (layer) {
+                if (layer instanceof LeafletMarker && layer.feature && layer.feature.properties.ri === regionId) {
+                    regionFeatures.push(layer.getLatLng());
+                }
+            });
+            if (regionFeatures.length === 0) {
+                mapBounds = geojsonLayer.getBounds();
+            } else {
+                mapBounds = latLngBounds(regionFeatures);
+            }
+        } else {
+            // 3. The map is positioned to fit all the markers on it.
+            mapBounds = geojsonLayer.getBounds()
+        }
+
+        map.fitBounds(mapBounds, {
             padding: [defaultPadding, defaultPadding],
             paddingTopLeft: [defaultPadding, topPadding]
         });

@@ -1,0 +1,39 @@
+/**
+ * INNER-HEADER
+ *
+ * Header with breadcrumbs, page title, button
+ */
+
+/* ------------------------------------ *\
+    #COUNTRY-REGION-HEADER
+\* ------------------------------------ */
+.ms-inner-header {
+    margin-bottom: $space * 1;
+
+    &__title-buttons {
+        display: flex;
+        align-items: center;
+        margin-bottom: $space;
+        justify-content: space-between;
+        gap: $space * 1.5;
+    }
+
+    .ms-page-title {
+        margin-bottom: $space * 0.5;
+    }
+
+    .ms-btn {
+        flex-shrink: 0;
+    }
+
+    &__metadata {
+        display: flex;
+        gap: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

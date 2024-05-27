@@ -18,7 +18,7 @@
     }
 
     &__flag {
-        margin-top: 2px;
+        margin-top: 1px;
         font-size: $font-size-xl-fluid;
         line-height: 1;
     }
@@ -64,7 +64,7 @@
         margin: 0 0 $space * 3 0;
 
         &__flag-title-wrapper {
-            gap: $space * 1;
+            gap: $space * 1.5;
             align-items: center;
         }
 

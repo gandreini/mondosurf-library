@@ -15,40 +15,7 @@
     flex-direction: column;
     padding: 0;
     margin: 0;
-
-    .ms-page-title {
-        margin-bottom: $space * 0.5;
-    }
-
-    &__metadata {
-        display: flex;
-        gap: $space * 2;
-    }
 }
-
-/* .ms-country {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: $tab-bar-height;
-    display: flex;
-    flex-direction: column;
-
-    &__top {
-        position: relative;
-        flex-grow: 0;
-        flex-shrink: 0;
-    }
-
-    &__content {
-        position: relative;
-        flex-grow: 1;
-        min-height: 0;
-        overflow-y: scroll;
-        background-color: $color-background-ultralight;
-    }
-} */
 
 /* ------------------------------------ *\
    #LIST
@@ -67,50 +34,6 @@
 }
 
 /* ------------------------------------ *\
-   #MAP
-\* ------------------------------------ */
-.ms-country {
-    &__content-map {
-        flex-grow: 1;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--color-gray-03);
-    }
-    /* &__map {
-        .ms-map-global {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 50;
-            box-sizing: border-box;
-            height: auto;
-        }
-
-        // Visible.
-        &.is-front {
-            .ms-map-global__container {
-                z-index: 200;
-            }
-        }
-    } */
-}
-
-/* ------------------------------------ *\
-   #LOADING
-\* ------------------------------------ */
-/* .ms-country.is-loading {
-    .ms-country__content-map {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-} */
-
-/* ------------------------------------ *\
    #ERROR
 \* ------------------------------------ */
 .ms-country {
@@ -120,23 +43,10 @@
 }
 
 /* ------------------------------------ *\
-   #EMPTY-STATE
-\* ------------------------------------ */
-/* .ms-country {
-    .ms-empty-state {
-        margin-top: $floating-head-height + $space * 3;
-    }
-} */
-
-/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
     .is-web .ms-country {
         padding: 0 0 $space * 8 0;
     }
-    /* .ms-country {
-        top: $header-height-desktop;
-        bottom: 0;
-    } */
 }
