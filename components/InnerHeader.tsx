@@ -44,8 +44,8 @@ const InnerHeader: React.FC<IInnerHeader> = (props) => {
             {/* Metadata */}
             {props.metadata && props.metadata.length > 0 && (
                 <div className="ms-inner-header__metadata">
-                    {props.metadata.map((item) => (
-                        <Metadata label={item.label} value={item.value} inline={true} />
+                    {props.metadata.map((item, key) => (
+                        <Metadata key={key} label={item.label} value={item.value} inline={true} />
                     ))}
                 </div>
             )}
