@@ -21,6 +21,18 @@
 
     &__title-tools {
         margin-left: auto;
+        display: flex;
+        gap: $space * 2;
+        align-items: center;
+
+        .mondo-icon {
+            font-size: $font-size-xxxl;
+            color: var(--color-gray-05);
+        }
+    }
+
+    &__calendar-icon {
+        display: flex;
     }
 
     &__tabs {

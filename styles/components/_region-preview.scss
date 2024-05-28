@@ -9,7 +9,6 @@
 \* ------------------------------------ */
 .ms-region-preview {
     @include card;
-    // padding-bottom: $space * 1.5;
 
     &__title-wrapper {
         display: block;
@@ -63,7 +62,7 @@
         margin-bottom: $space;
         @include loading-effect;
     }
-    .ms-region-preview__counters {
+    .ms-region-preview__counter {
         height: 19px;
         width: 50%;
         @include loading-effect;

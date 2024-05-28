@@ -12,7 +12,6 @@
         display: block;
         @include card;
         padding: 0;
-        //border: 1px solid $color-border-light;
     }
 
     // Breadcrumbs.
@@ -83,6 +82,7 @@
     }
 
     &__row {
+        box-sizing: border-box;
         padding: $space * 0.5 $space * 2 $space * 0.5 $space * 2;
     }
 

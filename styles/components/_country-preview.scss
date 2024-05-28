@@ -9,7 +9,6 @@
 \* ------------------------------------ */
 .ms-country-preview {
     @include card;
-    // padding-top: $space * 1.5;
 
     &__contents {
         display: flex;
@@ -25,7 +24,6 @@
 
     &__flag {
         margin-top: 2px;
-        // margin-right: $space/2;
         font-size: $font-size-xl;
         line-height: 1;
     }
@@ -81,8 +79,6 @@
    #LOADING
 \* ------------------------------------ */
 .ms-country-preview.is-loading {
-    height: 86px;
-    padding: $space * 1.5;
     background-color: $color-background-base;
 
     .ms-country-preview__contents {

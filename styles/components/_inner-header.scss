@@ -8,12 +8,11 @@
     #COUNTRY-REGION-HEADER
 \* ------------------------------------ */
 .ms-inner-header {
-    margin-bottom: $space * 1;
+    margin-bottom: $space * 2.5;
 
     &__title-buttons {
         display: flex;
         align-items: center;
-        margin-bottom: $space;
         justify-content: space-between;
         gap: $space * 1.5;
     }
@@ -29,6 +28,7 @@
     &__metadata {
         display: flex;
         gap: $space * 2;
+        margin-top: $space;
     }
 }
 

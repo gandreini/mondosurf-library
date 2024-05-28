@@ -3,9 +3,7 @@
 import { IIcon } from 'mondosurf-library/model/iIcon';
 
 const Icon: React.FC<IIcon> = (props: IIcon) => {
-    /**
-     * Returns the color of the icon.
-     */
+    // Returns the color of the icon
     const iconStyle = () => {
         return props.color
             ? {

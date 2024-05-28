@@ -5,27 +5,21 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
-import { basicMapFiltersCheck } from 'features/map/mapFilters.helpers';
+// import { basicMapFiltersCheck } from 'features/map/mapFilters.helpers';
 import { Feature, FeatureCollection } from 'geojson';
 import {
     control as LeafletControl,
     GeoJSON,
     LatLng,
+    Layer,
     Map as LeafletMap,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     TileLayer,
-    tileLayer,
-    Layer
+    tileLayer
 } from 'leaflet';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
-
-import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
-import { RootState } from 'mondosurf-library/redux/store';
-import toastService from 'mondosurf-library/services/toastService';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import {
     addMarkersOnMap,
     centerMapOnUserPosition,
@@ -34,8 +28,13 @@ import {
     positionMap,
     tilesLayerToggle
 } from 'mondosurf-library/helpers/map.helpers';
-import { useRouterProxy } from 'proxies/useRouter';
 import { createPopUp } from 'mondosurf-library/helpers/mapPopUpHelper';
+import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
+import { RootState } from 'mondosurf-library/redux/store';
+import toastService from 'mondosurf-library/services/toastService';
+import { useRouterProxy } from 'proxies/useRouter';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface IMap {
     lat?: number;

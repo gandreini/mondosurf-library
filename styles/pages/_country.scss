@@ -13,8 +13,6 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin: 0;
 }
 
 /* ------------------------------------ *\
@@ -28,8 +26,7 @@
     }
 
     &__regions-list {
-        // padding: $space * 2 $space * 2 $space * 2 $space * 2;
-        padding: $space * 2 0 $space * 2 0;
+        padding: 0 0 $space * 2 0;
     }
 }
 

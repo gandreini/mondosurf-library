@@ -10,7 +10,7 @@ interface IButton {
     additionalClass?: string;
     style?: 'cta' | 'light' | 'normal';
     size?: 'xl' | 'l' | 'm' | 's';
-    icon?: IIcon['icon'];
+    icon?: IIcon['icon'] | undefined;
     fullWidth?: boolean;
     loading?: boolean;
     dataTest?: string;

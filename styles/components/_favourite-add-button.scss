@@ -25,7 +25,7 @@
     // Add.
     &.ms-favourite-add-button-add {
         span {
-            color: var(--color-gray-04);
+            color: var(--color-gray-05);
         }
         &:hover span {
             color: var(--color-favourites);
@@ -35,7 +35,7 @@
     // Add for not logged users.
     &.ms-favourite-add-button-add-not-logged {
         span {
-            color: var(--color-gray-04);
+            color: var(--color-gray-05);
         }
         &:hover span {
             color: var(--color-favourites);
@@ -48,7 +48,7 @@
             color: var(--color-favourites);
         }
         &:hover span {
-            color: var(--color-gray-04);
+            color: var(--color-gray-05);
         }
     }
 }

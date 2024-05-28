@@ -2,7 +2,6 @@ import IRegionPreview from 'mondosurf-library/model/iRegionPreview';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
-// Component.
 const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
     return (
         <MondoLink
@@ -30,6 +29,12 @@ const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
                             <>
                                 <span className="ms-value">{props.number_of_spots}</span>
                                 <span className="ms-label">{mondoTranslate('basics.surf_spots')}</span>
+                            </>
+                        )}
+                        {props.loading && (
+                            <>
+                                <span className="ms-value"></span>
+                                <span className="ms-label"></span>
                             </>
                         )}
                     </span>
