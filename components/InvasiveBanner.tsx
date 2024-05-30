@@ -1,28 +1,36 @@
+// Client
+'use client';
+
 import Button from 'mondosurf-library/components/Button';
+import { requestAccountVerificationEmail } from 'mondosurf-library/helpers/auth.helpers';
+import { RootState } from 'mondosurf-library/redux/store';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useSelector } from 'react-redux';
 
 interface IInvasiveBanner {
-    text: string;
     type?: 'info' | 'success' | 'warning' | 'danger';
-    buttonFunction?: () => void;
-    buttonLabel?: string;
 }
 
 const InvasiveBanner: React.FC<IInvasiveBanner> = (props) => {
+    const logged = useSelector((state: RootState) => state.user.logged);
+    const accountVerified = useSelector((state: RootState) => state.user.accountVerified);
+
     return (
-        <div className={`ms-invasive-banner ms-invasive-banner__type-${props.type}`}>
-            <p className="ms-body-text ms-invasive-banner__text">{props.text}</p>
-            {props.buttonFunction && props.buttonLabel && (
-                <>
+        <>
+            {logged === 'yes' && accountVerified === false && (
+                <div className={`ms-invasive-banner ms-invasive-banner__type-${props.type}`}>
+                    <p className="ms-body-text ms-invasive-banner__text">{mondoTranslate('invasive_banner.text')}</p>
+
                     <Button
                         additionalClass="ms-invasive-banner__button"
-                        callback={props.buttonFunction}
-                        label={props.buttonLabel}
+                        callback={requestAccountVerificationEmail}
+                        label={mondoTranslate('invasive_banner.button')}
                         size="m"
                         style="cta"
                     />
-                </>
+                </div>
             )}
-        </div>
+        </>
     );
 };
 export default InvasiveBanner;

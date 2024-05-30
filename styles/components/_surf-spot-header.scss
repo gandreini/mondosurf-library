@@ -9,8 +9,12 @@
 \* ------------------------------------ */
 .ms-surf-spot-header {
     &__top {
-        margin-top: $space * 3;
+        margin: $space * 2 0 $space * 1 0;
         background-color: $color-background-base;
+    }
+
+    .ms-page-title {
+        margin-bottom: 0;
     }
 
     &__title {
@@ -22,17 +26,34 @@
     &__title-tools {
         margin-left: auto;
         display: flex;
-        gap: $space * 2;
+        gap: $space * 0.5;
         align-items: center;
 
+        > .ms-favourite-add-button,
+        .ms-surf-spot-header__calendar-icon {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
         .mondo-icon {
-            font-size: $font-size-xxxl;
+            font-size: $font-size-xl-fluid;
             color: var(--color-gray-05);
         }
     }
 
     &__calendar-icon {
         display: flex;
+        cursor: pointer;
+
+        &:hover {
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
     }
 
     &__tabs {
@@ -48,4 +69,9 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-header {
+        &__title-tools {
+            gap: $space * 1.5;
+        }
+    }
 }
