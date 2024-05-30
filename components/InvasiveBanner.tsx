@@ -18,7 +18,9 @@ const InvasiveBanner: React.FC<IInvasiveBanner> = (props) => {
     return (
         <>
             {logged === 'yes' && accountVerified === false && (
-                <div className={`ms-invasive-banner ms-invasive-banner__type-${props.type}`}>
+                <div
+                    className={`ms-invasive-banner ms-invasive-banner__type-${props.type}`}
+                    data-test="invasive-banner">
                     <p className="ms-body-text ms-invasive-banner__text">{mondoTranslate('invasive_banner.text')}</p>
 
                     <Button
