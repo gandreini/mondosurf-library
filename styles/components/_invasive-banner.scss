@@ -9,19 +9,25 @@
 \* ------------------------------------ */
 .ms-invasive-banner {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: $space;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
 
-    padding: $space * 1.5 $space * 2;
+    padding: $space * 1 $space * 2;
     background-color: var(--color-warning-light);
     border-bottom: 2px solid var(--color-warning);
 
     &__text.ms-body-text {
         margin-bottom: 0;
-        color: var(--color-text);
+        font-size: $font-size-xs-fluid;
+        color: #bf8423; // var(--color-text);
         font-weight: $font-weight-bold;
+        line-height: 1.4;
+    }
+
+    .ms-btn {
+        flex-shrink: 0;
     }
 }
 

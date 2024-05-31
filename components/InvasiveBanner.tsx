@@ -27,7 +27,7 @@ const InvasiveBanner: React.FC<IInvasiveBanner> = (props) => {
                         additionalClass="ms-invasive-banner__button"
                         callback={requestAccountVerificationEmail}
                         label={mondoTranslate('invasive_banner.button')}
-                        size="m"
+                        size="s"
                         style="cta"
                     />
                 </div>

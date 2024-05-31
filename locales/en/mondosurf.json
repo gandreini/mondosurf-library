@@ -758,6 +758,6 @@
   },
   "invasive_banner": {
     "text": "Please verify your account by clicking the verification link we sent you via email",
-    "button": "Re-send verification email"
+    "button": "Send verification email"
   }
 }
