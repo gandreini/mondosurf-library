@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import formurlencoded from 'form-urlencoded';
-import { getPlatform, isApp } from 'helpers/device.helpers';
+import { getPlatform2, isApp } from 'helpers/device.helpers';
 import jwt_decode from 'jwt-decode';
+import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
 import { store } from 'mondosurf-library/redux/store';
 import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
@@ -26,9 +26,9 @@ export const postApiAuthCall = async (url: string, accessToken: string, params: 
         // Retrieves refresh token from Redux.
         const state = store.getState();
         const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
-        params = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform(), refresh_token: storageRefreshToken };
+        params = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform2(), refresh_token: storageRefreshToken };
     } else { // Web.
-        params = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform() };
+        params = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform2() };
     }
 
     // JWT token decoding.

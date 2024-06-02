@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import formurlencoded from 'form-urlencoded';
-import { getPlatform, isApp } from 'helpers/device.helpers';
+import { getPlatform2, isApp } from 'helpers/device.helpers';
 import { addDebugLogItem } from 'mondosurf-library/redux/debugSlice';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -87,7 +87,7 @@ export const login = (email: string, password: string, deviceId: string) => {
             email: email,
             password: password,
             device_id: deviceId,
-            platform: getPlatform()
+            platform: getPlatform2()
         }),
         withCredentials: true, // ! TODO Verify when needed
         headers: {
@@ -130,7 +130,7 @@ export const logout = (accessToken: string, deviceId: string) => {
                 ', device_id: ' +
                 deviceId +
                 ', platform: ' +
-                getPlatform() +
+                getPlatform2() +
                 ', storageRefreshToken: ' +
                 storageRefreshToken
         )
@@ -143,7 +143,7 @@ export const logout = (accessToken: string, deviceId: string) => {
         data: formurlencoded({
             access_token: accessToken,
             device_id: deviceId,
-            platform: getPlatform(),
+            platform: getPlatform2(),
             refresh_token: storageRefreshToken
         }),
         headers: {
@@ -197,7 +197,7 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
             data: formurlencoded({
                 access_token: accessToken,
                 device_id: deviceId,
-                platform: getPlatform(),
+                platform: getPlatform2(),
                 refresh_token: storageRefreshToken
             }),
             headers: {
@@ -252,7 +252,7 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string) => {
             withCredentials: true, // ! TODO Verify when needed
             data: formurlencoded({
                 device_id: deviceId,
-                platform: getPlatform(),
+                platform: getPlatform2(),
                 refresh_token: storageRefreshToken
             }),
             headers: {
@@ -307,7 +307,7 @@ export const userRegister = (
             password: password,
             terms: termsConditions,
             device_id: deviceId,
-            platform: getPlatform()
+            platform: getPlatform2()
         }),
         withCredentials: true, // ! TODO Verify when needed
         headers: {

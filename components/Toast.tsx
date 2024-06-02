@@ -1,6 +1,6 @@
 'use client';
 
-import { getPlatform } from 'helpers/device.helpers';
+import { isAppiOs } from 'helpers/device.helpers';
 import { TOAST_DURATION } from 'mondosurf-library/constants/constants';
 import { screenWiderThan } from 'mondosurf-library/helpers/device.helpers';
 import { Toaster } from 'react-hot-toast';
@@ -11,7 +11,7 @@ const Toast: React.FC = () => {
 
     // Returns the top position of the Toast
     const modalTopPosition = () => {
-        if (typeof window !== 'undefined' && getPlatform() === 'ios') {
+        if (typeof window !== 'undefined' && isAppiOs()) {
             // Retrieves the CSS property "--ios-status-bar-margin".
             const msWrapperElement = document.querySelector('.ms-wrapper');
             const msWrapperStyle = msWrapperElement ? getComputedStyle(msWrapperElement) : null;

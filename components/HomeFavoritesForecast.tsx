@@ -1,6 +1,6 @@
-import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import List from 'components/List';
-import { getPlatform, isApp } from 'helpers/device.helpers';
+import { isApp } from 'helpers/device.helpers';
+import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import EmptyState from 'mondosurf-library/components/EmptyState';
 import GoodTime from 'mondosurf-library/components/GoodTime';
 import LastUpdate from 'mondosurf-library/components/LastUpdate';
@@ -61,8 +61,6 @@ const HomeFavoritesForecast: React.FC = () => {
     const [goodTimesFiltered, setGoodTimesFiltered] = useState<IGoodTime[]>([]);
     const fetchedFavoriteSpotsForecast = useAuthGetFetch(favouriteSpotsQuery, {}, true);
 
-    const platform = getPlatform();
-
     useEffect(() => {
         // Launches the actual query to the API.
         if (isApp()) {
@@ -89,7 +87,7 @@ const HomeFavoritesForecast: React.FC = () => {
                 favorites: 0
             });
         }
-    }, [accessToken, userLogged, favoriteSpots, storageRefreshToken, platform]);
+    }, [accessToken, userLogged, favoriteSpots, storageRefreshToken]);
 
     useEffect(() => {
         if (fetchedFavoriteSpotsForecast.status === 'loaded') {

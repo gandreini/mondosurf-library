@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-
 import appConfigSlice from 'mondosurf-library/redux/appConfigSlice';
 import appStatusSlice from 'mondosurf-library/redux/appStatusSlice';
 import debugSlice from 'mondosurf-library/redux/debugSlice';
