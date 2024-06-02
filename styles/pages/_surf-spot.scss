@@ -161,8 +161,6 @@
 .ms-surf-spot {
     &__special-info {
         margin-bottom: $space * 3.5;
-        padding-bottom: $space * 3;
-        border-bottom: 1px solid $color-border-normal;
 
         .ms-surf-spot__metadata {
             display: flex;
