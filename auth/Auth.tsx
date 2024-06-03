@@ -306,7 +306,6 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SignupCompleteApi, {
                             context: props.context
                         });
-                        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.TrialStartedApi);
 
                         router.push('/trial-confirmed');
                     } else {
