@@ -47,7 +47,7 @@ export enum TrackingEvent {
     PageCountriesShow = 'Page Countries_Show',
     PageCountryShow = 'Page Country_Show',
     PageRegionShow = 'Page Region_Show',
-    PageSpotShow = 'Page Spot_Show',
+    // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
     PageHomeShow = 'Page Home_Show',
     PageSpotGuideShow = 'Page Spot Guide_Show',
