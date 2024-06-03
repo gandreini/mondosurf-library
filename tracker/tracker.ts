@@ -128,7 +128,7 @@ export class Tracker {
             }
 
             /* Google */
-            if (destinations.includes('ga') && gtag && Tracker.gaSetUpDone) {
+            if (destinations.includes('ga') && typeof gtag === 'function' && Tracker.gaSetUpDone) {
                 if (isDebug()) console.log("gtag", gtag);
                 if (parameters) {
                     gtag('event', eventName, {

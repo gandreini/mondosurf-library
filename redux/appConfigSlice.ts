@@ -18,6 +18,8 @@ export interface IAppConfig {
     tutorial_video_url_google_cal: string;
     tutorial_video_url_apple_cal: string;
     device_id: string;
+    mixpanel_tracking_token?: string;
+    ga_measurement_id?: string;
 }
 
 const initialState: IAppConfig = {
