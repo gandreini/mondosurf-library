@@ -13,11 +13,14 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
+    margin: $space * 4 auto;
     max-width: 600px;
     padding-left: $space * 2;
     padding-right: $space * 2;
+
+    .ms-emoji {
+        margin-bottom: 0;
+    }
 
     &__title {
         margin: 0 0 $space * 1 0;

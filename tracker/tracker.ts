@@ -40,7 +40,6 @@ export class Tracker {
     static gaInit(gaId: string) {
         gtag("js", new Date());
         gtag("config", gaId);
-
         Tracker.gaSetUpDone = true;
     }
 

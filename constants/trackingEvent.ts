@@ -50,4 +50,9 @@ export enum TrackingEvent {
     PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
     PageHomeShow = 'Page Home_Show',
+    PageSpotGuideShow = 'Page Spot Guide_Show',
+    PageSpotForecastShow = 'Page Spot Forecast_Show',
+    PageSpotFullForecastShow = 'Page Spot Full Forecast_Show',
+    PageSpotNearbyShow = 'Page Spot Nearby_Show',
+    PageSpotVideoShow = 'Page Spot Video_Show',
 }
