@@ -12,7 +12,8 @@
 
     // Loading.
     &__loading {
-        padding-top: $space;
+        padding-top: $space * 4;
+        padding-bottom: $space * 2;
     }
 
     // Empty state.

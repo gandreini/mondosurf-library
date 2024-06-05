@@ -3,6 +3,7 @@ import { store } from "mondosurf-library/redux/store";
 /**
  * Verifies if the current user has Pro permissions (if is admin, pro or trial).
  * Also check if the user is logged.
+ * Use the hook "useHasProPermissions" if logged and accountType can change.
  *
  * @returns boolean True if the user can access the pro features.
  */
