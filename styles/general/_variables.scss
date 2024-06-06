@@ -203,13 +203,10 @@ $button-xlarge-height: $height-common-xl;
 // Normal button
 $color-button-text: var(--color-text);
 $color-button-text-hover: var(--color-text-link);
-// $color-button-text-disabled: var(--color-text);
 $color-button-bg: var(--color-gray-00); // var(--color-gray-01);
 $color-button-bg-hover: var(--color-gray-00); // var(--color-gray-02);
-// $color-button-bg-disabled: var(--color-gray-02);
 $color-button-border: var(--color-text); // var(--color-gray-03);
 $color-button-border-hover: var(--color-text-link);
-// $color-button-border-disabled: var(--color-gray-04);
 
 // Light button (no background or border, only text)
 $color-button-light-text: var(--color-text);
@@ -225,13 +222,10 @@ $color-button-light-border-disabled: var(--color-gray-02);
 // Call to action button
 $color-button-cta-text: var(--color-text-inverse);
 $color-button-cta-text-hover: var(--color-text-inverse);
-// $color-button-cta-text-disabled: var(--color-text-inverse);
 $color-button-cta-bg: var(--color-first);
 $color-button-cta-bg-hover: var(--color-first-dark);
-// $color-button-cta-bg-disabled: rgba(var(--color-first), 1);
 $color-button-cta-border: var(--color-first-dark);
 $color-button-cta-border-hover: var(--color-first-dark);
-// $color-button-cta-border-disabled: var(--color-first-dark);
 
 // Warning button
 $color-button-warn-text: var(--color-text-inverse);
@@ -241,7 +235,6 @@ $color-button-warn-bg: var(--color-error);
 $color-button-warn-bg-hover: var(--color-error-dark);
 $color-button-warn-bg-active: var(--color-error-dark);
 $color-button-warn-bg-disabled: rgba(var(--color-error), 0.5);
-
 $color-button-warn-border: var(--color-error-dark);
 
 // ------------------------------------ //
@@ -335,10 +328,15 @@ $loader-btn-height: 26px;
 // #MODAL
 // ------------------------------------ //
 $modal-bg-color: $color-background-base;
-$modal-box-shadow: 0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08), 0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
-    0 $space * 0.5 $space * 2 rgba(#000000, 0.08), 0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
-$modal-from-bottom-box-shadow: 0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
-    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04), 0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
+$modal-box-shadow:
+    0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 2 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
+$modal-from-bottom-box-shadow:
+    0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
+    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04),
+    0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
     0 (-$space * 0.5) $space * 6 rgba(#000000, 0.04);
 $modal-width: 500px;
 
@@ -409,3 +407,15 @@ $ms-spot-forecast-days-nav-height-desktop: 32px;
 // #SURF SPOT FORECAST DAYS NAV
 // ------------------------------------ //
 $surf-spot-forecast-days-nav-height: 60px;
+
+// ------------------------------------ //
+// FORECAST ROW
+// ------------------------------------ //
+$forecast-row-first-column-width: 31%;
+$forecast-row-second-column-width: 40%;
+$forecast-row-third-column-width: 29%;
+
+$forecast-row-desktop-first-column-width: 20%;
+$forecast-row-desktop-second-column-width: 27%;
+$forecast-row-desktop-third-column-width: 25%;
+$forecast-row-desktop-fourth-column-width: 27%;

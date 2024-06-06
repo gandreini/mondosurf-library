@@ -259,6 +259,20 @@
 }
 
 /* ------------------------------------ *\
+   #FULL_FORECAST
+\* ------------------------------------ */
+.ms-modal.ms-modal-full-forecast {
+    .ms-modal__header {
+        padding-left: $space * 2;
+        padding-right: $space * 2;
+    }
+
+    .ms-modal__body {
+        padding: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {

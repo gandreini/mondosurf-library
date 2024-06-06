@@ -4,7 +4,8 @@
  * Single row showing the forecast details of one hour or a section of day.
  */
 
-$no-good-opacity: 0.5;
+$no-good-opacity: 0.68;
+$unit-opacity: 0.75;
 
 /* ------------------------------------ *\
     #FORECAST ROW
@@ -16,6 +17,26 @@ $no-good-opacity: 0.5;
     min-height: 50px;
     border-radius: $border-radius-soft;
 
+    // Columns
+    &__first-column {
+        display: flex;
+        align-items: stretch;
+        width: $forecast-row-first-column-width;
+    }
+    &__second-column {
+        display: flex;
+        align-items: stretch;
+        width: $forecast-row-second-column-width;
+    }
+    &__third-column {
+        display: flex;
+        align-items: stretch;
+        width: $forecast-row-third-column-width;
+    }
+    &__fourth-column {
+        display: none;
+    }
+
     // Time
     &__time {
         align-items: center;
@@ -23,7 +44,8 @@ $no-good-opacity: 0.5;
         background-color: $color-background-mediumlight;
         width: 20px;
         display: flex;
-        border-radius: $border-radius-soft 0 0 $border-radius-soft;
+        // border-radius: $border-radius-soft 0 0 $border-radius-soft;
+        border-radius: $border-radius-soft;
     }
     &__time-label {
         transform: rotate(-90deg);
@@ -35,9 +57,10 @@ $no-good-opacity: 0.5;
 
     // Quality
     &__quality {
+        flex-grow: 3;
         display: flex;
         align-items: center;
-        width: 18%;
+        // width: 18%;
         padding: 0 $space * 1;
     }
 
@@ -45,27 +68,32 @@ $no-good-opacity: 0.5;
     &__swell-size {
         display: flex;
         align-items: center;
-        justify-content: center;
+        // justify-content: center;
+        width: 41px;
         gap: $space * 0.125;
-        width: 54px;
-        margin: 0 $space;
-        padding: $space 0;
+        // width: 54px;
+        // margin: 0 $space;
+        margin-right: $space;
+        // padding: $space 0;
         border-radius: $border-radius-soft;
-        background-color: var(--color-chart-swell);
+        // background-color: var(--color-chart-swell);
     }
     &__swell-size-value {
         font-weight: $font-weight-bold;
         font-size: $font-size-m-fluid;
-        color: var(--color-text-inverse);
+        // color: var(--color-text-inverse);
+        color: var(--color-text);
     }
     &__swell-size-unit {
+        margin-left: $space * 0.25;
         font-size: $font-size-xxxs-fluid;
-        color: var(--color-text-inverse);
-        opacity: 0.65;
+        // color: var(--color-text-inverse);
+        color: var(--color-text);
+        opacity: $unit-opacity;
     }
 
     &__swell-size.is-no-good {
-        opacity: $no-good-opacity;
+        // opacity: $no-good-opacity;
     }
 
     // Period
@@ -81,46 +109,32 @@ $no-good-opacity: 0.5;
         color: var(--color-text);
     }
     &__swell-period-unit {
+        margin-left: $space * 0.25;
         font-size: $font-size-xxs-fluid;
         color: var(--color-text);
-        opacity: 0.65;
+        opacity: $unit-opacity;
     }
 
     &__swell-period.is-no-good {
-        opacity: $no-good-opacity;
-    }
-
-    // Directions
-    &__swell-direction,
-    &__wind-direction {
-        display: flex;
-        align-items: center;
-        width: 30px;
-        justify-content: center;
-    }
-
-    &__swell-direction.is-no-good {
-        opacity: $no-good-opacity;
-    }
-
-    &__wind-direction.is-no-good {
-        opacity: $no-good-opacity;
+        // opacity: $no-good-opacity;
     }
 
     // Wind
     &__wind-speed {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 44px;
-        margin-left: $space * 2;
+        align-items: center;
+        width: 48px;
+        // flex-direction: column;
+        // justify-content: center;
+        // width: 44px;
+        // margin-left: $space * 2;
     }
-    &__wind-speed-label {
+    /* &__wind-speed-label {
         font-weight: $font-weight-bold;
         font-size: $font-size-xxxs-fluid;
         color: var(--color-text);
         opacity: 0.65;
-    }
+    } */
     &__wind-speed-content {
         display: flex;
         flex-direction: row;
@@ -134,12 +148,28 @@ $no-good-opacity: 0.5;
         line-height: 1;
     }
     &__wind-speed-unit {
+        margin-left: $space * 0.25;
         font-size: $font-size-xxxs-fluid;
         color: var(--color-text);
-        opacity: 0.65;
+        opacity: $unit-opacity;
     }
 
     &__wind-speed.is-no-good {
+        // opacity: $no-good-opacity;
+    }
+
+    // Directions
+    &__swell-direction,
+    &__wind-direction {
+        margin-left: $space * 0.5;
+        display: flex;
+        align-items: center;
+        width: 30px;
+        justify-content: center;
+    }
+
+    &__swell-direction.is-no-good,
+    &__wind-direction.is-no-good {
         opacity: $no-good-opacity;
     }
 }
@@ -195,7 +225,8 @@ $no-good-opacity: 0.5;
 \* ------------------------------------ */
 .ms-forecast-row {
     &.ms-forecast-row-night {
-        background-color: #6694a8;
+        // background-color: #6694a8;
+        background-color: #f0f3f4;
 
         // Time
         .ms-forecast-row__time {
@@ -214,22 +245,25 @@ $no-good-opacity: 0.5;
         }
 
         // Height
-        // Height
         .ms-forecast-row__swell-size {
-            background-color: #1e6888;
+            // background-color: #1e6888;
+        }
+        .ms-forecast-row__swell-size-value,
+        .ms-forecast-row__swell-size-unit {
+            // color: var(--color-text-inverse);
         }
 
         // Period
         .ms-forecast-row__swell-period-value,
         .ms-forecast-row__swell-period-unit {
-            color: var(--color-text-inverse);
+            // color: var(--color-text-inverse);
         }
 
         // Wind
         .ms-forecast-row__wind-speed-label,
         .ms-forecast-row__wind-speed-value,
         .ms-forecast-row__wind-speed-unit {
-            color: var(--color-text-inverse);
+            // color: var(--color-text-inverse);
         }
     }
 }
@@ -237,5 +271,21 @@ $no-good-opacity: 0.5;
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-forecast-row {
+        &__first-column {
+            width: $forecast-row-desktop-first-column-width;
+        }
+        &__second-column {
+            width: $forecast-row-desktop-second-column-width;
+        }
+        &__third-column {
+            width: $forecast-row-desktop-third-column-width;
+        }
+        &__fourth-column {
+            display: flex;
+            align-items: stretch;
+            width: $forecast-row-desktop-fourth-column-width;
+        }
+    }
 }

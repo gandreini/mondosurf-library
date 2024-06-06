@@ -750,14 +750,14 @@
     "0_icon": "💩",
     "0_1": "Likely no surf",
     "0_2": "but worth a look",
-    "-1": "No good",
+    "-1": "No surf",
     "0": "Poor",
     "1": "Good",
     "2": "Very good",
     "3": "Epic"
   },
   "invasive_banner": {
-    "text": "Please verify your account by clicking the verification link we sent you via email",
+    "text": "Please verify your account using the link sent to your email",
     "button": "Send verification email"
   }
 }

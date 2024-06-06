@@ -12,9 +12,10 @@
     flex-direction: column;
     margin-bottom: $space * 3;
 
-    &__day {
+    &__header {
+        display: flex;
+        align-items: center;
         padding: $space * 1 0;
-        font-weight: $font-weight-bold;
         position: -webkit-sticky; /* For Safari */
         position: sticky;
         top: $tab-height;
@@ -22,15 +23,56 @@
         z-index: 10;
     }
 
+    &__day {
+        width: $forecast-row-first-column-width;
+        font-size: $font-size-s-fluid;
+        font-weight: $font-weight-bold;
+    }
+
+    &__swell,
+    &__wind,
+    &__secondary-swell {
+        font-size: $font-size-xxs-fluid;
+        font-weight: $font-weight-bold;
+    }
+
+    &__swell {
+        width: $forecast-row-second-column-width;
+    }
+
+    &__wind {
+        width: $forecast-row-third-column-width;
+    }
+
+    &__secondary-swell {
+        display: none;
+    }
+
     &__rows {
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 3px;
     }
 }
 
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-forecast-day {
+        &__day {
+            width: $forecast-row-desktop-first-column-width;
+        }
+        &__swell {
+            width: $forecast-row-desktop-second-column-width;
+        }
+
+        &__wind {
+            width: $forecast-row-desktop-third-column-width;
+        }
+        &__secondary-swell {
+            display: block;
+            width: $forecast-row-desktop-fourth-column-width;
+        }
+    }
 }

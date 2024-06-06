@@ -19,7 +19,7 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
             {props.quality === -1 && (
                 <>
                     <div className="ms-good-time-quality__text">
-                        <span className="ms-good-time-quality__text">No good</span>
+                        <span className="ms-good-time-quality__text">No surf</span>
                     </div>
                 </>
             )}

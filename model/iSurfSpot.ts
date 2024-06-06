@@ -175,3 +175,15 @@ export interface ISurfSpotDailyForecast {
     date: string;
     region: string;
 }
+
+export interface ISurfSpotGoodConditions {
+    swellDirectionMin: number;
+    swellDirectionMax: number;
+    swellHeightMin: number;
+    swellHeightMax?: number;
+    swellPeriodMin: number;
+    windDirectionMin: number;
+    windDirectionMax: number;
+    windOffShoreSpeedMax?: number;
+    windOnShoreSpeedMax?: number;
+};

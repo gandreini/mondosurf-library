@@ -78,7 +78,6 @@
         padding: 0 $space * 1;
         // height: $button-small-height;
         height: $height-common-s;
-        // @include font-size('xs');
         font-size: $font-size-xs-fluid;
     }
 
@@ -87,7 +86,6 @@
         padding: 0 $space * 2.5;
         // height: $button-large-height;
         height: $height-common-l;
-        // @include font-size('m');
         font-size: $font-size-m-fluid;
     }
 
@@ -96,7 +94,6 @@
         padding: 0 $space * 3.5;
         // height: $button-xlarge-height;
         height: $height-common-xl;
-        // @include font-size('l');
         font-size: $font-size-l-fluid;
     }
 

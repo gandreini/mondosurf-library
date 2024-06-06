@@ -1,5 +1,7 @@
 export enum TrackingEvent {
     AppLaunch = 'App Launch',
+
+    // Homepage
     HomeFavsGTsShow = 'Home Favs GTs_Show',
     HomeNearTap = 'Home Near_Tap',
     HomeNearGTsShow = 'Home Near GTs_Show',
@@ -12,11 +14,15 @@ export enum TrackingEvent {
     FavIconTap = 'Fav Icon_Tap',
     FavBannerTap = 'Fav Banner_Tap',
     SpotPreviewTap = 'Spot Preview_Tap',
+
+    // Good surf
     GTTap = 'GT_Tap',
     GTShareTap = 'GT Share_Tap',
     // ModalGTWaTap = 'Modal GT Wa_Tap',
     // ModalGTFbTap = 'Modal GT Fb_Tap',
     // ModalGTURLTap = 'Modal GT URL_Tap',
+
+    // Login and signup
     ModalEmailShow = 'Modal Email_Show',
     ModalEmailTap = 'Modal Email_Tap',
     ModalSignupShow = 'Modal Signup_Show',
@@ -37,6 +43,8 @@ export enum TrackingEvent {
     ModalProShow = 'Modal Pro_Show',
     ModalProTap = 'Modal Pro_Tap',
     ProStartedShow = 'Pro Started_Show',
+
+    // Calendar
     CalBannerTap = 'Cal Banner_Tap',
     ModalCalShow = 'Modal Cal_Show',
     ModalCalURLTap = 'Modal Cal URL_Tap',
@@ -50,6 +58,8 @@ export enum TrackingEvent {
     // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
     PageHomeShow = 'Page Home_Show',
+
+    // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',
     PageSpotForecastShow = 'Page Spot Forecast_Show',
     PageSpotFullForecastShow = 'Page Spot Full Forecast_Show',
