@@ -1,9 +1,9 @@
-import { ICompressedData, ISurfSpotForecastDay, ISurfSpotGoodConditions } from 'mondosurf-library/model/iSurfSpot';
-import ForecastRow from 'mondosurf-library/components/ForecastRow';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import ForecastDayDetail from 'mondosurf-library/components/ForecastDayDetail';
+import ForecastRow from 'mondosurf-library/components/ForecastRow';
+import { ICompressedData, ISurfSpotForecastDay, ISurfSpotGoodConditions } from 'mondosurf-library/model/iSurfSpot';
 import modalService from 'mondosurf-library/services/modalService';
 
 interface ISurfSpotForecastCompressedDay {
