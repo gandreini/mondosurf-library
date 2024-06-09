@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import GoodTimeShare from 'features/goodTime/GoodTimeShare';
-import modalService from 'features/modal/modalService';
 import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -17,6 +16,8 @@ import IGoodTime from 'mondosurf-library/model/iGoodTime';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
+import modalService from 'mondosurf-library/services/modalService';
+import ForecastDayDetail from './ForecastDayDetail';
 
 // Component.
 const GoodTime: React.FC<IGoodTime> = (props) => {
@@ -70,10 +71,30 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
         e.stopPropagation();
     };
 
-    /**
-     * Handles the click on the Good Time.
-     */
+    // On click
     const onGoodTimeClick = () => {
+        // Tracking.
+        trackEvent();
+
+        modalService.openModal({
+            title:
+                (props.surf_spot_name ? props.surf_spot_name : 'Forecast') +
+                ', ' +
+                dayjs(props.start_time).tz(props.timezone).format('ddd D MMM'),
+            component: ForecastDayDetail,
+            componentProps: {
+                dayId: props.day_id,
+                spotId: props.surf_spot_id,
+                dayToShow: dayjs(props.start_time).tz(props.timezone).format('D'),
+                hourToShow: dayjs(props.start_time).tz(props.timezone).format('H'),
+                origin: 'GoodTime'
+            },
+            classes: 'ms-modal-full-forecast'
+        });
+    };
+
+    // Handles the click on the Good Time
+    /* const onGoodTimeClick = () => {
         // Tracking.
         trackEvent();
 
@@ -95,11 +116,9 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
             // Invoking the callback.
             props.callback(props.surf_spot_id, props.surf_spot_slug, props.day_id, props.timezone, props.start_time);
         }
-    };
+    }; */
 
-    /**
-     * Tracking: Tracks click event to Mixpanel and other trackers.
-     */
+    //Tracking: Tracks click event to Mixpanel and other trackers
     const trackEvent = () => {
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.GTTap, {
             surfSpotName: props.surf_spot_name,

@@ -2,7 +2,6 @@
 'use client';
 
 import { postApiAuthCall } from 'mondosurf-library/api/api';
-import modalService from 'features/modal/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -15,6 +14,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import modalService from 'mondosurf-library/services/modalService';
 
 interface IGetCalendarUrl {
     spotName: string;

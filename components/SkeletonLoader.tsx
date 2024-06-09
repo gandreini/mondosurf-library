@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 interface ISkeletonLoader {
     height?: string;
     width?: string;
@@ -5,19 +7,19 @@ interface ISkeletonLoader {
 }
 
 const SkeletonLoader: React.FC<ISkeletonLoader> = (props: ISkeletonLoader) => {
-    const style: React.CSSProperties = {};
+    let customStyle: CSSProperties = {};
 
     if (props.height) {
-        style.height = props.height;
+        customStyle.height = props.height;
     }
     if (props.width) {
-        style.width = props.width;
+        customStyle.width = props.width;
     }
     if (props.marginBottom) {
-        style.marginBottom = props.marginBottom;
+        customStyle.marginBottom = props.marginBottom;
     }
 
-    return <div className="ms-skeleton-loader" style={style}></div>;
+    return <div className="ms-skeleton-loader" style={customStyle}></div>;
 };
 
 export default SkeletonLoader;

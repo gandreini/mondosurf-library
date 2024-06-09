@@ -225,6 +225,7 @@ $unit-opacity: 0.75;
 \* ------------------------------------ */
 .ms-forecast-row {
     &.ms-forecast-row-night {
+        // min-height: 35px;
         // background-color: #6694a8;
         background-color: #f0f3f4;
 
@@ -248,18 +249,27 @@ $unit-opacity: 0.75;
         .ms-forecast-row__swell-size {
             // background-color: #1e6888;
         }
+        .ms-forecast-row__swell-size-value {
+            font-size: $font-size-s-fluid;
+        }
         .ms-forecast-row__swell-size-value,
         .ms-forecast-row__swell-size-unit {
             // color: var(--color-text-inverse);
         }
 
         // Period
+        .ms-forecast-row__swell-period-value {
+            font-size: $font-size-s-fluid;
+        }
         .ms-forecast-row__swell-period-value,
         .ms-forecast-row__swell-period-unit {
             // color: var(--color-text-inverse);
         }
 
         // Wind
+        .ms-forecast-row__wind-speed-value {
+            font-size: $font-size-s-fluid;
+        }
         .ms-forecast-row__wind-speed-label,
         .ms-forecast-row__wind-speed-value,
         .ms-forecast-row__wind-speed-unit {

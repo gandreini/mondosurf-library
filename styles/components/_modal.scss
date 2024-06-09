@@ -267,6 +267,10 @@
         padding-right: $space * 2;
     }
 
+    .ms-modal__header-title {
+        font-size: $font-size-l-fluid;
+    }
+
     .ms-modal__body {
         padding: $space * 2;
     }
@@ -326,6 +330,22 @@
     .ms-modal.ms-modal-tide-table {
         .ms-tide-table-days {
             margin: 0 $space * 3 0 $space * 3;
+        }
+    }
+
+    // Full forecast modal
+    .ms-modal.ms-modal-full-forecast {
+        .ms-modal__window {
+            min-width: 900px;
+        }
+
+        .ms-modal__header {
+            padding-left: $space * 3;
+            padding-right: $space * 3;
+        }
+
+        .ms-modal__body {
+            padding: $space * 3;
         }
     }
 

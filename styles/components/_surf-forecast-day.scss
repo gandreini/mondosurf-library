@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: $space * 3;
+    cursor: pointer;
 
     &__header {
         display: flex;
@@ -18,22 +19,21 @@
         padding: $space * 1 0;
         position: -webkit-sticky; /* For Safari */
         position: sticky;
-        top: $tab-height;
+        top: 0;
         background-color: $color-background-base;
         z-index: 10;
     }
 
-    &__day {
-        width: $forecast-row-first-column-width;
-        font-size: $font-size-s-fluid;
-        font-weight: $font-weight-bold;
-    }
-
+    &__day,
     &__swell,
     &__wind,
     &__secondary-swell {
         font-size: $font-size-xxs-fluid;
         font-weight: $font-weight-bold;
+    }
+
+    &__day {
+        width: $forecast-row-first-column-width;
     }
 
     &__swell {
@@ -52,6 +52,19 @@
         display: flex;
         flex-direction: column;
         gap: 3px;
+    }
+}
+
+/* ------------------------------------ *\
+    #COMPRESSED
+\* ------------------------------------ */
+.ms-surf-forecast-day.ms-surf-forecast-compressed-day {
+    .ms-surf-forecast-day__header {
+        top: $tab-height;
+    }
+
+    .ms-surf-forecast-day__day {
+        font-size: $font-size-s-fluid;
     }
 }
 
