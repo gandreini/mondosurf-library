@@ -1,14 +1,14 @@
 // Client
 'use client';
 
-import { ISurfForecastRow, ISurfSpotForecastDay, ISurfSpotGoodConditions } from 'mondosurf-library/model/iSurfSpot';
-import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDay';
-import { useEffect, useState } from 'react';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
-import LastUpdateProxy from 'proxies/LastUpdateProxy';
-import SkeletonLoader from './SkeletonLoader';
-import { Tracker } from 'mondosurf-library/tracker/tracker';
+import LastUpdate from 'mondosurf-library/components/LastUpdate';
+import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
+import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { ISurfForecastRow, ISurfSpotForecastDay, ISurfSpotGoodConditions } from 'mondosurf-library/model/iSurfSpot';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { useEffect, useState } from 'react';
 
 interface IForecastDayDetail {
     dayId: number;
@@ -122,7 +122,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
             {/* Last update */}
             {lastUpdate && (
                 <div className="ms-surf-spot-forecast__good-times-update">
-                    <LastUpdateProxy lastUpdate={lastUpdate} />
+                    <LastUpdate lastUpdate={lastUpdate} />
                 </div>
             )}
         </>

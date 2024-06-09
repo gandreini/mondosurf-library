@@ -1,3 +1,5 @@
+'use client';
+
 import dayjs from 'dayjs';
 import { FORECAST_UPDATE_PERIOD } from 'mondosurf-library/constants/constants';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';

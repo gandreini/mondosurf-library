@@ -1,14 +1,14 @@
-import { postApiAuthCall } from 'mondosurf-library/api/api';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { openLoginModal } from 'features/modal/modal.helpers';
-import toastService from 'mondosurf-library/services/toastService';
+import { postApiAuthCall } from 'mondosurf-library/api/api';
 import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
 import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 import IGoodTime from "mondosurf-library/model/iGoodTime";
 import { ISurfSpotForecast, ISurfSpotForecastDay } from "mondosurf-library/model/iSurfSpot";
 import { store } from "mondosurf-library/redux/store";
+import toastService from 'mondosurf-library/services/toastService';
 
 /**
  * Returns the number of forecast days to be displayed to the user, depending on the account type.

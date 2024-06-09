@@ -89,7 +89,7 @@
         height: calc(90vh - var(--ios-status-bar-margin)); // iOS spacing.
         border-radius: $space * 3 $space * 3 0 0;
         box-shadow: $modal-from-bottom-box-shadow;
-        transition: all 0.5s; // Must match setTimeout time parameter in src/features/modal/Modal.tsx.
+        transition: all 0.5s; // Must match setTimeout time parameter in src/mondosurf-library/components/Modal.tsx.
     }
 
     .ms-modal__content {
