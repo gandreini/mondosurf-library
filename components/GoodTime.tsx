@@ -18,6 +18,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
 import modalService from 'mondosurf-library/services/modalService';
 import ForecastDayDetail from './ForecastDayDetail';
+import Icon from 'mondosurf-library/components/Icon';
 
 // Component.
 const GoodTime: React.FC<IGoodTime> = (props) => {
@@ -47,7 +48,7 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
         dayjs().unix() > dayjs(props.start_time).unix() && dayjs().unix() < dayjs(props.end_time).unix() ? true : false;
 
     // Modal to share good time.
-    const onShowShareModal = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    const onShowShareModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
         modalService.openModal({
             text: mondoTranslate('good_time.share_text', {
                 name: props.surf_spot_name
@@ -85,8 +86,10 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
             componentProps: {
                 dayId: props.day_id,
                 spotId: props.surf_spot_id,
+                spotSlug: props.surf_spot_slug,
                 dayToShow: dayjs(props.start_time).tz(props.timezone).format('D'),
                 hourToShow: dayjs(props.start_time).tz(props.timezone).format('H'),
+                showSpotButton: props.context === 'homeFavorites' || props.context === 'homeNearSpots' ? true : false,
                 origin: 'GoodTime'
             },
             classes: 'ms-modal-full-forecast'
@@ -137,6 +140,10 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
             {/* Quality */}
             <div className="ms-good-time__quality">
                 <GoodTimeQuality quality={bestQuality} />
+
+                <div className="ms-good-time__share" onClick={(e) => onShowShareModal(e)}>
+                    <Icon icon={'share'} />
+                </div>
             </div>
 
             <div className="ms-good-time__content">
@@ -162,41 +169,40 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
 
                     {/* Swell, Wind, ... */}
                     <div className="ms-good-time__details">
-                        <div className="ms-good-time__details-label ms-color-swell">
-                            {mondoTranslate('basics.swell')}
+                        <div className="ms-good-time__details-block">
+                            <div className="ms-good-time__details-label ms-color-swell">
+                                {mondoTranslate('basics.swell')}
+                            </div>
+                            <div className="ms-good-time__details-value">
+                                <span className="ms-good-time__details-value-data">
+                                    {oneDecimal(convertSizeFromMeters(props.swell_height))}
+                                </span>
+                                <span className="ms-good-time__details-value-unit">{returnLengthUnitShortLabel()}</span>
+                                <span className="ms-good-time__details-value-separator">{', '}</span>
+                                <span className="ms-good-time__details-value-data">{props.swell_period}</span>
+                                <span className="ms-good-time__details-value-unit">s</span>
+                                <span className="ms-good-time__details-value-separator">{', '}</span>
+                                <span className="ms-good-time__details-value-data">
+                                    {directionAcronym(props.swell_direction)}
+                                </span>
+                            </div>
                         </div>
-                        <div className="ms-good-time__details-value">
-                            <span className="ms-good-time__details-value-data">
-                                {oneDecimal(convertSizeFromMeters(props.swell_height))}
-                            </span>
-                            <span className="ms-good-time__details-value-unit">{returnLengthUnitShortLabel()}</span>
-                            <span className="ms-good-time__details-value-separator">{', '}</span>
-                            <span className="ms-good-time__details-value-data">{props.swell_period}</span>
-                            <span className="ms-good-time__details-value-unit">s</span>
-                            <span className="ms-good-time__details-value-separator">{', '}</span>
-                            <span className="ms-good-time__details-value-data">
-                                {directionAcronym(props.swell_direction)}
-                            </span>
-                        </div>
-                        <div className="ms-good-time__details-label ms-color-wind">{mondoTranslate('basics.wind')}</div>
-                        <div className="ms-good-time__details-value">
-                            <span className="ms-good-time__details-value-data">
-                                {oneDecimal(convertSpeedFromKph(props.wind_speed))}
-                            </span>
-                            <span className="ms-good-time__details-value-unit">{returnSpeedUnitShortLabel()}</span>
-                            <span className="ms-good-time__details-value-separator">{', '}</span>
-                            <span className="ms-good-time__details-value-data">
-                                {directionAcronym(props.wind_direction)}
-                            </span>
+                        <div className="ms-good-time__details-block">
+                            <div className="ms-good-time__details-label ms-color-wind">
+                                {mondoTranslate('basics.wind')}
+                            </div>
+                            <div className="ms-good-time__details-value">
+                                <span className="ms-good-time__details-value-data">
+                                    {oneDecimal(convertSpeedFromKph(props.wind_speed))}
+                                </span>
+                                <span className="ms-good-time__details-value-unit">{returnSpeedUnitShortLabel()}</span>
+                                <span className="ms-good-time__details-value-separator">{', '}</span>
+                                <span className="ms-good-time__details-value-data">
+                                    {directionAcronym(props.wind_direction)}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                {/* Good Time share */}
-                <div className="ms-good-time__share">
-                    <button className="ms-btn ms-btn-s" onClick={(e) => onShowShareModal(e)}>
-                        {mondoTranslate('good_time.share')}
-                    </button>
                 </div>
             </div>
         </article>

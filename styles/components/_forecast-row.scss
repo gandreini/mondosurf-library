@@ -4,8 +4,9 @@
  * Single row showing the forecast details of one hour or a section of day.
  */
 
-$no-good-opacity: 0.68;
+$no-good-opacity: 0.5;
 $unit-opacity: 0.75;
+$arrow-size: 15px;
 
 /* ------------------------------------ *\
     #FORECAST ROW
@@ -14,7 +15,7 @@ $unit-opacity: 0.75;
     display: flex;
     align-items: stretch;
     width: 100%;
-    min-height: 50px;
+    min-height: 40px;
     border-radius: $border-radius-soft;
 
     // Columns
@@ -80,7 +81,7 @@ $unit-opacity: 0.75;
     }
     &__swell-size-value {
         font-weight: $font-weight-bold;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         // color: var(--color-text-inverse);
         color: var(--color-text);
     }
@@ -105,7 +106,7 @@ $unit-opacity: 0.75;
     }
     &__swell-period-value {
         font-weight: $font-weight-bold;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         color: var(--color-text);
     }
     &__swell-period-unit {
@@ -143,7 +144,7 @@ $unit-opacity: 0.75;
     }
     &__wind-speed-value {
         font-weight: $font-weight-bold;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-s-fluid;
         color: var(--color-text);
         line-height: 1;
     }
@@ -161,17 +162,34 @@ $unit-opacity: 0.75;
     // Directions
     &__swell-direction,
     &__wind-direction {
-        margin-left: $space * 0.5;
+        // margin-left: $space * 0.5;
         display: flex;
         align-items: center;
         width: 30px;
         justify-content: center;
+
+        svg {
+            width: $arrow-size;
+            height: $arrow-size;
+        }
     }
 
     &__swell-direction.is-no-good,
     &__wind-direction.is-no-good {
         opacity: $no-good-opacity;
     }
+
+    /* &__wind-direction.is-no-good {
+        path {
+            fill: var(--color-gray-03);
+        }
+    }
+
+    &__swell-direction.is-no-good {
+        path {
+            fill: var(--color-gray-04);
+        }
+    } */
 }
 
 /* ------------------------------------ *\
@@ -225,7 +243,8 @@ $unit-opacity: 0.75;
 \* ------------------------------------ */
 .ms-forecast-row {
     &.ms-forecast-row-night {
-        // min-height: 35px;
+        // opacity: 0.5;
+        // min-height: 30px;
         // background-color: #6694a8;
         background-color: #f0f3f4;
 

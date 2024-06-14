@@ -1,0 +1,36 @@
+/**
+ * FORECAST DAY DETAIL
+ *
+ * Style for the forecast detail of a daty, including tide and astronomy.
+ */
+
+/* ------------------------------------ *\
+    #FORECAST DAY DETAIL
+\* ------------------------------------ */
+.ms-forecast-day-detail {
+    &__content {
+        padding-bottom: 50px;
+    }
+    &__footer {
+        position: absolute;
+        bottom: 0;
+        left: $space * 2;
+        right: $space * 2;
+        height: 70px;
+        background-color: $color-background-base;
+        display: flex;
+        align-items: center;
+        gap: $space;
+        box-sizing: border-box;
+
+        .ms-btn {
+            flex: 1 1 0;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

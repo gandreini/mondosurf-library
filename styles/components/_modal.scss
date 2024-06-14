@@ -268,11 +268,15 @@
     }
 
     .ms-modal__header-title {
-        font-size: $font-size-l-fluid;
+        font-size: $font-size-m-fluid;
     }
 
     .ms-modal__body {
-        padding: $space * 2;
+        padding: $space $space * 2;
+    }
+
+    .ms-modal__close {
+        display: none;
     }
 }
 
@@ -336,7 +340,7 @@
     // Full forecast modal
     .ms-modal.ms-modal-full-forecast {
         .ms-modal__window {
-            min-width: 900px;
+            min-width: 800px;
         }
 
         .ms-modal__header {
@@ -345,7 +349,7 @@
         }
 
         .ms-modal__body {
-            padding: $space * 3;
+            padding: $space * 0.5 $space * 3 $space $space * 3;
         }
     }
 

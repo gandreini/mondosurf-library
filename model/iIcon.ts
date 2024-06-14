@@ -48,6 +48,8 @@ export interface IIcon {
     | 'tab-bar-active-me'
     | 'tab-bar-active-search'
     | 'tab-bar-active-home'
+    | 'enlarge'
+    | 'share'
     | 'mondo-logo';
     color?: string;
 }

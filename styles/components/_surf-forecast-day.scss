@@ -87,5 +87,11 @@
             display: block;
             width: $forecast-row-desktop-fourth-column-width;
         }
+
+        &:hover {
+            .ms-surf-forecast-day__header .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
     }
 }

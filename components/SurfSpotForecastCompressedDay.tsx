@@ -1,3 +1,6 @@
+// Client
+'use client';
+
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -5,6 +8,7 @@ import ForecastDayDetail from 'mondosurf-library/components/ForecastDayDetail';
 import ForecastRow from 'mondosurf-library/components/ForecastRow';
 import { ICompressedData, ISurfSpotForecastDay, ISurfSpotGoodConditions } from 'mondosurf-library/model/iSurfSpot';
 import modalService from 'mondosurf-library/services/modalService';
+import Icon from 'mondosurf-library/components/Icon';
 
 interface ISurfSpotForecastCompressedDay {
     day: ICompressedData;
@@ -13,6 +17,7 @@ interface ISurfSpotForecastCompressedDay {
     timezone: string;
     goodConditions: ISurfSpotGoodConditions;
     spotName?: string;
+    spotSlug?: string;
 }
 
 const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = (
@@ -32,6 +37,7 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
             component: ForecastDayDetail,
             componentProps: {
                 dayId: props.dayId,
+                spotSlug: props.spotSlug,
                 days: props.days,
                 timezone: props.timezone,
                 goodConditions: props.goodConditions,
@@ -50,6 +56,7 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
                 <p className="ms-surf-forecast-day__swell">Swell</p>
                 <p className="ms-surf-forecast-day__wind">Wind</p>
                 <p className="ms-surf-forecast-day__secondary-swell">Secondary swell</p>
+                <Icon icon={'enlarge'} />
             </div>
 
             <div className="ms-surf-forecast-day__rows">
