@@ -1,31 +1,28 @@
 // Client
 'use client';
 
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
+import Button from 'mondosurf-library/components/Button';
+import DayAstronomyTable from 'mondosurf-library/components/DayAstronomyTable';
+import DayTideTable from 'mondosurf-library/components/DayTideTable';
 import LastUpdate from 'mondosurf-library/components/LastUpdate';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
 import {
     ISurfForecastRow,
     ISurfSpotForecastDay,
     ISurfSpotForecastDayTideHighLow,
     ISurfSpotGoodConditions
 } from 'mondosurf-library/model/iSurfSpot';
-import { Tracker } from 'mondosurf-library/tracker/tracker';
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
-import Button from 'mondosurf-library/components/Button';
 import modalService from 'mondosurf-library/services/modalService';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { useRouterProxy } from 'proxies/useRouter';
-
-// Client Components dynamic loading
-import dynamic from 'next/dynamic';
-const DayAstronomyTable = dynamic(() => import('mondosurf-library/components/DayAstronomyTable'));
-const DayTideTable = dynamic(() => import('mondosurf-library/components/DayTideTable'));
+import { useEffect, useState } from 'react';
 
 interface IForecastDayDetail {
     dayId: number;
