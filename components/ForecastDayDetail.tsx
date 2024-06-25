@@ -124,7 +124,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
     // Navigates to a spot page
     const onNavigateToSpot = () => {
-        router.push(`/surf-spot/${props.spotSlug}/guide/${props.spotId}`);
+        router.push(`/surf-spot/${props.spotSlug}/full-forecast/${props.spotId}`);
 
         setTimeout(() => {
             modalService.closeModal();
@@ -197,7 +197,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
             <div className="ms-forecast-day-detail__footer">
                 {/* Buttons */}
                 <Button label="Close" callback={() => modalService.closeModal()} />
-                {showSpotButton && <Button label="Spot page" callback={() => onNavigateToSpot()} />}
+                {showSpotButton && <Button label="Full Forecast" callback={() => onNavigateToSpot()} />}
             </div>
         </div>
     );
