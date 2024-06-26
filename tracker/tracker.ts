@@ -98,6 +98,7 @@ export class Tracker {
         const logged = state.user.logged;
         const userId = state.user.userId;
         const accountType = state.user.accountType;
+        const favorites = state.user.favoriteSpots !== null ? state.user.favoriteSpots.length : 0;
         const platform = getPlatform2();
         const os = appOs();
 
@@ -105,6 +106,7 @@ export class Tracker {
             logged: logged,
             userId: userId,
             accountType: accountType,
+            favorites: favorites,
             platform: platform,
             os: os
         };
