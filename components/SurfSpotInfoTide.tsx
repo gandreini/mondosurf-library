@@ -33,7 +33,7 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
             {/* Info provided */}
             {props.surfSpotData.tide && props.surfSpotData.tide?.length > 0 && (
                 <section className="ms-surf-spot-info-tide">
-                    <p className="ms-surf-spot-info-tide__title ms-body-text">{mondoTranslate('tide.best_tide')}</p>
+                    <h2 className="ms-surf-spot-info-tide__title ms-body-text">{mondoTranslate('tide.best_tide')}</h2>
 
                     <p className="ms-surf-spot-info-tide__details">
                         {/* Tide */}
