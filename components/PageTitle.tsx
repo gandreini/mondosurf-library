@@ -7,6 +7,7 @@ interface IPageTitle {
     backlink?: string;
     backlinkTitle?: string;
     loading?: boolean;
+    itemProp?: string;
 }
 
 const PageTitle: React.FC<IPageTitle> = (props) => {
@@ -33,7 +34,10 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
                     )}
                     <div className="ms-page-title__flag-title-wrapper">
                         {props.flag && <span className="ms-page-title__flag">{props.flag}</span>}
-                        <h1 className="ms-page-title__title" data-test="page-title">
+                        <h1
+                            className="ms-page-title__title"
+                            data-test="page-title"
+                            itemProp={props.itemProp || undefined}>
                             {props.title}
                         </h1>
                     </div>

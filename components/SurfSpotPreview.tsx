@@ -10,6 +10,7 @@ import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import { FRONTEND_URL } from 'proxies/localConstants';
 
 // Component.
 const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) => {
@@ -70,9 +71,21 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
 
             {/* Loaded */}
             {!props.loading && (
-                <div className={rootClassName()} key={props.id} data-test="surf-spot-preview">
-                    <MondoLink
+                <div
+                    className={rootClassName()}
+                    key={props.id}
+                    data-test="surf-spot-preview"
+                    itemScope
+                    itemType="https://schema.org/TouristAttraction">
+                    <meta
                         itemProp="url"
+                        content={
+                            props.linkToGoodTimes
+                                ? `${FRONTEND_URL}/surf-spot/${props.slug}/forecast/${props.id}`
+                                : `${FRONTEND_URL}/surf-spot/${props.slug}/guide/${props.id}`
+                        }
+                    />
+                    <MondoLink
                         className="ms-surf-spot-preview__link"
                         href={
                             props.linkToGoodTimes
@@ -99,7 +112,10 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
                                 {props.direction && props.direction === 'L' && <Icon icon="wave-left" />}
                                 {!props.direction && <Icon icon="wave" />}
                             </div>
-                            <h2 className="ms-surf-spot-preview__title" data-test="surf-spot-preview-title">
+                            <h2
+                                className="ms-surf-spot-preview__title"
+                                data-test="surf-spot-preview-title"
+                                itemProp="name">
                                 {props.name}
                             </h2>
                             {props.id && props.name && (

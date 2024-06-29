@@ -1,5 +1,6 @@
 import IRegionPreview from 'mondosurf-library/model/iRegionPreview';
 import MondoLink from 'proxies/MondoLink';
+import { FRONTEND_URL } from 'proxies/localConstants';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
 const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
@@ -7,10 +8,13 @@ const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
         <MondoLink
             className={props.loading ? 'ms-region-preview is-loading' : 'ms-region-preview'}
             itemScope
-            itemType="https://schema.org/Place"
-            itemProp="url"
+            itemType="https://schema.org/DefinedRegion"
             href={`/surf-spots-in/${props.countrySlug}/${props.slug}/${props.id}`}
             dataTest="region-preview">
+            <meta
+                itemProp="url"
+                content={`${FRONTEND_URL}surf-spots-in/${props.countrySlug}/${props.slug}/${props.id}`}
+            />
             <div className="ms-region-preview__contents">
                 <span className="ms-region-preview__title-wrapper" itemProp="name">
                     <span

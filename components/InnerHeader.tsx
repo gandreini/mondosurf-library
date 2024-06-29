@@ -14,6 +14,7 @@ interface IInnerHeader {
     buttonTest?: string;
     metadata?: { label: string; value: string }[];
     children: React.ReactNode;
+    itemProp?: string;
 }
 
 const InnerHeader: React.FC<IInnerHeader> = (props) => {
@@ -29,6 +30,7 @@ const InnerHeader: React.FC<IInnerHeader> = (props) => {
                     flag={props.flag ?? undefined}
                     backlink={props.backLink}
                     backlinkTitle={props.backLinkTitle}
+                    itemProp={props.itemProp || undefined}
                 />
                 {props.buttonText && props.buttonUrl && (
                     <Button
