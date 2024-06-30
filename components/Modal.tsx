@@ -151,9 +151,7 @@ const Modal: React.FC = <T,>() => {
 
     return (
         <div
-            className={`ms-modal 
-                ${modalData.classes} 
-                ${modalVisible ? 'is-visible' : ''}`}
+            className={`ms-modal ${modalData.classes || undefined} ${modalVisible ? 'is-visible' : ''}`}
             id="ms_modal_forecast_settings"
             {...(modalData.dataTest && { 'data-test': modalData.dataTest })}>
             <div className="ms-modal__overlay" onClick={onCloseModal}></div>
