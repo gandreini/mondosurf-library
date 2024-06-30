@@ -16,7 +16,7 @@ const RegionPreview: React.FC<IRegionPreview> = (props: IRegionPreview) => {
                 content={`${FRONTEND_URL}surf-spots-in/${props.countrySlug}/${props.slug}/${props.id}`}
             />
             <div className="ms-region-preview__contents">
-                <span className="ms-region-preview__title-wrapper" itemProp="name">
+                <span className="ms-region-preview__title-wrapper">
                     <span
                         itemProp="name"
                         className="ms-region-preview__title"

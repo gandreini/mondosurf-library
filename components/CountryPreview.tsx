@@ -13,7 +13,7 @@ const CountryPreview: React.FC<ICountry> = (props: ICountry) => {
             dataTest="country-preview">
             <meta itemProp="url" content={`${FRONTEND_URL}surf-regions-in/${props.slug}/${props.id}`} />
             <div className="ms-country-preview__contents">
-                <span className="ms-country-preview__title-flag" itemProp="name">
+                <span className="ms-country-preview__title-flag">
                     {props.flag && <span className="ms-country-preview__flag">{props.flag}</span>}
                     <span
                         itemProp="name"
