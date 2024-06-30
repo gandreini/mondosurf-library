@@ -273,14 +273,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
     return (
         <>
             {/* The map */}
-            <div
-                ref={mapRef}
-                className="ms-map-global__container"
-                itemScope
-                itemProp="hasMap"
-                itemType="http://schema.org/Map"
-                data-test="surf-spot-map"
-            />
+            <div ref={mapRef} className="ms-map-global__container" data-test="surf-spot-map" />
 
             {/* Controls */}
             <div className="ms-map__controls" data-test="surf-spot-map-controls">
