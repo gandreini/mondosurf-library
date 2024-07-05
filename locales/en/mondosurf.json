@@ -293,7 +293,7 @@
     "apply": "Apply"
   },
   "seo": {
-    "image": "/images/seo/og-image.png",
+    "image": "images/seo/og-image.png",
     "home": {
       "title": "Mondo - Surf Atlas and Forecast",
       "description": "Explore the most comprehensive atlas of surf spots. Check maps, swell and wind forecasts, and integrate the reports into your Google or Apple calendar"
