@@ -186,8 +186,6 @@
     "generic_error": "This is weird! There was an error, please try again and contact the administrator if the problem persists."
   },
   "footer": {
-    "title": "Mondo Surf Atlas and Forecast",
-    "subtitle": "Every surf spot, with forecast. Discover surf spots and get accurate 7-day forecasts directly in your Google or Apple calendar.",
     "bottom_main": "© 2024 Mondo",
     "love": "Made with 🌊 in Tuscany"
   },
@@ -293,18 +291,19 @@
     "apply": "Apply"
   },
   "seo": {
+    "keywords": "surf, surfing, spot, forecast, report, map, webcam",
     "image": "images/seo/og-image.png",
     "home": {
       "title": "Mondo - Surf Atlas and Forecast",
-      "description": "Explore the most comprehensive atlas of surf spots. Check maps, swell and wind forecasts, and integrate the reports into your Google or Apple calendar"
+      "description": "Explore the most comprehensive atlas of surf spots. Check maps, swell forecasts, webcams, and integrate the reports into your Google or Apple calendar"
     },
     "countries": {
       "title": "Browse surf spot with forecasts, reports, maps - Mondo",
-      "description": "Dive into Mondo's extensive list of surf spots. Explore detailed guides, surf maps, accurate forecasts, and reports for top surf spots around the world"
+      "description": "Dive into Mondo's extensive list of surf spots. Explore detailed guides, surf maps, forecasts, reports, and webcams for top surf spots around the world"
     },
     "country_regions": {
       "title": "{{country}} - Browse surf regions with forecasts - Mondo",
-      "description": "Discover the surf regions in {{country}}. Explore our comprehensive guides to top surfing regions, complete with up-to-date forecasts, reports, and maps"
+      "description": "Discover the surf regions in {{country}}. Explore our comprehensive guides to top surf spots, complete with guides, forecasts, reports, maps, and webcams"
     },
     "country_map": {
       "title": "",
@@ -312,7 +311,7 @@
     },
     "region_spots": {
       "title": "{{region}} - Surf spots forecasts, reports, maps - Mondo",
-      "description": "Browse the list of surf spots in {{region}}. Find detailed information on each spot, including surfing forecasts, reports, maps, essential spot details"
+      "description": "Browse the list of surf spots in {{region}}. Find detailed information including surfing forecasts, reports, maps, webcams, and essential spot details"
     },
     "region_map": {
       "title": "",
@@ -324,11 +323,11 @@
     },
     "spot_guide": {
       "title": "{{spot}} - Surf spot guide and map - Mondo",
-      "description": "Discover everything about the surf spot {{spot}} including surf map, bottom, best swell and wind directions, tides, surf quality, crowd factor, and more"
+      "description": "Discover everything about the surf spot {{spot}} including surf map, bottom, best swell and wind directions, tides, surf quality, webcams, and more"
     },
     "spot_good_times": {
       "title": "{{spot}} - Good surf next 7 days - Mondo",
-      "description": "Discover when to catch the best waves at the surf spot {{spot}}. Our surf report highlights the upcoming good surf, and you can add them to your calendar"
+      "description": "Catch the best waves at the surf spot {{spot}}. Look at the webcams, check our forecast report with the upcoming good surf, and add it to your calendar"
     },
     "spot_full_forecast": {
       "title": "{{spot}} - Hourly surf forecast - Mondo",
@@ -336,7 +335,7 @@
     },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - Mondo",
-      "description": "Explore surf spots near {{spot}}. Each nearby spot comes with a complete guide, map, surf report for the next days, and accurate swell and wind forecasts"
+      "description": "Explore surf spots near {{spot}}. Each spot comes with a guide, surf map, surf report for the next 7 days, accurate swell and wind forecasts, webcams"
     },
     "spot_video": {
       "title": "{{spot}} - Surf videos - Mondo",
