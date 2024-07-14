@@ -14,6 +14,7 @@ interface IButton {
     fullWidth?: boolean;
     loading?: boolean;
     dataTest?: string;
+    rel?: string;
 }
 
 const Button = (props: IButton) => {
@@ -33,7 +34,11 @@ const Button = (props: IButton) => {
     return (
         <>
             {props.url && (
-                <MondoLink className={returnClass()} href={props.url} dataTest={props.dataTest || undefined}>
+                <MondoLink
+                    className={returnClass()}
+                    href={props.url}
+                    dataTest={props.dataTest || undefined}
+                    rel={props.rel || undefined}>
                     {props.icon && <Icon icon={props.icon} />}
                     {!props.loading && <span className="ms-btn__label">{props.label}</span>}
                     {props.loading && <Loader size="small" />}

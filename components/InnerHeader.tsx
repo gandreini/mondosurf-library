@@ -12,6 +12,7 @@ interface IInnerHeader {
     buttonText?: string;
     buttonIcon?: IIcon['icon'] | undefined;
     buttonTest?: string;
+    rel?: string;
     metadata?: { label: string; value: string }[];
     children: React.ReactNode;
 }
@@ -37,6 +38,7 @@ const InnerHeader: React.FC<IInnerHeader> = (props) => {
                         size="s"
                         icon={props.buttonIcon ?? undefined}
                         dataTest={props.buttonTest ?? undefined}
+                        rel={props.rel || undefined}
                     />
                 )}
             </div>
