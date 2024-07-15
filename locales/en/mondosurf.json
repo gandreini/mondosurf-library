@@ -330,7 +330,7 @@
       "description": "Catch the best waves at the surf spot {{spot}}. Look at the webcams, check our forecast report with the upcoming good surf, and add it to your calendar"
     },
     "spot_full_forecast": {
-      "title": "{{spot}} - Hourly surf forecast - Mondo",
+      "title": "{{spot}} - Hourly surf forecast report - Mondo",
       "description": "Explore the full hourly surf forecast for the surf spot {{spot}}. Get in-depth details on swell and wind surf reports and plan your next surfing sessions"
     },
     "spot_near_spots": {
