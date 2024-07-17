@@ -4,21 +4,22 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import GoodTimeShare from 'mondosurf-library/components/GoodTimeShare';
-import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
+import GoodTimeShare from 'mondosurf-library/components/GoodTimeShare';
+import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { extDayMonthFormat, hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
+import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { directionAcronym } from 'mondosurf-library/helpers/labels.helpers';
 import { convertSizeFromMeters, convertSpeedFromKph } from 'mondosurf-library/helpers/units.helpers';
 import { oneDecimal } from 'mondosurf-library/helpers/various.helpers';
 import IGoodTime from 'mondosurf-library/model/iGoodTime';
+import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
-import modalService from 'mondosurf-library/services/modalService';
+
 import ForecastDayDetail from './ForecastDayDetail';
-import Icon from 'mondosurf-library/components/Icon';
 
 // Component.
 const GoodTime: React.FC<IGoodTime> = (props) => {

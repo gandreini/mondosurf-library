@@ -90,7 +90,7 @@ const GoodTimeShare: React.FC<IGoodTimes> = (props: IGoodTimes) => {
         }); */
     };
 
-    const copyUrl = `${FRONTEND_URL}surf-spot/forecast/${props.surf_spot_id}/${props.surf_spot_slug}?day=${props.day_id}`;
+    const copyUrl = `${FRONTEND_URL}surf-spot/${props.surf_spot_slug}/forecast/${props.surf_spot_id}?day=${props.day_id}`;
 
     return (
         <div className="ms-good-time-share">
