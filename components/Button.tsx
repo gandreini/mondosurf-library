@@ -5,6 +5,7 @@ import MondoLink from 'proxies/MondoLink';
 
 interface IButton {
     url?: string;
+    targetBlank?: boolean;
     callback?: () => void;
     label: string;
     additionalClass?: string;
@@ -37,6 +38,7 @@ const Button = (props: IButton) => {
                 <MondoLink
                     className={returnClass()}
                     href={props.url}
+                    target={props.targetBlank ? '_blank' : undefined}
                     dataTest={props.dataTest || undefined}
                     rel={props.rel || undefined}>
                     {props.icon && <Icon icon={props.icon} />}

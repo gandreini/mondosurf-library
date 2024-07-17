@@ -4,7 +4,7 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import GoodTimeShare from 'features/goodTime/GoodTimeShare';
+import GoodTimeShare from 'mondosurf-library/components/GoodTimeShare';
 import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';

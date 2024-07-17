@@ -192,7 +192,10 @@ const Modal: React.FC = <T,>() => {
                                     </button>
                                 )}
                                 {modalData.closeButtonText && (
-                                    <button className="ms-btn" onClick={onCloseModal} data-test="modal-close-button">
+                                    <button
+                                        className="ms-btn ms-btn-xl"
+                                        onClick={onCloseModal}
+                                        data-test="modal-close-button">
                                         {modalData.closeButtonText}
                                     </button>
                                 )}

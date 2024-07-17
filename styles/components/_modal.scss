@@ -168,6 +168,10 @@
         padding: 0;
     }
 
+    &__text {
+        margin-right: $space * 5;
+    }
+
     &__text.ms-body-text:not(:last-child) {
         margin-bottom: $space * 3;
     }
