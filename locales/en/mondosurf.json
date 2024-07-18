@@ -103,8 +103,8 @@
     "error_subtext": "Try relaunching the app or check your internet connection"
   },
   "auth": {
-    "welcome": "Hi {{name}}, welcome to Mondo Surf!",
-    "welcome_back": "Hi {{name}}, welcome back to Mondo Surf!",
+    "welcome": "Hi {{name}}, welcome to Mondo!",
+    "welcome_back": "Hi {{name}}, welcome back to Mondo!",
     "errors": {
       "error_login": "There was an error during log in",
       "error_registration": "There was an error during registration",
@@ -115,7 +115,7 @@
       "password_short": "The password seems too short",
       "name_required": "Please insert your name",
       "name_short": "The name is too short",
-      "register_terms_conditions_accept_required": "Please accept the Terms and Conditions and Privacy Policy to register on Mondo Surf"
+      "register_terms_conditions_accept_required": "Please accept the Terms and Conditions and Privacy Policy to register on Mondo"
     },
     "password_reset_sent": "Please check your inbox to reset your password",
     "form": {
@@ -133,14 +133,14 @@
       "register_form_text": "You are about to register a new account, go back if you already have one",
       "register_button": "Create Account",
       "register_back": "Back",
-      "register_terms_conditions": "I agree to the Mondo Surf Terms and Conditions. Learn about how we use and protect your data in our Privacy Policy (links below).",
+      "register_terms_conditions": "I agree to the Mondo Terms and Conditions. Learn about how we use and protect your data in our Privacy Policy (links below).",
       "password_reset_form_text": "Insert your email address to reset your password. You'll receive and email with a link to reset your password",
       "password_reset_form_submit": "Send reset link",
       "password_reset_back": "Log In or Register",
       "password_reset_success_text": "Request successfully sent! Check your mail inbox and click on the link provided in the password reset email",
       "logged_modal_title": "Welcome!",
       "logged_icon": "🤙",
-      "logged": "Welcome back to Mondo Surf, {{name}}!"
+      "logged": "Welcome back to Mondo, {{name}}!"
     },
     "modal_title": "Log In or Register",
     "refresh_token": "Refresh JWT token",
@@ -156,11 +156,11 @@
     }
   },
   "modal": {
-    "want_to_exit_app": "Are you sure you want to leave the Mondo Surf app?",
-    "exit_app_btn": "Exit Mondo Surf",
+    "want_to_exit_app": "Are you sure you want to leave the Mondo app?",
+    "exit_app_btn": "Exit Mondo",
     "favorites": {
       "favorite_removal_title": "Remove favorite?",
-      "favorite_removal_text": "Are you sure you want to remove {{name}} from your favorites?\nIt will not be included anymore in your daily bulletin and in the Mondo Surf homepage.",
+      "favorite_removal_text": "Are you sure you want to remove {{name}} from your favorites?\nIt will not be included anymore in your daily bulletin and in the Mondo homepage.",
       "favorite_removal_button": "Yes, remove favorite!"
     }
   },
@@ -241,15 +241,15 @@
       "near_spots_forecast_empty": "No good forecast for the surf spots near you",
       "near_spots_title": "Spots near to you",
       "empty_text": "No spots near you, time to plan a surf trip?",
-      "empty_button": "Browse Mondo Surf spots",
+      "empty_button": "Browse Mondo surf spots",
       "near_spots_empty": "No spots near you, time to plan a surf trip?",
       "geolocation_unsupported": "Geolocation is not authorized or not supported on your device.\nTry enabling it in your browser's settings.",
       "geolocation_try_again": "See local forecast",
       "server_error": "Ops, there was an error loading your near spots, try reloading the app"
     },
     "cta": {
-      "title": "Add a surf spot on Mondo Surf",
-      "text": "One of your favorites surf spot is missing on Mondo Surf? No problem! You can add it by providing some basic information and you'll get all the forecast info you need.",
+      "title": "Add a surf spot on Mondo",
+      "text": "One of your favorites surf spot is missing on Mondo? No problem! You can add it by providing some basic information and you'll get all the forecast info you need.",
       "button": "Add a new surf spot"
     },
     "favourites": {
@@ -267,14 +267,14 @@
       "register": {
         "icon": "🏄‍♀️",
         "title": "Want to surf more?",
-        "text": "Register to Mondo Surf and get full access to:",
-        "button_text_1": "Register to Mondo Surf",
+        "text": "Register to Mondo and get full access to:",
+        "button_text_1": "Register to Mondo",
         "button_text_2": "and start your {{duration}} days free trial",
         "sub_text": "Already a member? Click to log in"
       },
       "pro": {
         "icon": "🏄‍♀️",
-        "title": "Subscribe to\nMondo Surf Pro",
+        "title": "Subscribe to\nMondo Pro",
         "text_expired": "Your trial period has expired, subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_days": "Your trial period will expire in {{days}} days. Subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_hours": "Your {{duration}} days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
@@ -379,9 +379,9 @@
     "add_a_spot": "Add a surf spot",
     "settings": "Settings",
     "you_are_not_logged_icon": "👋",
-    "you_are_not_logged": "Welcome to Mondo Surf!",
-    "you_are_not_logged_subtext": "Register to Mondo Surf and subscribe to the Pro membership to save your favorites spots, see the weekly forecast, receive a daily surf bulletin, and install surf calendars.",
-    "please_verify_your_account_text": "To keep using Mondo Surf please verify your account by clicking on the link provided in the email we sent you.",
+    "you_are_not_logged": "Welcome to Mondo!",
+    "you_are_not_logged_subtext": "Register to Mondo and subscribe to the Pro membership to save your favorites spots, see the weekly forecast, receive a daily surf bulletin, and install surf calendars.",
+    "please_verify_your_account_text": "To keep using Mondo please verify your account by clicking on the link provided in the email we sent you.",
     "please_verify_your_account_subtext": "Accounts that are not verified will be disabled after 20 days.",
     "send_verification_mail": "Resend verification email",
     "profile_details": "Profile details",
@@ -401,7 +401,7 @@
     "slash_year": "/year",
     "slash_month": "/month",
     "yearly_saving": "save 16%",
-    "get_mondo_pro": "Subscribe to Mondo Surf Pro",
+    "get_mondo_pro": "Subscribe to Mondo Pro",
     "start_trial": "Start your {{duration}} day trial",
     "start_trial_modal_text": "Get full access to all the Pro membership features for free!",
     "become_pro": "Become a Pro member",
@@ -411,8 +411,8 @@
     "trial_membership": "Pro membership (currently in trial)",
     "subscription": "Subscription",
     "your_current_plan": "Your current plan",
-    "switch_to_trial": "Start the {{duration}} days free trial to use all the features of Mondo Surf Pro.",
-    "switch_to_pro": "Switch to Pro to use all the features of Mondo Surf Pro.",
+    "switch_to_trial": "Start the {{duration}} days free trial to use all the features of Mondo Pro.",
+    "switch_to_pro": "Switch to Pro to use all the features of Mondo Pro.",
     "currently_trial": "Currently in trial",
     "trial_expires_on": "Trial expires on",
     "charged_when_trial_expires": "You will be charged when the trial period expires.",
@@ -422,7 +422,7 @@
     "delete_account": "Delete your account",
     "delete_account_subtext": "Your account will be deleted within 24 hours. All your data will be removed from our systems. You will receive a confirmation email once the account is deleted.",
     "delete_account_modal_title": "Account deletion",
-    "delete_account_modal_text": "Are you sure you want to delete your Mondo Surf account? Please confirm you want to delete your account by clicking the button below. Your account will be deleted within 24 hours.",
+    "delete_account_modal_text": "Are you sure you want to delete your Mondo account? Please confirm you want to delete your account by clicking the button below. Your account will be deleted within 24 hours.",
     "delete_account_modal_button": "Yes, delete my account",
     "delete_account_toast_success": "Account deletion request successfully sent. Your account will be deleted within 24 hours.",
     "delete_account_toast_error": "Error while sending your account deletion request, please try again later or contact us at hello@mondo.surf",
@@ -443,7 +443,7 @@
       "trial_title": "Log In or Register",
       "trial_text": "Please Log In or Register to start your {{duration}} days free trial",
       "automatic_trial_title": "Log In or Register",
-      "automatic_trial_text": "Please Log In or Register to use all the features of Mondo Surf"
+      "automatic_trial_text": "Please Log In or Register to use all the features of Mondo"
     },
     "trial_modal": {
       "text_1": "<strong>No credit card required!</strong>\nUnlock the following features:",
@@ -673,9 +673,9 @@
   },
   "toast": {
     "app_latest_version_check": {
-      "web": "A new version of Mondo Surf is available, please refresh the page to enjoy the latest features",
-      "android": "A new version of Mondo Surf is available, please update your app on the Google Play Store to enjoy the latest features",
-      "ios": "A new version of Mondo Surf is available, please update your app on the App Store to enjoy the latest features"
+      "web": "A new version of Mondo is available, please refresh the page to enjoy the latest features",
+      "android": "A new version of Mondo is available, please update your app on the Google Play Store to enjoy the latest features",
+      "ios": "A new version of Mondo is available, please update your app on the App Store to enjoy the latest features"
     },
     "favourites": {
       "already_added_to_favourites": "{{spotName}} already in your favorites",
