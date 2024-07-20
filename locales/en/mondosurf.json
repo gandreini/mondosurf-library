@@ -737,12 +737,12 @@
     }
   },
   "banner": {
-    "banner_calendar_text": "Add {{name}} Surf Forecast to your Calendar",
-    "banner_calendar_subtext": "Missing surf sessions? Not anymore",
-    "banner_calendar_icon": "🗓",
+    "banner_calendar_text": "Add this surf report to your calendar",
+    "banner_calendar_subtext": "Have the good surf at hand on your Google or Apple calendar and never miss a session",
     "banner_favorite_text": "Add {{name}} to your favorites",
     "banner_favorite_subtext": "And receive the forecast in your daily surf bulletin",
-    "banner_favorite_icon": "❤️"
+    "banner_widget_text": "Add Mondo't forecast widget to your website",
+    "banner_widget_subtext": "Show the updated surf forecast for {{name}}"
   },
   "swell_quality": {
     "0_icon": "💩",

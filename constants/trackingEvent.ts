@@ -12,7 +12,6 @@ export enum TrackingEvent {
     HomeProTap = 'Home Pro_Tap',
     // HomeCalBannerTap = 'Home Cal Banner_Tap',
     FavIconTap = 'Fav Icon_Tap',
-    FavBannerTap = 'Fav Banner_Tap',
     SpotPreviewTap = 'Spot Preview_Tap',
 
     // Good surf
@@ -45,7 +44,6 @@ export enum TrackingEvent {
     ProStartedShow = 'Pro Started_Show',
 
     // Calendar
-    CalBannerTap = 'Cal Banner_Tap',
     ModalCalShow = 'Modal Cal_Show',
     ModalCalURLTap = 'Modal Cal URL_Tap',
     ModalCalEmailTap = 'Modal Cal Email_Tap',
@@ -58,6 +56,11 @@ export enum TrackingEvent {
     // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
     PageHomeShow = 'Page Home_Show',
+
+    // Banners
+    CalBannerTap = 'Cal Banner_Tap',
+    FavBannerTap = 'Fav Banner_Tap',
+    WidgetBannerTap = 'Widget Banner_Tap',
 
     // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',

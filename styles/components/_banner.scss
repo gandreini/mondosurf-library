@@ -11,25 +11,73 @@
     display: flex;
     align-items: center;
     padding: $space * 2;
+    gap: $space * 2;
     background-size: cover;
     background-color: var(--color-gray-00);
-    border: 1px solid var(--color-gray-06);
     border-radius: $border-radius * 2;
     cursor: pointer;
 
-    &__icon {
-        margin: 0 $space * 1.75 0 0;
+    .mondo-icon {
+        font-size: $font-size-xxxl-fluid;
     }
 
-    &__texts {
+    .ms-banner__texts {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 0.5;
     }
 
-    .ms-banner__texts .ms-banner__text {
+    .ms-banner__text {
         margin-bottom: 0;
         color: var(--color-text);
     }
-    .ms-banner__texts .ms-banner__subtext {
+    .ms-banner__subtext {
         color: var(--color-text);
+        margin-bottom: 0;
+    }
+}
+
+/* ------------------------------------ *\
+    #FAVORITES
+\* ------------------------------------ */
+.ms-banner-favorite {
+    border: 2px solid var(--color-favourites);
+    // background-color: var(--color-favourites);
+    color: var(--color-favourites);
+
+    .ms-banner__text {
+        color: var(--color-favourites);
+    }
+}
+
+/* ------------------------------------ *\
+    #CALENDAR
+\* ------------------------------------ */
+.ms-banner-calendar {
+    border: 2px solid var(--color-first);
+    color: var(--color-first);
+
+    .ms-banner__text {
+        color: var(--color-first);
+    }
+}
+
+/* ------------------------------------ *\
+    #WIDGET
+\* ------------------------------------ */
+.ms-banner-widget {
+    border: 2px solid var(--color-forecast-good);
+    color: var(--color-forecast-good);
+
+    // Image
+    &__image {
+        width: 92px;
+        height: 63px;
+        background: transparent url('../assets/widgetIcon.png') center center no-repeat;
+        background-size: contain;
+    }
+    .ms-banner__text {
+        color: var(--color-forecast-good);
     }
 }
 

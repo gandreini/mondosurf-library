@@ -27,7 +27,8 @@
 .ms-h3-title {
     color: var(--color-titles);
     font-weight: $font-weight-bold;
-    line-height: 1.32;
+    // line-height: 1.32;
+    line-height: 1.18;
     white-space: pre-line; // To allow new line with '\n'.
     font-size: $font-size-l-fluid;
     @include first-letter-capital;

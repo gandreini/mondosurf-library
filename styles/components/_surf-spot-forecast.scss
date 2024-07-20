@@ -93,6 +93,18 @@
 .ms-surf-spot-forecast {
     &__banners {
         margin-bottom: $space * 5;
+        > section {
+            margin-bottom: $grid-gutter-h;
+        }
+    }
+    &__banners-row {
+        display: flex;
+        gap: $grid-gutter-h;
+        flex-direction: column;
+
+        > * {
+            flex: 1 1 100%;
+        }
     }
 }
 
@@ -152,5 +164,10 @@
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-forecast {
+        &__banners-row {
+            flex-direction: row;
+        }
+    }
 }
