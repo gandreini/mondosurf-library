@@ -7,7 +7,6 @@ import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
-import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useSelector } from 'react-redux';
 
@@ -105,25 +104,26 @@ const Banner: React.FC<IBanner> = (props) => {
 
             {/* Widget banner */}
             {props.type === 'widget' && (
-                <MondoLink
-                    href="https://forms.gle/4BikoTaPPscGaiUW8"
-                    className="ms-banner ms-banner-widget"
-                    target="_blank"
-                    onClickCallback={onClickWidgetBanner}>
-                    <div className="ms-banner-widget__image"></div>
-                    <div className="ms-banner__texts">
-                        <p className="ms-h3-title ms-banner__text">
-                            {mondoTranslate('banner.banner_widget_text', {
-                                name: props.spotName
-                            })}
-                        </p>
-                        <p className="ms-banner__subtext ms-small-text">
-                            {mondoTranslate('banner.banner_widget_subtext', {
-                                name: props.spotName
-                            })}
-                        </p>
+                <a href="https://forms.gle/4BikoTaPPscGaiUW8" target="_blank" rel="noreferrer">
+                    <div
+                        className="ms-banner ms-banner-widget"
+                        onClick={onClickWidgetBanner}
+                        data-test="surf-spot-forecast-widget-banner">
+                        <div className="ms-banner-widget__image"></div>
+                        <div className="ms-banner__texts">
+                            <p className="ms-h3-title ms-banner__text">
+                                {mondoTranslate('banner.banner_widget_text', {
+                                    name: props.spotName
+                                })}
+                            </p>
+                            <p className="ms-banner__subtext ms-small-text">
+                                {mondoTranslate('banner.banner_widget_subtext', {
+                                    name: props.spotName
+                                })}
+                            </p>
+                        </div>
                     </div>
-                </MondoLink>
+                </a>
             )}
         </>
     );
