@@ -1,11 +1,11 @@
-import { ISurfSpot } from 'mondosurf-library/model/iSurfSpot';
 import Banner from 'mondosurf-library/components/Banner';
+import { ISurfSpot } from 'mondosurf-library/model/iSurfSpot';
 
 interface ISurfSpotForecastBanners {
     spot: ISurfSpot;
 }
 
-const SurfSpotForecastBanners: React.FC<ISurfSpotForecastBanners> = async (props: ISurfSpotForecastBanners) => {
+const SurfSpotForecastBanners: React.FC<ISurfSpotForecastBanners> = (props: ISurfSpotForecastBanners) => {
     return (
         <>
             {props.spot && (

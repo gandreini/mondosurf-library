@@ -2,15 +2,14 @@
 'use client';
 
 import { openCalendarModal } from 'features/modal/modal.helpers';
+import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useSelector } from 'react-redux';
-import Icon from './Icon';
-import { useRouterProxy } from 'proxies/useRouter';
-import Button from 'mondosurf-library/components/Button';
 
 interface IBanner {
     type: 'favorite' | 'calendar' | 'widget';
@@ -20,9 +19,6 @@ interface IBanner {
 }
 
 const Banner: React.FC<IBanner> = (props) => {
-    // React router.
-    const router = useRouterProxy();
-
     // Redux.
     const logged = useSelector((state: RootState) => state.user.logged);
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
@@ -49,7 +45,6 @@ const Banner: React.FC<IBanner> = (props) => {
 
     // On click on Widget banner
     const onClickWidgetBanner = () => {
-        router.push('https://forms.gle/4BikoTaPPscGaiUW8');
         // Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.WidgetBannerTap, {
             spotId: props.spotId,
@@ -62,13 +57,6 @@ const Banner: React.FC<IBanner> = (props) => {
             {/* Favorite banner */}
             {props.type === 'favorite' && (
                 <>
-                    {console.log(
-                        favoriteSpots,
-                        logged,
-                        checkIfSpotIdIsInFavorites(favoriteSpots, Number(props.spotId)),
-                        props.spotId,
-                        Number(props.spotId)
-                    )}
                     {(logged != 'yes' ||
                         (logged === 'yes' && !favoriteSpots) ||
                         (logged === 'yes' &&
@@ -117,10 +105,11 @@ const Banner: React.FC<IBanner> = (props) => {
 
             {/* Widget banner */}
             {props.type === 'widget' && (
-                <div
+                <MondoLink
+                    href="https://forms.gle/4BikoTaPPscGaiUW8"
                     className="ms-banner ms-banner-widget"
-                    onClick={onClickWidgetBanner}
-                    data-test="surf-spot-forecast-widget-banner">
+                    target="_blank"
+                    onClickCallback={onClickWidgetBanner}>
                     <div className="ms-banner-widget__image"></div>
                     <div className="ms-banner__texts">
                         <p className="ms-h3-title ms-banner__text">
@@ -134,7 +123,7 @@ const Banner: React.FC<IBanner> = (props) => {
                             })}
                         </p>
                     </div>
-                </div>
+                </MondoLink>
             )}
         </>
     );
