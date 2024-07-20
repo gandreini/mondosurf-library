@@ -10,7 +10,7 @@ interface IDayAstronomyTable {
 const DayAstronomyTable: React.FC<IDayAstronomyTable> = (props) => {
     return (
         <div className="ms-day-astronomy-table" data-test="astronomy-table">
-            <table className="ms-day-astronomy-table__table">
+            <table className="ms-day-astronomy-table__table ms-table">
                 <tbody>
                     <tr>
                         <td className="ms-day-astronomy-table__td ms-day-astronomy-table__icon">🌄</td>

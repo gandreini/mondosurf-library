@@ -17,7 +17,7 @@ const DayTideTable: React.FC<IDayTideTable> = (props) => {
 
     return (
         <div className="ms-day-tide-table">
-            <table className="ms-day-tide-table__table">
+            <table className="ms-day-tide-table__table ms-table">
                 <tbody>
                     {removeFirstAndLastItem(props.highLows).map(
                         (value: ISurfSpotForecastDayTideHighLow, key: number) => (

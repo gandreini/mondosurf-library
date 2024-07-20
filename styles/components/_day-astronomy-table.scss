@@ -7,27 +7,11 @@
    #DAY-ASTRONOMY-TABLE
 \* ------------------------------------ */
 .ms-day-astronomy-table {
-    &__table {
-        width: 100%;
-        margin-bottom: $space * 2;
-        border-collapse: collapse;
-        border: 2px solid $color-border-normal;
-        border-radius: $border-radius * 2;
-    }
+    margin-bottom: $space * 2;
 
-    &__td {
-        padding: $space/2;
-        border: 2px solid $color-border-normal;
-        font-size: $font-size-s;
-        color: var(--color-text);
-    }
-
-    &__icon {
+    tbody td.ms-day-astronomy-table__icon {
         text-align: center;
         width: 24px;
-    }
-
-    &__label {
     }
 
     &__value {

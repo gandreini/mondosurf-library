@@ -9,12 +9,14 @@
 \* ------------------------------------ */
 .ms-table {
     width: 100%;
-    border-collapse: collapse;
-    border: 1px solid $color-border-normal;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid $color-border-normal;
+    border-radius: $border-radius * 2;
 
     thead {
         th {
-            padding: $space/2;
+            padding: $space * 0.75;
             border: 1px solid $color-border-normal;
             background-color: $color-background-light;
             color: var(--color-text);
@@ -25,28 +27,33 @@
 
     tbody {
         td {
-            padding: $space/2;
-            border: 1px solid $color-border-normal;
-            background-color: $color-background-base;
+            padding: $space * 0.75;
+            font-size: $font-size-s;
             color: var(--color-text);
-            font-size: $font-size-xs;
+            font-size: $font-size-xs-fluid;
             text-align: left;
+        }
+
+        td:not(:last-child) {
+            border-right: 2px solid $color-border-normal;
+        }
+
+        tr:not(:last-child) td {
+            border-bottom: 2px solid $color-border-normal;
         }
     }
 
-    /* No data */
+    // No data
     &__no-data {
         font-style: italic;
         color: var(--color-text-light);
     }
 }
 
-
 /* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
-
     .ms-footer {
         margin-bottom: 0;
     }
