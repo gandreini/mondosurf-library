@@ -1,5 +1,5 @@
-import { requestAccountVerificationEmail } from 'mondosurf-library/helpers/auth.helpers';
 import { TOAST_DURATION } from 'mondosurf-library/constants/constants';
+import { requestAccountVerificationEmail } from 'mondosurf-library/helpers/auth.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import toast from 'react-hot-toast';
 
