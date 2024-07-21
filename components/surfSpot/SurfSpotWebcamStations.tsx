@@ -1,7 +1,7 @@
-import SurfSpotMeteoStation from 'features/surfSpot/forecast/SurfSpotMeteoStation';
-import SurfSpotWebcam from 'features/surfSpot/forecast/SurfSpotWebcam';
 import { ISurfSpot, ISurfSpotMeteoStation, ISurfSpotWebcam } from 'mondosurf-library/model/iSurfSpot';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import SurfSpotWebcam from 'mondosurf-library/components/surfSpot/SurfSpotWebcam';
+import SurfSpotMeteoStation from 'mondosurf-library/components/surfSpot/SurfSpotMeteoStation';
 
 interface ISurfSpotWebcamStations {
     spot: ISurfSpot;
