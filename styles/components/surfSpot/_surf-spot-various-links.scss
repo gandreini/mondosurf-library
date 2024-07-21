@@ -1,0 +1,32 @@
+/**
+ * SURF SPOT VARIOUS LINKS
+ *
+ * Section that contains some textual links.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT VARIOUS LINKS
+\* ------------------------------------ */
+.ms-surf-spot-various-links {
+    ul {
+        margin: 0;
+        padding: $space * 4 0 $space * 2 0;
+        list-style: none;
+        border-top: 1px solid $color-border-normal;
+
+        a {
+            color: var(--color-text-light);
+            font-size: $font-size-s-fluid;
+
+            &:hover {
+                color: var(--color-text-link);
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

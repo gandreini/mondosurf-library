@@ -5,6 +5,7 @@ import { openCalendarModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
+import { shouldShowFavoritesBanner } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
@@ -56,12 +57,7 @@ const Banner: React.FC<IBanner> = (props) => {
             {/* Favorite banner */}
             {props.type === 'favorite' && (
                 <>
-                    {(logged != 'yes' ||
-                        (logged === 'yes' && !favoriteSpots) ||
-                        (logged === 'yes' &&
-                            favoriteSpots &&
-                            !checkIfSpotIdIsInFavorites(favoriteSpots, Number(props.spotId)) &&
-                            favoriteSpots.length < 5)) && (
+                    {shouldShowFavoritesBanner(Number(props.spotId)) && (
                         <div
                             className="ms-banner ms-banner-favorite"
                             onClick={onClickFavoriteBanner}
@@ -78,6 +74,9 @@ const Banner: React.FC<IBanner> = (props) => {
                                 </p>
                             </div>
                         </div>
+                    )}
+                    {!shouldShowFavoritesBanner(Number(props.spotId)) && (
+                        <div className="ms-banner ms-banner-favorite is-empty"></div>
                     )}
                 </>
             )}

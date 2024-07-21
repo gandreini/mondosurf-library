@@ -31,31 +31,29 @@
     }
 
     &__map {
-        // margin-top: $space * 2;
         width: 100%;
         overflow: hidden;
-        // border-radius: $border-radius-hard $border-radius-hard 0 0;
         .ms-map-global {
             height: 360px;
         }
     }
 
-    // Tabs contents.
-    /* .ms-tabs__content {
-        margin-top: $space * 3;
-    } */
-
     // Description.
     &__description {
         @include consistent;
         margin-bottom: $space * 3.5;
-        padding-bottom: $space * 3;
-        border-bottom: 1px solid $color-border-normal;
+        // padding-bottom: $space * 3;
+        // border-bottom: 1px solid $color-border-normal;
         @include fix-android-wrong-font-size;
 
         .ms-body-text {
             margin-bottom: 0;
         }
+    }
+
+    // Guide banner
+    &__guide-banner {
+        margin-bottom: $space * 3.5;
     }
 }
 

@@ -1,3 +1,6 @@
+import { store } from "mondosurf-library/redux/store";
+import { checkIfSpotIdIsInFavorites } from "mondosurf-library/helpers/favorites.helpers";
+
 /**
  * Returns the value of a GET parameter,
  * null if the parameter is not set.
@@ -99,4 +102,30 @@ export const generateUUID = (): string => {
         const v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
+}
+
+/**
+ * Determines whether the "Favorites" banner should be shown based on the user's login status
+ * and their favorite spots.
+ *
+ * @param {number} spotId - The ID of the spot to check against the user's favorite spots.
+ * @returns {boolean} - Returns `true` if the "Favorites" banner should be shown, `false` otherwise.
+ */
+export const shouldShowFavoritesBanner = (spotId: number): boolean => {
+    // Redux.
+    const state = store.getState();
+    const logged = state.user.logged;
+    const favoriteSpots = state.user.favoriteSpots;
+
+    if
+        (logged != 'yes' ||
+        (logged === 'yes' && !favoriteSpots) ||
+        (logged === 'yes' &&
+            favoriteSpots &&
+            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId) &&
+            favoriteSpots.length < 5)) {
+        return true
+    } else {
+        return false;
+    }
 }

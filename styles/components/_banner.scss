@@ -42,11 +42,17 @@
 \* ------------------------------------ */
 .ms-banner-favorite {
     border: 2px solid var(--color-favourites);
-    // background-color: var(--color-favourites);
     color: var(--color-favourites);
 
     .ms-banner__text {
         color: var(--color-favourites);
+    }
+
+    &.is-empty {
+        padding: $space * 0.5 0 0 0;
+        border: 0;
+        border-bottom: 1px solid $color-border-normal;
+        border-radius: 0;
     }
 }
 

@@ -10,21 +10,13 @@ const SurfSpotForecastBanners: React.FC<ISurfSpotForecastBanners> = (props: ISur
         <>
             {props.spot && (
                 <div className="ms-surf-spot-forecast__banners">
-                    <section className="ms-surf-spot-forecast__banners-row">
-                        <Banner
-                            type={'favorite'}
-                            spotName={props.spot.name}
-                            spotId={props.spot.id}
-                            spotCalendarUrl={props.spot.calendar_url}
-                        />
+                    <section className="ms-grid-1-2">
                         <Banner
                             type={'calendar'}
                             spotName={props.spot.name}
                             spotId={props.spot.id}
                             spotCalendarUrl={props.spot.calendar_url}
                         />
-                    </section>
-                    <section className="ms-surf-spot-forecast__banners-row">
                         <Banner
                             type={'widget'}
                             spotName={props.spot.name}

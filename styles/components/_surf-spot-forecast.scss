@@ -97,15 +97,6 @@
             margin-bottom: $grid-gutter-h;
         }
     }
-    &__banners-row {
-        display: flex;
-        gap: $grid-gutter-h;
-        flex-direction: column;
-
-        > * {
-            flex: 1 1 100%;
-        }
-    }
 }
 
 /* ------------------------------------ *\
@@ -131,20 +122,6 @@
 }
 
 /* ------------------------------------ *\
-    #WEBCAMS-STATIONS
-\* ------------------------------------ */
-.ms-surf-spot-forecast {
-    &__webcams,
-    &__meteo-stations {
-        margin-bottom: $space * 5;
-
-        .ms-h3-title {
-            margin-bottom: $space * 1.5;
-        }
-    }
-}
-
-/* ------------------------------------ *\
    #ERROR
 \* ------------------------------------ */
 .ms-surf-spot-forecast {
@@ -156,10 +133,6 @@
         text-align: center;
     }
 }
-
-/* ------------------------------------ *\
-    #WINDY
-\* ------------------------------------ */
 
 /* ------------------------------------ *\
     #MEDIA-QUERIES
