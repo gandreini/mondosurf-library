@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+// import { IAPRecognizeUser } from 'features/pro/iap.helpers';
 import formurlencoded from 'form-urlencoded';
-import { getPlatform2, isApp } from 'helpers/device.helpers';
+import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
 import { addDebugLogItem } from 'mondosurf-library/redux/debugSlice';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -87,17 +88,24 @@ export const login = (email: string, password: string, deviceId: string) => {
             email: email,
             password: password,
             device_id: deviceId,
-            platform: getPlatform2()
+            platform: getPlatform()
         }),
         withCredentials: true, // ! TODO Verify when needed
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
-        .then((response) => {
+        .then(async (response) => {
             if (response.status === 200) {
                 updateUserStatus(response);
-                if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                if (response.data.user_id) {
+                    if (getPlatform() === 'app' && isAppiOs()) {
+                        // const { IAPRecognizeUser } = await import('features/pro/iap.helpers');
+                        // IAPRecognizeUser(response.data.user_id); // Revenue cat
+                    }
+
+                    Tracker.identifyUser(response.data.user_id);
+                }
                 return response;
             } else {
                 store.dispatch(setLogin('no'));
@@ -130,7 +138,7 @@ export const logout = (accessToken: string, deviceId: string) => {
                 ', device_id: ' +
                 deviceId +
                 ', platform: ' +
-                getPlatform2() +
+                getPlatform() +
                 ', storageRefreshToken: ' +
                 storageRefreshToken
         )
@@ -143,7 +151,7 @@ export const logout = (accessToken: string, deviceId: string) => {
         data: formurlencoded({
             access_token: accessToken,
             device_id: deviceId,
-            platform: getPlatform2(),
+            platform: getPlatform(),
             refresh_token: storageRefreshToken
         }),
         headers: {
@@ -197,7 +205,7 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
             data: formurlencoded({
                 access_token: accessToken,
                 device_id: deviceId,
-                platform: getPlatform2(),
+                platform: getPlatform(),
                 refresh_token: storageRefreshToken
             }),
             headers: {
@@ -252,17 +260,23 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string) => {
             withCredentials: true, // ! TODO Verify when needed
             data: formurlencoded({
                 device_id: deviceId,
-                platform: getPlatform2(),
+                platform: getPlatform(),
                 refresh_token: storageRefreshToken
             }),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-            .then((response) => {
+            .then(async (response) => {
                 if (response.status === 200 && response.data.success === true) {
                     updateUserStatus(response);
-                    if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                    if (response.data.user_id) {
+                        if (getPlatform() === 'app' && isAppiOs()) {
+                            // const { IAPRecognizeUser } = await import('features/pro/iap.helpers');
+                            // IAPRecognizeUser(response.data.user_id); // Revenue cat
+                        }
+                        Tracker.identifyUser(response.data.user_id);
+                    }
                 } else {
                     store.dispatch(logOut()); // To redux state
                     if (isApp()) {
@@ -307,7 +321,7 @@ export const userRegister = (
             password: password,
             terms: termsConditions,
             device_id: deviceId,
-            platform: getPlatform2()
+            platform: getPlatform()
         }),
         withCredentials: true, // ! TODO Verify when needed
         headers: {

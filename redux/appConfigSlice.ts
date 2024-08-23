@@ -10,7 +10,6 @@ export interface IAppConfig {
     footer_spots: ISurfSpotPreview[];
     banner_spots: ISurfSpotPreview[];
     status: "init" | "loading" | "loaded" | "error";
-    // platform: "web" | "ios" | "android";
     geolocationAuthorized: boolean;
     latest_version: string;
     latest_version_progressive: number;
@@ -29,7 +28,6 @@ const initialState: IAppConfig = {
     footer_spots: [],
     banner_spots: [],
     status: 'init',
-    // platform: "web",
     geolocationAuthorized: false,
     latest_version: "",
     latest_version_progressive: 0,
@@ -46,9 +44,6 @@ export const appConfigSlice = createSlice({
         updateAppConfig: (state, action) => {
             return { ...state, ...action.payload };
         },
-        /* updateAppPlatform: (state, action) => {
-            return { ...state, platform: action.payload };
-        }, */
         geolocationIsAuthorized: (state) => {
             return { ...state, geolocationAuthorized: true };
         },
@@ -62,6 +57,5 @@ export const appConfigSlice = createSlice({
     }
 })
 
-// export const { updateAppConfig, updateStatus, updateAppPlatform, geolocationIsAuthorized, updateDeviceId } = appConfigSlice.actions;
 export const { updateAppConfig, updateStatus, geolocationIsAuthorized, updateDeviceId } = appConfigSlice.actions;
 export default appConfigSlice.reducer;
