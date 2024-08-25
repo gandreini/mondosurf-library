@@ -1,0 +1,22 @@
+/**
+ * PROFILE PREFERENCES EDIT
+ *
+ * Style for the component that allows users to edit their preferences.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE PREFERENCES EDIT
+\* ------------------------------------ */
+.ms-profile-preferences-edit {
+    .ms-form {
+        select {
+            width: 100%;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

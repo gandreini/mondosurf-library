@@ -27,6 +27,10 @@ export interface IUserSliceValue {
     subscriptionDuration: 'notset' | 'yearly' | 'monthly';
     trialActivation: number;
     trialDuration: number;
+    preferences: {
+        userBulletinFrequency: "daily" | "weekly" | "never";
+        userBulletinWeekDay: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+    }
 }
 
 const initialState: IUserSliceValue = {
@@ -54,7 +58,11 @@ const initialState: IUserSliceValue = {
     subscriptionExpiration: -1,
     subscriptionDuration: 'notset',
     trialActivation: -1,
-    trialDuration: 30
+    trialDuration: 30,
+    preferences: {
+        userBulletinFrequency: "daily",
+        userBulletinWeekDay: "monday"
+    }
 };
 
 export const userSlice = createSlice({
@@ -149,6 +157,9 @@ export const userSlice = createSlice({
         setTrialDuration: (state, action) => {
             return { ...state, trialDuration: action.payload };
         },
+        setPreferences: (state, action) => {
+            return { ...state, preferences: action.payload };
+        },
         logOut: (state) => {
             return {
                 ...state,
@@ -205,6 +216,7 @@ export const { setLogin,
     setSubscriptionExpiration,
     setTrialActivation,
     setTrialDuration,
+    setPreferences,
     setSubscriptionDuration,
     logOut } = userSlice.actions;
 export default userSlice.reducer;
