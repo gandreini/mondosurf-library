@@ -15,6 +15,7 @@ import {
     setFavoriteSpots,
     setLevel,
     setLogin,
+    setPreferences,
     setProductId,
     setRegistrationDate,
     setStripeSubscriptionId,
@@ -452,7 +453,7 @@ export const passwordReset = (token: string, newPassword: string) => {
 };
 
 /**
- * Updates the user Redux status with the response from the server after authentication, re-authentication and registration.
+ * Updates the user Redux status with the response from the server after login, re-authentication and registration.
  *
  * @param   {AxiosResponse<any>} response The response coming from the server.
  * @param   {boolean} registration True if the function is used during the user registration.
@@ -495,6 +496,13 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
             store.dispatch(setSubscriptionExpiration(response.data.user_subscription_expiration_date));
         if (response.data.user_subscription_duration)
             store.dispatch(setSubscriptionDuration(response.data.user_subscription_duration));
+        if (response.data.user_bulletin_frequency && response.data.user_bulletin_week_day)
+            store.dispatch(
+                setPreferences({
+                    userBulletinFrequency: response.data.user_bulletin_frequency,
+                    userBulletinWeekDay: response.data.user_bulletin_week_day
+                })
+            );
     }
 
     // Handling of the refresh token is different on mobile App.

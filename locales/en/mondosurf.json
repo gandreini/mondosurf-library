@@ -357,6 +357,7 @@
   "profile": {
     "profile": "Profile",
     "profile_edit": "Edit Profile",
+    "profile_preferences": "Preferences",
     "password_change": "Password change",
     "password_change_text": "Use this form to change your password",
     "profile_details_edit_text": "Use this form to update your information",
@@ -392,7 +393,22 @@
     "favourite_spots_empty_text_2": "to add all your local spots to your favorites",
     "favourite_spots_empty_subtext": "Favorites are your locals spots where your surf more often: you'll find the updated forecast on the app and you'll receive a daily bulletin every morning to plan your week",
     "favourite_spots_error_text": "",
-    "settings_text": "Settings fo your profile"
+    "settings_text": "Settings fo your profile",
+    "preferences_edit_text": "Update how often you would like to receive the surf bulletin email",
+    "bulletin_frequency_label": "Surf Bulletin Email Frequency",
+    "bulletin_frequency_description": "The surf bulletin is only sent when there are good surf conditions at your favorite spots within the next 7 days. Poor conditions are not included in the bulletin.",
+    "bulletin_frequency_daily": "Daily",
+    "bulletin_frequency_weekly": "Weekly",
+    "bulletin_frequency_never": "Never",
+    "bulletin_week_day_label": "When to receive the bulletin",
+    "bulletin_week_day_monday": "Monday",
+    "bulletin_week_day_tuesday": "Tuesday",
+    "bulletin_week_day_wednesday": "Wednesday",
+    "bulletin_week_day_thursday": "Thursday",
+    "bulletin_week_day_friday": "Friday",
+    "bulletin_week_day_saturday": "Saturday",
+    "bulletin_week_day_sunday": "Sunday",
+    "save_preferences": "Save preferences"
   },
   "pro": {
     "yearly": "Yearly",

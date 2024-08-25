@@ -90,6 +90,14 @@
         }
     }
 
+    // Small text below field
+    &__input {
+        input + .ms-small-text,
+        select + .ms-small-text {
+            margin-top: $space;
+        }
+    }
+
     // Wraps checkbox and label for best alignment.
     &__checkbox-label-wrapper {
         position: relative;
