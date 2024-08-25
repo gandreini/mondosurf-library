@@ -396,7 +396,7 @@
     "settings_text": "Settings fo your profile",
     "preferences_edit_text": "Update how often you would like to receive the surf bulletin email",
     "bulletin_frequency_label": "Surf Bulletin Email Frequency",
-    "bulletin_frequency_description": "The surf bulletin contains the forecast of your favorite spots. Poor conditions are not included in the bulletin.",
+    "bulletin_frequency_description": "The surf bulletin is only sent when there are good surf conditions at your favorite spots within the next 7 days. Poor conditions are not included in the bulletin.",
     "bulletin_frequency_daily": "Daily",
     "bulletin_frequency_weekly": "Weekly",
     "bulletin_frequency_never": "Never",
