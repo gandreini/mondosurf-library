@@ -1,16 +1,15 @@
 // Client
 'use client';
 
-import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useForm } from 'react-hook-form';
-import Button from 'mondosurf-library/components/Button';
-import Loader from 'mondosurf-library/components/Loader';
-import { useEffect, useState } from 'react';
 import { postApiAuthCall } from 'mondosurf-library/api/api';
-import { useSelector } from 'react-redux';
+import Loader from 'mondosurf-library/components/Loader';
 import { RootState, store } from 'mondosurf-library/redux/store';
-import toastService from 'mondosurf-library/services/toastService';
 import { setPreferences } from 'mondosurf-library/redux/userSlice';
+import toastService from 'mondosurf-library/services/toastService';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 interface IProfilePreferencesEdit {
     preferences: {
@@ -34,7 +33,6 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
     } = useForm({ reValidateMode: 'onSubmit' });
 
     // Redux.
-    const userName = useSelector((state: RootState) => state.user.userName);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
 
     const [savingPreferences, setSavingPreferences] = useState<boolean>(false);
