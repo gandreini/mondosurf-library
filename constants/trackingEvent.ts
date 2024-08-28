@@ -71,4 +71,7 @@ export enum TrackingEvent {
 
     // Forecast details
     SpotForecastDetailsShow = 'Spot Forecast Details_Show',
+
+    // Comments
+    CommentAddedApi = 'Comment Added_Api',
 }

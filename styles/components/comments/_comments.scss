@@ -1,0 +1,29 @@
+/**
+ * COMMENTS
+ *
+ * Components with the list of the comments and the form to add new ones.
+ * Used for spots, but can be also used for other entities.
+ */
+
+/* ------------------------------------ *\
+    #COMMENTS
+\* ------------------------------------ */
+.ms-comments {
+    &__title.ms-h2-title {
+        margin-bottom: $space * 2;
+    }
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space * 1;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

@@ -211,6 +211,17 @@
 }
 
 /* ------------------------------------ *\
+   #COMMENTS
+\* ------------------------------------ */
+.ms-surf-spot {
+    &__comments {
+        margin-top: $space * 3;
+        padding-top: $space * 3;
+        border-top: 1px solid $color-border-normal;
+    }
+}
+
+/* ------------------------------------ *\
    #FORECAST
 \* ------------------------------------ */
 .ms-surf-spot {

@@ -94,6 +94,20 @@
     "today": "today",
     "browse_spots": "Browse spots"
   },
+  "comments": {
+    "title": "Comments",
+    "add_a_comment": "Add comment",
+    "comment_field_label": "New comment",
+    "comment_field_placeholder": "Write a comment about {{resource_name}} here",
+    "login_modal_text": "Please login or register to leave a comment",
+    "toast_comment_added": "Comment added correctly",
+    "toast_comment_error": "Error saving your comment, please try again",
+    "delete_modal_title": "Adios comment",
+    "delete_modal_text": "Are you 100% sure you want to delete the comment:\n\"{{comment_text}}\"?",
+    "delete_modal_button": "Yes, delete comment",
+    "toast_deletion_successful": "Comment deleted!",
+    "toast_deletion_error": "Error deleting comment!"
+  },
   "app": {
     "offline_icon": "🤷",
     "offline_text": "There was a problem loading the App or you are offline!",

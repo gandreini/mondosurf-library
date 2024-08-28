@@ -23,7 +23,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 interface IAuth {
-    callback?: (accessToken?: string) => void;
+    callback?: (accessToken?: string, userName?: string) => void;
     context?: LoginModalContext;
 }
 
@@ -222,7 +222,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                     if (response && response.data) {
                         modalService.closeModal();
                         toastService.success(mondoTranslate('auth.welcome_back', { name: response.data.user_name }));
-                        if (props.callback) props.callback(response.data.access_token); // Callback is invoked only after registration.
+                        if (props.callback) props.callback(response.data.access_token, response.data.user_name); // Callback is invoked only after registration.
                         //Tracking.
                         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.LoginCompleteApi, {
                             context: props.context
@@ -300,7 +300,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                     if (response && response.data) {
                         modalService.closeModal();
                         toastService.success(mondoTranslate('auth.welcome', { name: response.data.user_name }));
-                        if (props.callback) props.callback(response.data.access_token);
+                        if (props.callback) props.callback(response.data.access_token, response.data.user_name);
 
                         //Tracking.
                         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SignupCompleteApi, {

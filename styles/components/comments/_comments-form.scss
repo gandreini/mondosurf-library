@@ -1,0 +1,34 @@
+/**
+ * COMMENTS FORM
+ *
+ * Form to add new comments.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT COMMENTS FORM
+\* ------------------------------------ */
+.ms-comments-form {
+    margin-bottom: $space;
+
+    &__contents {
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+
+        .ms-form__input {
+            margin-bottom: $space * 0.5;
+        }
+    }
+    &__buttons {
+        display: flex;
+        gap: $space;
+        justify-content: flex-end;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}
