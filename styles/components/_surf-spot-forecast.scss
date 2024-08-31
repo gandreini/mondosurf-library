@@ -75,7 +75,8 @@
 
     // No good days.
     &__empty {
-        margin-bottom: $space * 4;
+        margin-top: $space * 3;
+        margin-bottom: $space * 8;
 
         .ms-empty-state {
             margin-bottom: 0;
