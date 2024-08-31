@@ -19,7 +19,7 @@ import modalService from 'mondosurf-library/services/modalService';
 interface IGetCalendarUrl {
     spotName: string;
     spotId: number;
-    calendarUrl: string;
+    calendarUrl?: string;
 }
 
 const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
@@ -32,7 +32,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     // Used to be sure spotId is a number.
     const spotId = typeof props.spotId === 'number' ? props.spotId : parseInt(props.spotId);
 
-    const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl);
+    const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl ? props.calendarUrl : '');
     const [calendarUrlRetrieved, setCalendarUrlRetrieved] = useState<boolean>(false);
     const [displayFavoriteCheckbox, setDisplayFavoriteCheckbox] = useState<boolean>(true);
 

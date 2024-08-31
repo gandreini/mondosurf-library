@@ -45,7 +45,7 @@ const Banner: React.FC<IBanner> = (props) => {
 
     // On click on calendar banner
     const onClickCalendarBanner = () => {
-        if (props.spotCalendarUrl) openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
+        openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
         // Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
             spotId: props.spotId,
