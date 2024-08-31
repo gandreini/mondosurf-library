@@ -117,6 +117,7 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
                             </label> */}
                             <textarea
                                 {...register('commentText')}
+                                data-test="comment-field"
                                 placeholder={mondoTranslate('comments.comment_field_placeholder', {
                                     resource_name: props.resourceName
                                 })}></textarea>
@@ -143,7 +144,7 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
                                     }}>
                                     {mondoTranslate('basics.cancel')}
                                 </button>
-                                <button type="submit" className="ms-btn ms-btn-cta ms-btn-m">
+                                <button type="submit" className="ms-btn ms-btn-cta ms-btn-m" data-test="comment-submit">
                                     {savingComment && <Loader size="small" />}
                                     {!savingComment && <>{mondoTranslate('comments.add_a_comment')}</>}
                                 </button>

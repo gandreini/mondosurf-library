@@ -34,7 +34,10 @@ const Comment: React.FC<IComment> = (props) => {
             buttonFunction: () => {
                 deleteApiAuthCall('comments/' + props.commentId, accessToken, {})
                     .then((response) => {
-                        toastService.success(mondoTranslate('comments.toast_deletion_successful'));
+                        toastService.success(
+                            mondoTranslate('comments.toast_deletion_successful'),
+                            'data-test-toast-comment-deleted'
+                        );
                         modalService.closeModal();
                         if (props.callback) props.callback();
                     })
@@ -48,7 +51,7 @@ const Comment: React.FC<IComment> = (props) => {
     };
 
     return (
-        <li className="ms-comment">
+        <li className="ms-comment" data-test="comment">
             <div className="ms-comment__header">
                 <div className="ms-comment__header-left">
                     <p className="ms-comment__author ms-small-text">{props.commentAuthorName}</p>
@@ -57,7 +60,7 @@ const Comment: React.FC<IComment> = (props) => {
                 </div>
                 {login === 'yes' && props.commentId && userIdRedux === props.commentAuthorId && (
                     <div className="ms-comment__header-right">
-                        <button className="ms-comment__delete" onClick={onDeleteComment}>
+                        <button className="ms-comment__delete" onClick={onDeleteComment} data-test="comment-delete">
                             <Icon icon="trash" />
                         </button>
                     </div>
