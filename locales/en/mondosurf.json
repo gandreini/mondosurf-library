@@ -96,6 +96,7 @@
   },
   "comments": {
     "title": "Comments",
+    "spot_comment_guide": "Tell us about the surf spot {{resource_name}}! Whether it's the wave quality, crowd level, local vibes, or tips for catching the best swell, we'd love to hear from you. Share any insights on the best time to surf, forecast tips, the best webcams to check the spot, the type of board to use, or even your favorite post-surf hangout spots nearby. Your feedback helps fellow surfers and contributes to the growing surf community.",
     "add_a_comment": "Add comment",
     "comment_field_label": "New comment",
     "comment_field_placeholder": "Write a comment about {{resource_name}} here",

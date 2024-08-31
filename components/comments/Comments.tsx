@@ -42,42 +42,35 @@ const Comments: React.FC<IComments> = (props) => {
     }, [fetchedComments]);
 
     return (
-        <div className="ms-comments">
-            <h2 className="ms-comments__title ms-h2-title">{mondoTranslate('comments.title')}</h2>
-            <ul className="ms-comments__list">
-                <CommentsForm
-                    resourceId={props.resourceId}
-                    resourceName={props.resourceName}
-                    callback={refreshComments}
-                />
+        <ul className="ms-comments">
+            <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
 
-                {/* Loading */}
-                {fetchedComments.status !== 'loaded' && (
-                    <>
-                        {Array.from({ length: numberOfComments }).map((item, key) => (
-                            <div className="ms-comments__skeleton" key={key}>
-                                <SkeletonLoader height="20px" width="180px" />
-                                <SkeletonLoader height="26px" />
-                            </div>
-                        ))}
-                    </>
-                )}
-
-                {/* Loaded */}
-                {fetchedComments.status === 'loaded' &&
-                    fetchedComments.payload.map((comment: ISurfSpotComment, key: number) => (
-                        <Comment
-                            key={key}
-                            commentId={comment.ID}
-                            commentText={comment.comment_text}
-                            commentAuthorName={comment.comment_author_name}
-                            commentAuthorId={comment.comment_author_id}
-                            commentDate={dayjs(comment.comment_date).format('DD-MM-YYYY HH:mm')}
-                            callback={refreshComments}
-                        />
+            {/* Loading */}
+            {fetchedComments.status !== 'loaded' && (
+                <>
+                    {Array.from({ length: numberOfComments }).map((item, key) => (
+                        <div className="ms-comments__skeleton" key={key}>
+                            <SkeletonLoader height="20px" width="180px" />
+                            <SkeletonLoader height="26px" />
+                        </div>
                     ))}
-            </ul>
-        </div>
+                </>
+            )}
+
+            {/* Loaded */}
+            {fetchedComments.status === 'loaded' &&
+                fetchedComments.payload.map((comment: ISurfSpotComment, key: number) => (
+                    <Comment
+                        key={key}
+                        commentId={comment.ID}
+                        commentText={comment.comment_text}
+                        commentAuthorName={comment.comment_author_name}
+                        commentAuthorId={comment.comment_author_id}
+                        commentDate={dayjs(comment.comment_date).format('DD-MM-YYYY HH:mm')}
+                        callback={refreshComments}
+                    />
+                ))}
+        </ul>
     );
 };
 export default Comments;
