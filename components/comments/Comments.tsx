@@ -4,12 +4,12 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { ISurfSpotComment } from 'mondosurf-library/model/iSurfSpotComment';
-import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
-import Comment from 'mondosurf-library/components/comments/Comment';
-import { useEffect, useState } from 'react';
 import useGetFetch from 'mondosurf-library/api/useGetFetch';
-import { mondoTranslate } from 'proxies/mondoTranslate';
+import Comment from 'mondosurf-library/components/comments/Comment';
+import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
+import { ISurfSpotComment } from 'mondosurf-library/model/iSurfSpotComment';
+import { useEffect, useState } from 'react';
+
 import SkeletonLoader from '../SkeletonLoader';
 
 interface IComments {
