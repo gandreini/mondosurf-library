@@ -4,28 +4,38 @@
 import { openCalendarModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
-import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
+import {
+    checkIfSpotIdIsInFavorites,
+    checkPermissionsAndAddSpotToFavorites
+} from 'mondosurf-library/helpers/favorites.helpers';
 import { shouldShowFavoritesBanner } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
     type: 'favorite' | 'calendar' | 'widget';
     spotName: string;
     spotId: number;
-    spotCalendarUrl: string;
+    spotCalendarUrl?: string;
 }
 
 const Banner: React.FC<IBanner> = (props) => {
-    // Redux.
+    // Redux
     const logged = useSelector((state: RootState) => state.user.logged);
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
 
+    // Handles the visibility of the favorites banner
+    const [showFavoriteBanner, setShowFavoriteBanner] = useState(true);
+    useEffect(() => {
+        if (props.type === 'favorite') setShowFavoriteBanner(shouldShowFavoritesBanner(Number(props.spotId)));
+    }, [props.spotId, logged, props.type, favoriteSpots]);
+
     // On click on favorite banner
     const onClickFavoriteBanner = () => {
-        addSpotToFavourites(props.spotId, props.spotName);
+        checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
         // Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
             spotId: props.spotId,
@@ -35,7 +45,7 @@ const Banner: React.FC<IBanner> = (props) => {
 
     // On click on calendar banner
     const onClickCalendarBanner = () => {
-        openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
+        if (props.spotCalendarUrl) openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
         // Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
             spotId: props.spotId,
@@ -57,7 +67,7 @@ const Banner: React.FC<IBanner> = (props) => {
             {/* Favorite banner */}
             {props.type === 'favorite' && (
                 <>
-                    {shouldShowFavoritesBanner(Number(props.spotId)) && (
+                    {showFavoriteBanner && (
                         <div
                             className="ms-banner ms-banner-favorite"
                             onClick={onClickFavoriteBanner}
@@ -75,8 +85,10 @@ const Banner: React.FC<IBanner> = (props) => {
                             </div>
                         </div>
                     )}
-                    {!shouldShowFavoritesBanner(Number(props.spotId)) && (
-                        <div className="ms-banner ms-banner-favorite is-empty"></div>
+                    {!showFavoriteBanner && (
+                        <div
+                            className="ms-banner ms-banner-favorite is-empty"
+                            data-test="surf-spot-forecast-favorite-hidden-banner"></div>
                     )}
                 </>
             )}

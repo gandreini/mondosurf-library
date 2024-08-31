@@ -1,11 +1,53 @@
+import { openModalToExecuteProAction } from "features/modal/modal.helpers";
 import { postApiAuthCall } from "mondosurf-library/api/api";
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { store } from "mondosurf-library/redux/store";
 import { setFavoriteSpots } from "mondosurf-library/redux/userSlice";
+import modalService from "mondosurf-library/services/modalService";
 import toastService from 'mondosurf-library/services/toastService';
 import { deleteLocalStorageData, getLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { mondoTranslate } from "proxies/mondoTranslate";
+
+/**
+ * Checks user permissions and adds a spot to favorites.
+ * If the user is not logged in or lacks pro permissions, it opens a modal.
+ * Otherwise, it calls "addSpotToFavourites".
+ * 
+ * @param {number} spotId - The ID of the spot to add.
+ * @param {string} spotName - The name of the spot to add.
+ * @returns {Promise<any>} A promise that resolves when the spot is added or the modal is handled.
+ */
+export const checkPermissionsAndAddSpotToFavorites = (spotId: number, spotName: string): Promise<any> => {
+
+    // Adds the spot to suspended favs in local storage
+    setSuspendedFavorite(spotId, spotName);
+
+    // Redux
+    const state = store.getState();
+    const logged = state.user.logged;
+
+    // Opens the modal if user is not logged or has no pro permissions
+    if (logged === 'no' || (logged === 'yes' && !hasProPermissions())) {
+        return new Promise(resolve => {
+            openModalToExecuteProAction(
+                'favoriteAddButton',
+                mondoTranslate('favorites.log_in_modal_title'),
+                mondoTranslate('favorites.log_in_modal_text', { spotName: spotName }),
+                mondoTranslate('favorites.trial_modal_title'),
+                mondoTranslate('favorites.trial_modal_text', { spotName: spotName }),
+                mondoTranslate('favorites.subscribe_modal_title'),
+                mondoTranslate('favorites.subscribe_modal_text', { spotName: spotName }),
+                () => {
+                    modalService.closeModal();
+                    resolve(addSpotToFavourites(spotId, spotName));
+                }
+            );
+        });
+    } else {
+        return addSpotToFavourites(spotId, spotName);
+    }
+}
 
 /**
 * Adds a spot to the user's favourites.
@@ -19,12 +61,10 @@ export const addSpotToFavourites = (spotId: number, spotName: string): Promise<a
     const favoriteSpots: ISurfSpotPreview[] | null = state.user.favoriteSpots // Redux
 
     // The user hasn't permission to add favourites
+    // Not very useful if "checkPermissionsAndAddSpotToFavorites" is called before
     if (!hasProPermissions()) {
         return Promise.reject();
     }
-
-    // Always clean up the suspended_favorite localStorage
-    deleteLocalStorageData('suspended_favorite');
 
     // Ensure spotId is a number
     spotId = typeof spotId === 'string' ? parseInt(spotId) : spotId;
@@ -46,6 +86,7 @@ export const addSpotToFavourites = (spotId: number, spotName: string): Promise<a
                 if (response && response.status === 200 && response.data.success === true) {
                     store.dispatch(setFavoriteSpots(response.data.favourites_surf_spots)); // To redux state
                     toastService.success(spotName + ' added to your favourites!', 'data-test-toast-favorite-added');
+                    deleteLocalStorageData('suspended_favorite');
                     resolve(true);
                 } else {
                     toastService.error(mondoTranslate('toast.favourites.added_to_favourites_error'));

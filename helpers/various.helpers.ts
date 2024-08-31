@@ -122,8 +122,7 @@ export const shouldShowFavoritesBanner = (spotId: number): boolean => {
         (logged === 'yes' && !favoriteSpots) ||
         (logged === 'yes' &&
             favoriteSpots &&
-            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId) &&
-            favoriteSpots.length < 5)) {
+            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId))) {
         return true
     } else {
         return false;
