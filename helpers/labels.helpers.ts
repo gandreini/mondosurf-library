@@ -310,6 +310,34 @@ export function returnWaveLengthLabel(
 }
 
 /**
+ * Returns label for wave steepness.
+ * 
+ * @param {string | undefined} waveSteepnessId Value the wave steepness.
+ * @returns {string | undefined} The readable label for the wave steepness.
+ */
+export function returnWaveSteepnessLabel(
+    waveSteepnessId: string | undefined
+): string | undefined {
+
+    switch (waveSteepnessId) {
+        case '1':
+            return mondoTranslate('wave_steepness.1');
+        case '2':
+            return mondoTranslate('wave_steepness.2');
+        case '3':
+            return mondoTranslate('wave_steepness.3');
+        case '4':
+            return mondoTranslate('wave_steepness.4');
+        case '5':
+            return mondoTranslate('wave_steepness.5');
+        case undefined:
+            return undefined;
+        default:
+            return undefined;
+    }
+}
+
+/**
  * Returns label for wave frequency.
  * 
  * @param {string | undefined} frequencyId Value the wave frequency.

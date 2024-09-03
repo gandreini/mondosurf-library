@@ -1,3 +1,9 @@
+import { returnExperienceLabel, returnLengthUnitLabel, returnTideLabel } from "mondosurf-library/helpers/labels.helpers";
+import { convertSizeFromMeters } from "mondosurf-library/helpers/units.helpers";
+import { oneDecimal } from "mondosurf-library/helpers/various.helpers";
+import { ISurfSpot } from "mondosurf-library/model/iSurfSpot";
+import { mondoTranslate } from "proxies/mondoTranslate";
+
 /**
  * Returns an array of the directions strings (given a string like "SW-W-NW")
  * 
@@ -126,6 +132,99 @@ const returnDirectionOctant = (direction: number, octants: any[]): number => {
     }
     // Fallback, should never go here!
     return 0;
+}
+
+/**
+ * Builds and returns a descriptive text about the surfing experience level required or suitable for a given surf spot.
+ *
+ * The function constructs a text string based on the experience levels provided in the `surfSpotData` parameter.
+ * It also adds additional context about whether the surf spot is suitable for beginners.
+ *
+ * @param {ISurfSpot} surfSpotData - The data object representing a surf spot, containing information about experience levels and suitability for beginners.
+ * 
+ * @returns {string} A descriptive string indicating the experience levels appropriate for the surf spot. The string may also include information about whether the spot is suitable or not suitable for beginners.
+ */
+export const experienceText = (surfSpotData: ISurfSpot): string => {
+    let text = '';
+
+    // All levels
+    if (
+        surfSpotData.experience &&
+        surfSpotData.experience.length > 0 &&
+        surfSpotData.experience.length === 3
+    ) {
+        text += mondoTranslate('surf_spot.experience_good_for_all');
+    }
+
+    // Selected levels
+    if (
+        surfSpotData.experience &&
+        surfSpotData.experience.length > 0 &&
+        surfSpotData.experience.length < 3
+    )
+        text += returnReadableArray(surfSpotData.experience, returnExperienceLabel, ', ');
+
+    // Good fo beginners
+    if (surfSpotData.beginners && surfSpotData.beginners === true) {
+        text += ' (' + mondoTranslate('surf_spot.beginners_good') + ')';
+    }
+
+    // Not good for beginners
+    if (surfSpotData.not_beginners && surfSpotData.not_beginners === true) {
+        text += ' (' + mondoTranslate('surf_spot.beginners_not_good') + ')';
+    }
+
+    return text;
+};
+
+/**
+ * Returns the tide in a readable format given the array returned by the API.
+ * 
+ * @param   {string[]} tideArray Array like [ "L", "M"].
+ * @returns {string} String that describes the tide in a readable format. Multiple tides positions
+ * are separated by comma. Possible results "Low, Medium", "Always good".
+ */
+export const returnTideDetails = (
+    tideArray: string[]
+): string => {
+    let returnString = "";
+    if (tideArray.length === 3) {
+        returnString = mondoTranslate('tide.tide_always_good');
+    }
+    if (tideArray.length < 3 && tideArray.length > 0) {
+        for (let i: number = 0, max = tideArray.length; i < max; i++) {
+            returnString += returnTideLabel(tideArray[i]);
+            if (i < tideArray.length - 1) returnString += ', ';
+        }
+    }
+    return returnString;
+}
+
+/**
+ * Returns swell range size in a readable format, given the swell min and max returned by the API.
+ * Example: "Good from 0.6 to 2.4 meters"
+ * 
+ * @param   {number | undefined} swellMin The minimum size of the swell that's good for the spot
+ * @param   {number} swellMax The maximum size of the swell that's good for the spot
+ * @returns {string | undefined} Returns the min and max swell sizes at which a spot is working, in a readable format: "Good from 0.6 to 2.4 meters"
+ */
+export const returnSwellSizeRange = (
+    swellMin?: number | undefined,
+    swellMax?: number,
+): string | undefined => {
+    let returnString = "";
+    if (!swellMin && swellMin === undefined && !swellMax && swellMax === undefined) return undefined;
+
+    if (swellMin && swellMin > 0 && (!swellMax || swellMax === undefined)) {
+        returnString = mondoTranslate('basics.swell_good_from', { min: oneDecimal(convertSizeFromMeters(swellMin)) }) + ' ' + returnLengthUnitLabel();
+    }
+    if ((!swellMax || swellMax === undefined || swellMax === 0) && swellMax && swellMax > 0) {
+        returnString = mondoTranslate('basics.swell_good_till', { max: oneDecimal(convertSizeFromMeters(swellMax)) }) + ' ' + returnLengthUnitLabel();
+    }
+    if (swellMin && swellMin > 0 && swellMax && swellMax > 0) {
+        returnString = mondoTranslate('basics.swell_good_from_till', { min: oneDecimal(convertSizeFromMeters(swellMin)), max: oneDecimal(convertSizeFromMeters(swellMax)) }) + ' ' + returnLengthUnitLabel();
+    }
+    return returnString;
 }
 
 // ---

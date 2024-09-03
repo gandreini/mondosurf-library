@@ -569,6 +569,7 @@
     "best_wind": "Best wind",
     "best_size": "Best size",
     "wave_length": "Wave length",
+    "wave_steepness": "Wave steepness",
     "frequency": "Frequency",
     "quality": "Quality",
     "experience": "Experience",
@@ -593,7 +594,8 @@
     "no_near_spots_text": "Sorry, there are no near spots",
     "near_spots_error": "Sorry, there was an error retrieving near spots",
     "no_videos": "There are no video for this surf spot",
-    "video_error": "There was an error retrieving the spot video"
+    "video_error": "There was an error retrieving the spot video",
+    "location_hidden": "The location of {{spotName}} is not available to preserve and protect the integrity of the spot"
   },
   "account_verify": {
     "verify_account_title": "Verify your account",
@@ -675,6 +677,13 @@
     "3": "150 - 300 m",
     "4": "300 - 500 m",
     "5": "> 500 m"
+  },
+  "wave_steepness": {
+    "1": "Mellow",
+    "2": "Medium-mellow",
+    "3": "Medium",
+    "4": "Medium-hollow",
+    "5": "Hollow"
   },
   "frequency": {
     "1": "Rarely break (less than 5 days/year)",

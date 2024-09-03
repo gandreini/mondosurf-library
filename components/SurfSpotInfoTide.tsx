@@ -1,5 +1,5 @@
-import { returnTideDetails } from 'features/surfSpot/surfSpot.helpers';
 import { returnMovementTideLabel } from 'mondosurf-library/helpers/labels.helpers';
+import { returnTideDetails } from 'mondosurf-library/helpers/surfSpot.helpers';
 import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
