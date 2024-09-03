@@ -61,6 +61,7 @@ export interface ISurfSpot {
     forecast_conditions_wind_direction_max: number;
     forecast_conditions_wind_speed_max?: number;
     forecast_conditions_on_shore_wind_speed_max?: number;
+    last_wp_update?: string;
 }
 
 export interface ISurfSpotWebcam {
