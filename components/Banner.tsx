@@ -4,21 +4,19 @@
 import { openCalendarModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
-import {
-    checkIfSpotIdIsInFavorites,
-    checkPermissionsAndAddSpotToFavorites
-} from 'mondosurf-library/helpers/favorites.helpers';
+import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers/favorites.helpers';
 import { shouldShowFavoritesBanner } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
-    type: 'favorite' | 'calendar' | 'widget';
-    spotName: string;
-    spotId: number;
+    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs';
+    spotName?: string;
+    spotId?: number;
     spotCalendarUrl?: string;
 }
 
@@ -35,22 +33,26 @@ const Banner: React.FC<IBanner> = (props) => {
 
     // On click on favorite banner
     const onClickFavoriteBanner = () => {
-        checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
-        // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
-            spotId: props.spotId,
-            spotName: props.spotName
-        });
+        if (props.spotId && props.spotName) {
+            checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
+            // Tracking.
+            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
+                spotId: props.spotId,
+                spotName: props.spotName
+            });
+        }
     };
 
     // On click on calendar banner
     const onClickCalendarBanner = () => {
-        openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
-        // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
-            spotId: props.spotId,
-            spotName: props.spotName
-        });
+        if (props.spotId && props.spotName) {
+            openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
+            // Tracking.
+            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
+                spotId: props.spotId,
+                spotName: props.spotName
+            });
+        }
     };
 
     // On click on Widget banner
@@ -65,7 +67,7 @@ const Banner: React.FC<IBanner> = (props) => {
     return (
         <>
             {/* Favorite banner */}
-            {props.type === 'favorite' && (
+            {props.type === 'favorite' && props.spotId && props.spotName && (
                 <>
                     {showFavoriteBanner && (
                         <div
@@ -94,7 +96,7 @@ const Banner: React.FC<IBanner> = (props) => {
             )}
 
             {/* Calendar banner */}
-            {props.type === 'calendar' && (
+            {props.type === 'calendar' && props.spotId && props.spotName && (
                 <div
                     className="ms-banner ms-banner-calendar"
                     onClick={onClickCalendarBanner}
@@ -114,7 +116,7 @@ const Banner: React.FC<IBanner> = (props) => {
             )}
 
             {/* Widget banner */}
-            {props.type === 'widget' && (
+            {props.type === 'widget' && props.spotId && props.spotName && (
                 <a href="https://forms.gle/4BikoTaPPscGaiUW8" target="_blank" rel="noreferrer">
                     <div
                         className="ms-banner ms-banner-widget"
@@ -135,6 +137,22 @@ const Banner: React.FC<IBanner> = (props) => {
                         </div>
                     </div>
                 </a>
+            )}
+
+            {/* Talk to us banner */}
+            {props.type === 'talkToUs' && (
+                <MondoLink
+                    className="ms-banner ms-banner-talk-to-us"
+                    href="https://calendar.app.google/ZJcGjybqNqqrEh17A"
+                    target="_blank">
+                    <div className="ms-banner__emoji">💬</div>
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_talk_to_us_text')}</p>
+                        <p className="ms-banner__subtext ms-small-text">
+                            {mondoTranslate('banner.banner_talk_to_us_subtext')}
+                        </p>
+                    </div>
+                </MondoLink>
             )}
         </>
     );
