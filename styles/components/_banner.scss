@@ -141,6 +141,36 @@
 }
 
 /* ------------------------------------ *\
+    #GET-PRO
+\* ------------------------------------ */
+.ms-banner-get-pro {
+    border: 2px solid var(--color-first);
+    color: var(--color-first);
+
+    .ms-banner__text {
+        color: var(--color-first);
+    }
+
+    .ms-h3-title {
+        margin-bottom: $space * 1;
+    }
+
+    .ms-banner__texts {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &:hover {
+        border: 2px solid var(--color-text-hover);
+        color: var(--color-text-hover);
+
+        .ms-banner__text {
+            color: var(--color-text-hover);
+        }
+    }
+}
+
+/* ------------------------------------ *\
     #CTA STYLE
 \* ------------------------------------ */
 .ms-banner.ms-banner-cta {
@@ -158,5 +188,18 @@
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-banner-get-pro {
+        .ms-h3-title {
+            margin-bottom: 0;
+        }
+        .ms-banner__texts {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: $space * 4;
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
 }
