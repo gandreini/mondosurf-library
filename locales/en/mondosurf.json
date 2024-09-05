@@ -75,6 +75,7 @@
     "profile": "Profile",
     "info": "Info",
     "forecast": "Forecast",
+    "tide": "Tide",
     "good_times": "Good Surf",
     "forecast_edit": "Forecast edit",
     "near_spots": "Near spots",
@@ -207,14 +208,14 @@
   "tide": {
     "tide": "Tide",
     "tide_table": "Tide table",
-    "button_tide_table": "Full tide table",
+    "button_tide_table": "Check the full tide table",
     "tide_always_good": "Always good",
     "tide_good": "Tide good",
     "tide_not_provided": "Tide info not provided",
-    "best_tide": "Best tide",
+    "best_tide": "Best tide at {{surfSpot}}",
     "tides_all_good": "All tides are good",
     "tide_movement_always_good": "Tide movement always good",
-    "tide_movement_good_at": "Good tide movement",
+    "tide_movement_good_at": "best tide movement",
     "weekly_tide_levels": "Weekly tide levels",
     "low": "Low",
     "low_to_medium": "low to medium",
@@ -222,7 +223,11 @@
     "high": "High",
     "medium": "Medium",
     "rising": "Rising tide",
-    "falling": "Falling tide"
+    "falling": "Falling tide",
+    "table_intro": "This tide table provides accurate tide times and levels for the upcoming week at {{surfSpot}}, helping you anticipate the best conditions for surfing. Match it with our Mondo forecast report to better understand when to plan your surfing.",
+    "explanation_long": "Tides influence wave quality differently depending on the surf spot. Some spots remain consistent regardless of tidal changes, offering reliable waves throughout the day. In these locations, the seabed depth stays stable, so waves break similarly at high, medium, and low tide. However, other spots are significantly impacted by the tide, with conditions varying as the water depth changes. At these spots, high tide may produce softer waves, while low tide can create steeper, faster waves. Understanding how each spot reacts to the tide is crucial for timing your sessions to enjoy the best waves.",
+    "explanation_medium_all_good": "Tides play a role in determining wave quality at many surf spots, but some locations like {{surfSpot}} remain consistent regardless of tidal changes. In these spots, the depth of the water over the seabed stays relatively stable, meaning the waves break in a similar way throughout the tidal cycle. Whether it's high, medium, or low tide, the wave conditions at these spots are largely unaffected, offering consistent surf sessions at any time of day.",
+    "explanation_medium_not_all_good": "Tides have a significant impact on wave quality at certain surf spots like {{surfSpot}}, causing conditions to vary throughout the tidal cycle. As the tide moves between high and low, the water depth over the seabed changes, affecting how the waves break. At these spots, high tide usually produce softer, slower waves, while low tide can generate faster, steeper waves. Some spots have specific tide stages when they work best, offering optimal conditions only at certain times of the day."
   },
   "good_time": {
     "share_text": "Share the forecast for {{name}} on:",
@@ -347,6 +352,10 @@
     "spot_full_forecast": {
       "title": "{{spot}} - Hourly surf forecast report - Mondo",
       "description": "Explore the full hourly surf forecast for the surf spot {{spot}}. Get in-depth details on swell and wind surf reports and plan your next surfing sessions"
+    },
+    "spot_full_tide": {
+      "title": "{{spot}} - Tide Times and Tide Charts - Mondo",
+      "description": "Discover the tide for the surf spot {{spot}}. Access detailed tide times and charts for today and the next 7 days to perfectly plan your surfing sessions"
     },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - Mondo",

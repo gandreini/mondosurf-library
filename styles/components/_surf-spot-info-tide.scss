@@ -8,11 +8,15 @@
    #SURF-SPOT-INFO-TIDE
 \* ------------------------------------ */
 .ms-surf-spot-info-tide {
-    padding: $space * 2;
+    padding: $space * 2.5;
     margin-bottom: $space * 4;
     background-color: $color-background-ultralight;
     border: 2px solid var(--color-gray-03);
     border-radius: $border-radius;
+
+    &__left {
+        margin-bottom: $space * 2;
+    }
 
     &__title.ms-body-text {
         margin-bottom: $space * 0.5;
@@ -21,14 +25,17 @@
     }
 
     &__details {
-        display: inline-block;
+        margin-bottom: $space * 1.5;
+    }
+
+    &__details-text.ms-body-text {
         margin: 0;
-        font-size: $font-size-s;
         @include first-letter-capital;
         @include fix-android-wrong-font-size;
     }
 
-    &__details-movement {
+    &__details-movement-text.ms-body-text {
+        margin: 0;
         display: inline-block;
         @include fix-android-wrong-font-size;
     }
@@ -36,9 +43,12 @@
     &__good-moments {
         display: block;
         margin: 0 0 $space 0;
-        font-size: $font-size-s;
         @include first-letter-capital;
         @include fix-android-wrong-font-size;
+    }
+
+    .ms-small-text {
+        margin-bottom: 0;
     }
 }
 
@@ -59,4 +69,17 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-info-tide {
+        display: flex;
+        gap: $space * 3;
+
+        &__left {
+            flex-shrink: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+        &__right {
+            width: 50%;
+        }
+    }
 }

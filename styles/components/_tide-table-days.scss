@@ -55,11 +55,13 @@
         td {
             flex-basis: 25%;
             flex-grow: 0;
+            flex-shrink: 0;
             padding: 4px;
             border-right: 1px solid $color-border-normal;
             border-bottom: 0;
             border-left: 0;
             border-top: 0;
+            width: 25%;
 
             &:first-child {
                 border-left: 0;
@@ -70,7 +72,10 @@
             }
 
             &.is-high {
-                background-color: $color-background-light;
+                .ms-tide-table-days__details-main-info {
+                    font-weight: $font-weight-bold;
+                }
+                // background-color: $color-background-light;
             }
         }
     }
