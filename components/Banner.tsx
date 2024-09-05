@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import { openCalendarModal } from 'features/modal/modal.helpers';
+import { openCalendarModal, openModalToExecuteProAction, openProModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers/favorites.helpers';
@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
-    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs';
+    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro';
     spotName?: string;
     spotId?: number;
     spotCalendarUrl?: string;
@@ -35,7 +35,7 @@ const Banner: React.FC<IBanner> = (props) => {
     const onClickFavoriteBanner = () => {
         if (props.spotId && props.spotName) {
             checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
-            // Tracking.
+            // Tracking
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
                 spotId: props.spotId,
                 spotName: props.spotName
@@ -47,7 +47,7 @@ const Banner: React.FC<IBanner> = (props) => {
     const onClickCalendarBanner = () => {
         if (props.spotId && props.spotName) {
             openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
-            // Tracking.
+            // Tracking
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
                 spotId: props.spotId,
                 spotName: props.spotName
@@ -57,11 +57,21 @@ const Banner: React.FC<IBanner> = (props) => {
 
     // On click on Widget banner
     const onClickWidgetBanner = () => {
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.WidgetBannerTap, {
             spotId: props.spotId,
             spotName: props.spotName
         });
+    };
+
+    // On click get pro banner
+    const onGetProBannerClick = () => {
+        // Tracking
+        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FullForecastGetProBannerTap, {
+            spotId: props.spotId,
+            spotName: props.spotName
+        });
+        openModalToExecuteProAction('fullForecast', undefined, 'Log in or sign up to Mondo to subscribe to Pro');
     };
 
     return (
@@ -151,6 +161,20 @@ const Banner: React.FC<IBanner> = (props) => {
                         <p className="ms-banner__subtext ms-small-text">
                             {mondoTranslate('banner.banner_talk_to_us_subtext')}
                         </p>
+                    </div>
+                </MondoLink>
+            )}
+
+            {/* Get pro */}
+            {props.type === 'getPro' && (
+                <MondoLink className="ms-banner ms-banner-get-pro" onClickCallback={onGetProBannerClick}>
+                    <div className="ms-banner__emoji">🌊</div>
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_get_pro_text')}</p>
+                        {/* <p className="ms-banner__subtext ms-small-text">
+                            {mondoTranslate('banner.banner_get_pro_subtext')}
+                        </p> */}
+                        <div className="ms-btn ms-btn-cta">{mondoTranslate('banner.banner_get_pro_button')}</div>
                     </div>
                 </MondoLink>
             )}

@@ -61,6 +61,7 @@ export enum TrackingEvent {
     CalBannerTap = 'Cal Banner_Tap',
     FavBannerTap = 'Fav Banner_Tap',
     WidgetBannerTap = 'Widget Banner_Tap',
+    FullForecastGetProBannerTap = 'Full Forecast Get Pro Banner_Tap',
 
     // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',
