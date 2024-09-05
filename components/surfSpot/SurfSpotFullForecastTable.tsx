@@ -16,7 +16,7 @@ const SurfSpotFullForecastTable: React.FC<ISurfSpotFullForecastTable> = (props) 
     const proForecast = limitForecastToDaysRange(props.spotForecast, 7, props.spot.timezone, 3);
 
     return (
-        <div className="ms-surf-spot-full-forecast-table">
+        <div className="ms-surf-spot-full-forecast-table" data-test="full-forecast">
             <SurfSpotFullForecastTableFree spot={props.spot} freeSpotForecast={freeForecast} />
             <SurfSpotFullForecastTablePro spot={props.spot} proSpotForecast={proForecast} />
 
