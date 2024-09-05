@@ -1,6 +1,6 @@
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
-const ProFeatures: React.FC = (props) => {
+const ProFeaturesList: React.FC = (props) => {
     return (
         <ul className="ms-pro-features-list">
             <li className="ms-pro-features-list__item">
@@ -22,4 +22,4 @@ const ProFeatures: React.FC = (props) => {
         </ul>
     );
 };
-export default ProFeatures;
+export default ProFeaturesList;
