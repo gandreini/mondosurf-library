@@ -14,9 +14,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
 
 // Component.
 const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) => {
-    /**
-     * Returns the root class of the component.
-     */
+    // Returns the root class of the component
     const rootClassName = (): string => {
         let returnClassName = 'ms-surf-spot-preview';
         if (props.loading) returnClassName += ' is-loading ';
@@ -24,7 +22,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
     };
 
     const clickOnPreview = (e: React.MouseEvent) => {
-        // Tracker.
+        // Tracker
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SpotPreviewTap, {
             context: props.context,
             surfSpotId: props.id,

@@ -47,6 +47,7 @@ export interface ISurfSpot {
     surf_schools?: boolean;
     airport?: string;
     near_spots?: ISurfSpotPreview[];
+    near_spots_count?: number;
     forecast_is_good?: number;
     hide_secondary_swell?: boolean;
     spot_forecast?: ISurfSpotForecast;
