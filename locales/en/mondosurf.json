@@ -77,6 +77,7 @@
     "forecast": "Forecast",
     "tide": "Tide",
     "good_times": "Good Surf",
+    "comments": "Comments",
     "forecast_edit": "Forecast edit",
     "near_spots": "Near spots",
     "videos": "Video",
@@ -98,6 +99,7 @@
   "comments": {
     "title": "Comments",
     "spot_comment_guide": "Tell us about the surf spot {{resource_name}}! Whether it's the wave quality, crowd level, local vibes, or tips for catching the best swell, we'd love to hear from you. Share any insights on the best time to surf, forecast tips, the best webcams to check the spot, the type of board to use, or even your favorite post-surf hangout spots nearby. Your feedback helps fellow surfers and contributes to the growing surf community.",
+    "be_the_first": "Be the first to leave a comment about {{resource_name}}!",
     "add_a_comment": "Add comment",
     "comment_field_label": "New comment",
     "comment_field_placeholder": "Write a comment about {{resource_name}} here",
@@ -344,6 +346,10 @@
     "spot_guide": {
       "title": "{{spot}} - Surf spot guide and map - Mondo",
       "description": "Discover everything about the surf spot {{spot}} including surf map, bottom, best swell and wind directions, tides, surf quality, webcams, and more"
+    },
+    "spot_comments": {
+      "title": "{{spot}} - Surf spot comments and reviews",
+      "description": "Read the latest comments and reviews about the surf spot {{spot}}, including tips from surfers, local insights, wave conditions, shared by the community."
     },
     "spot_good_times": {
       "title": "{{spot}} - Good surf next 7 days - Mondo",

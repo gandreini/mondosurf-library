@@ -11,6 +11,7 @@ import { ISurfSpotComment } from 'mondosurf-library/model/iSurfSpotComment';
 import { useEffect, useState } from 'react';
 
 import SkeletonLoader from '../SkeletonLoader';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 
 interface IComments {
     resourceId: string;
@@ -43,6 +44,14 @@ const Comments: React.FC<IComments> = (props) => {
 
     return (
         <ul className="ms-comments">
+            {fetchedComments.status === 'loaded' && fetchedComments.payload.length === 0 && (
+                <p className="ms-large-text">
+                    {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
+                </p>
+            )}
+            <p className="ms-small-text">
+                {mondoTranslate('comments.spot_comment_guide', { resource_name: props.resourceName })}
+            </p>
             <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
 
             {/* Loading */}
