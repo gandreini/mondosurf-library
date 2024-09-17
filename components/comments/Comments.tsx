@@ -7,15 +7,15 @@ import utc from 'dayjs/plugin/utc';
 import useGetFetch from 'mondosurf-library/api/useGetFetch';
 import Comment from 'mondosurf-library/components/comments/Comment';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
+import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import { ISurfSpotComment } from 'mondosurf-library/model/iSurfSpotComment';
-import { useEffect, useState } from 'react';
-
-import SkeletonLoader from '../SkeletonLoader';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useEffect, useState } from 'react';
 
 interface IComments {
     resourceId: string;
     resourceName: string;
+    shortText?: boolean;
 }
 
 const Comments: React.FC<IComments> = (props) => {
@@ -49,9 +49,19 @@ const Comments: React.FC<IComments> = (props) => {
                     {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
                 </p>
             )}
-            <p className="ms-small-text">
-                {mondoTranslate('comments.spot_comment_guide', { resource_name: props.resourceName })}
-            </p>
+
+            {!props.shortText && (
+                <p className="ms-small-text">
+                    {mondoTranslate('comments.spot_comment_guide', { resource_name: props.resourceName })}
+                </p>
+            )}
+
+            {props.shortText && (
+                <p className="ms-small-text">
+                    {mondoTranslate('comments.spot_comment_guide_short', { resource_name: props.resourceName })}
+                </p>
+            )}
+
             <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
 
             {/* Loading */}

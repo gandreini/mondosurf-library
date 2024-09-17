@@ -15,7 +15,7 @@ interface ITideTableDays {
     timezone: string;
 }
 
-const TideTableDays = async (props: ITideTableDays) => {
+const TideTableDays: React.FC<ITideTableDays> = (props) => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);

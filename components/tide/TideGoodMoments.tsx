@@ -9,7 +9,7 @@ interface ITideGoodMoments {
     timezone: string;
 }
 
-const TideGoodMoments = async (props: ITideGoodMoments) => {
+const TideGoodMoments: React.FC<ITideGoodMoments> = (props) => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);
