@@ -1,10 +1,10 @@
 // Server
 
-import { limitForecastToDaysRange } from 'mondosurf-library/helpers/forecast.helpers';
-import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
+import LastUpdate from 'mondosurf-library/components/LastUpdate';
 import SurfSpotFullForecastTableFree from 'mondosurf-library/components/surfSpot/SurfSpotFullForecastTableFree';
 import SurfSpotFullForecastTablePro from 'mondosurf-library/components/surfSpot/SurfSpotFullForecastTablePro';
-import LastUpdate from 'mondosurf-library/components/LastUpdate';
+import { limitForecastToDaysRange } from 'mondosurf-library/helpers/forecast.helpers';
+import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
 
 interface ISurfSpotFullForecastTable {
     spot: ISurfSpot;

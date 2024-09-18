@@ -8,7 +8,7 @@ export interface ITideTable {
 
 const TideTable: React.FC<ITideTable> = (props) => {
     return (
-        <div className="ms-tide-table">
+        <div>
             {/* <TideTableWeeklyLevels weeklyLimits={props.weeklyLimits} /> */}
             <TideTableDays days={props.days} timezone={props.timezone} />
         </div>

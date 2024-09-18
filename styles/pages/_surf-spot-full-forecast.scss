@@ -16,6 +16,14 @@
     .ms-empty-state {
         margin-top: $space * 8;
     }
+
+    &__loading {
+        margin-top: $space * 1.5;
+
+        .ms-surf-forecast-day__rows {
+            margin-bottom: $space * 2;
+        }
+    }
 }
 
 /* ------------------------------------ *\

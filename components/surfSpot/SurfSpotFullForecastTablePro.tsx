@@ -1,12 +1,12 @@
 // Client
 'use client';
 
-import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
-import SurfSpotForecastCompressedDay from 'mondosurf-library/components/SurfSpotForecastCompressedDay';
 import Banner from 'mondosurf-library/components/Banner';
-import { useSelector } from 'react-redux';
+import SurfSpotForecastCompressedDay from 'mondosurf-library/components/SurfSpotForecastCompressedDay';
+import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
 import { RootState } from 'mondosurf-library/redux/store';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface ISurfSpotFullForecastTablePro {
     spot: ISurfSpot;

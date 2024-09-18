@@ -1,7 +1,7 @@
 // Server
 
-import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
 import SurfSpotForecastCompressedDay from 'mondosurf-library/components/SurfSpotForecastCompressedDay';
+import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
 
 interface ISurfSpotFullForecastTableFree {
     spot: ISurfSpot;

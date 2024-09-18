@@ -16,9 +16,10 @@
     flex-direction: column;
     gap: $space * 1;
 
-    .ms-large-text {
+    &__first-comment.ms-body-text {
         margin-bottom: $space * 0.5;
-        color: var(--color-text-link);
+        font-weight: $font-weight-bold;
+        // color: var(--color-text-link);
     }
 }
 

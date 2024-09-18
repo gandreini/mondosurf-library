@@ -8,6 +8,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
 interface ISurfSpotInfoTide {
     surfSpotData: ISurfSpot;
     forecastData?: ISurfSpotForecast;
+    children?: React.ReactNode;
 }
 
 const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
@@ -16,20 +17,6 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
         (props.surfSpotData.tide && props.surfSpotData.tide?.length === 3)
             ? true
             : false;
-
-    /* function showTideTableModal() {
-        modalService.openModal({
-            title: mondoTranslate('tide.tide_table'),
-            closeButtonText: mondoTranslate('basics.close'),
-            component: TideTable,
-            componentProps: {
-                weeklyLimits: props.surfSpotData.spot_forecast!.tide_weekly.max_min,
-                days: props.surfSpotData.spot_forecast!.days,
-                timezone: props.surfSpotData.timezone
-            },
-            classes: 'ms-modal-tide-table'
-        });
-    } */
 
     return (
         <>
@@ -64,10 +51,12 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
                                 )}
                         </p>
 
-                        <Button
+                        {props.children}
+
+                        {/* <Button
                             label={mondoTranslate('tide.button_tide_table')}
                             url={`${FRONTEND_URL}surf-spot/${props.surfSpotData.slug}/tide/${props.surfSpotData.id}`}
-                        />
+                        /> */}
 
                         {/* <p className="ms-surf-spot-info-tide__good-moments">
                         {props.forecastData &&
@@ -97,14 +86,6 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
                             </p>
                         )}
                     </div>
-
-                    {/* {props.forecastData && props.forecastData.days[1].tide && (
-                <button
-                    onClick={showTideTableModal}
-                    className="ms-surf-spot-info-tide__button ms-btn ms-btn-cta ms-btn-s">
-                    {mondoTranslate('tide.button_tide_table')}
-                </button>
-            )} */}
                 </section>
             )}
         </>

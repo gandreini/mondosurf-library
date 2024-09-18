@@ -74,6 +74,10 @@
     grid-row-gap: 0;
 }
 
+.ms-grid-v-xl {
+    grid-row-gap: $grid-gutter-v * 2;
+}
+
 .ms-grid-v-1 {
     grid-row-gap: $grid-gutter-v/3 * 2;
 }

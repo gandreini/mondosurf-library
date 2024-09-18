@@ -25,7 +25,7 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
     const lengthUnitLabel = lengthUnit === 'mt' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
 
     return (
-        <table className="ms-tide-table-days">
+        <table className="ms-tide-table-days ms-table">
             <tbody>
                 {props.days &&
                     props.days
@@ -38,7 +38,7 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
                                     {dayjs(value.civil_dawn).tz(props.timezone).format(extDayFormat())}
                                 </td>
                                 <td className="ms-tide-table-days__values">
-                                    {hasProPermissions() && (
+                                    {/* {hasProPermissions() && (
                                         <div className="ms-tide-table-days__good-moments">
                                             <p className="ms-tide-table-days__good-moments-text">
                                                 <TideGoodMoments
@@ -47,7 +47,7 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
                                                 />
                                             </p>
                                         </div>
-                                    )}
+                                    )} */}
                                     <table className="ms-tide-table-days__details">
                                         <tbody>
                                             <tr>

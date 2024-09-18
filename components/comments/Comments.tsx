@@ -24,7 +24,7 @@ const Comments: React.FC<IComments> = (props) => {
     dayjs.extend(timezone);
 
     const [commentsQuery, setCommentsQuery] = useState('');
-    const [numberOfComments, setNumberOfComments] = useState(4);
+    const [numberOfComments, setNumberOfComments] = useState(3);
     const fetchedComments = useGetFetch(commentsQuery, {});
 
     // Fetch comments
@@ -39,13 +39,13 @@ const Comments: React.FC<IComments> = (props) => {
 
     // Updates the number of comments used by the loader
     useEffect(() => {
-        setNumberOfComments(fetchedComments.payload.length);
+        if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
     return (
         <ul className="ms-comments">
             {fetchedComments.status === 'loaded' && fetchedComments.payload.length === 0 && (
-                <p className="ms-large-text">
+                <p className="ms-comments__first-comment ms-body-text">
                     {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
                 </p>
             )}
@@ -69,7 +69,7 @@ const Comments: React.FC<IComments> = (props) => {
                 <>
                     {Array.from({ length: numberOfComments }).map((item, key) => (
                         <div className="ms-comments__skeleton" key={key}>
-                            <SkeletonLoader height="20px" width="180px" />
+                            <SkeletonLoader height="20px" width="180px" marginBottom="12px" />
                             <SkeletonLoader height="26px" />
                         </div>
                     ))}

@@ -1,0 +1,60 @@
+/**
+ * TIDE-TABLE-DAY
+ *
+ * Table displaying the tide of a day.
+ */
+
+/* ------------------------------------ *\
+   #TIDE-TABLE-DAY
+\* ------------------------------------ */
+.ms-tide-table-day {
+    margin-bottom: $space * 2;
+
+    td {
+        &:first-child {
+            text-align: center;
+            width: 24px;
+        }
+    }
+
+    tr:first-child {
+        border-radius: $border-radius $border-radius 0 0;
+        overflow: hidden;
+
+        td:first-child {
+            border-radius: $border-radius 0 0 0;
+            overflow: hidden;
+        }
+        td:last-child {
+            border-radius: 0 $border-radius 0 0;
+            overflow: hidden;
+        }
+    }
+    tr:last-child {
+        border-radius: 0 0 $border-radius $border-radius;
+
+        td:first-child {
+            border-radius: 0 0 0 $border-radius;
+            overflow: hidden;
+        }
+        td:last-child {
+            border-radius: 0 0 $border-radius 0;
+            overflow: hidden;
+        }
+    }
+
+    .ms-tide-table-day__row-low {
+        background-color: var(--color-chart-tide-low);
+    }
+
+    .ms-tide-table-day__row-high {
+        background-color: var(--color-chart-tide-high);
+        font-weight: $font-weight-bold;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

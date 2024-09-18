@@ -1,0 +1,154 @@
+/**
+ * TIDE-TABLE-DAYS
+ *
+ * Table with the details of the tide for each day.
+ */
+
+/* ------------------------------------ *\
+   #TIDE-TABLE-DAYS
+\* ------------------------------------ */
+.ms-tide-table-days {
+    margin-bottom: $space * 2;
+
+    tbody td {
+        padding: 0;
+    }
+
+    td.ms-tide-table-days__date {
+        padding: $space * 0.5;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        font-size: $font-size-xxs-fluid;
+        text-wrap: wrap;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    &__values {
+        padding: 0;
+    }
+
+    /*  &__good-moments {
+        border-bottom: 2px solid $table-border-color;
+        text-align: center;
+    }
+
+    &__good-moments-text {
+        padding: $space * 0.5 $space * 0.5;
+        margin: 0;
+        line-height: 1.3;
+        font-size: $font-size-xs-fluid;
+        @include first-letter-capital;
+    } */
+}
+
+/* ------------------------------------ *\
+   #INNER-TABLE
+\* ------------------------------------ */
+.ms-tide-table-days {
+    &__details {
+        width: 100%;
+        border-collapse: collapse;
+
+        tbody {
+            tr {
+                display: flex;
+                td {
+                    border-bottom: 0;
+                }
+            }
+
+            tr:not(:last-child) td {
+                border-bottom: 0;
+            }
+
+            tr:last-child td {
+                border-bottom: 0;
+            }
+
+            td {
+                flex-basis: 25%;
+                flex-grow: 0;
+                flex-shrink: 2;
+                width: 25%;
+                padding: $space $space * 0.5;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-right: 1px solid $table-border-color;
+                border-bottom: 0;
+                border-left: 0;
+                border-top: 0;
+
+                &:first-child {
+                    border-left: 0;
+                    border-bottom: 0;
+                }
+
+                &:last-child {
+                    border-right: 0;
+                    border-bottom: 0;
+                }
+
+                &.is-high {
+                    .ms-tide-table-days__details-main-info {
+                        font-weight: $font-weight-bold;
+                    }
+                    background-color: var(--color-chart-tide-high);
+                }
+                &.is-low {
+                    background-color: var(--color-chart-tide-low);
+                }
+            }
+        }
+    }
+
+    &__details-main-info {
+        display: block;
+        font-size: $font-size-s;
+        text-align: center;
+    }
+
+    &__icon {
+        display: block;
+    }
+
+    &__size {
+        display: block;
+        text-align: center;
+        margin-top: $space * 0.5;
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text);
+        text-wrap: wrap;
+        line-height: 1;
+    }
+}
+
+/* ------------------------------------ *\
+   #ROUND-CORNERS-BACKGROUND
+\* ------------------------------------ */
+.ms-tide-table-days {
+    tbody tr:first-child {
+        .ms-tide-table-days__details {
+            td:last-child {
+                border-radius: 0 4px 0 0;
+                overflow: hidden;
+            }
+        }
+    }
+    tbody tr:last-child {
+        .ms-tide-table-days__details {
+            td:last-child {
+                border-radius: 0 0 4px 0;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
