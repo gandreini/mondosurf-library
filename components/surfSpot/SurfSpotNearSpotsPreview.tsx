@@ -30,8 +30,8 @@ const SurfSpotNearSpotsPreview: React.FC<ISurfSpotNearSpotsPreview> = (props) =>
                                     countrySlug={item.countrySlug}
                                     regionSlug={item.regionSlug}
                                     context="spotNearSpots"
-                                    showDirection={false}
                                     showMetadata={true}
+                                    showDirection={false}
                                 />
                             )}
                         />

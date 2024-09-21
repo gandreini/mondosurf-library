@@ -25,5 +25,6 @@ export default interface ISurfSpotPreview {
     loading?: boolean;
     inFavourites?: boolean;
     linkToGoodTimes?: boolean;
+    forecast_update?: boolean;
     context?: 'homeNearSpots' | 'subscriptionConfirmed' | 'region' | 'spotNearSpots' | 'search';
 }
