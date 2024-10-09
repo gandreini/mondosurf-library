@@ -383,6 +383,14 @@
     "search": {
       "title": "Surf spots search - Mondo",
       "description": "From local favorites to international waves, explore surf locations worldwide, offering detailed spot guides and forecasts."
+    },
+    "terms_conditions": {
+      "title": "Terms and conditions",
+      "description": "Terms and conditions of Mondo surf atlas and forecast"
+    },
+    "privacy_policy": {
+      "title": "Privacy policy",
+      "description": "Privacy policy of Mondo surf atlas and forecast"
     }
   },
   "profile": {

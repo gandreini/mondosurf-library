@@ -124,6 +124,41 @@ hr {
 }
 
 /* ------------------------------------ *\
+   #DETAILS_SUMMARY
+\* ------------------------------------ */
+details {
+    margin: $space 0;
+}
+
+summary {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: $space;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: $space;
+    margin-top: -5px;
+    transition: transform 0.2s;
+    font-size: $font-size-xs-fluid;
+}
+
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+details summary + div {
+    margin-left: $space * 4;
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
