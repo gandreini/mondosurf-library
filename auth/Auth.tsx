@@ -99,9 +99,35 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     );
 
     useEffect(() => {
+        // Initialize Google Sign-In API
+        const google = (window as any).google;
+
+        if (google) {
+            google.accounts.id.initialize({
+                client_id: '882575910142-bdjkr3i1oo74sh6euou39uokd2dq0utn.apps.googleusercontent.com', // Replace with your Google Client ID
+                callback: handleGoogleSignIn
+            });
+
+            google.accounts.id.renderButton(document.getElementById('google-signin-button'), {
+                theme: 'outline',
+                size: 'large'
+            });
+        }
+
         setFocus('email');
         setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
     }, []);
+
+    const handleGoogleSignIn = (response: any) => {
+        // Google JWT Token
+        const credential = response.credential;
+
+        // You can further verify the credential on your server, or use it in your client logic
+        // Decode JWT to get user info (optional)
+        const decodedToken = JSON.parse(atob(credential.split('.')[1]));
+        // setUser(decodedToken);
+        console.log('Google user:', decodedToken);
+    };
 
     // Triggered when formState changes
     useEffect(() => {
@@ -440,6 +466,11 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
+                    {/* Render Google Sign-In Button */}
+                    <div id="google-signin-button" onClick={handleGoogleSignIn}>
+                        CLICK
+                    </div>
+
                     {/*}<p className="ms-auth__intro-text ms-body-text">{mondoTranslate('auth.form.email_form_text')}</p>{*/}
                     <form
                         onSubmit={handleSubmit(onEmailCheck, onEmailCheckError)}
