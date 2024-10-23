@@ -17,8 +17,10 @@ export const IOS_DEFAULT_MONTHLY_SUBSCRIPTION_PRICE = "€ 1.99"; // Used when t
 export const FREE_USER_MAX_FORECAST_DAYS = 3;
 export const PRO_USER_MAX_FORECAST_DAYS = 8;
 
-export const TERMS_CONDITIONS_URL = "https://www.iubenda.com/terms-and-conditions/50851546";
-export const PRIVACY_POLICY_URL = "https://www.iubenda.com/privacy-policy/50851546/legal";
+// export const TERMS_CONDITIONS_URL = "https://www.iubenda.com/terms-and-conditions/50851546";
+// export const PRIVACY_POLICY_URL = "https://www.iubenda.com/privacy-policy/50851546/legal";
+export const TERMS_CONDITIONS_URL = "https://www.mondo.surf/terms-conditions";
+export const PRIVACY_POLICY_URL = "https://www.mondo.surf/privacy-policy";
 export const IOS_EULA_URL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
