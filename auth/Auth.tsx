@@ -3,6 +3,7 @@
 
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
+import { callApi } from 'mondosurf-library/api/api';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -16,6 +17,7 @@ import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { JWT_API_URL } from 'proxies/localConstants';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
@@ -99,25 +101,34 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     );
 
     useEffect(() => {
+        addGoogleButton();
+        setFocus('email');
+        setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
+    }, []);
+
+    // Displays the Google button
+    const addGoogleButton = () => {
         // Initialize Google Sign-In API
         const google = (window as any).google;
 
         if (google) {
             google.accounts.id.initialize({
                 client_id: '882575910142-bdjkr3i1oo74sh6euou39uokd2dq0utn.apps.googleusercontent.com', // Replace with your Google Client ID
-                callback: handleGoogleSignIn
+                callback: (response: any) => {
+                    handleGoogleSignIn(response);
+                }
             });
 
             google.accounts.id.renderButton(document.getElementById('google-signin-button'), {
                 theme: 'outline',
-                size: 'large'
+                size: 'large',
+                logo_alignment: 'center'
             });
+            // google.accounts.id.prompt(); // also display the One Tap dialog
         }
+    };
 
-        setFocus('email');
-        setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
-    }, []);
-
+    // Google button click
     const handleGoogleSignIn = (response: any) => {
         // Google JWT Token
         const credential = response.credential;
@@ -125,14 +136,30 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         // You can further verify the credential on your server, or use it in your client logic
         // Decode JWT to get user info (optional)
         const decodedToken = JSON.parse(atob(credential.split('.')[1]));
+
         // setUser(decodedToken);
         console.log('Google user:', decodedToken);
+        console.log('Email:', decodedToken.email);
+        console.log('Name:', decodedToken.given_name);
+        console.log('Picture:', decodedToken.picture);
+        console.log('Sub:', decodedToken.sub);
+
+        callApi(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential })
+            .then((response) => {
+                if (response.data.success === true) {
+                    console.log('Time to login');
+                } else {
+                    console.log('Something wrong');
+                }
+            })
+            .catch((error) => console.log('Something wrong', error));
     };
 
     // Triggered when formState changes
     useEffect(() => {
         if (formState === 'email' || formState === 'email_waiting') {
             // modalService.updateTitle({ title: mondoTranslate('auth.modal_title') });
+            addGoogleButton();
         }
         // Tracking.
         if (formState === 'email') {
@@ -467,8 +494,10 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
                     {/* Render Google Sign-In Button */}
-                    <div id="google-signin-button" onClick={handleGoogleSignIn}>
-                        CLICK
+                    <div className="ms-auth__google-btn" id="google-signin-button" onClick={handleGoogleSignIn}></div>
+
+                    <div className="ms-auth__google-btn-separator">
+                        <span className="ms-auth__google-btn-separator-text">or user your email</span>
                     </div>
 
                     {/*}<p className="ms-auth__intro-text ms-body-text">{mondoTranslate('auth.form.email_form_text')}</p>{*/}

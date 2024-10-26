@@ -6,7 +6,7 @@ import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
 import { store } from 'mondosurf-library/redux/store';
 import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
-import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
+import { JWT_API_URL, PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 
 /**
  * Fires an authorized POST api call to a given endpoint.
@@ -175,7 +175,28 @@ export const deleteApiAuthCall = async (url: string, accessToken: string, params
 }
 
 /**
- * Fires a GET api call to a given endpoint.
+ * Call an API endpoint.
+ * 
+ * @param   {string} url The full endpoint to be called.
+ * @param   {"GET" | "POST"} method GET, POST
+ * @param   {object} params Object with parameters to send.
+ * @returns {Promise}
+ */
+export const callApi = async (url: string, method: "GET" | "POST", params: object): Promise<any> => {
+    return axios({
+        method: method,
+        url: url,
+        params: { ...params },
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then(response => response)
+        .catch(error => error);
+}
+
+/**
+ * DEPRECATED - Fires a GET api call to a given endpoint.
  * 
  * @param   {string} url Endpoint to be called.
  * @param   {object} params Object with parameters to send.
