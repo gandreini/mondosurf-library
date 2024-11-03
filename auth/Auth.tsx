@@ -10,6 +10,7 @@ import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
 import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
+import { generateSecurePassword } from 'mondosurf-library/helpers/user.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
 import { LoginModalContext } from 'mondosurf-library/model/loginModalContext';
@@ -114,6 +115,8 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         if (google) {
             google.accounts.id.initialize({
                 client_id: '882575910142-bdjkr3i1oo74sh6euou39uokd2dq0utn.apps.googleusercontent.com', // Replace with your Google Client ID
+                context: 'signin',
+                ux_mode: 'popup',
                 callback: (response: any) => {
                     handleGoogleSignIn(response);
                 }
@@ -124,30 +127,47 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                 size: 'large',
                 logo_alignment: 'center'
             });
-            // google.accounts.id.prompt(); // also display the One Tap dialog
+
+            google.accounts.id.prompt(); // also display the One Tap dialog
         }
     };
 
-    // Google button click
+    // Google button click handler
     const handleGoogleSignIn = (response: any) => {
         // Google JWT Token
         const credential = response.credential;
 
-        // You can further verify the credential on your server, or use it in your client logic
-        // Decode JWT to get user info (optional)
+        // Decode JWT to get user info
         const decodedToken = JSON.parse(atob(credential.split('.')[1]));
 
         // setUser(decodedToken);
-        console.log('Google user:', decodedToken);
-        console.log('Email:', decodedToken.email);
-        console.log('Name:', decodedToken.given_name);
-        console.log('Picture:', decodedToken.picture);
-        console.log('Sub:', decodedToken.sub);
 
+        // Verification of the credential on the server
         callApi(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential })
             .then((response) => {
                 if (response.data.success === true) {
-                    console.log('Time to login');
+                    // The password is only used if a new user is created
+                    login(
+                        decodedToken.email,
+                        generateSecurePassword(),
+                        deviceId,
+                        decodedToken.given_name,
+                        decodedToken.picture,
+                        true,
+                        decodedToken.sub
+                    )
+                        .then((response) => {
+                            if (response && response.data) {
+                                modalService.closeModal();
+                                toastService.success(
+                                    mondoTranslate('auth.welcome_back', { name: response.data.user_name })
+                                );
+                                if (props.callback) props.callback(response.data.access_token, response.data.user_name); // Callback is invoked only after registration.
+                            }
+                        })
+                        .catch((error) => {
+                            console.log('Something wrong');
+                        });
                 } else {
                     console.log('Something wrong');
                 }

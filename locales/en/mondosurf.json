@@ -123,7 +123,7 @@
   },
   "auth": {
     "welcome": "Hi {{name}}, welcome to Mondo!",
-    "welcome_back": "Hi {{name}}, welcome back to Mondo!",
+    "welcome_back": "Hi {{name}}, welcome to Mondo!",
     "errors": {
       "error_login": "There was an error during login",
       "error_registration": "There was an error during registration",
@@ -159,7 +159,7 @@
       "password_reset_success_text": "Request successfully sent! Check your mail inbox and click on the link provided in the password reset email",
       "logged_modal_title": "Welcome!",
       "logged_icon": "🤙",
-      "logged": "Welcome back to Mondo, {{name}}!"
+      "logged": "Welcome to Mondo, {{name}}!"
     },
     "modal_title": "Log in or register",
     "refresh_token": "Refresh JWT token",

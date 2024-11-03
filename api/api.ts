@@ -177,7 +177,7 @@ export const deleteApiAuthCall = async (url: string, accessToken: string, params
 /**
  * Call an API endpoint.
  * 
- * @param   {string} url The full endpoint to be called.
+ * @param   {string} url The FULL endpoint to be called.
  * @param   {"GET" | "POST"} method GET, POST
  * @param   {object} params Object with parameters to send.
  * @returns {Promise}

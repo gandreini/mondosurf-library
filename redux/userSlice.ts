@@ -6,6 +6,7 @@ export interface IUserSliceValue {
     userId: number;
     userName: string;
     userEmail: string;
+    userPictureUrl: string | null;
     accessToken: string;
     capacitorRefreshToken: string;
     accountVerified: boolean;
@@ -38,6 +39,7 @@ const initialState: IUserSliceValue = {
     userId: -1,
     userName: '',
     userEmail: '',
+    userPictureUrl: null,
     accessToken: '',
     capacitorRefreshToken: '',
     accountVerified: false,
@@ -80,6 +82,9 @@ export const userSlice = createSlice({
         },
         setUserEmail: (state, action) => {
             return { ...state, userEmail: action.payload };
+        },
+        setUserPictureUrl: (state, action) => {
+            return { ...state, userPictureUrl: action.payload };
         },
         setAccessToken: (state, action) => {
             return { ...state, accessToken: action.payload };
@@ -196,6 +201,7 @@ export const { setLogin,
     setUserId,
     setUserName,
     setUserEmail,
+    setUserPictureUrl,
     setAccessToken,
     setCapacitorRefreshToken,
     setAccountVerified,
