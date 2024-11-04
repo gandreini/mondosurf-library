@@ -194,23 +194,3 @@ export const callApi = async (url: string, method: "GET" | "POST", params: objec
         .then(response => response)
         .catch(error => error);
 }
-
-/**
- * DEPRECATED - Fires a GET api call to a given endpoint.
- * 
- * @param   {string} url Endpoint to be called.
- * @param   {object} params Object with parameters to send.
- * @returns {Promise}
- */
-export const getApiCall = async (url: string, params: object): Promise<any> => {
-    return axios({
-        method: 'get',
-        url: PUBLIC_API_URL_V1! + url,
-        params: { ...params },
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-        .then(response => response)
-        .catch(error => error);
-}
