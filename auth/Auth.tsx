@@ -6,7 +6,6 @@ import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
 import { isApp } from 'helpers/device.helpers';
 import { callApi } from 'mondosurf-library/api/api';
-import Button from 'mondosurf-library/components/Button';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -22,7 +21,9 @@ import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { GOOGLE_CLIENT_ID, JWT_API_URL } from 'proxies/localConstants';
+import { setLocalStorageData } from 'proxies/localStorage.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useLocationProxy } from 'proxies/useLocation';
 import { useRouterProxy } from 'proxies/useRouter';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -36,6 +37,9 @@ interface IAuth {
 const Auth: React.FC<IAuth> = (props: IAuth) => {
     // React router
     const router = useRouterProxy();
+
+    // Current location
+    const currentLocation = useLocationProxy();
 
     // React hook form stuff
     const {
@@ -177,6 +181,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
 
     // Google button click handler for App
     const onClickStaticGoogleButton = async () => {
+        setLocalStorageData('url_to_redirect_after_google_login', currentLocation);
         const authUrl =
             `https://accounts.google.com/o/oauth2/auth` +
             `?client_id=${GOOGLE_CLIENT_ID}` +
@@ -525,6 +530,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
+                    {/* Render Google Sign-In Button */}
                     {isApp() && (
                         <button className="ms-btn-google ms-btn-full ms-btn-l" onClick={onClickStaticGoogleButton}>
                             <span className="ms-btn-google__icon"></span>
@@ -532,11 +538,12 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         </button>
                     )}
 
-                    {/* Render Google Sign-In Button */}
-                    <div
-                        className="ms-auth__google-btn"
-                        id="google-signin-button"
-                        onClick={handleWebGoogleSignIn}></div>
+                    {!isApp() && (
+                        <div
+                            className="ms-auth__google-btn"
+                            id="google-signin-button"
+                            onClick={handleWebGoogleSignIn}></div>
+                    )}
 
                     <div className="ms-auth__google-btn-separator">
                         <span className="ms-auth__google-btn-separator-text">or user your email</span>
