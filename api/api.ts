@@ -180,15 +180,17 @@ export const deleteApiAuthCall = async (url: string, accessToken: string, params
  * @param   {string} url The FULL endpoint to be called.
  * @param   {"GET" | "POST"} method GET, POST
  * @param   {object} params Object with parameters to send.
+ * @param   {object} [customHeaders] Optional custom headers to include in the request.
  * @returns {Promise}
  */
-export const callApi = async (url: string, method: "GET" | "POST", params: object): Promise<any> => {
+export const callApi = async (url: string, method: "GET" | "POST", params: object, customHeaders?: object): Promise<any> => {
     return axios({
         method: method,
         url: url,
         params: { ...params },
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            ...customHeaders
         }
     })
         .then(response => response)

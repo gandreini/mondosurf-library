@@ -1,9 +1,12 @@
 // Client
 'use client';
 
+import { Browser } from '@capacitor/browser';
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
+import { isApp } from 'helpers/device.helpers';
 import { callApi } from 'mondosurf-library/api/api';
+import Button from 'mondosurf-library/components/Button';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -18,7 +21,7 @@ import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
-import { JWT_API_URL } from 'proxies/localConstants';
+import { GOOGLE_CLIENT_ID, JWT_API_URL } from 'proxies/localConstants';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
@@ -102,23 +105,22 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     );
 
     useEffect(() => {
-        addGoogleButton();
+        if (!isApp()) addGoogleButton();
         setFocus('email');
         setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
     }, []);
 
-    // Displays the Google button
+    // Displays the Google button for web
     const addGoogleButton = () => {
-        // Initialize Google Sign-In API
         const google = (window as any).google;
 
         if (google) {
             google.accounts.id.initialize({
-                client_id: '882575910142-bdjkr3i1oo74sh6euou39uokd2dq0utn.apps.googleusercontent.com', // Replace with your Google Client ID
+                client_id: GOOGLE_CLIENT_ID,
                 context: 'signin',
                 ux_mode: 'popup',
                 callback: (response: any) => {
-                    handleGoogleSignIn(response);
+                    handleWebGoogleSignIn(response);
                 }
             });
 
@@ -128,19 +130,17 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                 logo_alignment: 'center'
             });
 
-            google.accounts.id.prompt(); // also display the One Tap dialog
+            // google.accounts.id.prompt(); // Display the One Tap dialog
         }
     };
 
-    // Google button click handler
-    const handleGoogleSignIn = (response: any) => {
+    // Google button click handler for web
+    const handleWebGoogleSignIn = (response: any) => {
         // Google JWT Token
         const credential = response.credential;
 
         // Decode JWT to get user info
         const decodedToken = JSON.parse(atob(credential.split('.')[1]));
-
-        // setUser(decodedToken);
 
         // Verification of the credential on the server
         callApi(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential })
@@ -173,6 +173,18 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                 }
             })
             .catch((error) => console.log('Something wrong', error));
+    };
+
+    // Google button click handler for App
+    const onClickStaticGoogleButton = async () => {
+        const authUrl =
+            `https://accounts.google.com/o/oauth2/auth` +
+            `?client_id=${GOOGLE_CLIENT_ID}` +
+            `&redirect_uri=https://mondo.surf/google-login-succeeded` +
+            `&response_type=token` +
+            `&scope=profile email`;
+
+        await Browser.open({ url: authUrl });
     };
 
     // Triggered when formState changes
@@ -513,8 +525,13 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
+                    {isApp() && <Button label={'Static Google Button'} callback={onClickStaticGoogleButton} />}
+
                     {/* Render Google Sign-In Button */}
-                    <div className="ms-auth__google-btn" id="google-signin-button" onClick={handleGoogleSignIn}></div>
+                    <div
+                        className="ms-auth__google-btn"
+                        id="google-signin-button"
+                        onClick={handleWebGoogleSignIn}></div>
 
                     <div className="ms-auth__google-btn-separator">
                         <span className="ms-auth__google-btn-separator-text">or user your email</span>
