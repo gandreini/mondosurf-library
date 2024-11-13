@@ -525,7 +525,12 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
-                    {isApp() && <Button label={'Static Google Button'} callback={onClickStaticGoogleButton} />}
+                    {isApp() && (
+                        <button className="ms-btn-google ms-btn-full ms-btn-l" onClick={onClickStaticGoogleButton}>
+                            <span className="ms-btn-google__icon"></span>
+                            {mondoTranslate('auth.google_button.sign_in')}
+                        </button>
+                    )}
 
                     {/* Render Google Sign-In Button */}
                     <div

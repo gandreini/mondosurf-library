@@ -172,6 +172,10 @@
       "passwords_dont_match": "The two provided passwords are not matching, please check them again",
       "success": "Password successfully changed!",
       "error": "Ops there was en error, please try again or contact an administrator"
+    },
+    "google_button": {
+      "sign_in": "Sign in with Google",
+      "sign_out": "Sign out"
     }
   },
   "modal": {
