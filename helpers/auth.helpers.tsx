@@ -509,7 +509,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
     }
 
     // We also store the user id in the local storage, used for the re-auth
-    setLocalStorageData('user', response.data.user_id);
+    setLocalStorageData('user', response.data.user_id.toString());
 
     // Handling of the refresh token is different on mobile App.
     if (isApp()) {

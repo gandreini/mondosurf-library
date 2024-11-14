@@ -4,7 +4,7 @@
 import { Browser } from '@capacitor/browser';
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
-import { isApp } from 'helpers/device.helpers';
+import { isApp, isAppAndroid } from 'helpers/device.helpers';
 import { callApi } from 'mondosurf-library/api/api';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
@@ -190,7 +190,11 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             `&response_type=token` +
             `&scope=profile email`;
 
-        await Browser.open({ url: authUrl });
+        if (isAppAndroid()) {
+            await Browser.open({ url: authUrl });
+        } else {
+            window.open(authUrl, '_blank', 'toolbar=no,location=yes');
+        }
     };
 
     // Triggered when formState changes
