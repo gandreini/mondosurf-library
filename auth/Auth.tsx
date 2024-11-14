@@ -114,7 +114,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
     }, []);
 
-    // Displays the Google button for web
+    // Google web: Displays the Google button for web
     const addGoogleButton = () => {
         const google = (window as any).google;
 
@@ -138,7 +138,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         }
     };
 
-    // Google button click handler for web
+    // Google web: Google button click handler for web
     const handleWebGoogleSignIn = (response: any) => {
         // Google JWT Token
         const credential = response.credential;
@@ -179,8 +179,9 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             .catch((error) => console.log('Something wrong', error));
     };
 
-    // Google button click handler for App
+    // Google app: Google button click handler for App
     const onClickStaticGoogleButton = async () => {
+        // Set the URL for redirecting in localStorage
         setLocalStorageData('url_to_redirect_after_google_login', currentLocation);
         const authUrl =
             `https://accounts.google.com/o/oauth2/auth` +
