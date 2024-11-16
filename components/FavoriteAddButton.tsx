@@ -1,20 +1,15 @@
 // Client
 'use client';
 
-import { openModalToExecuteProAction } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import {
-    addFavoriteFromSuspendedFavorite,
     checkIfSpotIdIsInFavorites,
     checkPermissionsAndAddSpotToFavorites,
-    removeSpotFromFavourites,
-    setSuspendedFavorite
+    removeSpotFromFavourites
 } from 'mondosurf-library/helpers/favorites.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
-import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';

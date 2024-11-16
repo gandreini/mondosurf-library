@@ -1,18 +1,20 @@
 // Client
 'use client';
 
-import { Browser } from '@capacitor/browser';
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
-import { isApp, isAppAndroid } from 'helpers/device.helpers';
-import { callApi } from 'mondosurf-library/api/api';
+import { isApp } from 'helpers/device.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
 import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
+import {
+    addGoogleButton,
+    handleWebGoogleSignIn,
+    onClickStaticGoogleButton
+} from 'mondosurf-library/helpers/googleAuth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
-import { generateSecurePassword } from 'mondosurf-library/helpers/user.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
 import { LoginModalContext } from 'mondosurf-library/model/loginModalContext';
@@ -20,8 +22,6 @@ import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
-import { GOOGLE_CLIENT_ID, JWT_API_URL } from 'proxies/localConstants';
-import { setLocalStorageData } from 'proxies/localStorage.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useLocationProxy } from 'proxies/useLocation';
 import { useRouterProxy } from 'proxies/useRouter';
@@ -109,99 +109,16 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     );
 
     useEffect(() => {
-        if (!isApp()) addGoogleButton();
+        // if (!isApp()) addGoogleButton(deviceId, props.callback);  // ! Google Auth
         setFocus('email');
         setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
     }, []);
-
-    // Google web: Displays the Google button for web
-    const addGoogleButton = () => {
-        const google = (window as any).google;
-
-        if (google) {
-            google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
-                context: 'signin',
-                ux_mode: 'popup',
-                callback: (response: any) => {
-                    handleWebGoogleSignIn(response);
-                }
-            });
-
-            google.accounts.id.renderButton(document.getElementById('google-signin-button'), {
-                theme: 'outline',
-                size: 'large',
-                logo_alignment: 'center'
-            });
-
-            // google.accounts.id.prompt(); // Display the One Tap dialog
-        }
-    };
-
-    // Google web: Google button click handler for web
-    const handleWebGoogleSignIn = (response: any) => {
-        // Google JWT Token
-        const credential = response.credential;
-
-        // Decode JWT to get user info
-        const decodedToken = JSON.parse(atob(credential.split('.')[1]));
-
-        // Verification of the credential on the server
-        callApi(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential })
-            .then((response) => {
-                if (response.data.success === true) {
-                    // The password is only used if a new user is created
-                    login(
-                        decodedToken.email,
-                        generateSecurePassword(),
-                        deviceId,
-                        decodedToken.given_name,
-                        decodedToken.picture,
-                        true,
-                        decodedToken.sub
-                    )
-                        .then((response) => {
-                            if (response && response.data) {
-                                modalService.closeModal();
-                                toastService.success(
-                                    mondoTranslate('auth.welcome_back', { name: response.data.user_name })
-                                );
-                                if (props.callback) props.callback(response.data.access_token, response.data.user_name); // Callback is invoked only after registration.
-                            }
-                        })
-                        .catch((error) => {
-                            console.log('Something wrong');
-                        });
-                } else {
-                    console.log('Something wrong');
-                }
-            })
-            .catch((error) => console.log('Something wrong', error));
-    };
-
-    // Google app: Google button click handler for App
-    const onClickStaticGoogleButton = async () => {
-        // Set the URL for redirecting in localStorage
-        setLocalStorageData('url_to_redirect_after_google_login', currentLocation);
-        const authUrl =
-            `https://accounts.google.com/o/oauth2/auth` +
-            `?client_id=${GOOGLE_CLIENT_ID}` +
-            `&redirect_uri=https://mondo.surf/google-login-succeeded` +
-            `&response_type=token` +
-            `&scope=profile email`;
-
-        if (isAppAndroid()) {
-            await Browser.open({ url: authUrl });
-        } else {
-            window.open(authUrl, '_blank', 'toolbar=no,location=yes');
-        }
-    };
 
     // Triggered when formState changes
     useEffect(() => {
         if (formState === 'email' || formState === 'email_waiting') {
             // modalService.updateTitle({ title: mondoTranslate('auth.modal_title') });
-            addGoogleButton();
+            // if (!isApp()) addGoogleButton(deviceId, props.callback);  // ! Google Auth
         }
         // Tracking.
         if (formState === 'email') {
@@ -535,9 +452,12 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
+                    {/*  // ! Google Auth */}
                     {/* Render Google Sign-In Button */}
-                    {isApp() && (
-                        <button className="ms-btn-google ms-btn-full ms-btn-l" onClick={onClickStaticGoogleButton}>
+                    {/* {isApp() && (
+                        <button
+                            className="ms-btn-google ms-btn-full ms-btn-l"
+                            onClick={() => onClickStaticGoogleButton(currentLocation, deviceId)}>
                             <span className="ms-btn-google__icon"></span>
                             {mondoTranslate('auth.google_button.sign_in')}
                         </button>
@@ -547,13 +467,13 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         <div
                             className="ms-auth__google-btn"
                             id="google-signin-button"
-                            onClick={handleWebGoogleSignIn}></div>
+                            onClick={() => handleWebGoogleSignIn}></div>
                     )}
 
                     <div className="ms-auth__google-btn-separator">
                         <span className="ms-auth__google-btn-separator-text">or user your email</span>
                     </div>
-
+ */}
                     {/*}<p className="ms-auth__intro-text ms-body-text">{mondoTranslate('auth.form.email_form_text')}</p>{*/}
                     <form
                         onSubmit={handleSubmit(onEmailCheck, onEmailCheckError)}

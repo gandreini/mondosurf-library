@@ -529,6 +529,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
  * @returns {void}
  */
 export const handleActualLogout = (why?: string, whyObject?: any): void => {
+    // toastService.emoji('Loggin out: ' + why, '🛟', '', 10000);
     store.dispatch(logOut()); // Redux
     if (isApp()) {
         deleteLocalStorageData('refresh_token');
