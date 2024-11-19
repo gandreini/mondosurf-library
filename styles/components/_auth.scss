@@ -1,13 +1,19 @@
 /**
  * AUTH
  *
- * Stle for all login, registration, and auth screens.
+ * Style for all login, registration, and auth screens.
  */
 
 /* ------------------------------------ *\
     #AUTH
 \* ------------------------------------ */
 .ms-auth {
+    &__google-btn > div > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     &__google-btn-separator {
         display: flex;
         align-items: center;

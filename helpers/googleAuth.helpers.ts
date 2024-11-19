@@ -1,17 +1,14 @@
-// ! Google Auth
-
-import { isAppAndroid } from "helpers/device.helpers";
-import { GoogleService } from "helpers/GoogleService";
+import { SocialLogin } from "@capgo/capacitor-social-login";
 import { callApi } from "mondosurf-library/api/api";
 import { login } from "mondosurf-library/helpers/auth.helpers";
+import { generateSecurePassword } from "mondosurf-library/helpers/user.helpers";
 import modalService from "mondosurf-library/services/modalService";
 import toastService from "mondosurf-library/services/toastService";
 import { GOOGLE_CLIENT_ID, JWT_API_URL } from "proxies/localConstants";
+import { deleteLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { mondoTranslate } from "proxies/mondoTranslate";
 
-import { generateSecurePassword } from "./user.helpers";
-
-// Google web: Displays the Google button for web
+// GOOGLE WEB: Displays the Google button for web
 export const addGoogleButton = (deviceId: string, callback?: (accessToken?: string, userName?: string) => void) => {
     const google = (window as any).google;
 
@@ -35,7 +32,7 @@ export const addGoogleButton = (deviceId: string, callback?: (accessToken?: stri
     }
 };
 
-// Google web: Google button click handler for web
+// GOOGLE WEB: Google button click handler for web
 export const handleWebGoogleSignIn = (response: any, deviceId: string, callback?: (accessToken?: string, userName?: string) => void) => {
 
     // Google JWT Token
@@ -68,79 +65,58 @@ export const handleWebGoogleSignIn = (response: any, deviceId: string, callback?
                         }
                     })
                     .catch((error) => {
-                        console.log('Something wrong');
+                        handleLoginError();
                     });
             } else {
-                console.log('Something wrong');
+                handleLoginError();
             }
         })
-        .catch((error) => console.log('Something wrong', error));
+        .catch((error) => handleLoginError());
 };
 
-// Google app: Google button click handler for App
-export const onClickStaticGoogleButton = async (currentLocation: string, deviceId: string) => {
+// GOOGLE APP: Google button click handler for App
+export const onClickStaticGoogleButton = async (deviceId: string, callback?: (accessToken?: string, userName?: string) => void) => {
 
-    const googleService = new GoogleService();
+    setLocalStorageData('google_auth_in_progress', 'true');
 
-    const token = await googleService.login();
+    const res = await SocialLogin.login({
+        provider: 'google',
+        options: {}
+    })
 
-    if (token) {
-        console.log("User signed in with token:", token);
-        googleService.verifyToken(token, deviceId).then(loginResponse => {
-            modalService.closeModal();
-            toastService.success(
-                mondoTranslate('auth.welcome_back')
-            );
-        }).catch(error => {
-            modalService.closeModal();
-            toastService.error(
-                mondoTranslate('auth.welcome_back')
-            );
-        });
-    } else {
-        console.log("Google sign-in failed");
-    }
+    const profile = res.result.profile as {
+        email: string;
+        givenName: string;
+        imageUrl: string;
+        id: string;
+    }; // Type assertion to ensure the correct structure
 
-
-    if (isAppAndroid()) {
-        /* setLocalStorageData('url_to_redirect_after_google_login', currentLocation);
-        const authUrl =
-            `https://accounts.google.com/o/oauth2/auth` +
-            `?client_id=${GOOGLE_CLIENT_ID}` +
-            `&redirect_uri=https://mondo.surf/google-login-succeeded` +
-            `&response_type=token` +
-            `&scope=profile email`;
-
-        await Browser.open({ url: authUrl }); */
-    } else {
-        // window.open(authUrl, '_blank', 'toolbar=no,location=yes');
-        /* const res = await SocialLogin.login({
-            provider: 'google',
-            options: {}
+    login(profile.email, generateSecurePassword(), deviceId, profile.givenName, profile.imageUrl, true, profile.id)
+        .then((loginResponse) => {
+            if (loginResponse && loginResponse.data) {
+                // handleRedirect();
+                modalService.closeModal();
+                toastService.success(
+                    mondoTranslate('auth.welcome_back', { name: loginResponse.data.user_name })
+                );
+                if (callback) callback(loginResponse.data.access_token, loginResponse.data.user_name);
+            } else {
+                handleLoginError();
+            }
         })
+        .catch((error) => {
+            handleLoginError();
+        });
+};
 
-        const profile = res.result.profile as {
-            email: string;
-            givenName: string;
-            imageUrl: string;
-            id: string;
-        }; // Type assertion to ensure the correct structure
-
-        // Call to login
-        login(profile.email, generateSecurePassword(), deviceId, profile.givenName, profile.imageUrl, true, profile.id)
-            .then((loginResponse) => {
-                if (loginResponse && loginResponse.data) {
-                    // handleRedirect();
-                    modalService.closeModal();
-                    toastService.success(
-                        mondoTranslate('auth.welcome_back', { name: loginResponse.data.user_name })
-                    );
-                } else {
-                    // handleLoginError(); // ! Handle the error
-                }
-            })
-            .catch((error) => {
-                // handleLoginError(); // ! Handle the error
-            }); */
-    }
+/**
+ * Handles login errors by performing the following actions:
+ * 1. Deletes the 'google_auth_in_progress' entry from local storage to indicate that the login process has ended.
+ * 2. Closes any open modal dialogs to provide a clean user interface.
+ * 3. Displays an error message to the user indicating that the login attempt has failed.
+ */
+const handleLoginError = () => {
+    deleteLocalStorageData('google_auth_in_progress');
+    modalService.closeModal();
+    toastService.error(mondoTranslate('auth.errors.error_login'));
 };
