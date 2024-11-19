@@ -100,6 +100,10 @@ export const onClickStaticGoogleButton = async (deviceId: string, callback?: (ac
                     mondoTranslate('auth.welcome_back', { name: loginResponse.data.user_name })
                 );
                 if (callback) callback(loginResponse.data.access_token, loginResponse.data.user_name);
+                // Add a timeout to execute after 1 second
+                setTimeout(() => {
+                    deleteLocalStorageData('google_auth_in_progress'); // ! Double check this!
+                }, 2000);
             } else {
                 handleLoginError();
             }
