@@ -8,7 +8,8 @@
     #AUTH
 \* ------------------------------------ */
 .ms-auth {
-    &__google-btn > div > div {
+    &__google-btn > div > div,
+    &__google-btn > div {
         display: flex;
         align-items: center;
         justify-content: center;
