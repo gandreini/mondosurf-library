@@ -10,7 +10,6 @@ import { mondoTranslate } from "proxies/mondoTranslate";
 // GOOGLE WEB: Displays the Google button for web
 export const addGoogleButton = (deviceId: string, callback?: (accessToken?: string, userName?: string) => void) => {
     const google = (window as any).google;
-    console.log("GOOGLE_CLIENT_ID", GOOGLE_CLIENT_ID);
 
     if (google) {
         google.accounts.id.initialize({
