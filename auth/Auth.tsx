@@ -9,11 +9,7 @@ import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
 import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
-import {
-    addGoogleButton,
-    handleWebGoogleSignIn,
-    onClickStaticGoogleButton
-} from 'mondosurf-library/helpers/googleAuth.helpers';
+import { addGoogleButton, handleWebGoogleSignIn } from 'mondosurf-library/helpers/googleAuth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
@@ -22,6 +18,7 @@ import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { onClickStaticGoogleButton } from 'proxies/googleAuth.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
