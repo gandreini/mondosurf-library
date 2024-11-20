@@ -2,6 +2,7 @@ import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform2, isApp } from 'helpers/device.helpers';
+import { callApi } from 'mondosurf-library/api/api';
 import { addDebugLogItem } from 'mondosurf-library/redux/debugSlice';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -31,7 +32,8 @@ import {
     setTrialDuration,
     setUserEmail,
     setUserId,
-    setUserName
+    setUserName,
+    setUserPictureUrl
 } from 'mondosurf-library/redux/userSlice';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
@@ -47,6 +49,7 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
  * Endpoint: 'mail-check'
  *
  * @param   {string} email Email that must be checked to see if it exists.
+ *
  * @returns {Promise} Response is true if the mail exists, false if it doesn't exist.
  */
 export const emailCheck = (email: string) => {
@@ -78,9 +81,22 @@ export const emailCheck = (email: string) => {
  * @param   {string} email Email of the user.
  * @param   {string} password Password.
  * @param   {string} deviceId Unique id of the device.
+ * @param   {string} name The name of the user (currently only used for Google Auth).
+ * @param   {string} pictureUrl The URL of the picture (currently only used for Google Auth).
+ * @param   {bool} googleAuth If to use the Google authentication (currently only used for Google Auth).
+ * @param   {string} googleAuthId The unique Google ID (currently only used for Google Auth).
+ *
  * @returns {Promise} Response contains all the users's data if he was correctly logged in.
  */
-export const login = (email: string, password: string, deviceId: string) => {
+export const login = (
+    email: string,
+    password: string,
+    deviceId: string,
+    name?: string,
+    pictureUrl?: string,
+    googleAuth?: boolean,
+    googleAuthId?: string
+) => {
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'auth',
@@ -88,9 +104,13 @@ export const login = (email: string, password: string, deviceId: string) => {
             email: email,
             password: password,
             device_id: deviceId,
-            platform: getPlatform2()
+            platform: getPlatform2(),
+            name: name,
+            picture_url: pictureUrl,
+            google_auth: googleAuth,
+            google_auth_id: googleAuthId
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -117,6 +137,7 @@ export const login = (email: string, password: string, deviceId: string) => {
  *
  * @param   {string} accessToken Access JWT token stored in Redux.
  * @param   {string} deviceId Unique id of the device.
+ *
  * @returns {Promise} Response.success is true if the user was correctly logged out.
  */
 export const logout = (accessToken: string, deviceId: string) => {
@@ -124,7 +145,7 @@ export const logout = (accessToken: string, deviceId: string) => {
     const state = store.getState();
     const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
 
-    store.dispatch(
+    /* store.dispatch(
         addDebugLogItem(
             'Calling revoke. access_token: ' +
                 accessToken +
@@ -135,12 +156,12 @@ export const logout = (accessToken: string, deviceId: string) => {
                 ', storageRefreshToken: ' +
                 storageRefreshToken
         )
-    );
+    ); */
 
     return axios({
         method: 'post',
         url: JWT_API_URL! + 'revoke',
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         data: formurlencoded({
             access_token: accessToken,
             device_id: deviceId,
@@ -153,21 +174,12 @@ export const logout = (accessToken: string, deviceId: string) => {
     })
         .then((response) => {
             if (response.status === 200) {
-                store.dispatch(logOut()); // To redux state
-                if (isApp()) {
-                    deleteLocalStorageData('refresh_token');
-                    store.dispatch(setCapacitorRefreshToken('')); // To redux state
-                }
+                handleActualLogout('User intentionally logged out');
                 return response;
             }
         })
         .catch(function (error) {
-            // Logged out in any case.
-            store.dispatch(logOut()); // To redux state
-            if (isApp()) {
-                deleteLocalStorageData('refresh_token');
-                store.dispatch(setCapacitorRefreshToken('')); // To redux state
-            }
+            handleActualLogout('User intentionally logged out');
             throw error;
         });
 };
@@ -179,6 +191,7 @@ export const logout = (accessToken: string, deviceId: string) => {
  *
  * @param   {string} accessToken Access JWT token stored in Redux.
  * @param   {string} deviceId Unique id of the device.
+ *
  * @returns {Promise} Response.success is true if the the token was refreshed correctly. All needed data are sent with response.
  */
 export const refreshToken = (accessToken: string, deviceId: string) => {
@@ -194,7 +207,7 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
         return axios({
             method: 'post',
             url: JWT_API_URL! + 'refresh-token',
-            withCredentials: true, // ! TODO Verify when needed
+            withCredentials: true, // Cookies should be included in cross-site requests
             data: formurlencoded({
                 access_token: accessToken,
                 device_id: deviceId,
@@ -214,70 +227,63 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
                             store.dispatch(setCapacitorRefreshToken(response.data.refresh_token)); // To redux state
                         }
                     } else {
-                        store.dispatch(logOut()); // To redux state
-                        if (isApp()) {
-                            deleteLocalStorageData('refresh_token');
-                        }
+                        handleActualLogout('Refresh token failed', response);
                     }
                     return response;
                 }
             })
             .catch(function (error) {
-                store.dispatch(logOut()); // To redux state
-                if (isApp()) {
-                    deleteLocalStorageData('refresh_token');
-                }
+                handleActualLogout('Refresh token failed (error)', error);
                 throw error;
             });
     }
 };
 
 /**
- * Checks if the user is already logged into the application at applications startup.
- * This is needed to keep the user logged also when the app is closed and then reopened.
+ * Checks if the user is logged in when the app opens on a specific device.
+ * This function verifies the user's authentication status using a stored refresh token.
+ * If valid, it updates the user's status and identifies the user in tracking.
+ * If authentication fails, it dispatches a logout action and optionally clears local storage
+ * depending on the platform.
  *
- * Endpoint: 're-auth'
+ * @param {string} deviceId - Unique identifier for the current device; required for re-authentication.
  *
- * @param   {string} deviceId Unique id of the device.
- * @returns {void}
+ * @returns {Promise<void>} - A promise resolving after the re-authentication process completes.
  */
-export const checkIfUserIsLoggedOnOpen = (deviceId: string) => {
-    if (deviceId !== '') {
-        // iOs and Android refresh token handling.
-        const state = store.getState();
-        const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
+export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | null) => {
+    if (deviceId === '') {
+        return Promise.reject(new Error('Device ID is required for authentication.'));
+    }
 
-        return axios({
-            method: 'post',
-            url: JWT_API_URL! + 're-auth',
-            withCredentials: true, // ! TODO Verify when needed
-            data: formurlencoded({
-                device_id: deviceId,
-                platform: getPlatform2(),
-                refresh_token: storageRefreshToken
-            }),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+    // iOs and Android refresh token handling
+    const state = store.getState();
+    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux
+
+    return axios({
+        method: 'post',
+        url: JWT_API_URL! + 're-auth',
+        withCredentials: true, // Cookies should be included in cross-site requests
+        data: formurlencoded({
+            device_id: deviceId,
+            user_id: userId,
+            platform: getPlatform2(),
+            refresh_token: storageRefreshToken
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then((response) => {
+            if (response.status === 200 && response.data.success === true) {
+                updateUserStatus(response);
+                if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+            } else {
+                handleActualLogout('checkIfUserIsLoggedOnOpen failed', response);
             }
         })
-            .then((response) => {
-                if (response.status === 200 && response.data.success === true) {
-                    updateUserStatus(response);
-                    if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
-                } else {
-                    store.dispatch(logOut()); // To redux state
-                    if (isApp()) {
-                        // deleteLocalStorageData('refresh_token');
-                    }
-                }
-            })
-            .catch(function (error) {
-                store.dispatch(logOut()); // To redux state
-                if (isApp()) {
-                    // deleteLocalStorageData('refresh_token');
-                }
-            });
-    }
+        .catch(function (error) {
+            handleActualLogout('checkIfUserIsLoggedOnOpen failed (error)', error);
+        });
 };
 
 /**
@@ -310,7 +316,7 @@ export const userRegister = (
             device_id: deviceId,
             platform: getPlatform2()
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -321,17 +327,11 @@ export const userRegister = (
                 if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
                 return response;
             } else {
-                store.dispatch(logOut()); // To redux state
-                if (isApp()) {
-                    deleteLocalStorageData('refresh_token');
-                }
+                handleActualLogout('userRegister failed', response);
             }
         })
         .catch(function (error) {
-            store.dispatch(logOut()); // To redux state
-            if (isApp()) {
-                deleteLocalStorageData('refresh_token');
-            }
+            handleActualLogout('userRegister failed (error)', error);
             throw error;
         });
 };
@@ -351,7 +351,7 @@ export const confirmAccount = (token: string) => {
         data: formurlencoded({
             token: token
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -380,7 +380,7 @@ export const requestAccountConfirmationEmail = (userId: number) => {
         data: formurlencoded({
             user_id: userId
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -408,7 +408,7 @@ export const requestPasswordResetEmailApi = (email: string) => {
         data: formurlencoded({
             email: email
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -439,7 +439,7 @@ export const passwordReset = (token: string, newPassword: string) => {
             token: token,
             new_password: newPassword
         }),
-        withCredentials: true, // ! TODO Verify when needed
+        withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -453,10 +453,12 @@ export const passwordReset = (token: string, newPassword: string) => {
 };
 
 /**
- * Updates the user Redux status with the response from the server after login, re-authentication and registration.
+ * Updates the user Redux status with the response from the server after login,
+ * re-authentication and registration.
  *
  * @param   {AxiosResponse<any>} response The response coming from the server.
  * @param   {boolean} registration True if the function is used during the user registration.
+ *
  * @returns {returnType} Return description.
  */
 export const updateUserStatus = (response: AxiosResponse<any>, registration: boolean = false) => {
@@ -465,6 +467,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
     store.dispatch(setUserId(response.data.user_id));
     store.dispatch(setUserName(response.data.user_name));
     store.dispatch(setUserEmail(response.data.user_email));
+    if (response.data.user_picture_url) store.dispatch(setUserPictureUrl(response.data.user_picture_url));
     store.dispatch(setAccountVerified(response.data.account_verified));
     store.dispatch(setApprovedTerms(response.data.approved_terms));
     store.dispatch(setAuthorizedTracking(response.data.authorized_tracking));
@@ -505,6 +508,9 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
             );
     }
 
+    // We also store the user id in the local storage, used for the re-auth
+    setLocalStorageData('user', response.data.user_id.toString());
+
     // Handling of the refresh token is different on mobile App.
     if (isApp()) {
         setLocalStorageData('refresh_token', response.data.refresh_token);
@@ -515,7 +521,30 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
 };
 
 /**
- * Requests a new confirmation email to be sent.
+ * Logs out the user and performs necessary cleanup actions based on platform.
+ *
+ * This function dispatches a logout action to update the Redux state and, if the app is running
+ * on a mobile platform, clears the refresh token from local storage and resets it in the Redux store.
+ *
+ * @returns {void}
+ */
+export const handleActualLogout = (why?: string, whyObject?: any): void => {
+    // toastService.emoji('Loggin out: ' + why, '🛟', '', 10000);
+    store.dispatch(logOut()); // Redux
+    if (isApp()) {
+        deleteLocalStorageData('refresh_token');
+        store.dispatch(setCapacitorRefreshToken('')); // Redux
+    }
+};
+
+/**
+ * Sends a request to trigger the account verification email for the current user.
+ *
+ * This function retrieves the user ID from the Redux store and, if valid,
+ * initiates an account confirmation email request. Upon success or failure,
+ * it displays a toast notification to inform the user of the outcome.
+ *
+ * @returns {void}
  */
 export const requestAccountVerificationEmail = (): void => {
     const state = store.getState();

@@ -6,7 +6,7 @@ import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
 import { store } from 'mondosurf-library/redux/store';
 import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
-import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
+import { JWT_API_URL, PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 
 /**
  * Fires an authorized POST api call to a given endpoint.
@@ -175,19 +175,22 @@ export const deleteApiAuthCall = async (url: string, accessToken: string, params
 }
 
 /**
- * Fires a GET api call to a given endpoint.
+ * Call an API endpoint.
  * 
- * @param   {string} url Endpoint to be called.
+ * @param   {string} url The FULL endpoint to be called.
+ * @param   {"GET" | "POST"} method GET, POST
  * @param   {object} params Object with parameters to send.
+ * @param   {object} [customHeaders] Optional custom headers to include in the request.
  * @returns {Promise}
  */
-export const getApiCall = async (url: string, params: object): Promise<any> => {
+export const callApi = async (url: string, method: "GET" | "POST", params: object, customHeaders?: object): Promise<any> => {
     return axios({
-        method: 'get',
-        url: PUBLIC_API_URL_V1! + url,
+        method: method,
+        url: url,
         params: { ...params },
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            ...customHeaders
         }
     })
         .then(response => response)

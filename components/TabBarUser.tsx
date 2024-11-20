@@ -18,6 +18,7 @@ const TabBarUser: React.FC<ITabBarUser> = (props: ITabBarUser) => {
     // Redux
     const logged = useSelector((state: RootState) => state.user.logged);
     const userName = useSelector((state: RootState) => state.user.userName);
+    const userPictureUrl = useSelector((state: RootState) => state.user.userPictureUrl);
 
     // Opens the login modal
     const onLoginClick = () => {
@@ -43,7 +44,13 @@ const TabBarUser: React.FC<ITabBarUser> = (props: ITabBarUser) => {
                         title="Your profile"
                         dataTest="user-tab-bar">
                         <>
-                            <Icon icon={props.active ? 'tab-bar-active-me' : 'tab-bar-me'} />
+                            {!userPictureUrl && <Icon icon={props.active ? 'tab-bar-active-me' : 'tab-bar-me'} />}
+                            {userPictureUrl && (
+                                <div
+                                    className="ms-tab-bar__item-user-image"
+                                    style={{ backgroundImage: `url(${userPictureUrl})` }}></div>
+                            )}
+
                             {props.active && <span className="ms-tab-bar__item-label">{userName}</span>}
                             {hasProPermissions() && <span className="ms-tab-bar__pro">PRO</span>}
                         </>

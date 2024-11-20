@@ -1,13 +1,37 @@
 /**
  * AUTH
  *
- * Stle for all login, registration, and auth screens.
+ * Style for all login, registration, and auth screens.
  */
 
 /* ------------------------------------ *\
     #AUTH
 \* ------------------------------------ */
 .ms-auth {
+    &__google-btn > div > div,
+    &__google-btn > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__google-btn-separator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: $space * 5 0 $space * 3 0;
+        border-top: 1px solid $color-border-light;
+    }
+
+    &__google-btn-separator-text {
+        display: inline-block;
+        margin-top: -13px;
+        background-color: $color-background-base;
+        padding: 0 $space * 2;
+        color: var(--color-text-light);
+        font-size: $font-size-s-fluid;
+        font-style: italic;
+    }
 }
 
 /* ------------------------------------ *\

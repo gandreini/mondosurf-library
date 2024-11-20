@@ -10,6 +10,21 @@
 \* ------------------------------------ */
 .ms-header-user {
     padding: $space * 0.5 0 0 $space * 1;
+
+    a {
+        display: flex;
+        gap: $space;
+    }
+
+    // User image
+    &__item-user-image {
+        width: 24px;
+        height: 24px;
+        background-position: center;
+        background-size: contain;
+        border-radius: 50%;
+        background-color: var(--color-gray-03);
+    }
 }
 
 /* ------------------------------------ *\

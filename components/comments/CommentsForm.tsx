@@ -4,18 +4,17 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import { openLoginModal } from 'features/modal/modal.helpers';
 import { postApiAuthCall } from 'mondosurf-library/api/api';
-import { RootState, store } from 'mondosurf-library/redux/store';
+import Loader from 'mondosurf-library/components/Loader';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import Loader from 'mondosurf-library/components/Loader';
-import { openLoginModal } from 'features/modal/modal.helpers';
-import Comment from 'mondosurf-library/components/comments/Comment';
-import { Tracker } from 'mondosurf-library/tracker/tracker';
-import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 
 interface ICommentsForm {
     resourceId: string;

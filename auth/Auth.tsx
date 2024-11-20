@@ -3,11 +3,13 @@
 
 import { AxiosResponse } from 'axios';
 import TermsPrivacy from 'components/TermsPrivacy';
+import { isApp } from 'helpers/device.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { apiErrorsTranslation } from 'mondosurf-library/helpers/apiErrors.helpers';
 import { emailCheck, login, requestPasswordResetEmailApi, userRegister } from 'mondosurf-library/helpers/auth.helpers';
+import { addGoogleButton, handleWebGoogleSignIn } from 'mondosurf-library/helpers/googleAuth.helpers';
 import { checkIfEmailIsValid } from 'mondosurf-library/helpers/strings.helpers';
 import { inputCursorAtTheEnd } from 'mondosurf-library/helpers/various.helpers';
 import useKeypress from 'mondosurf-library/hooks/useKeypress';
@@ -16,6 +18,7 @@ import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { onClickStaticGoogleButton } from 'proxies/googleAuth.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRouterProxy } from 'proxies/useRouter';
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
@@ -99,6 +102,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     );
 
     useEffect(() => {
+        if (!isApp()) addGoogleButton(deviceId, props.callback);
         setFocus('email');
         setTimeout(() => setFocus('email'), 100); // Not very nice, but to be sure the focus works.
     }, []);
@@ -107,6 +111,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
     useEffect(() => {
         if (formState === 'email' || formState === 'email_waiting') {
             // modalService.updateTitle({ title: mondoTranslate('auth.modal_title') });
+            if (!isApp()) addGoogleButton(deviceId, props.callback);
         }
         // Tracking.
         if (formState === 'email') {
@@ -440,6 +445,27 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             {/* Email insert form */}
             {logged === 'no' && (formState === 'email' || formState === 'email_waiting') && (
                 <>
+                    {/* GOOGLE AUTH: Render Google Sign-In Button */}
+                    {isApp() && (
+                        <button
+                            className="ms-btn-google ms-btn-full ms-btn-l"
+                            onClick={() => onClickStaticGoogleButton(deviceId, props.callback)}>
+                            <span className="ms-btn-google__icon"></span>
+                            {mondoTranslate('auth.google_button.sign_in')}
+                        </button>
+                    )}
+
+                    {!isApp() && (
+                        <div
+                            className="ms-auth__google-btn"
+                            id="google-signin-button"
+                            onClick={() => handleWebGoogleSignIn}></div>
+                    )}
+
+                    <div className="ms-auth__google-btn-separator">
+                        <span className="ms-auth__google-btn-separator-text">or user your email</span>
+                    </div>
+
                     {/*}<p className="ms-auth__intro-text ms-body-text">{mondoTranslate('auth.form.email_form_text')}</p>{*/}
                     <form
                         onSubmit={handleSubmit(onEmailCheck, onEmailCheckError)}

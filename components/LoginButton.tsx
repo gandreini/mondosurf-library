@@ -13,6 +13,7 @@ interface ILoginButton {
     dataTest?: string;
     trackingEvent?: TrackingEvent;
     context: LoginModalContext;
+    size?: 'l' | 'm' | 's';
     parentFunction?: () => void;
     callback?: () => void;
 }
@@ -33,7 +34,7 @@ const LoginButton: React.FC<ILoginButton> = (props) => {
         <Button
             label={mondoTranslate('basics.login')}
             style="cta"
-            size="l"
+            size={props.size || 'l'}
             additionalClass={props.classes}
             callback={onLoginClick}
             dataTest={props.dataTest}

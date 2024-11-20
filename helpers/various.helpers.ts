@@ -1,5 +1,5 @@
-import { store } from "mondosurf-library/redux/store";
 import { checkIfSpotIdIsInFavorites } from "mondosurf-library/helpers/favorites.helpers";
+import { store } from "mondosurf-library/redux/store";
 
 /**
  * Returns the value of a GET parameter,
