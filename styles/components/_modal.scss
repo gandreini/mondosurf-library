@@ -276,6 +276,15 @@
 }
 
 /* ------------------------------------ *\
+   #CANCEL PRO MEMBERSHIP
+\* ------------------------------------ */
+.ms-modal.ms-modal-cancel-membership {
+    .ms-btn-cta {
+        @extend .ms-btn-danger;
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {

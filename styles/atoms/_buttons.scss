@@ -239,6 +239,49 @@
 }
 
 /* ------------------------------------ *\
+   #DANGER-BUTTON
+\* ------------------------------------ */
+.ms-btn-danger {
+    color: var(--color-error);
+    border-color: var(--color-error);
+    border-width: 2px;
+    background-color: $color-button-bg;
+
+    &:hover {
+        color: $color-button-cta-text-hover;
+        background-color: var(--color-error);
+        border-color: var(--color-error);
+    }
+
+    // Disabled.
+    &.disabled,
+    &:disabled,
+    &.disabled:hover,
+    &:disabled:hover,
+    &.disabled:active,
+    &:disabled:active,
+    &.disabled:active:hover,
+    &:disabled:active:hover {
+        // color: $color-button-cta-text;
+        // background-color: $color-button-cta-bg;
+        // border-color: $color-button-cta-border;
+        opacity: 0.7;
+    }
+
+    // Active.
+    &.active,
+    &:active,
+    &.active:hover,
+    &:active:hover,
+    &:focus,
+    &:focus:hover {
+        color: $color-button-cta-text-hover;
+        background-color: var(--color-error);
+        border-color: var(--color-error);
+    }
+}
+
+/* ------------------------------------ *\
    #ICONS
 \* ------------------------------------ */
 .ms-btn {

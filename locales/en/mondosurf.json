@@ -305,7 +305,7 @@
         "text_expired": "Your trial period has expired, subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_days": "Your trial period will expire in {{days}} days. Subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_hours": "Your {{duration}} days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
-        "button_text_1": "Get Pro",
+        "button_text_1": "Get Mondo Pro",
         "button_text_2": "Starting at {{price}}/month",
         "sub_text": "Cancel anytime"
       }
@@ -509,17 +509,18 @@
       "text_2": "Free for 30 days. Then just <strong>{{price_year}}/year</strong> or <strong>{{price_month}}/month</strong>.You can choose to confirm your subscription on {{date}}.",
       "button_1": "Start 30 days free trial",
       "button_2": "No credit card required",
-      "smalltext_1": "By starting the trial you will access all the Pro features of Mondo Surf for 30 days for free.",
+      "smalltext_1": "By starting the trial you will access all the Pro features of Mondo for 30 days for free.",
       "smalltext_2": "After your trial expires you can choose to pay for the yearly subscription ({{price_year}}/year), the monthly subscription ({{price_month}}/month), or let the trial period end without renewing your subscription.",
-      "toast_success": "Trial started! Welcome to Mondo Surf Pro!",
+      "toast_success": "Trial started! Welcome to Mondo Pro!",
       "toast_error": "Something went wrong while activating your trial. Please contact us at hello@mondo.surf",
       "text_error": "Something went wrong while activating your trial. Check your profile plan to verify if the trial is already active."
     },
     "pro_modal": {
-      "text_1": "Subscribe today and unlock these features:",
+      "default_text": "Get Mondo Pro and unlock these features:",
+      "text_1": "Unlock these features:",
       "text_2": "Cancel anytime.",
       "subtext": "You already used the free trial. To keep using all the Pro membership features please subscribe to the yearly or monthly plan. Your subscription will be renewed yearly or monthly depending your plan.\n\nThe Pro membership can be closed at any time, just send an email to hello@mondo.surf.",
-      "already_pro": "You're already a Pro member, no need to purchase a subscription. Enjoy your Mondo Surf Pro membership!",
+      "already_pro": "You're already a Pro member, no need to purchase a subscription. Enjoy your Mondo Pro membership!",
       "ios_inconsistency_1": "Sorry, we found some inconsistencies in your profile.\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at",
       "ios_inconsistency_2": "and we'll provide some support.",
       "ios_cancel": "The subscription process has been cancelled. Try again by clicking on the buttons below.",
@@ -527,29 +528,30 @@
       "ios_error_2": "Sorry, there was an error during the subscription process. the server returned the status: {{status}}.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
       "ios_error_3": "Sorry, there was an error during the subscription process: The server transaction verification failed.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
       "ios_error_4": "Sorry, there was an error during the subscription process: The 'appStoreReceipt' in the 'transaction' of the product is empty.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
-      "loading": "Connecting to App Store"
+      "loading": "Connecting to App Store",
+      "get_full_forecast": "Subscribe to the Mondo Pro membership to access the full forecast and unlock these features:"
     },
     "subscription_confirmed": {
-      "success_title": "Welcome to Mondo Surf Pro",
+      "success_title": "Welcome to Mondo Pro",
       "cancel_title": "Subscription not completed",
       "trial_started": "🎉 Your {{duration}} days free trial has started!",
       "subscription_started": "🎉 Your subscription was confirmed!",
-      "cancel_text_1": "🤔 Something went wrong. The subscription was not successful either for an error or because you didn't complete the process.",
-      "cancel_text_2": "Please log in to Mondo Surf or go back to the App to try subscribing to the Pro membership again.",
-      "cancel_text_2_alt": "Go back to the App to try subscribing to the Pro membership again.",
+      "cancel_text_1": "🤔 Something went wrong, the subscription was not successful.",
+      "cancel_text_2": "Log in to Mondo and try subscribing to the Pro membership again.",
+      "cancel_text_2_alt": "Try subscribing to the Pro membership again.",
       "cancel_subtext_1": "Contact Mondo Surf at",
       "cancel_subtext_2": "if you need help or support with your subscription.",
       "where_to_start_title": "Where to start?",
-      "where_to_start_text_1": "Add your local spots to your favorites by clicking on the heart icon in the surf spot lists and pages.",
+      "where_to_start_text_1": "Add your local spots to your favorites by clicking on the heart icon",
       "where_to_start_subtext_1": "You will receive an email daily bulletin with the 7 days forecast",
-      "where_to_start_text_2": "Add the spot forecast calendars to your personal or business calendar by following the instructions you find in the surf spots pages.",
+      "where_to_start_text_2": "Add the spot forecast calendars to your personal or business calendar",
       "where_to_start_subtext_2": "Google and Apple calendars are supported!",
       "log_in_text": "Log in to enjoy all the Pro functionalities.",
       "second_block_text_1": "In 30 days we will send you information on how to complete your paid subscription, in the meantime enjoy our services.\nWe wish you a good surf!",
       "second_block_text_2": "Your subscription will be renewed every month.\nGet in touch with us at",
       "second_block_text_3": "if you wish to cancel your subscription.",
       "follow_up_1": "Start browsing from the map or by searching a surf spot:",
-      "follow_up_2": "👇 start with the spots you have visited recently:"
+      "follow_up_2": "👇 Start with the spots you have recently visited:"
     }
   },
   "surfboard_type": {
@@ -777,7 +779,7 @@
     "trial_modal_title": "Start your free trial to add favorites",
     "trial_modal_text": "Activate the 30-days free trial to add {{spotName}} to your favourites",
     "subscribe_modal_title": "Subscribe to Mondo Surf Pro to add favorites",
-    "subscribe_modal_text": "Subscribe to a Pro membership to add {{spotName}} to your favourites",
+    "subscribe_modal_text": "Subscribe to the Mondo Pro membership to add {{spotName}} to your favourites and unlock these features:",
     "add_to_favorites": "Add {{spotName}} to your favorites",
     "remove_from_favorites": "Remove {{spotName}} from your favorites"
   },
@@ -791,7 +793,7 @@
     "modal_trial_title": "Start your free trial to install the calendar",
     "modal_trial_text": "Activate the 30-days free trial to add {{spotName}} to your calendar.",
     "modal_pro_title": "Subscribe to Mondo Surf Pro to install the calendar",
-    "modal_pro_text": "Subscribe to the Pro membership to add {{spotName}} to your calendar.",
+    "modal_pro_text": "Subscribe to the Pro membership to add {{spotName}} to your calendar and unlock these features:",
     "get_calendar_url_modal": {
       "title": "Add {{spotName}} to your calendar",
       "copy_text": "Copy the URL to add {{spotName}} to your calendar. Check the instructions below to know how to add it.",

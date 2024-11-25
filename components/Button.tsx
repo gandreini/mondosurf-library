@@ -9,7 +9,7 @@ interface IButton {
     callback?: () => void;
     label: string;
     additionalClass?: string;
-    style?: 'cta' | 'light' | 'normal';
+    style?: 'cta' | 'light' | 'normal' | 'danger';
     size?: 'xl' | 'l' | 'm' | 's';
     icon?: IIcon['icon'] | undefined;
     fullWidth?: boolean;
@@ -26,6 +26,7 @@ const Button = (props: IButton) => {
         if (props.size && props.size === 'l') cl += ' ms-btn-l ';
         if (props.size && props.size === 'xl') cl += ' ms-btn-xl ';
         if (props.style && props.style === 'cta') cl += ' ms-btn-cta ';
+        if (props.style && props.style === 'danger') cl += ' ms-btn-danger ';
         if (props.style && props.style === 'light') cl += ' ms-btn-light ';
         if (props.fullWidth) cl += ' ms-btn-full ';
         if (props.loading) cl += ' disabled ';

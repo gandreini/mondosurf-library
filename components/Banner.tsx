@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import { openCalendarModal, openModalToExecuteProAction, openProModal } from 'features/modal/modal.helpers';
+import { openCalendarModal, openModalToExecuteProAction } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers/favorites.helpers';
@@ -71,7 +71,15 @@ const Banner: React.FC<IBanner> = (props) => {
             spotId: props.spotId,
             spotName: props.spotName
         });
-        openModalToExecuteProAction('fullForecast', undefined, 'Log in or sign up to Mondo to subscribe to Pro');
+        openModalToExecuteProAction(
+            'fullForecast',
+            undefined,
+            'Log in or sign up to Mondo to subscribe to Pro',
+            undefined,
+            undefined,
+            undefined,
+            mondoTranslate('pro.pro_modal.get_full_forecast')
+        );
     };
 
     return (
@@ -167,7 +175,10 @@ const Banner: React.FC<IBanner> = (props) => {
 
             {/* Get pro */}
             {props.type === 'getPro' && (
-                <MondoLink className="ms-banner ms-banner-get-pro" onClickCallback={onGetProBannerClick}>
+                <MondoLink
+                    className="ms-banner ms-banner-get-pro"
+                    onClickCallback={onGetProBannerClick}
+                    dataTest="surf-spot-full-forecast-banner">
                     <div className="ms-banner__emoji">🌊</div>
                     <div className="ms-banner__texts">
                         <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_get_pro_text')}</p>

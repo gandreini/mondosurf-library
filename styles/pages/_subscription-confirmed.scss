@@ -8,15 +8,11 @@
     #SUBSCRIPTION CONFIRMED
 \* ------------------------------------ */
 .ms-subscription-confirmed {
+    padding-bottom: $space * 4;
+
     &__content {
         max-width: $page-max-medium-width;
         margin-bottom: $space * 2;
-    }
-
-    .ms-card {
-        max-width: 600px;
-        margin-left: $space * 2;
-        margin-right: $space * 2;
     }
 
     .ms-btn {
