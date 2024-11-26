@@ -471,7 +471,7 @@
     "subscription": "Subscription",
     "your_current_plan": "Your current plan",
     "switch_to_trial": "Start the {{duration}} days free trial to use all the features of Mondo Pro.",
-    "switch_to_pro": "Switch to Pro to use all the features of Mondo Pro.",
+    "switch_to_pro": "Switch to Pro to use all the features of Mondo Pro:",
     "currently_trial": "Currently in trial",
     "trial_expires_on": "Trial expires on",
     "charged_when_trial_expires": "You will be charged when the trial period expires.",

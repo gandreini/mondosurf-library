@@ -1,5 +1,5 @@
-import { mondoTranslate } from 'proxies/mondoTranslate';
 import Icon from 'mondosurf-library/components/Icon';
+import { mondoTranslate } from 'proxies/mondoTranslate';
 
 const WhereToStart: React.FC = (props) => {
     return (
