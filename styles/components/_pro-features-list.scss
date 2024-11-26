@@ -27,7 +27,7 @@
         color: var(--color-text);
         font-weight: $font-weight-normal;
         line-height: 1.45;
-        @include font-size('m');
+        font-size: $font-size-m-fluid;
     }
 }
 
