@@ -160,7 +160,7 @@ export const logout = (accessToken: string, deviceId: string) => {
                 ', device_id: ' +
                 deviceId +
                 ', platform: ' +
-                getPlatform() +
+                getPlatform2() +
                 ', storageRefreshToken: ' +
                 storageRefreshToken
         )

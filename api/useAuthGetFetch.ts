@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getPlatform, isApp } from 'helpers/device.helpers';
+import { getPlatform2, isApp } from 'helpers/device.helpers';
 import jwt_decode from 'jwt-decode';
 import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
@@ -50,7 +50,7 @@ export default function useAuthGetFetch(url: string, params?: any, needsAuth: bo
 
             // No authorization required, but user is logged.
             if (!needsAuth && userLogged === "yes") {
-                const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform(), refresh_token: storageRefreshToken };
+                const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform2(), refresh_token: storageRefreshToken };
                 getQuery(url, authParams, true);
             }
 
@@ -86,10 +86,10 @@ export default function useAuthGetFetch(url: string, params?: any, needsAuth: bo
                         .then(response => {
                             if (response && response.data.success === true) {
                                 if (isApp()) {
-                                    const authParams = { ...params, access_token: response.data.access_token, device_id: deviceId, platform: getPlatform(), refresh_token: response.data.refresh_token }; // "refresh_token" used only by ios and android.
+                                    const authParams = { ...params, access_token: response.data.access_token, device_id: deviceId, platform: getPlatform2(), refresh_token: response.data.refresh_token }; // "refresh_token" used only by ios and android.
                                     getQuery(url, authParams, true);
                                 } else {
-                                    const authParams = { ...params, access_token: response.data.access_token, device_id: deviceId, platform: getPlatform() };
+                                    const authParams = { ...params, access_token: response.data.access_token, device_id: deviceId, platform: getPlatform2() };
                                     getQuery(url, authParams, true);
                                 }
                             } else {
@@ -101,10 +101,10 @@ export default function useAuthGetFetch(url: string, params?: any, needsAuth: bo
                 } else {
                     // Token is still valid
                     if (isApp()) {
-                        const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform(), refresh_token: storageRefreshToken }; // "refresh_token" used only by ios and android.
+                        const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform2(), refresh_token: storageRefreshToken }; // "refresh_token" used only by ios and android.
                         getQuery(url, authParams, true);
                     } else {
-                        const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform() };
+                        const authParams = { ...params, access_token: accessToken, device_id: deviceId, platform: getPlatform2() };
                         getQuery(url, authParams, true);
                     }
                 }
