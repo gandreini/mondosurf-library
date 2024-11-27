@@ -11,13 +11,13 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: 2px solid $color-border-normal;
-    border-radius: $border-radius * 2;
+    border: 2px solid $table-border-color;
+    border-radius: $border-radius;
 
     thead {
         th {
             padding: $space * 0.75;
-            border: 1px solid $color-border-normal;
+            border: 1px solid $table-border-color;
             background-color: $color-background-light;
             color: var(--color-text);
             font-size: $font-size-xs;
@@ -35,11 +35,11 @@
         }
 
         td:not(:last-child) {
-            border-right: 2px solid $color-border-normal;
+            border-right: 2px solid $table-border-color;
         }
 
         tr:not(:last-child) td {
-            border-bottom: 2px solid $color-border-normal;
+            border-bottom: 2px solid $table-border-color;
         }
     }
 

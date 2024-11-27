@@ -94,6 +94,16 @@
         font-weight: $font-weight-bold;
         font-size: 9px;
     }
+
+    // User image
+    &__item-user-image {
+        width: 24px;
+        height: 24px;
+        background-position: center;
+        background-size: contain;
+        border-radius: 50%;
+        background-color: var(--color-gray-03);
+    }
 }
 
 /* ------------------------------------ *\
@@ -114,6 +124,11 @@
 
                 .mondo-icon:before {
                     color: var(--color-first);
+                }
+
+                // pro
+                .ms-tab-bar__pro {
+                    top: 12px;
                 }
             }
         }

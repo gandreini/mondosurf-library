@@ -8,7 +8,7 @@ interface ITabs {
         disabled?: boolean;
         dataTest?: string;
     }[];
-    selectedTab?: 1 | 2 | 3 | 4 | 5;
+    selectedTab?: 1 | 2 | 3 | 4 | 5 | 6 | 7;
     loading?: boolean;
 }
 

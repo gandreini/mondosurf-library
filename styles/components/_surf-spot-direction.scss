@@ -26,7 +26,7 @@
     &__label {
         font-weight: $font-weight-bold;
         text-transform: uppercase;
-        @include font-size('xxs');
+        font-size: $font-size-xxxs-fluid;
     }
 
     &__text {
@@ -42,7 +42,7 @@
 
     &__value {
         color: var(--color-text);
-        @include font-size('xs');
+        font-size: $font-size-xs-fluid;
     }
 
     /* Swell */

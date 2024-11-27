@@ -4,6 +4,7 @@ interface ISkeletonLoader {
     height?: string;
     width?: string;
     marginBottom?: string;
+    noRoundCorners?: boolean;
 }
 
 const SkeletonLoader: React.FC<ISkeletonLoader> = (props: ISkeletonLoader) => {
@@ -17,6 +18,9 @@ const SkeletonLoader: React.FC<ISkeletonLoader> = (props: ISkeletonLoader) => {
     }
     if (props.marginBottom) {
         customStyle.marginBottom = props.marginBottom;
+    }
+    if (props.noRoundCorners) {
+        customStyle.borderRadius = '0';
     }
 
     return <div className="ms-skeleton-loader" style={customStyle}></div>;

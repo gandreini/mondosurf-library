@@ -1,20 +1,15 @@
 // Client
 'use client';
 
-import { openModalToExecuteProAction } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import {
-    addFavoriteFromSuspendedFavorite,
-    addSpotToFavourites,
     checkIfSpotIdIsInFavorites,
-    removeSpotFromFavourites,
-    setSuspendedFavorite
+    checkPermissionsAndAddSpotToFavorites,
+    removeSpotFromFavourites
 } from 'mondosurf-library/helpers/favorites.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
-import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
@@ -44,9 +39,7 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
         }
     }, [props.spotId, favoriteSpots]);
 
-    /**
-     * Adds a spot to the user's favourites.
-     */
+    // Adds a spot to the user's favourites
     const onAddToFavourites = (e: React.MouseEvent<HTMLButtonElement>) => {
         // Tracking.
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavIconTap, {
@@ -56,7 +49,8 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
             surfSpotId: props.spotId
         });
         setLoading(true);
-        addSpotToFavourites(props.spotId, props.spotName)
+        setTimeout(() => setLoading(false), 3000); // Bad stuff: used if the user closes the modal
+        checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName)
             .then((response) => {
                 setSpotIsInFavourites(true);
                 setLoading(false);
@@ -68,10 +62,7 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
         e.stopPropagation();
     };
 
-    /**
-     * Removes a spot from the user's favourites.
-     * Opens a modal for confirmation.
-     */
+    // Removes a spot from the user's favourites, opens a modal for confirmation.
     const onRemoveFromFavourites = (e: React.MouseEvent<HTMLButtonElement>) => {
         // Tracking.
         Tracker.trackEvent(['mp'], TrackingEvent.FavIconTap, {
@@ -93,33 +84,6 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
             });
     };
 
-    // Opens the login modal and add the spots to the favourites as a result
-    const onAddToFavouritesNotLogged = (e: React.MouseEvent<HTMLButtonElement>) => {
-        // Tracking.
-        Tracker.trackEvent(['mp'], TrackingEvent.FavIconTap, {
-            action: 'add',
-            context: props.context,
-            surfSpotId: props.spotId,
-            surfSpotName: props.spotName
-        });
-        setSuspendedFavorite(props.spotId, props.spotName);
-        openModalToExecuteProAction(
-            'favoriteAddButton',
-            mondoTranslate('favorites.log_in_modal_title'),
-            mondoTranslate('favorites.log_in_modal_text', { spotName: props.spotName }),
-            mondoTranslate('favorites.trial_modal_title'),
-            mondoTranslate('favorites.trial_modal_text', { spotName: props.spotName }),
-            mondoTranslate('favorites.subscribe_modal_title'),
-            mondoTranslate('favorites.subscribe_modal_text', { spotName: props.spotName }),
-            () => {
-                addFavoriteFromSuspendedFavorite();
-                modalService.closeModal();
-            }
-        );
-        e.preventDefault();
-        e.stopPropagation();
-    };
-
     return (
         <>
             {/* Loading */}
@@ -132,20 +96,8 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
                 </button>
             )}
 
-            {/* Not logged or logged but has no permissions */}
-            {!loading && (logged === 'no' || (logged === 'yes' && !hasProPermissions())) && (
-                <button
-                    className="ms-favourite-add-button ms-favourite-add-button-add-not-logged"
-                    onClick={(e) => onAddToFavouritesNotLogged(e)}
-                    aria-label={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
-                    title={mondoTranslate('favorites.add_to_favorites', { spotName: props.spotName })}
-                    data-test="favorite-add-button">
-                    <Icon icon="heart-empty" />
-                </button>
-            )}
-
             {/* Logged, has permissions, spot not in favorites */}
-            {!loading && logged === 'yes' && hasProPermissions() && !spotIsInFavourites && (
+            {!loading && (logged === 'no' || (logged === 'yes' && !spotIsInFavourites)) && (
                 <button
                     className="ms-favourite-add-button ms-favourite-add-button-add"
                     onClick={(e) => onAddToFavourites(e)}
@@ -157,7 +109,7 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
             )}
 
             {/* Logged, has permissions, spot in favorites */}
-            {!loading && logged === 'yes' && hasProPermissions() && spotIsInFavourites && (
+            {!loading && logged === 'yes' && spotIsInFavourites && (
                 <button
                     className="ms-favourite-add-button ms-favourite-add-button-remove"
                     onClick={(e) => onRemoveFromFavourites(e)}

@@ -1,22 +1,20 @@
 import FavoriteAddButton from 'mondosurf-library/components/FavoriteAddButton';
-import { returnTideDetails } from 'features/surfSpot/surfSpot.helpers';
-import { returnBottomLabel } from 'mondosurf-library/helpers/labels.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import SurfSpotDirection from 'mondosurf-library/components/SurfSpotDirection';
 import SurfSpotPreviewQualityIcon from 'mondosurf-library/components/SurfSpotPreviewQualityIcon';
 import SurfSpotPreviewQualityRow from 'mondosurf-library/components/SurfSpotPreviewQualityRow';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { returnBottomLabel } from 'mondosurf-library/helpers/labels.helpers';
+import { returnTideDetails } from 'mondosurf-library/helpers/surfSpot.helpers';
 import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { FRONTEND_URL } from 'proxies/localConstants';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { FRONTEND_URL } from 'proxies/localConstants';
 
 // Component.
 const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) => {
-    /**
-     * Returns the root class of the component.
-     */
+    // Returns the root class of the component
     const rootClassName = (): string => {
         let returnClassName = 'ms-surf-spot-preview';
         if (props.loading) returnClassName += ' is-loading ';
@@ -24,7 +22,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
     };
 
     const clickOnPreview = (e: React.MouseEvent) => {
-        // Tracker.
+        // Tracker
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SpotPreviewTap, {
             context: props.context,
             surfSpotId: props.id,

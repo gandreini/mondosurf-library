@@ -62,6 +62,15 @@
 }
 
 /* ------------------------------------ *\
+   #NOT-AVAILABLE
+\* ------------------------------------ */
+.ms-surf-spot-forecast {
+    &__not-available {
+        padding: $space * 6 0;
+    }
+}
+
+/* ------------------------------------ *\
    #GOOD-TIMES
 \* ------------------------------------ */
 .ms-surf-spot-forecast {
@@ -70,12 +79,13 @@
     }
 
     &__good-times-days {
-        margin-bottom: $space * 2;
+        margin-bottom: $space * 1;
     }
 
-    // No good days.
+    // No good days
     &__empty {
-        margin-bottom: $space * 4;
+        margin-top: $space * 7;
+        margin-bottom: $space * 8;
 
         .ms-empty-state {
             margin-bottom: 0;
@@ -84,6 +94,11 @@
         .ms-empty-state__text {
             margin-bottom: $space * 0.25;
         }
+    }
+
+    // Loading
+    &__good-times-loading {
+        margin: $space * 3 0 $space * 5 0;
     }
 }
 

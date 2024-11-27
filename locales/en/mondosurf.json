@@ -9,8 +9,8 @@
     "home": "Home",
     "cancel": "Cancel",
     "close": "Close",
-    "login": "Log In",
-    "logout": "Log Out",
+    "login": "Log in",
+    "logout": "Log out",
     "register": "Register",
     "reset_password": "Reset password",
     "regions": "Regions",
@@ -75,7 +75,9 @@
     "profile": "Profile",
     "info": "Info",
     "forecast": "Forecast",
+    "tide": "Tide",
     "good_times": "Good Surf",
+    "comments": "Comments",
     "forecast_edit": "Forecast edit",
     "near_spots": "Near spots",
     "videos": "Video",
@@ -94,6 +96,23 @@
     "today": "today",
     "browse_spots": "Browse spots"
   },
+  "comments": {
+    "title": "Comments",
+    "spot_comment_guide": "Tell us about the surf spot {{resource_name}}! Whether it's the wave quality, crowd level, local vibes, or tips for catching the best swell, we'd love to hear from you. Share any insights on the best time to surf, forecast tips, the best webcams to check the spot, the type of board to use, or even your favorite post-surf hangout spots nearby. Your feedback helps fellow surfers and contributes to the growing surf community.",
+    "spot_comment_guide_short": "Share info or ask questions about {{resource_name}} surf spot like wave quality, crowd, local vibes, tips for catching the best swell, forecast tips, webcams, board to use, best post-surf hangout spots nearby",
+    "be_the_first": "Be the first to leave a comment about {{resource_name}}!",
+    "add_a_comment": "Add comment",
+    "comment_field_label": "New comment",
+    "comment_field_placeholder": "Write a comment about {{resource_name}} here",
+    "login_modal_text": "Please log in or register to leave a comment",
+    "toast_comment_added": "Comment added correctly",
+    "toast_comment_error": "Error saving your comment, please try again",
+    "delete_modal_title": "Adios comment",
+    "delete_modal_text": "Are you 100% sure you want to delete the comment:\n\"{{comment_text}}\"?",
+    "delete_modal_button": "Yes, delete comment",
+    "toast_deletion_successful": "Comment deleted!",
+    "toast_deletion_error": "Error deleting comment!"
+  },
   "app": {
     "offline_icon": "🤷",
     "offline_text": "There was a problem loading the App or you are offline!",
@@ -104,9 +123,9 @@
   },
   "auth": {
     "welcome": "Hi {{name}}, welcome to Mondo!",
-    "welcome_back": "Hi {{name}}, welcome back to Mondo!",
+    "welcome_back": "Hi {{name}}, welcome to Mondo!",
     "errors": {
-      "error_login": "There was an error during log in",
+      "error_login": "There was an error during login",
       "error_registration": "There was an error during registration",
       "email_required": "Please insert your email",
       "email_short": "The email seems too short",
@@ -136,13 +155,13 @@
       "register_terms_conditions": "I agree to the Mondo Terms and Conditions. Learn about how we use and protect your data in our Privacy Policy (links below).",
       "password_reset_form_text": "Insert your email address to reset your password. You'll receive and email with a link to reset your password",
       "password_reset_form_submit": "Send reset link",
-      "password_reset_back": "Log In or Register",
+      "password_reset_back": "Log in or register",
       "password_reset_success_text": "Request successfully sent! Check your mail inbox and click on the link provided in the password reset email",
       "logged_modal_title": "Welcome!",
       "logged_icon": "🤙",
-      "logged": "Welcome back to Mondo, {{name}}!"
+      "logged": "Welcome to Mondo, {{name}}!"
     },
-    "modal_title": "Log In or Register",
+    "modal_title": "Log in or register",
     "refresh_token": "Refresh JWT token",
     "password_reset": {
       "no_token": "Couldn't retrieve the code to reset your password, please try again to click on the link in the email.",
@@ -153,6 +172,10 @@
       "passwords_dont_match": "The two provided passwords are not matching, please check them again",
       "success": "Password successfully changed!",
       "error": "Ops there was en error, please try again or contact an administrator"
+    },
+    "google_button": {
+      "sign_in": "Sign in with Google",
+      "sign_out": "Sign out"
     }
   },
   "modal": {
@@ -192,14 +215,14 @@
   "tide": {
     "tide": "Tide",
     "tide_table": "Tide table",
-    "button_tide_table": "Full tide table",
+    "button_tide_table": "Check the full tide table",
     "tide_always_good": "Always good",
     "tide_good": "Tide good",
     "tide_not_provided": "Tide info not provided",
-    "best_tide": "Best tide",
+    "best_tide": "Best tide at {{surfSpot}}",
     "tides_all_good": "All tides are good",
     "tide_movement_always_good": "Tide movement always good",
-    "tide_movement_good_at": "Good tide movement",
+    "tide_movement_good_at": "best tide movement",
     "weekly_tide_levels": "Weekly tide levels",
     "low": "Low",
     "low_to_medium": "low to medium",
@@ -207,7 +230,11 @@
     "high": "High",
     "medium": "Medium",
     "rising": "Rising tide",
-    "falling": "Falling tide"
+    "falling": "Falling tide",
+    "table_intro": "This tide table provides accurate tide times and levels for the upcoming week at {{surfSpot}}, helping you anticipate the best conditions for surfing. Match it with our Mondo forecast report to better understand when to plan your surfing.",
+    "explanation_long": "Tides influence wave quality differently depending on the surf spot. Some spots remain consistent regardless of tidal changes, offering reliable waves throughout the day. In these locations, the seabed depth stays stable, so waves break similarly at high, medium, and low tide. However, other spots are significantly impacted by the tide, with conditions varying as the water depth changes. At these spots, high tide may produce softer waves, while low tide can create steeper, faster waves. Understanding how each spot reacts to the tide is crucial for timing your sessions to enjoy the best waves.",
+    "explanation_medium_all_good": "Tides play a role in determining wave quality at many surf spots, but some locations like {{surfSpot}} remain consistent regardless of tidal changes. In these spots, the depth of the water over the seabed stays relatively stable, meaning the waves break in a similar way throughout the tidal cycle. Whether it's high, medium, or low tide, the wave conditions at these spots are largely unaffected, offering consistent surf sessions at any time of day.",
+    "explanation_medium_not_all_good": "Tides have a significant impact on wave quality at certain surf spots like {{surfSpot}}, causing conditions to vary throughout the tidal cycle. As the tide moves between high and low, the water depth over the seabed changes, affecting how the waves break. At these spots, high tide usually produce softer, slower waves, while low tide can generate faster, steeper waves. Some spots have specific tide stages when they work best, offering optimal conditions only at certain times of the day."
   },
   "good_time": {
     "share_text": "Share the forecast for {{name}} on:",
@@ -253,8 +280,8 @@
       "button": "Add a new surf spot"
     },
     "favourites": {
-      "not_logged_title": "Log In or Register!",
-      "not_logged_text": "Log In or Register to save your favorites spots, see the weekly forecast, and receive a daily surf bulletin on your email",
+      "not_logged_title": "Log in or register!",
+      "not_logged_text": "Log in or register to save your favorites spots, see the weekly forecast, and receive a daily surf bulletin on your email",
       "no_favourites_text": "No favorite spots yet?",
       "no_favourites_subtext_1": "Browse Mondo and click on the icon",
       "no_favourites_subtext_2": "to add all your local spots to your favorites",
@@ -278,7 +305,7 @@
         "text_expired": "Your trial period has expired, subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_days": "Your trial period will expire in {{days}} days. Subscribe to the paid membership to keep using the Pro features.",
         "text_expiring_in_hours": "Your {{duration}} days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
-        "button_text_1": "Get Pro",
+        "button_text_1": "Get Mondo Pro",
         "button_text_2": "Starting at {{price}}/month",
         "sub_text": "Cancel anytime"
       }
@@ -325,6 +352,10 @@
       "title": "{{spot}} - Surf spot guide and map - Mondo",
       "description": "Discover everything about the surf spot {{spot}} including surf map, bottom, best swell and wind directions, tides, surf quality, webcams, and more"
     },
+    "spot_comments": {
+      "title": "{{spot}} - Surf spot comments and reviews",
+      "description": "Read the latest comments and reviews about the surf spot {{spot}}, including tips from surfers, local insights, wave conditions, shared by the community."
+    },
     "spot_good_times": {
       "title": "{{spot}} - Good surf next 7 days - Mondo",
       "description": "Catch the best waves at the surf spot {{spot}}. Look at the webcams, check our forecast report with the upcoming good surf, and add it to your calendar"
@@ -332,6 +363,10 @@
     "spot_full_forecast": {
       "title": "{{spot}} - Hourly surf forecast report - Mondo",
       "description": "Explore the full hourly surf forecast for the surf spot {{spot}}. Get in-depth details on swell and wind surf reports and plan your next surfing sessions"
+    },
+    "spot_full_tide": {
+      "title": "{{spot}} - Tide Times and Tide Charts - Mondo",
+      "description": "Discover the tide for the surf spot {{spot}}. Access detailed tide times and charts for today and the next 7 days to perfectly plan your surfing sessions"
     },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - Mondo",
@@ -352,11 +387,20 @@
     "search": {
       "title": "Surf spots search - Mondo",
       "description": "From local favorites to international waves, explore surf locations worldwide, offering detailed spot guides and forecasts."
+    },
+    "terms_conditions": {
+      "title": "Terms and conditions",
+      "description": "Terms and conditions of Mondo surf atlas and forecast"
+    },
+    "privacy_policy": {
+      "title": "Privacy policy",
+      "description": "Privacy policy of Mondo surf atlas and forecast"
     }
   },
   "profile": {
     "profile": "Profile",
     "profile_edit": "Edit Profile",
+    "profile_preferences": "Preferences",
     "password_change": "Password change",
     "password_change_text": "Use this form to change your password",
     "profile_details_edit_text": "Use this form to update your information",
@@ -392,7 +436,22 @@
     "favourite_spots_empty_text_2": "to add all your local spots to your favorites",
     "favourite_spots_empty_subtext": "Favorites are your locals spots where your surf more often: you'll find the updated forecast on the app and you'll receive a daily bulletin every morning to plan your week",
     "favourite_spots_error_text": "",
-    "settings_text": "Settings fo your profile"
+    "settings_text": "Settings fo your profile",
+    "preferences_edit_text": "Update how often you would like to receive the surf bulletin email",
+    "bulletin_frequency_label": "Surf Bulletin Email Frequency",
+    "bulletin_frequency_description": "The surf bulletin is only sent when there are good surf conditions at your favorite spots within the next 7 days. Poor conditions are not included in the bulletin.",
+    "bulletin_frequency_daily": "Daily",
+    "bulletin_frequency_weekly": "Weekly",
+    "bulletin_frequency_never": "Never",
+    "bulletin_week_day_label": "When to receive the bulletin",
+    "bulletin_week_day_monday": "Monday",
+    "bulletin_week_day_tuesday": "Tuesday",
+    "bulletin_week_day_wednesday": "Wednesday",
+    "bulletin_week_day_thursday": "Thursday",
+    "bulletin_week_day_friday": "Friday",
+    "bulletin_week_day_saturday": "Saturday",
+    "bulletin_week_day_sunday": "Sunday",
+    "save_preferences": "Save preferences"
   },
   "pro": {
     "yearly": "Yearly",
@@ -412,7 +471,7 @@
     "subscription": "Subscription",
     "your_current_plan": "Your current plan",
     "switch_to_trial": "Start the {{duration}} days free trial to use all the features of Mondo Pro.",
-    "switch_to_pro": "Switch to Pro to use all the features of Mondo Pro.",
+    "switch_to_pro": "Upgrade to the Mondo Pro membership to unlock these exclusive features:",
     "currently_trial": "Currently in trial",
     "trial_expires_on": "Trial expires on",
     "charged_when_trial_expires": "You will be charged when the trial period expires.",
@@ -427,7 +486,7 @@
     "delete_account_toast_success": "Account deletion request successfully sent. Your account will be deleted within 24 hours.",
     "delete_account_toast_error": "Error while sending your account deletion request, please try again later or contact us at hello@mondo.surf",
     "already_owner_toast": "It seems that you already own this product: try to relaunch the app",
-    "pro_button_text_1": "Log In or Register to start your {{duration}} days free trial",
+    "pro_button_text_1": "Log in or register to start your {{duration}} days free trial",
     "pro_button_text_2": "Start your {{duration}} days free trial",
     "features_list": {
       "icon_1": "🌬",
@@ -440,27 +499,28 @@
       "text_4": "surf forecast calendars"
     },
     "login_modal": {
-      "trial_title": "Log In or Register",
-      "trial_text": "Please Log In or Register to start your {{duration}} days free trial",
-      "automatic_trial_title": "Log In or Register",
-      "automatic_trial_text": "Please Log In or Register to use all the features of Mondo"
+      "trial_title": "Log in or register",
+      "trial_text": "Log in or register to start your {{duration}} days free trial",
+      "automatic_trial_title": "Log in or register",
+      "automatic_trial_text": "Please Log in or register to use all the features of Mondo"
     },
     "trial_modal": {
       "text_1": "<strong>No credit card required!</strong>\nUnlock the following features:",
       "text_2": "Free for 30 days. Then just <strong>{{price_year}}/year</strong> or <strong>{{price_month}}/month</strong>.You can choose to confirm your subscription on {{date}}.",
       "button_1": "Start 30 days free trial",
       "button_2": "No credit card required",
-      "smalltext_1": "By starting the trial you will access all the Pro features of Mondo Surf for 30 days for free.",
+      "smalltext_1": "By starting the trial you will access all the Pro features of Mondo for 30 days for free.",
       "smalltext_2": "After your trial expires you can choose to pay for the yearly subscription ({{price_year}}/year), the monthly subscription ({{price_month}}/month), or let the trial period end without renewing your subscription.",
-      "toast_success": "Trial started! Welcome to Mondo Surf Pro!",
+      "toast_success": "Trial started! Welcome to Mondo Pro!",
       "toast_error": "Something went wrong while activating your trial. Please contact us at hello@mondo.surf",
       "text_error": "Something went wrong while activating your trial. Check your profile plan to verify if the trial is already active."
     },
     "pro_modal": {
-      "text_1": "Subscribe today and unlock these features:",
+      "default_text": "Get Mondo Pro and unlock these features:",
+      "text_1": "Unlock these features:",
       "text_2": "Cancel anytime.",
-      "subtext": "You already used the free trial. To keep using all the Pro membership features please subscribe to the yearly or monthly plan. Your subscription will be renewed yearly or monthly depending your plan.\n\nThe Pro membership can be closed at any time, just send an email to hello@mondo.surf.",
-      "already_pro": "You're already a Pro member, no need to purchase a subscription. Enjoy your Mondo Surf Pro membership!",
+      "subtext": "You already used the free trial. To keep using all the Pro membership features please subscribe to the yearly or monthly plan. Your subscription will be renewed yearly or monthly depending your plan.\n\nYou can cancel your subscription at any time.",
+      "already_pro": "You're already a Pro member, no need to purchase a subscription. Enjoy your Mondo Pro membership!",
       "ios_inconsistency_1": "Sorry, we found some inconsistencies in your profile.\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at",
       "ios_inconsistency_2": "and we'll provide some support.",
       "ios_cancel": "The subscription process has been cancelled. Try again by clicking on the buttons below.",
@@ -468,29 +528,30 @@
       "ios_error_2": "Sorry, there was an error during the subscription process. the server returned the status: {{status}}.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
       "ios_error_3": "Sorry, there was an error during the subscription process: The server transaction verification failed.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
       "ios_error_4": "Sorry, there was an error during the subscription process: The 'appStoreReceipt' in the 'transaction' of the product is empty.\n\nPlease relaunch the app, and try logging in and subscribing again. If the problem persist, contact us at {{email}} and we'll provide some support.",
-      "loading": "Connecting to App Store"
+      "loading": "Connecting to App Store",
+      "get_full_forecast": "Subscribe to the Mondo Pro membership to access the full forecast and unlock these features:"
     },
     "subscription_confirmed": {
-      "success_title": "Welcome to Mondo Surf Pro",
+      "success_title": "Welcome to Mondo Pro",
       "cancel_title": "Subscription not completed",
       "trial_started": "🎉 Your {{duration}} days free trial has started!",
       "subscription_started": "🎉 Your subscription was confirmed!",
-      "cancel_text_1": "🤔 Something went wrong. The subscription was not successful either for an error or because you didn't complete the process.",
-      "cancel_text_2": "Please login to Mondo Surf or go back to the App to try subscribing to the Pro membership again.",
-      "cancel_text_2_alt": "Go back to the App to try subscribing to the Pro membership again.",
+      "cancel_text_1": "🤔 Something went wrong, the subscription was not successful.",
+      "cancel_text_2": "Log in to Mondo and try subscribing to the Pro membership again.",
+      "cancel_text_2_alt": "Try subscribing to the Pro membership again.",
       "cancel_subtext_1": "Contact Mondo Surf at",
       "cancel_subtext_2": "if you need help or support with your subscription.",
       "where_to_start_title": "Where to start?",
-      "where_to_start_text_1": "Add your local spots to your favorites by clicking on the heart icon in the surf spot lists and pages.",
+      "where_to_start_text_1": "Add your local spots to your favorites by clicking on the heart icon",
       "where_to_start_subtext_1": "You will receive an email daily bulletin with the 7 days forecast",
-      "where_to_start_text_2": "Add the spot forecast calendars to your personal or business calendar by following the instructions you find in the surf spots pages.",
+      "where_to_start_text_2": "Add the spot forecast calendars to your personal or business calendar",
       "where_to_start_subtext_2": "Google and Apple calendars are supported!",
-      "log_in_text": "Log In to enjoy all the Pro functionalities.",
+      "log_in_text": "Log in to enjoy all the Pro functionalities.",
       "second_block_text_1": "In 30 days we will send you information on how to complete your paid subscription, in the meantime enjoy our services.\nWe wish you a good surf!",
       "second_block_text_2": "Your subscription will be renewed every month.\nGet in touch with us at",
       "second_block_text_3": "if you wish to cancel your subscription.",
       "follow_up_1": "Start browsing from the map or by searching a surf spot:",
-      "follow_up_2": "👇 start with the spots you have visited recently:"
+      "follow_up_2": "👇 Start with the spots you have recently visited:"
     }
   },
   "surfboard_type": {
@@ -538,6 +599,7 @@
     "best_wind": "Best wind",
     "best_size": "Best size",
     "wave_length": "Wave length",
+    "wave_steepness": "Wave steepness",
     "frequency": "Frequency",
     "quality": "Quality",
     "experience": "Experience",
@@ -562,7 +624,10 @@
     "no_near_spots_text": "Sorry, there are no near spots",
     "near_spots_error": "Sorry, there was an error retrieving near spots",
     "no_videos": "There are no video for this surf spot",
-    "video_error": "There was an error retrieving the spot video"
+    "video_error": "There was an error retrieving the spot video",
+    "location_hidden": "The location of {{spotName}} is not available to preserve and protect the integrity of the spot",
+    "near_spots_preview_text": "There are {{numberOfNearSpots}} surf spots within a range of 100 km from {{spotName}}. Use this section to find alternative spots that may be less crowded, better suited for your surfing skills, or offer a better forecast report for the next 7 days. Each spot includes detailed surf reports, forecast updates, and webcam views to help you plan. Whether you're seeking less crowded alternatives or simply exploring a region, the list of nearby surf spots is an essential tool.",
+    "near_spots_preview_button": "See all {{numberOfNearSpots}} surf spots"
   },
   "account_verify": {
     "verify_account_title": "Verify your account",
@@ -645,6 +710,13 @@
     "4": "300 - 500 m",
     "5": "> 500 m"
   },
+  "wave_steepness": {
+    "1": "Mellow",
+    "2": "Medium-mellow",
+    "3": "Medium",
+    "4": "Medium-hollow",
+    "5": "Hollow"
+  },
   "frequency": {
     "1": "Rarely break (less than 5 days/year)",
     "2": "Sometimes break (between 5 and 40)",
@@ -702,12 +774,12 @@
   },
   "favorites": {
     "loading": "Loading your favorite spots",
-    "log_in_modal_title": "Log In to add favourites",
-    "log_in_modal_text": "Please register or login to add {{spotName}} to your favourites.",
+    "log_in_modal_title": "Log in to add favourites",
+    "log_in_modal_text": "Please register or log in to add {{spotName}} to your favourites",
     "trial_modal_title": "Start your free trial to add favorites",
-    "trial_modal_text": "Activate the 30-days free trial to add {{spotName}} to your favourites.",
+    "trial_modal_text": "Activate the 30-days free trial to add {{spotName}} to your favourites",
     "subscribe_modal_title": "Subscribe to Mondo Surf Pro to add favorites",
-    "subscribe_modal_text": "Subscribe to a Pro membership to add {{spotName}} to your favourites.",
+    "subscribe_modal_text": "Subscribe to the Mondo Pro membership to add {{spotName}} to your favourites and unlock these features:",
     "add_to_favorites": "Add {{spotName}} to your favorites",
     "remove_from_favorites": "Remove {{spotName}} from your favorites"
   },
@@ -716,12 +788,12 @@
     "image_alt": "Never miss out a session at {{spotName}}, use the calendar!",
     "text": "Add {{spotName}} to your personal or work calendar and never plan a meeting again when you can go surfing! Install the calendar on your favorites application (like Google Calendar or Apple Calendar).",
     "button": "Add {{spotName}} to your calendar",
-    "modal_login_title": "Log In to install the calendar",
-    "modal_login_text": "Log In or Register to Mondo Surf to add {{spotName}} to your calendar",
+    "modal_login_title": "Log in to install the calendar",
+    "modal_login_text": "Log in or register to Mondo to add {{spotName}} to your calendar",
     "modal_trial_title": "Start your free trial to install the calendar",
     "modal_trial_text": "Activate the 30-days free trial to add {{spotName}} to your calendar.",
     "modal_pro_title": "Subscribe to Mondo Surf Pro to install the calendar",
-    "modal_pro_text": "Subscribe to the Pro membership to add {{spotName}} to your calendar.",
+    "modal_pro_text": "Subscribe to the Pro membership to add {{spotName}} to your calendar and unlock these features:",
     "get_calendar_url_modal": {
       "title": "Add {{spotName}} to your calendar",
       "copy_text": "Copy the URL to add {{spotName}} to your calendar. Check the instructions below to know how to add it.",
@@ -742,7 +814,12 @@
     "banner_favorite_text": "Add {{name}} to your favorites",
     "banner_favorite_subtext": "And receive the forecast in your daily surf bulletin",
     "banner_widget_text": "Add Mondo't forecast widget to your website",
-    "banner_widget_subtext": "Show the updated surf forecast for {{name}}"
+    "banner_widget_subtext": "Show the updated surf forecast for {{name}}",
+    "banner_talk_to_us_text": "Talk to our team and get 3 free months of Mondo Pro!",
+    "banner_talk_to_us_subtext": "Share your thoughts and experiences on a 30-minute interview and get 3 free months. Click here to schedule your session!",
+    "banner_get_pro_text": "Subscribe to Mondo Pro and get the full forecast",
+    "banner_get_pro_subtext": "Share your thoughts and experiences on a 30-minute interview and get 3 free months. Click here to schedule your session!",
+    "banner_get_pro_button": "Start here"
   },
   "swell_quality": {
     "0_icon": "💩",

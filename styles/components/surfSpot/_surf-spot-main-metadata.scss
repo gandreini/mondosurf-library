@@ -1,0 +1,65 @@
+/**
+ * SURF SPOT MAIN METADATA
+ *
+ * Wave direction, swell direction, wind direction.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT MAIN METADATA
+\* ------------------------------------ */
+.ms-surf-spot-main-metadata {
+    margin-bottom: $space * 3.5;
+
+    &__metadata {
+        display: flex;
+        align-items: center;
+        height: $space * 5;
+    }
+
+    .ms-label {
+        max-width: 140px;
+        margin-right: $space;
+        flex: 0 0 120px;
+        line-height: 1.2;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-m-fluid;
+        @include first-letter-capital;
+    }
+
+    .ms-value {
+        flex: 1 1;
+        font-size: $font-size-m-fluid;
+        @include first-letter-capital;
+        line-height: 1.2;
+
+        strong {
+            font-weight: $font-weight-normal;
+        }
+    }
+
+    &__direction-icon {
+        display: flex;
+
+        .mondo-icon {
+            margin: -3px $space * 0.5 -3px -5px;
+            font-size: $font-size-xxxl;
+        }
+    }
+
+    // Inside .ms-surf-spot-direction.
+    &__chart svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    &__value {
+        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

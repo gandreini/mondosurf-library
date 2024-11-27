@@ -239,6 +239,49 @@
 }
 
 /* ------------------------------------ *\
+   #DANGER-BUTTON
+\* ------------------------------------ */
+.ms-btn-danger {
+    color: var(--color-error);
+    border-color: var(--color-error);
+    border-width: 2px;
+    background-color: $color-button-bg;
+
+    &:hover {
+        color: $color-button-cta-text-hover;
+        background-color: var(--color-error);
+        border-color: var(--color-error);
+    }
+
+    // Disabled.
+    &.disabled,
+    &:disabled,
+    &.disabled:hover,
+    &:disabled:hover,
+    &.disabled:active,
+    &:disabled:active,
+    &.disabled:active:hover,
+    &:disabled:active:hover {
+        // color: $color-button-cta-text;
+        // background-color: $color-button-cta-bg;
+        // border-color: $color-button-cta-border;
+        opacity: 0.7;
+    }
+
+    // Active.
+    &.active,
+    &:active,
+    &.active:hover,
+    &:active:hover,
+    &:focus,
+    &:focus:hover {
+        color: $color-button-cta-text-hover;
+        background-color: var(--color-error);
+        border-color: var(--color-error);
+    }
+}
+
+/* ------------------------------------ *\
    #ICONS
 \* ------------------------------------ */
 .ms-btn {
@@ -246,6 +289,40 @@
         height: 18px;
         width: auto;
         margin-left: $space/2;
+    }
+}
+
+/* ------------------------------------ *\
+   #GOOGLE-BUTTON
+\* ------------------------------------ */
+.ms-btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space * 0.5;
+    width: 100%;
+    height: $height-common-l;
+    background-color: $color-background-base;
+    border: 1px solid var(--color-gray-05);
+    border-radius: $border-radius;
+    padding: 0$space * 2;
+    font-size: var($font-size-xs-fluid);
+    font-weight: $font-weight-bold;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: $space/2;
+        background: transparent url('../assets/google-icon.svg') center center no-repeat;
+        background-size: contain;
     }
 }
 

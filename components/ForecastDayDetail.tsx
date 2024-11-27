@@ -7,10 +7,10 @@ import utc from 'dayjs/plugin/utc';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import Button from 'mondosurf-library/components/Button';
 import DayAstronomyTable from 'mondosurf-library/components/DayAstronomyTable';
-import DayTideTable from 'mondosurf-library/components/DayTideTable';
 import LastUpdate from 'mondosurf-library/components/LastUpdate';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDay';
+import TideTableDay from 'mondosurf-library/components/tide/TideTableDay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
 import {
@@ -188,7 +188,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
                 )}
 
                 {/* Tide */}
-                {tide && spotTimezone && <DayTideTable highLows={tide} timezone={spotTimezone} />}
+                {tide && spotTimezone && <TideTableDay highLows={tide} timezone={spotTimezone} />}
             </div>
 
             <div className="ms-forecast-day-detail__footer">

@@ -21,6 +21,11 @@
         font-size: $font-size-xxxl-fluid;
     }
 
+    // Emoji
+    &__emoji {
+        font-size: $font-size-xxl-fluid;
+    }
+
     .ms-banner__texts {
         display: flex;
         flex-direction: column;
@@ -54,6 +59,15 @@
         border-bottom: 1px solid $color-border-normal;
         border-radius: 0;
     }
+
+    &:hover {
+        border: 2px solid var(--color-favourites-hover);
+        color: var(--color-favourites-hover);
+
+        .ms-banner__text {
+            color: var(--color-favourites-hover);
+        }
+    }
 }
 
 /* ------------------------------------ *\
@@ -65,6 +79,15 @@
 
     .ms-banner__text {
         color: var(--color-first);
+    }
+
+    &:hover {
+        border: 2px solid var(--color-text-hover);
+        color: var(--color-text-hover);
+
+        .ms-banner__text {
+            color: var(--color-text-hover);
+        }
     }
 }
 
@@ -84,6 +107,66 @@
     }
     .ms-banner__text {
         color: var(--color-forecast-good);
+    }
+
+    &:hover {
+        border: 2px solid var(--color-forecast-very-good);
+        color: var(--color-forecast-very-good);
+
+        .ms-banner__text {
+            color: var(--color-forecast-very-good);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #TALK-TO-US
+\* ------------------------------------ */
+.ms-banner-talk-to-us {
+    border: 2px solid var(--color-first);
+    color: var(--color-first);
+
+    .ms-banner__text {
+        color: var(--color-first);
+    }
+
+    &:hover {
+        border: 2px solid var(--color-text-hover);
+        color: var(--color-text-hover);
+
+        .ms-banner__text {
+            color: var(--color-text-hover);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #GET-PRO
+\* ------------------------------------ */
+.ms-banner-get-pro {
+    border: 2px solid var(--color-first);
+    color: var(--color-first);
+
+    .ms-banner__text {
+        color: var(--color-first);
+    }
+
+    .ms-h3-title {
+        margin-bottom: $space * 1;
+    }
+
+    .ms-banner__texts {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &:hover {
+        border: 2px solid var(--color-text-hover);
+        color: var(--color-text-hover);
+
+        .ms-banner__text {
+            color: var(--color-text-hover);
+        }
     }
 }
 
@@ -105,5 +188,18 @@
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-banner-get-pro {
+        .ms-h3-title {
+            margin-bottom: 0;
+        }
+        .ms-banner__texts {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: $space * 4;
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
 }

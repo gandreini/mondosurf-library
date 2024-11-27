@@ -47,6 +47,7 @@ export interface ISurfSpot {
     surf_schools?: boolean;
     airport?: string;
     near_spots?: ISurfSpotPreview[];
+    near_spots_count?: number;
     forecast_is_good?: number;
     hide_secondary_swell?: boolean;
     spot_forecast?: ISurfSpotForecast;
@@ -61,6 +62,7 @@ export interface ISurfSpot {
     forecast_conditions_wind_direction_max: number;
     forecast_conditions_wind_speed_max?: number;
     forecast_conditions_on_shore_wind_speed_max?: number;
+    last_wp_update?: string;
 }
 
 export interface ISurfSpotWebcam {

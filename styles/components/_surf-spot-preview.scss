@@ -24,7 +24,7 @@
 
     &__breadcrumbs-flag {
         margin-right: $space;
-        font-size: $font-size-l;
+        font-size: $font-size-l-fluid;
     }
 
     &__breadcrumbs-country {
@@ -72,7 +72,7 @@
         line-height: 1.2;
         color: var(--color-text);
         transition: all $transition-durations;
-        @include font-size('l');
+        font-size: $font-size-l-fluid;
     }
 
     // Content.
@@ -92,14 +92,14 @@
         color: var(--color-text-light);
         text-transform: uppercase;
         line-height: 1.1;
-        @include font-size('xxs');
+        font-size: $font-size-xxxs-fluid;
     }
 
     &__value {
         display: block;
         color: var(--color-text);
         line-height: 1.1;
-        @include font-size('xs');
+        font-size: $font-size-xs-fluid;
     }
 }
 
@@ -111,9 +111,15 @@
         position: absolute;
         top: 8px;
         left: 29px;
-        text-shadow: -2px -2px 0 $color-background-base, 0 -2px 0 $color-background-base,
-            2px -2px 0 $color-background-base, 2px 0 0 $color-background-base, 2px 2px 0 $color-background-base,
-            0 2px 0 $color-background-base, -2px 2px 0 $color-background-base, -2px 0 0 $color-background-base;
+        text-shadow:
+            -2px -2px 0 $color-background-base,
+            0 -2px 0 $color-background-base,
+            2px -2px 0 $color-background-base,
+            2px 0 0 $color-background-base,
+            2px 2px 0 $color-background-base,
+            0 2px 0 $color-background-base,
+            -2px 2px 0 $color-background-base,
+            -2px 0 0 $color-background-base;
     }
 
     .ms-surf-spot-preview-quality-row {

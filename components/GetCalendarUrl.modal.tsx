@@ -19,7 +19,7 @@ import modalService from 'mondosurf-library/services/modalService';
 interface IGetCalendarUrl {
     spotName: string;
     spotId: number;
-    calendarUrl: string;
+    calendarUrl?: string;
 }
 
 const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
@@ -32,7 +32,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     // Used to be sure spotId is a number.
     const spotId = typeof props.spotId === 'number' ? props.spotId : parseInt(props.spotId);
 
-    const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl);
+    const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl ? props.calendarUrl : '');
     const [calendarUrlRetrieved, setCalendarUrlRetrieved] = useState<boolean>(false);
     const [displayFavoriteCheckbox, setDisplayFavoriteCheckbox] = useState<boolean>(true);
 
@@ -43,11 +43,11 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         }
     });
 
-    // Retrieves the calendar url from the API, if empty.
-    // This happens when the user opens the modal before being logged in.
+    // Retrieves the calendar url from the API, if empty
+    // This happens when the user opens the modal before being logged in
     useEffect(() => {
         if (!calendarUrl || calendarUrl === '') {
-            // Call to "calendar-url" API to retrieve the unique URL of the calendar.
+            // Call to "calendar-url" API to retrieve the unique URL of the calendar
             postApiAuthCall('calendar-url', accessToken, {
                 spot_id: spotId
             })
@@ -72,14 +72,14 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
             setDisplayFavoriteCheckbox(false);
         }
 
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalShow, {
             spotName: props.spotName,
             spotId: props.spotId
         });
     }, []);
 
-    // Takes care of classes of the modal, for vertical alignment.
+    // Takes care of classes of the modal, for vertical alignment
     useEffect(() => {
         if (
             !hasProPermissions() ||
@@ -92,9 +92,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         }
     }, [calendarUrl, calendarUrlRetrieved]);
 
-    /**
-     * Copies the calendar url to the clipboard and calls to function to add to favorites.
-     */
+    // Copies the calendar url to the clipboard and calls to function to add to favorites
     const onCopyCalendar = () => {
         copyToClipboard(calendarUrl, () => {
             toastService.emoji(
@@ -103,7 +101,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
                 'data-test-toast-calendar-url-copied'
             );
         });
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalURLTap, {
             spotName: props.spotName,
             spotId: props.spotId,
@@ -112,9 +110,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         addToFavorites();
     };
 
-    /**
-     * Send the calendar url via mail to the user and calls to function to add to favorites.
-     */
+    // Send the calendar url via mail to the user and calls to function to add to favorites
     const onSendCalendar = () => {
         postApiAuthCall('send-calendar-url-to-user-email', accessToken, {
             spot_id: props.spotId
@@ -134,7 +130,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
             .catch(function (error) {
                 toastService.error(mondoTranslate('toast.calendar.error_sending_email'));
             });
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalEmailTap, {
             spotName: props.spotName,
             spotId: props.spotId,
@@ -142,18 +138,14 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         });
     };
 
-    /**
-     * Adds the spot to the user's favourites, after a few checks.
-     */
+    // Adds the spot to the user's favourites, after a few checks
     const addToFavorites = () => {
         if (getValues('addToFavoritesCheck') && favoriteSpots && !checkIfSpotIdIsInFavorites(favoriteSpots, spotId)) {
             addSpotToFavourites(props.spotId, props.spotName);
         }
     };
 
-    /**
-     * Returns the string to add as tracking parameter: tells if the favorites is added.
-     */
+    // Returns the string to add as tracking parameter: tells if the favorites is added
     const addToFavoritesForTracking = () => {
         let returnString = 'false';
         if (!displayFavoriteCheckbox) return 'notAvailable';
@@ -161,22 +153,18 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         return returnString;
     };
 
-    /**
-     * Click on the link to watch the tutorial, for tracking purposes only.
-     */
+    // Click on the link to watch the tutorial, for tracking purposes only
     const onGoogleTutorial = () => {
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalGoogleTap, {
             spotName: props.spotName,
             spotId: props.spotId
         });
     };
 
-    /**
-     * Click on the link to watch the tutorial, for tracking purposes only.
-     */
+    // Click on the link to watch the tutorial, for tracking purposes only
     const onAppleTutorial = () => {
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalAppleTap, {
             spotName: props.spotName,
             spotId: props.spotId

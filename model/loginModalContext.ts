@@ -1,1 +1,1 @@
-export type LoginModalContext = 'header' | 'profilePage' | 'subscriptionConfirmed' | 'tabBar' | 'homeProCta' | 'proButton' | 'favoriteAddButton' | 'calendar' | 'passwordReset' | 'favorites' | 'spotForecastRequest';
+export type LoginModalContext = 'header' | 'profilePage' | 'subscriptionConfirmed' | 'tabBar' | 'homeProCta' | 'proButton' | 'proModal' | 'favoriteAddButton' | 'calendar' | 'passwordReset' | 'favorites' | 'spotForecastRequest' | 'commentForm' | 'fullForecast';

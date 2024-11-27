@@ -1,5 +1,5 @@
-import { store } from "mondosurf-library/redux/store";
 import { checkIfSpotIdIsInFavorites } from "mondosurf-library/helpers/favorites.helpers";
+import { store } from "mondosurf-library/redux/store";
 
 /**
  * Returns the value of a GET parameter,
@@ -122,8 +122,7 @@ export const shouldShowFavoritesBanner = (spotId: number): boolean => {
         (logged === 'yes' && !favoriteSpots) ||
         (logged === 'yes' &&
             favoriteSpots &&
-            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId) &&
-            favoriteSpots.length < 5)) {
+            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId))) {
         return true
     } else {
         return false;

@@ -11,6 +11,11 @@
     .ms-search-form {
         margin: $space * 5 0;
     }
+
+    &__banner {
+        max-width: $page-max-width;
+        margin: $space * 5 auto 0;
+    }
 }
 
 /* ------------------------------------ *\

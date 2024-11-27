@@ -18,7 +18,7 @@
     left: 0;
     z-index: $z-index-modal;
 
-    // The actual modal dialog.
+    // The actual modal dialog
     &__window {
         position: fixed;
         display: flex;
@@ -31,14 +31,14 @@
         background-color: $modal-bg-color;
     }
 
-    // Toggles visibility.
+    // Toggles visibility
     &.is-visible {
         display: flex;
         .ms-modal__window {
             // top: 0;
         }
 
-        // Body of the modal.
+        // Body of the modal
         .ms-modal__body {
             padding: $space * 3;
         }
@@ -49,7 +49,7 @@
    #OVERLAY
 \* ------------------------------------ */
 .ms-modal {
-    // Overlay: only when visible.
+    // Overlay: only when visible
     & .ms-modal__overlay {
         display: none;
         opacity: 0.85;
@@ -57,12 +57,12 @@
         // transition: opacity 1s;
     }
 
-    // When starts fading out, set opacity to 0.
+    // When starts fading out, set opacity to 0
     &.is-fading-out .ms-modal__overlay {
         // opacity: 0;
     }
 
-    // When visible (and not fading out), set opacity to visible.
+    // When visible (and not fading out), set opacity to visible
     &.is-visible:not(.is-fading-out) .ms-modal__overlay {
         // opacity: 0.85;
     }
@@ -118,11 +118,11 @@
    #CLOSE-BUTTON
 \* ------------------------------------ */
 .ms-modal {
-    // Close button.
+    // Close button
     &__close {
         position: absolute;
         z-index: $z-index-modal;
-        top: calc(#{$space} * 3 + var(--ios-status-bar-margin)); // iOS spacing.
+        top: calc(#{$space} * 3 + var(--ios-status-bar-margin)); // iOS spacing
         right: $space * 3;
         cursor: pointer;
 
@@ -155,15 +155,15 @@
         display: flex;
         flex-direction: column;
         flex: auto;
-        margin: var(--ios-status-bar-margin) 0 var(--ios-bottom-bar-margin) 0; // iOS spacing.
+        margin: var(--ios-status-bar-margin) 0 var(--ios-bottom-bar-margin) 0; // iOS spacing
     }
 
-    // Header.
+    // Header
     &__header {
         padding: $space * 3 $space * 8 0 $space * 3;
     }
 
-    // Body.
+    // Body
     &__body {
         padding: 0;
     }
@@ -172,17 +172,21 @@
         margin-right: $space * 5;
     }
 
+    &__header-title.ms-h2-title {
+        margin-bottom: 0;
+    }
+
     &__text.ms-body-text:not(:last-child) {
         margin-bottom: $space * 3;
     }
 
-    // Footer.
+    // Footer
     &__footer {
         margin-top: auto;
         padding: 0 $space * 3 $space * 3 $space * 3;
     }
 
-    // Contents formatting.
+    // Contents formatting
     &__inner-title {
         margin-bottom: $space * 1;
         font-size: $font-size-m;
@@ -190,7 +194,7 @@
     }
 }
 
-// Specifics for non from-bottom modal.
+// Specifics for non from-bottom modal
 /*
 .ms-modal:not(.is-from-bottom) {
     .ms-modal__content-scroll {
@@ -221,25 +225,12 @@
    #CENTERED-MODAL-BODY
 \* ------------------------------------ */
 .ms-modal.ms-modal-content-centered {
-    // Body.
+    // Body
     .ms-modal__body {
         flex-grow: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-}
-
-/* ------------------------------------ *\
-   #TIDE-TABLE-MODAL
-\* ------------------------------------ */
-.ms-modal.ms-modal-tide-table {
-    .ms-modal__body {
-        padding: $space * 3 $space * 0.5;
-    }
-
-    .ms-tide-table-weekly-levels {
-        margin: 0 $space * 3 $space * 3 $space * 3;
     }
 }
 
@@ -285,6 +276,15 @@
 }
 
 /* ------------------------------------ *\
+   #CANCEL PRO MEMBERSHIP
+\* ------------------------------------ */
+.ms-modal.ms-modal-cancel-membership {
+    .ms-btn-cta {
+        @extend .ms-btn-danger;
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
@@ -319,7 +319,7 @@
         }
     }
 
-    // Buttons.
+    // Buttons
     .ms-modal {
         &__footer {
             flex-direction: row-reverse;
@@ -332,13 +332,6 @@
 
     .ms-modal.is-visible {
         display: flex;
-    }
-
-    // Tide modal.
-    .ms-modal.ms-modal-tide-table {
-        .ms-tide-table-days {
-            margin: 0 $space * 3 0 $space * 3;
-        }
     }
 
     // Full forecast modal
@@ -357,15 +350,15 @@
         }
     }
 
-    // iOS (iPad).
+    // iOS (iPad)
     .is-ios {
         .ms-modal {
-            // Header.
+            // Header
             &__header {
                 padding-top: $space * 4.5;
             }
 
-            // Close button.
+            // Close button
             &__close {
                 top: $space * 4.5;
             }

@@ -16,3 +16,20 @@ export const hasProPermissions = (): boolean => {
     if (accountType === "admin" || accountType === "pro" || accountType === "trial") return true;
     return false;
 }
+
+/**
+ * Generates a random and secure user password.
+ * The password will be 12 characters long, including uppercase, lowercase, numbers, and special characters.
+ *
+ * @returns string A randomly generated secure password.
+ */
+export const generateSecurePassword = (): string => {
+    const length = 12;
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+    }
+    return password;
+}

@@ -250,6 +250,11 @@ $tab-bar-height: 64px;
 $tab-bar-color-background: $color-background-base;
 
 // ------------------------------------ //
+// TABLE
+// ------------------------------------ //
+$table-border-color: $color-border-dark;
+
+// ------------------------------------ //
 // BREADCRUMBS
 // ------------------------------------ //
 $breadcrumbs-mobile-height: 30px;
@@ -328,15 +333,10 @@ $loader-btn-height: 26px;
 // #MODAL
 // ------------------------------------ //
 $modal-bg-color: $color-background-base;
-$modal-box-shadow:
-    0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08),
-    0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
-    0 $space * 0.5 $space * 2 rgba(#000000, 0.08),
-    0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
-$modal-from-bottom-box-shadow:
-    0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
-    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04),
-    0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
+$modal-box-shadow: 0 $space * 0.5 $space * 0.5 rgba(#000000, 0.08), 0 $space * 0.5 $space * 1 rgba(#000000, 0.08),
+    0 $space * 0.5 $space * 2 rgba(#000000, 0.08), 0 $space * 0.5 $space * 6 rgba(#000000, 0.08);
+$modal-from-bottom-box-shadow: 0 (-$space * 0.5) $space * 0.5 rgba(#000000, 0.04),
+    0 (-$space * 0.5) $space * 2 rgba(#000000, 0.04), 0 (-$space * 0.5) $space * 4 rgba(#000000, 0.04),
     0 (-$space * 0.5) $space * 6 rgba(#000000, 0.04);
 $modal-width: 500px;
 

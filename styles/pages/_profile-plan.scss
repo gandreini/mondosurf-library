@@ -9,7 +9,6 @@
 \* ------------------------------------ */
 .ms-profile-plan {
     &__content {
-        // max-width: $page-max-medium-width;
         margin-bottom: $space * 2;
 
         .ms-btn {
@@ -31,6 +30,7 @@
     }
 
     &__text {
+        margin-top: $space * 1;
         margin-bottom: $space * 2;
     }
 
@@ -40,6 +40,25 @@
 
     .ms-grid-2-2 {
         margin-bottom: $space * 1.5;
+    }
+
+    // Danger zone
+    &__danger-zone {
+        padding-top: $space * 3;
+        margin-top: $space * 3;
+        border-top: 1px solid $color-border-normal;
+
+        .ms-h3-title {
+            margin-bottom: $space * 1.5;
+            color: var(--color-error);
+        }
+    }
+
+    &__danger-zone-link {
+        cursor: pointer;
+        &:hover {
+            color: var(--color-text-link);
+        }
     }
 }
 

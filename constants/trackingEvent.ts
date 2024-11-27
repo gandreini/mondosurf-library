@@ -61,14 +61,20 @@ export enum TrackingEvent {
     CalBannerTap = 'Cal Banner_Tap',
     FavBannerTap = 'Fav Banner_Tap',
     WidgetBannerTap = 'Widget Banner_Tap',
+    FullForecastGetProBannerTap = 'Full Forecast Get Pro Banner_Tap',
 
     // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',
+    PageSpotCommentsShow = 'Page Spot Comments_Show',
     PageSpotForecastShow = 'Page Spot Forecast_Show',
     PageSpotFullForecastShow = 'Page Spot Full Forecast_Show',
+    PageSpotTideShow = 'Page Spot Tide_Show',
     PageSpotNearbyShow = 'Page Spot Nearby_Show',
     PageSpotVideoShow = 'Page Spot Video_Show',
 
     // Forecast details
     SpotForecastDetailsShow = 'Spot Forecast Details_Show',
+
+    // Comments
+    CommentAddedApi = 'Comment Added_Api',
 }

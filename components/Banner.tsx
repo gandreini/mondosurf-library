@@ -1,63 +1,93 @@
 // Client
 'use client';
 
-import { openCalendarModal } from 'features/modal/modal.helpers';
+import { openCalendarModal, openModalToExecuteProAction } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
-import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
+import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers/favorites.helpers';
 import { shouldShowFavoritesBanner } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
-    type: 'favorite' | 'calendar' | 'widget';
-    spotName: string;
-    spotId: number;
-    spotCalendarUrl: string;
+    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro';
+    spotName?: string;
+    spotId?: number;
+    spotCalendarUrl?: string;
 }
 
 const Banner: React.FC<IBanner> = (props) => {
-    // Redux.
+    // Redux
     const logged = useSelector((state: RootState) => state.user.logged);
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
 
+    // Handles the visibility of the favorites banner
+    const [showFavoriteBanner, setShowFavoriteBanner] = useState(true);
+    useEffect(() => {
+        if (props.type === 'favorite') setShowFavoriteBanner(shouldShowFavoritesBanner(Number(props.spotId)));
+    }, [props.spotId, logged, props.type, favoriteSpots]);
+
     // On click on favorite banner
     const onClickFavoriteBanner = () => {
-        addSpotToFavourites(props.spotId, props.spotName);
-        // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
-            spotId: props.spotId,
-            spotName: props.spotName
-        });
+        if (props.spotId && props.spotName) {
+            checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
+            // Tracking
+            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
+                spotId: props.spotId,
+                spotName: props.spotName
+            });
+        }
     };
 
     // On click on calendar banner
     const onClickCalendarBanner = () => {
-        openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
-        // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
-            spotId: props.spotId,
-            spotName: props.spotName
-        });
+        if (props.spotId && props.spotName) {
+            openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
+            // Tracking
+            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
+                spotId: props.spotId,
+                spotName: props.spotName
+            });
+        }
     };
 
     // On click on Widget banner
     const onClickWidgetBanner = () => {
-        // Tracking.
+        // Tracking
         Tracker.trackEvent(['mp', 'ga'], TrackingEvent.WidgetBannerTap, {
             spotId: props.spotId,
             spotName: props.spotName
         });
     };
 
+    // On click get pro banner
+    const onGetProBannerClick = () => {
+        // Tracking
+        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FullForecastGetProBannerTap, {
+            spotId: props.spotId,
+            spotName: props.spotName
+        });
+        openModalToExecuteProAction(
+            'fullForecast',
+            undefined,
+            'Log in or sign up to Mondo to subscribe to Pro',
+            undefined,
+            undefined,
+            undefined,
+            mondoTranslate('pro.pro_modal.get_full_forecast')
+        );
+    };
+
     return (
         <>
             {/* Favorite banner */}
-            {props.type === 'favorite' && (
+            {props.type === 'favorite' && props.spotId && props.spotName && (
                 <>
-                    {shouldShowFavoritesBanner(Number(props.spotId)) && (
+                    {showFavoriteBanner && (
                         <div
                             className="ms-banner ms-banner-favorite"
                             onClick={onClickFavoriteBanner}
@@ -75,14 +105,16 @@ const Banner: React.FC<IBanner> = (props) => {
                             </div>
                         </div>
                     )}
-                    {!shouldShowFavoritesBanner(Number(props.spotId)) && (
-                        <div className="ms-banner ms-banner-favorite is-empty"></div>
+                    {!showFavoriteBanner && (
+                        <div
+                            className="ms-banner ms-banner-favorite is-empty"
+                            data-test="surf-spot-forecast-favorite-hidden-banner"></div>
                     )}
                 </>
             )}
 
             {/* Calendar banner */}
-            {props.type === 'calendar' && (
+            {props.type === 'calendar' && props.spotId && props.spotName && (
                 <div
                     className="ms-banner ms-banner-calendar"
                     onClick={onClickCalendarBanner}
@@ -102,7 +134,7 @@ const Banner: React.FC<IBanner> = (props) => {
             )}
 
             {/* Widget banner */}
-            {props.type === 'widget' && (
+            {props.type === 'widget' && props.spotId && props.spotName && (
                 <a href="https://forms.gle/4BikoTaPPscGaiUW8" target="_blank" rel="noreferrer">
                     <div
                         className="ms-banner ms-banner-widget"
@@ -123,6 +155,39 @@ const Banner: React.FC<IBanner> = (props) => {
                         </div>
                     </div>
                 </a>
+            )}
+
+            {/* Talk to us banner */}
+            {props.type === 'talkToUs' && (
+                <MondoLink
+                    className="ms-banner ms-banner-talk-to-us"
+                    href="https://calendar.app.google/ZJcGjybqNqqrEh17A"
+                    target="_blank">
+                    <div className="ms-banner__emoji">💬</div>
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_talk_to_us_text')}</p>
+                        <p className="ms-banner__subtext ms-small-text">
+                            {mondoTranslate('banner.banner_talk_to_us_subtext')}
+                        </p>
+                    </div>
+                </MondoLink>
+            )}
+
+            {/* Get pro */}
+            {props.type === 'getPro' && (
+                <MondoLink
+                    className="ms-banner ms-banner-get-pro"
+                    onClickCallback={onGetProBannerClick}
+                    dataTest="surf-spot-full-forecast-banner">
+                    <div className="ms-banner__emoji">🌊</div>
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_get_pro_text')}</p>
+                        {/* <p className="ms-banner__subtext ms-small-text">
+                            {mondoTranslate('banner.banner_get_pro_subtext')}
+                        </p> */}
+                        <div className="ms-btn ms-btn-cta">{mondoTranslate('banner.banner_get_pro_button')}</div>
+                    </div>
+                </MondoLink>
             )}
         </>
     );

@@ -88,13 +88,17 @@
     }
 }
 
+.ms-list-no-style {
+    list-style: none;
+}
+
 .ms-small-text {
     display: block;
     color: var(--color-text-light);
     font-weight: $font-weight-normal;
     line-height: 1.4;
     white-space: pre-line; // To allow new line with '\n'.
-    font-size: $font-size-xs-fluid;
+    font-size: $font-size-s-fluid;
     @include fix-android-wrong-font-size;
     margin-bottom: 0.95em;
     &:not(:last-child) {

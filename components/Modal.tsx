@@ -185,7 +185,7 @@ const Modal: React.FC = <T,>() => {
                             <div className="ms-modal__footer">
                                 {modalData.buttonText && modalData.buttonFunction && (
                                     <button
-                                        className="ms-btn ms-btn-cta"
+                                        className="ms-btn ms-btn-cta ms-btn-xl"
                                         onClick={() => modalData.buttonFunction!()}
                                         data-test="modal-button">
                                         {modalData.buttonText}

@@ -6,7 +6,7 @@ import { postApiAuthCall } from 'mondosurf-library/api/api';
 import { FORECAST_UPDATES, FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
 import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 import IGoodTime from "mondosurf-library/model/iGoodTime";
-import { ISurfSpotForecast, ISurfSpotForecastDay } from "mondosurf-library/model/iSurfSpot";
+import { ISurfSpotForecast } from "mondosurf-library/model/iSurfSpot";
 import { store } from "mondosurf-library/redux/store";
 import toastService from 'mondosurf-library/services/toastService';
 
@@ -37,9 +37,10 @@ export const forecastDays = (): number => {
  * @param   {ISurfSpotForecast} forecastData Full forecast object for the given surf spot.
  * @param   {number} days Days to leave in the object.
  * @param   {string} timezone Timezone of the spot.
+ * @param   {number} firstDay The first day to retrieve.
  * @returns {ISurfSpotForecast} Object with the forecast limited to the number of days.
  */
-export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string): ISurfSpotForecast => {
+export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string, firstDay: number = 0): ISurfSpotForecast => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);
@@ -59,26 +60,8 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
     });
 
     // Days: cuts the days before the current day, and those after the given number of days (both for "days" and "compressed days")
-    clonedForecastData.days = clonedForecastData.days.slice(firstDayId, days + firstDayId);
-    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId, days + firstDayId);
-
-    // Compressed days: Id of the hour corresponding to the current day in timezone (in the "compressed_days.hours" array).
-    /* clonedForecastData.compressed_days.hours.forEach((hour, index) => {
-        if (hour === startDayInTimezone.format()) {
-            firstCompressedHourId = index;
-        }
-    });
-    const lastCompressedHourId = firstCompressedHourId + (days * 4); // Last hour of the compressed days. "4" in the number of hours per compressed day. */
-
-    // Actual slice of the compressed_days arrays.
-    /* clonedForecastData.compressed_days.hours = clonedForecastData.compressed_days.hours.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.is_good = clonedForecastData.compressed_days.is_good.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.is_light = clonedForecastData.compressed_days.is_light.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_direction = clonedForecastData.compressed_days.swell_direction.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_height = clonedForecastData.compressed_days.swell_height.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_period = clonedForecastData.compressed_days.swell_period.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.wind_direction = clonedForecastData.compressed_days.wind_direction.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.wind_speed = clonedForecastData.compressed_days.wind_speed.slice(firstCompressedHourId, lastCompressedHourId); */
+    clonedForecastData.days = clonedForecastData.days.slice(firstDayId + firstDay, days + firstDayId);
+    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId + firstDay, days + firstDayId);
 
     // Good times.
     const periodEnd = startDayInTimezone.add(days, 'd');

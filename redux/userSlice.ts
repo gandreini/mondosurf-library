@@ -6,6 +6,7 @@ export interface IUserSliceValue {
     userId: number;
     userName: string;
     userEmail: string;
+    userPictureUrl: string | null;
     accessToken: string;
     capacitorRefreshToken: string;
     accountVerified: boolean;
@@ -27,6 +28,10 @@ export interface IUserSliceValue {
     subscriptionDuration: 'notset' | 'yearly' | 'monthly';
     trialActivation: number;
     trialDuration: number;
+    preferences: {
+        userBulletinFrequency: "daily" | "weekly" | "never";
+        userBulletinWeekDay: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+    }
 }
 
 const initialState: IUserSliceValue = {
@@ -34,6 +39,7 @@ const initialState: IUserSliceValue = {
     userId: -1,
     userName: '',
     userEmail: '',
+    userPictureUrl: null,
     accessToken: '',
     capacitorRefreshToken: '',
     accountVerified: false,
@@ -54,7 +60,11 @@ const initialState: IUserSliceValue = {
     subscriptionExpiration: -1,
     subscriptionDuration: 'notset',
     trialActivation: -1,
-    trialDuration: 30
+    trialDuration: 30,
+    preferences: {
+        userBulletinFrequency: "daily",
+        userBulletinWeekDay: "monday"
+    }
 };
 
 export const userSlice = createSlice({
@@ -72,6 +82,9 @@ export const userSlice = createSlice({
         },
         setUserEmail: (state, action) => {
             return { ...state, userEmail: action.payload };
+        },
+        setUserPictureUrl: (state, action) => {
+            return { ...state, userPictureUrl: action.payload };
         },
         setAccessToken: (state, action) => {
             return { ...state, accessToken: action.payload };
@@ -149,6 +162,9 @@ export const userSlice = createSlice({
         setTrialDuration: (state, action) => {
             return { ...state, trialDuration: action.payload };
         },
+        setPreferences: (state, action) => {
+            return { ...state, preferences: action.payload };
+        },
         logOut: (state) => {
             return {
                 ...state,
@@ -185,6 +201,7 @@ export const { setLogin,
     setUserId,
     setUserName,
     setUserEmail,
+    setUserPictureUrl,
     setAccessToken,
     setCapacitorRefreshToken,
     setAccountVerified,
@@ -205,6 +222,7 @@ export const { setLogin,
     setSubscriptionExpiration,
     setTrialActivation,
     setTrialDuration,
+    setPreferences,
     setSubscriptionDuration,
     logOut } = userSlice.actions;
 export default userSlice.reducer;
