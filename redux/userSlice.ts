@@ -21,6 +21,7 @@ export interface IUserSliceValue {
     surfingFrom: number;
     surfboards: number[];
     accountType: 'free' | 'trial' | 'pro' | 'admin' | 'disabled';
+    proService: 'none' | 'stripe' | 'apple';
     stripeUserId: string;
     productId: string;
     stripeSubscriptionId: string;
@@ -54,6 +55,7 @@ const initialState: IUserSliceValue = {
     surfingFrom: -1,
     surfboards: [],
     accountType: 'free',
+    proService: 'none',
     stripeUserId: '',
     productId: '',
     stripeSubscriptionId: '',
@@ -141,6 +143,9 @@ export const userSlice = createSlice({
         setAccountType: (state, action) => {
             return { ...state, accountType: action.payload };
         },
+        setProService: (state, action) => {
+            return { ...state, proService: action.payload };
+        },
         setStripeUserId: (state, action) => {
             return { ...state, stripeUserId: action.payload };
         },
@@ -216,6 +221,7 @@ export const { setLogin,
     setSurfingFrom,
     setSurfboards,
     setAccountType,
+    setProService,
     setStripeUserId,
     setProductId,
     setStripeSubscriptionId,

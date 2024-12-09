@@ -3,8 +3,8 @@
 
 import dayjs from 'dayjs';
 import { openProModal } from 'features/modal/modal.helpers';
-import { proPriceMonth } from 'features/pro/pro.helpers';
 import { daysInUNIX } from 'mondosurf-library/helpers/date.helpers';
+import { proPriceMonth } from 'mondosurf-library/helpers/pro.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
@@ -34,6 +34,8 @@ const ProButton: React.FC<IProButton> = (props) => {
                 dayjs().unix() > trialActivation + daysInUNIX(userTrialDuration - 5))
         ) {
             setView('pro');
+        } else {
+            setView('hidden');
         }
     }, [accountType, trialActivation, userLogged, userTrialDuration]);
 

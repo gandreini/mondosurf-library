@@ -19,6 +19,10 @@ export interface IAppConfig {
     device_id: string;
     mixpanel_tracking_token?: string;
     ga_measurement_id?: string;
+    stripe_yearly_product: string;
+    stripe_monthly_product: string;
+    apple_yearly_product: string;
+    apple_monthly_product: string;
 }
 
 const initialState: IAppConfig = {
@@ -34,7 +38,11 @@ const initialState: IAppConfig = {
     trial_duration: 30,
     tutorial_video_url_google_cal: "",
     tutorial_video_url_apple_cal: "",
-    device_id: ""
+    device_id: "",
+    stripe_yearly_product: "",
+    stripe_monthly_product: "",
+    apple_yearly_product: "",
+    apple_monthly_product: ""
 };
 
 export const appConfigSlice = createSlice({

@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-// import { IAPRecognizeUser } from 'features/pro/iap.helpers';
+import { RevenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform2, isApp, isAppiOs } from 'helpers/device.helpers';
-import { callApi } from 'mondosurf-library/api/api';
-import { addDebugLogItem } from 'mondosurf-library/redux/debugSlice';
+import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
     logOut,
@@ -18,12 +17,7 @@ import {
     setLevel,
     setLogin,
     setPreferences,
-    setProductId,
     setRegistrationDate,
-    setStripeSubscriptionId,
-    setStripeUserId,
-    setSubscriptionDuration,
-    setSubscriptionExpiration,
     setSurfboards,
     setSurfingFrom,
     setTimezoneDST,
@@ -117,16 +111,11 @@ export const login = (
         }
     })
         .then(async (response) => {
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.user_id) {
                 updateUserStatus(response);
-                if (response.data.user_id) {
-                    if (getPlatform2() === 'app' && isAppiOs()) {
-                        // const { IAPRecognizeUser } = await import('features/pro/iap.helpers');
-                        // IAPRecognizeUser(response.data.user_id); // Revenue cat
-                    }
-
-                    Tracker.identifyUser(response.data.user_id);
-                }
+                Tracker.identifyUser(response.data.user_id);
+                // iOS: Logs in the user to Revenue Cat
+                if (isAppiOs()) RevenueCatRecognizeUser(response.data.user_id);
                 return response;
             } else {
                 store.dispatch(setLogin('no'));
@@ -282,9 +271,11 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | nul
         }
     })
         .then((response) => {
-            if (response.status === 200 && response.data.success === true) {
+            if (response.status === 200 && response.data.success === true && response.data.user_id) {
                 updateUserStatus(response);
-                if (response.data.user_id) Tracker.identifyUser(response.data.user_id);
+                Tracker.identifyUser(response.data.user_id);
+                // iOS: Logs in the user to Revenue Cat
+                if (isAppiOs()) RevenueCatRecognizeUser(response.data.user_id);
             } else {
                 handleActualLogout('checkIfUserIsLoggedOnOpen failed', response);
             }
@@ -499,14 +490,15 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
         if (response.data.user_level) store.dispatch(setLevel(response.data.user_level));
         if (response.data.user_surfing_from) store.dispatch(setSurfingFrom(response.data.user_surfing_from));
         if (response.data.user_surfboards) store.dispatch(setSurfboards(response.data.user_surfboards));
-        if (response.data.user_stripe_user_id) store.dispatch(setStripeUserId(response.data.user_stripe_user_id));
-        if (response.data.user_product_id) store.dispatch(setProductId(response.data.user_product_id));
-        if (response.data.user_stripe_subscription_id)
-            store.dispatch(setStripeSubscriptionId(response.data.user_stripe_subscription_id));
-        if (response.data.user_subscription_expiration_date)
-            store.dispatch(setSubscriptionExpiration(response.data.user_subscription_expiration_date));
-        if (response.data.user_subscription_duration)
-            store.dispatch(setSubscriptionDuration(response.data.user_subscription_duration));
+        // if (response.data.user_stripe_user_id) store.dispatch(setStripeUserId(response.data.user_stripe_user_id));
+        // if (response.data.user_product_id) store.dispatch(setProductId(response.data.user_product_id));
+        // store.dispatch(setProService(response.data.user_pro_service));
+        /* if (response.data.user_stripe_subscription_id)
+            store.dispatch(setStripeSubscriptionId(response.data.user_stripe_subscription_id)); */
+        /* if (response.data.user_subscription_expiration_date)
+            store.dispatch(setSubscriptionExpiration(response.data.user_subscription_expiration_date)); */
+        /* if (response.data.user_subscription_duration)
+            store.dispatch(setSubscriptionDuration(response.data.user_subscription_duration)); */
         if (response.data.user_bulletin_frequency && response.data.user_bulletin_week_day)
             store.dispatch(
                 setPreferences({
@@ -514,6 +506,22 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                     userBulletinWeekDay: response.data.user_bulletin_week_day
                 })
             );
+        if (
+            response.data.account_type === 'pro' &&
+            response.data.user_subscription_expiration_date &&
+            response.data.user_subscription_duration
+        ) {
+            userIsPro(
+                response.data.user_product_id,
+                response.data.user_subscription_expiration_date,
+                response.data.user_subscription_duration,
+                response.data.user_pro_service,
+                response.data.user_stripe_user_id,
+                response.data.user_stripe_subscription_id
+            );
+        }
+
+        // ! TODO If iOS we can check for purchases status
     }
 
     // We also store the user id in the local storage, used for the re-auth
