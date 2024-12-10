@@ -490,15 +490,6 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
         if (response.data.user_level) store.dispatch(setLevel(response.data.user_level));
         if (response.data.user_surfing_from) store.dispatch(setSurfingFrom(response.data.user_surfing_from));
         if (response.data.user_surfboards) store.dispatch(setSurfboards(response.data.user_surfboards));
-        // if (response.data.user_stripe_user_id) store.dispatch(setStripeUserId(response.data.user_stripe_user_id));
-        // if (response.data.user_product_id) store.dispatch(setProductId(response.data.user_product_id));
-        // store.dispatch(setProService(response.data.user_pro_service));
-        /* if (response.data.user_stripe_subscription_id)
-            store.dispatch(setStripeSubscriptionId(response.data.user_stripe_subscription_id)); */
-        /* if (response.data.user_subscription_expiration_date)
-            store.dispatch(setSubscriptionExpiration(response.data.user_subscription_expiration_date)); */
-        /* if (response.data.user_subscription_duration)
-            store.dispatch(setSubscriptionDuration(response.data.user_subscription_duration)); */
         if (response.data.user_bulletin_frequency && response.data.user_bulletin_week_day)
             store.dispatch(
                 setPreferences({
