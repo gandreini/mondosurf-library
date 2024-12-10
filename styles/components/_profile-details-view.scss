@@ -37,6 +37,7 @@
     }
 
     &__danger-zone-link {
+        margin-bottom: $space * 2;
         cursor: pointer;
         &:hover {
             color: var(--color-text-link);
