@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-import { RevenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
+import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform2, isApp, isAppiOs } from 'helpers/device.helpers';
 import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
@@ -115,7 +115,7 @@ export const login = (
                 updateUserStatus(response);
                 Tracker.identifyUser(response.data.user_id);
                 // iOS: Logs in the user to Revenue Cat
-                if (isAppiOs()) RevenueCatRecognizeUser(response.data.user_id);
+                if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
                 return response;
             } else {
                 store.dispatch(setLogin('no'));
@@ -275,7 +275,7 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | nul
                 updateUserStatus(response);
                 Tracker.identifyUser(response.data.user_id);
                 // iOS: Logs in the user to Revenue Cat
-                if (isAppiOs()) RevenueCatRecognizeUser(response.data.user_id);
+                if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
             } else {
                 handleActualLogout('checkIfUserIsLoggedOnOpen failed', response);
             }
