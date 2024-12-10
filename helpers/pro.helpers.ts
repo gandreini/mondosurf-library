@@ -17,21 +17,19 @@ import { setAccountType, setProductId, setProService, setStripeSubscriptionId, s
 export const userIsPro = (productId: string, expirationDate: number, subscriptionDuration: 'yearly' | 'monthly', proService: "stripe" | "apple", stripeUserId?: String, stripeSubscriptionId?: String) => {
     // Redux
     const state = store.getState();
-    const logged = state.user.logged;
+    store.dispatch(setAccountType("pro"));
+    store.dispatch(setProService(proService));
+    store.dispatch(setProductId(productId));
+    store.dispatch(setSubscriptionExpiration(expirationDate));
+    store.dispatch(setSubscriptionDuration(subscriptionDuration));
+    if (stripeUserId) store.dispatch(setStripeUserId(stripeUserId));
+    if (stripeSubscriptionId) store.dispatch(setStripeSubscriptionId(stripeSubscriptionId));
+    return true;
 
-    // Opens the modal if user is not logged or has no pro permissions
-    if (logged === 'no' || logged === "checking") {
+    /* if (logged === 'no' || logged === "checking") {
         return false;
     } else {
-        store.dispatch(setAccountType("pro"));
-        store.dispatch(setProService(proService));
-        store.dispatch(setProductId(productId));
-        store.dispatch(setSubscriptionExpiration(expirationDate));
-        store.dispatch(setSubscriptionDuration(subscriptionDuration));
-        if (stripeUserId) store.dispatch(setStripeUserId(stripeUserId));
-        if (stripeSubscriptionId) store.dispatch(setStripeSubscriptionId(stripeSubscriptionId));
-        return true;
-    }
+    } */
 }
 
 /**

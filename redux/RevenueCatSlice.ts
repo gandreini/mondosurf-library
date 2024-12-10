@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { PurchasesPackage } from '@revenuecat/purchases-capacitor';
 import { MONTHLY_SUBSCRIPTION_TITLE, STRIPE_MONTHLY_SUBSCRIPTION_PRICE, STRIPE_YEARLY_SUBSCRIPTION_PRICE, YEARLY_SUBSCRIPTION_TITLE } from 'mondosurf-library/constants/constants';
 
 export interface IRevenueCat {
@@ -7,8 +6,8 @@ export interface IRevenueCat {
     proYearlyPrice: string;
     proMonthlyTitle: string;
     proMonthlyPrice: string;
-    proYearlyRevenueCatPurchasesPackage: PurchasesPackage | null;
-    proMonthlyRevenueCatPurchasesPackage: PurchasesPackage | null;
+    proYearlyRevenueCatPurchasesPackage: any; // PurchasesPackage | null;
+    proMonthlyRevenueCatPurchasesPackage: any; // PurchasesPackage | null;
     IAPerror?: Error;
 }
 
