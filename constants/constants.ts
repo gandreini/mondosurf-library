@@ -24,5 +24,5 @@ export const PRIVACY_POLICY_URL = "https://www.mondo.surf/privacy-policy";
 export const IOS_EULA_URL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
-export const APP_LATEST_VERSION = "4.10.0";
-export const APP_LATEST_VERSION_PROGRESSIVE = 59;
+export const APP_LATEST_VERSION = "4.11.0";
+export const APP_LATEST_VERSION_PROGRESSIVE = 60;
