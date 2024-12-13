@@ -1,4 +1,4 @@
-import List from 'components/List';
+import List from 'mondosurf-library/components/List';
 import { isApp } from 'helpers/device.helpers';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import EmptyState from 'mondosurf-library/components/EmptyState';
@@ -189,18 +189,17 @@ const HomeFavoritesForecast: React.FC = () => {
                                 {/* 5. User logged has favourites, favourites forecast has good days */}
                                 {goodTimesFiltered.length > 0 && (
                                     <List
-                                        items={goodTimesFiltered}
-                                        maxItems={4}
-                                        dataTest="home-favorites-forecast-good-times"
-                                        wrapperClasses="ms-home__good-days ms-grid-2 ms-grid-v-1"
-                                        renderItem={(item, key) => (
+                                        components={goodTimesFiltered.map((item: any, index: number) => (
                                             <GoodTime
-                                                key={key}
+                                                key={index}
                                                 {...item}
                                                 defaultClickBehavior={true}
                                                 context="homeFavorites"
                                             />
-                                        )}
+                                        ))}
+                                        pageSize={4}
+                                        dataTest="home-favorites-forecast-good-times"
+                                        wrapperClasses="ms-home__good-days ms-grid-2 ms-grid-v-1"
                                     />
                                 )}
 

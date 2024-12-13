@@ -1,8 +1,8 @@
-import List from 'components/List';
 import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import SurfSpotPreview from 'mondosurf-library/components/SurfSpotPreview';
 import Button from 'mondosurf-library/components/Button';
+import ListServer from 'components/ListServer';
 
 interface ISurfSpotNearSpotsPreview {
     spotName: string;
@@ -21,9 +21,9 @@ const SurfSpotNearSpotsPreview: React.FC<ISurfSpotNearSpotsPreview> = (props) =>
             <div className="ms-surf-spot-near-spots-preview__content">
                 <div className="ms-surf-spot-near-spots-preview__left">
                     <section className="ms-surf-spot-near-spots-preview__list ms-grid-1-1">
-                        <List
+                        <ListServer
                             items={props.nearSpots}
-                            renderItem={(item) => (
+                            renderComponent={(item) => (
                                 <SurfSpotPreview
                                     key={item.id}
                                     {...item}

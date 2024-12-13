@@ -8,22 +8,30 @@
     #HOME NEAR SPOTS FORECAST
 \* ------------------------------------ */
 .ms-home-near-spots-forecast {
-    // margin-bottom: $space * 5;
-    padding: $space * 5 0;
+    padding: $space * 3 0;
     background-color: $color-background-ultralight;
 
-    // Loading.
+    // Loading
     &__loading {
         text-align: center;
     }
 
-    // Call to action.
+    // Call to action
     &__cta {
         text-align: center;
     }
 
-    // Results.
-    &__forecast {
+    // Results
+    &__results {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 5;
+    }
+
+    &__results-group {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 2;
     }
 
     &__title.ms-h2-title {
@@ -40,19 +48,19 @@
         margin-bottom: 0;
     }
 
-    // Separator.
+    // Separator
     &__forecast-separator {
         padding-bottom: $space * 2;
         border-bottom: 1px solid $color-border-normal;
         margin: 0 0 $space * 2 0;
     }
 
-    // Error.
+    // Error
     &__error {
         text-align: center;
     }
 
-    // Server-error.
+    // Server-error
     &__server-error {
         text-align: center;
     }
@@ -66,4 +74,7 @@
     #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
+    .ms-home-near-spots-forecast {
+        padding: $space * 4 0;
+    }
 }

@@ -163,10 +163,10 @@ const Banner: React.FC<IBanner> = (props) => {
                     className="ms-banner ms-banner-talk-to-us"
                     href="https://calendar.app.google/ZJcGjybqNqqrEh17A"
                     target="_blank">
-                    <div className="ms-banner__emoji">💬</div>
+                    <div className="ms-banner__emoji">🎤</div>
                     <div className="ms-banner__texts">
                         <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_talk_to_us_text')}</p>
-                        <p className="ms-banner__subtext ms-small-text">
+                        <p className="ms-banner__subtext ms-body-text">
                             {mondoTranslate('banner.banner_talk_to_us_subtext')}
                         </p>
                     </div>

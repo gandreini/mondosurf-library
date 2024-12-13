@@ -10,7 +10,13 @@
 .ms-list {
     &__load-more-btn {
         display: flex;
-        margin: $space * 1.5 auto 0;
+        margin: $space * 0.5 auto 0;
+    }
+
+    // Button to take all columns
+    // ...grid item fill all the available space by spanning all the columns in the grid, regardless of the number of columns
+    &__load-more-btn {
+        grid-column: 1 / -1;
     }
 }
 

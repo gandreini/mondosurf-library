@@ -1,0 +1,43 @@
+/**
+ * LATEST COMMENTS
+ *
+ * Components showing the latest comments.
+ */
+
+/* ------------------------------------ *\
+    #LATEST COMMENTS
+\* ------------------------------------ */
+.ms-latest-comments {
+    padding: $space * 2 0;
+    background-color: $color-background-ultralight;
+
+    &__title {
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 0;
+
+        a:not(:last-of-type) {
+            border-bottom: 1px solid $color-border-light;
+        }
+    }
+
+    .ms-comment:hover {
+        .ms-comment__text,
+        .ms-comment__spot-name,
+        .ms-comment__author {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-latest-comments {
+        padding: $space * 4 0;
+    }
+}

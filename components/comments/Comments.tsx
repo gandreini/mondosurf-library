@@ -1,14 +1,11 @@
 // Client
 'use client';
 
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
 import useGetFetch from 'mondosurf-library/api/useGetFetch';
 import Comment from 'mondosurf-library/components/comments/Comment';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
-import { ISurfSpotComment } from 'mondosurf-library/model/iSurfSpotComment';
+import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 
@@ -19,10 +16,6 @@ interface IComments {
 }
 
 const Comments: React.FC<IComments> = (props) => {
-    // Dayjs plugins.
-    dayjs.extend(utc);
-    dayjs.extend(timezone);
-
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
     const fetchedComments = useGetFetch(commentsQuery, {});
@@ -78,15 +71,17 @@ const Comments: React.FC<IComments> = (props) => {
 
             {/* Loaded */}
             {fetchedComments.status === 'loaded' &&
-                fetchedComments.payload.map((comment: ISurfSpotComment, key: number) => (
+                fetchedComments.payload.map((comment: IComment, key: number) => (
                     <Comment
                         key={key}
-                        commentId={comment.ID}
-                        commentText={comment.comment_text}
-                        commentAuthorName={comment.comment_author_name}
-                        commentAuthorId={comment.comment_author_id}
-                        commentDate={dayjs(comment.comment_date).format('DD-MM-YYYY HH:mm')}
+                        ID={comment.ID}
+                        comment_text={comment.comment_text}
+                        comment_author_name={comment.comment_author_name}
+                        comment_author_id={comment.comment_author_id}
+                        comment_date={comment.comment_date}
                         callback={refreshComments}
+                        allow_editing={true}
+                        commented_resource_id={Number(props.resourceId)}
                     />
                 ))}
         </ul>

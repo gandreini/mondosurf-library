@@ -15,7 +15,7 @@
 
     &__input-button {
         display: flex;
-        gap: $space;
+        gap: $space * 2;
         flex-direction: column;
         align-items: center;
     }

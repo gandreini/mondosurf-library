@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import List from 'components/List';
+import List from 'mondosurf-library/components/List';
 import useGetFetch from 'mondosurf-library/api/useGetFetch';
 import SurfSpotPreview from 'mondosurf-library/components/SurfSpotPreview';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
@@ -61,8 +61,7 @@ const SpotsList: React.FC = (props) => {
                     <p className="ms-body-text">{mondoTranslate('pro.subscription_confirmed.follow_up_2')}</p>
                     <div className="ms-grid-1-1 ms-grid-v-1" data-test="subscription-success-list">
                         <List
-                            items={fetchedSpots.payload as ISurfSpotPreview[]}
-                            renderItem={(item) => (
+                            components={fetchedSpots.payload.map((item: ISurfSpotPreview, index: number) => (
                                 <SurfSpotPreview
                                     key={item.id}
                                     {...item}
@@ -70,7 +69,7 @@ const SpotsList: React.FC = (props) => {
                                     showDirection={true}
                                     showMetadata={true}
                                 />
-                            )}
+                            ))}
                         />
                     </div>
                 </>

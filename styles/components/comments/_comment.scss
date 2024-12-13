@@ -51,6 +51,11 @@
         }
     }
 
+    &__spot-name.ms-small-text {
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+
     &__author.ms-small-text {
         font-weight: $font-weight-bold;
         color: var(--color-text);

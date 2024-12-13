@@ -14,7 +14,7 @@
 
     &__banner {
         max-width: $page-max-width;
-        margin: $space * 5 auto 0;
+        margin: $space * 4 auto;
     }
 }
 
@@ -31,6 +31,10 @@
             justify-content: center;
             align-items: center;
             box-sizing: border-box;
+        }
+
+        &__banner {
+            margin: $space * 6 auto;
         }
 
         .ms-search-form {
