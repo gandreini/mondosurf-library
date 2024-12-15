@@ -1,4 +1,4 @@
-import { appOs, getPlatform2 } from 'helpers/device.helpers';
+import { appOs, getPlatform } from 'helpers/device.helpers';
 import mixpanel from 'mixpanel-browser';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { getCookie } from 'mondosurf-library/helpers/cookies.helpers';
@@ -99,7 +99,7 @@ export class Tracker {
         const userId = state.user.userId;
         const accountType = state.user.accountType;
         const favorites = state.user.favoriteSpots !== null ? state.user.favoriteSpots.length : 0;
-        const platform = getPlatform2();
+        const platform = getPlatform();
         const os = appOs();
 
         return {

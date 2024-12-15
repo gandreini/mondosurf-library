@@ -1,9 +1,9 @@
-import List from 'mondosurf-library/components/List';
 import { isApp } from 'helpers/device.helpers';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import EmptyState from 'mondosurf-library/components/EmptyState';
 import GoodTime from 'mondosurf-library/components/GoodTime';
 import LastUpdate from 'mondosurf-library/components/LastUpdate';
+import List from 'mondosurf-library/components/List';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { limitGoodTimesToDaysRange } from 'mondosurf-library/helpers/forecast.helpers';
@@ -189,10 +189,10 @@ const HomeFavoritesForecast: React.FC = () => {
                                 {/* 5. User logged has favourites, favourites forecast has good days */}
                                 {goodTimesFiltered.length > 0 && (
                                     <List
-                                        components={goodTimesFiltered.map((item: any, index: number) => (
+                                        components={goodTimesFiltered.map((goodTime: any, index: number) => (
                                             <GoodTime
                                                 key={index}
-                                                {...item}
+                                                {...goodTime}
                                                 defaultClickBehavior={true}
                                                 context="homeFavorites"
                                             />

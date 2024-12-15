@@ -8,17 +8,17 @@ import {
     icon as LeafletIcon2,
     IconOptions,
     LatLng,
+    LatLngBounds,
+    latLngBounds,
     Map as LeafletMap,
     Marker as LeafletMarker,
     marker as LeafletMarker2,
     marker as Marker,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     markerClusterGroup as markerClusterGroup2,
-    TileLayer,
-    latLngBounds,
-    LatLngBounds
+    TileLayer
 } from 'leaflet';
-import { getUserPositionWeb } from 'mondosurf-library/helpers/geolocation.helpers';
+import { getUserLocation } from 'proxies/getUserLocation';
 import { IMAGES_URL } from 'proxies/localConstants';
 
 /**
@@ -294,7 +294,7 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
  * 
  */
 export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => void): void => {
-    getUserPositionWeb()
+    getUserLocation()
         .then((response) => {
             if (map) {
                 // Centering map on user position.
