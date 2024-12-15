@@ -18,8 +18,8 @@ import {
     latLngBounds,
     LatLngBounds
 } from 'leaflet';
-import { getUserPositionWeb } from 'mondosurf-library/helpers/geolocation.helpers';
 import { IMAGES_URL } from 'proxies/localConstants';
+import { getUserLocation } from 'proxies/getUserLocation';
 
 /**
  * Provides the right icon for each point.
@@ -294,7 +294,7 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
  * 
  */
 export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => void): void => {
-    getUserPositionWeb()
+    getUserLocation()
         .then((response) => {
             if (map) {
                 // Centering map on user position.

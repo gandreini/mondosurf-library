@@ -2,7 +2,7 @@ import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
-import { getPlatform2, isApp, isAppiOs } from 'helpers/device.helpers';
+import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
 import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -99,7 +99,7 @@ export const login = (
             email: email,
             password: password,
             device_id: deviceId,
-            platform: getPlatform2(),
+            platform: getPlatform(),
             name: name,
             picture_url: pictureUrl,
             google_auth: googleAuth,
@@ -149,7 +149,7 @@ export const logout = (accessToken: string, deviceId: string) => {
                 ', device_id: ' +
                 deviceId +
                 ', platform: ' +
-                getPlatform2() +
+                getPlatform() +
                 ', storageRefreshToken: ' +
                 storageRefreshToken
         )
@@ -162,7 +162,7 @@ export const logout = (accessToken: string, deviceId: string) => {
         data: formurlencoded({
             access_token: accessToken,
             device_id: deviceId,
-            platform: getPlatform2(),
+            platform: getPlatform(),
             refresh_token: storageRefreshToken
         }),
         headers: {
@@ -208,7 +208,7 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
             data: formurlencoded({
                 access_token: accessToken,
                 device_id: deviceId,
-                platform: getPlatform2(),
+                platform: getPlatform(),
                 refresh_token: storageRefreshToken
             }),
             headers: {
@@ -263,7 +263,7 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | nul
         data: formurlencoded({
             device_id: deviceId,
             user_id: userId,
-            platform: getPlatform2(),
+            platform: getPlatform(),
             refresh_token: storageRefreshToken
         }),
         headers: {
@@ -313,7 +313,7 @@ export const userRegister = (
             password: password,
             terms: termsConditions,
             device_id: deviceId,
-            platform: getPlatform2()
+            platform: getPlatform()
         }),
         withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
