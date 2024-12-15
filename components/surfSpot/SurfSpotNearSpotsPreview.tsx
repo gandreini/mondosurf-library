@@ -1,8 +1,8 @@
+import Button from 'mondosurf-library/components/Button';
+import List from 'mondosurf-library/components/List';
+import SurfSpotPreview from 'mondosurf-library/components/SurfSpotPreview';
 import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import SurfSpotPreview from 'mondosurf-library/components/SurfSpotPreview';
-import Button from 'mondosurf-library/components/Button';
-import ListServer from 'components/ListServer';
 
 interface ISurfSpotNearSpotsPreview {
     spotName: string;
@@ -21,19 +21,18 @@ const SurfSpotNearSpotsPreview: React.FC<ISurfSpotNearSpotsPreview> = (props) =>
             <div className="ms-surf-spot-near-spots-preview__content">
                 <div className="ms-surf-spot-near-spots-preview__left">
                     <section className="ms-surf-spot-near-spots-preview__list ms-grid-1-1">
-                        <ListServer
-                            items={props.nearSpots}
-                            renderComponent={(item) => (
+                        <List
+                            components={props.nearSpots.map((spot: ISurfSpotPreview, index: number) => (
                                 <SurfSpotPreview
-                                    key={item.id}
-                                    {...item}
-                                    countrySlug={item.countrySlug}
-                                    regionSlug={item.regionSlug}
+                                    key={spot.id}
+                                    {...spot}
+                                    countrySlug={spot.countrySlug}
+                                    regionSlug={spot.regionSlug}
                                     context="spotNearSpots"
                                     showMetadata={true}
                                     showDirection={false}
                                 />
-                            )}
+                            ))}
                         />
                     </section>
                 </div>

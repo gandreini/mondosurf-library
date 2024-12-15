@@ -8,15 +8,15 @@ import {
     icon as LeafletIcon2,
     IconOptions,
     LatLng,
+    LatLngBounds,
+    latLngBounds,
     Map as LeafletMap,
     Marker as LeafletMarker,
     marker as LeafletMarker2,
     marker as Marker,
     MarkerClusterGroup as LeafletMarkerClusterGroup,
     markerClusterGroup as markerClusterGroup2,
-    TileLayer,
-    latLngBounds,
-    LatLngBounds
+    TileLayer
 } from 'leaflet';
 import { IMAGES_URL } from 'proxies/localConstants';
 import { getUserLocation } from 'proxies/getUserLocation';

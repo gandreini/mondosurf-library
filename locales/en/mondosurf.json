@@ -270,8 +270,8 @@
       "empty_text": "No spots near you, time to plan a surf trip?",
       "empty_button": "Browse Mondo surf spots",
       "near_spots_empty": "No spots near you, time to plan a surf trip?",
-      "geolocation_unsupported": "Geolocation is not authorized or not supported on your device.\nTry enabling it in your browser's settings.",
-      "geolocation_try_again": "See local forecast",
+      "geolocation_unsupported": "Geolocation is not authorized or not supported on your device.\nEnable it in the settings and try again.",
+      "geolocation_try_again": "Try again",
       "server_error": "Ops, there was an error loading your near spots, try reloading the app"
     },
     "cta": {

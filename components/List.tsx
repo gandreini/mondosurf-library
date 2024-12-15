@@ -56,8 +56,20 @@ export default List;
 
 /* Usage example:
 
-<List items={props.spots} renderItem={(item) => <SurfSpotPreview key={item.id} {...item} />} />
-<List items={props.spots as IType[]} renderItem={(item) => <SurfSpotPreview key={item.id} {...item} />} />
-<List items={props.spots} renderItem={(item, key) => <SurfSpotPreview key={key} {...item} />} />
+<List
+    components={props.spots.map((item: ISurfSpotPreview, index: number) => (
+        <SurfSpotPreview
+            key={item.id}
+            {...item}
+            context="region"
+            showDirection={true}
+            showMetadata={true}
+        />
+    ))}
+    pageSize={4}
+    wrapperClasses="ms-home__good-days ms-grid-1-2 ms-grid-v-2"
+    dataTest="home-banners-calendar-banner"
+    buttonLabel="More Spots";
+/>
 
 */
