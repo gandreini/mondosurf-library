@@ -39,7 +39,7 @@ const LatestComments: React.FC = (props) => {
 
                 {/* Loaded */}
                 {fetchedComments.status === 'loaded' && (
-                    <ul className="ms-latest-comments__list ms-grid-1-1">
+                    <ul className="ms-latest-comments__list ms-grid-1-1" data-test="latest-comments">
                         <List
                             pageSize={4}
                             components={fetchedComments.payload.map((comment: IComment, index: number) => (
