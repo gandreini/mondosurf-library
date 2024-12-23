@@ -127,7 +127,7 @@ const HomeNearSpotsForecast: React.FC = () => {
                                                 context="homeNearSpots"
                                             />
                                         ))}
-                                        pageSize={6}
+                                        pageSize={8}
                                     />
                                 </div>
                             </div>
@@ -150,7 +150,7 @@ const HomeNearSpotsForecast: React.FC = () => {
                                                 showDirection={false}
                                             />
                                         ))}
-                                        pageSize={6}
+                                        pageSize={8}
                                     />
                                 </div>
                             </div>
