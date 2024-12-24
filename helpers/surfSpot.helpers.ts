@@ -2,6 +2,7 @@ import { returnExperienceLabel, returnLengthUnitLabel, returnTideLabel } from "m
 import { convertSizeFromMeters } from "mondosurf-library/helpers/units.helpers";
 import { oneDecimal } from "mondosurf-library/helpers/various.helpers";
 import { ISurfSpot } from "mondosurf-library/model/iSurfSpot";
+import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { mondoTranslate } from "proxies/mondoTranslate";
 
 /**
@@ -227,8 +228,33 @@ export const returnSwellSizeRange = (
     return returnString;
 }
 
-// ---
+/**
+ * Adds a "add a spot" banner to the list of surf spots at every N position.
+ * 
+ * @param {ISurfSpotPreview[]} spots - An array of surf spot previews.
+ * @returns {ISurfSpotPreview[]} A new array of surf spot previews with banners added.
+ */
+export const addBannerToSpotsList = (spots: ISurfSpotPreview[]): ISurfSpotPreview[] => {
+    const modifiedSurfSpots = spots.flatMap((item, index) => {
+        const fakeSpot: ISurfSpotPreview = {
+            id: -1, // or any unique identifier
+            name: 'Fake Spot',
+            slug: 'fake-spot',
+            country: '',
+            countrySlug: '',
+            region: '',
+            regionSlug: '',
+            isAddMissingSpot: true
+        };
 
+        return index > 0 && index % 4 === 0 ? [fakeSpot, item] : [item];
+    });
+
+    return modifiedSurfSpots;
+}
+
+
+// ---
 
 /**
  * Returns an array of readable directions (i.e. "NW", "N", "NE") given a range in degrees with a min and max.

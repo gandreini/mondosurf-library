@@ -27,4 +27,5 @@ export default interface ISurfSpotPreview {
     linkToGoodTimes?: boolean;
     forecast_update?: boolean;
     context?: 'homeNearSpots' | 'subscriptionConfirmed' | 'region' | 'spotNearSpots' | 'search';
+    isAddMissingSpot?: boolean;
 }
