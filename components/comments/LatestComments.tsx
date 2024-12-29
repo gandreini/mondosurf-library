@@ -48,7 +48,7 @@ const LatestComments: React.FC = (props) => {
                                     href={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}`}>
                                     <Comment
                                         comment_text={comment.comment_text}
-                                        comment_author_name={comment.comment_author_name.split(' ')[0]}
+                                        comment_author_name={comment.comment_author_name}
                                         comment_author_id={comment.comment_author_id}
                                         comment_date={comment.comment_date}
                                         commented_resource_id={comment.commented_resource_id}

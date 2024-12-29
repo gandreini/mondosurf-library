@@ -62,7 +62,9 @@ const Comment: React.FC<IComment> = (props) => {
                         </>
                     )}
                     <p className="ms-small-text"> by </p>
-                    <p className="ms-comment__author ms-small-text">{props.comment_author_name}</p>
+                    {props.comment_author_name && (
+                        <p className="ms-comment__author ms-small-text">{props.comment_author_name.split(' ')[0]}</p>
+                    )}
                     <p className="ms-small-text"> • </p>
                     <p className="ms-comment__date ms-small-text">
                         {dayjs(props.comment_date).format('DD-MM-YYYY HH:mm')}

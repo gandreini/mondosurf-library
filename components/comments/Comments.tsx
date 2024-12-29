@@ -76,7 +76,7 @@ const Comments: React.FC<IComments> = (props) => {
                         key={key}
                         ID={comment.ID}
                         comment_text={comment.comment_text}
-                        comment_author_name={comment.comment_author_name.split(' ')[0]}
+                        comment_author_name={comment.comment_author_name}
                         comment_author_id={comment.comment_author_id}
                         comment_date={comment.comment_date}
                         callback={refreshComments}
