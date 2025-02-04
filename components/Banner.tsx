@@ -8,13 +8,14 @@ import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers
 import { shouldShowFavoritesBanner } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { ADD_SPOT_URL } from 'proxies/localConstants';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
-    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro';
+    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro' | 'addMissingSpot';
     spotName?: string;
     spotId?: number;
     spotCalendarUrl?: string;
@@ -186,6 +187,16 @@ const Banner: React.FC<IBanner> = (props) => {
                             {mondoTranslate('banner.banner_get_pro_subtext')}
                         </p> */}
                         <div className="ms-btn ms-btn-cta">{mondoTranslate('banner.banner_get_pro_button')}</div>
+                    </div>
+                </MondoLink>
+            )}
+
+            {/* Add missing spot */}
+            {props.type === 'addMissingSpot' && (
+                <MondoLink className="ms-banner ms-banner-add-missing-spot" href={ADD_SPOT_URL} target="_blank">
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">Missing a spot?</p>
+                        <p className="ms-banner__subtext ms-body-text">Click here to add it to Mondo!</p>
                     </div>
                 </MondoLink>
             )}

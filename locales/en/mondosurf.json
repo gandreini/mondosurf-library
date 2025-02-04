@@ -74,6 +74,7 @@
     "mondo_surf_icon": "🌍 Mondo Surf",
     "profile": "Profile",
     "info": "Info",
+    "spot_guide": "Spot guide",
     "forecast": "Forecast",
     "tide": "Tide",
     "good_times": "Good Surf",
@@ -209,7 +210,7 @@
     "generic_error": "This is weird! There was an error, please try again and contact the administrator if the problem persists."
   },
   "footer": {
-    "bottom_main": "© 2024 Mondo",
+    "bottom_main": "© 2025 Mondo",
     "love": "Made with 🌊 in Tuscany"
   },
   "tide": {

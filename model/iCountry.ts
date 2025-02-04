@@ -9,4 +9,5 @@ export default interface ICountry {
     number_of_spots: number;
     regions: IRegionPreview[];
     loading?: boolean;
+    last_wp_update?: string;
 }

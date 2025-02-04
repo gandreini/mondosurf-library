@@ -46,7 +46,7 @@ const SurfSpotMap: React.FC<ISurfSpotMap> = (props) => {
                 <div className="ms-surf-spot-map__coordinates-actions">
                     <MondoLink
                         className="ms-btn"
-                        href={`http://www.google.com/maps/place/${props.latParking ? props.latParking : props.lat}/${
+                        href={`https://maps.google.com/?q=${props.latParking ? props.latParking : props.lat},${
                             props.lngParking ? props.lngParking : props.lng
                         }`}
                         title={mondoTranslate('surf_spot.open_in_google_maps')}

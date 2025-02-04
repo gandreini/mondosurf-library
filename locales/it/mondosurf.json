@@ -74,6 +74,7 @@
     "mondo_surf_icon": "🌍 Mondo Surf",
     "profile": "Profile",
     "info": "Info",
+    "surf_guide": "Surf guide",
     "forecast": "Forecast",
     "good_times": "Good Times",
     "forecast_edit": "Forecast edit",
@@ -187,7 +188,7 @@
   "footer": {
     "title": "Mondo",
     "subtitle": "Your favorite surf spots' forecast in your inbox and calendar. Mondo is a growing worldwide surf spot atlas and forecast service.",
-    "bottom_main": "@ 2024 Mondo",
+    "bottom_main": "@ 2025 Mondo",
     "love": "Made with 🌊 in Tuscany"
   },
   "tide": {

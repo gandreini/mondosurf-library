@@ -50,8 +50,12 @@
         display: flex;
         cursor: pointer;
 
+        .mondo-icon-add-calendar:before {
+            color: var(--color-gray-05);
+        }
+
         &:hover {
-            .mondo-icon {
+            .mondo-icon-add-calendar:before {
                 color: var(--color-text-link);
             }
         }

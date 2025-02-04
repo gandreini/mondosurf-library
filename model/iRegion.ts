@@ -21,4 +21,5 @@ export default interface IRegion {
     spots_direction?: number[];
     spots_bottom?: number[];
     surf_spots: ISurfSpotPreview[];
+    last_wp_update?: string;
 }

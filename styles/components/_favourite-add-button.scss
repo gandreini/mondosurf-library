@@ -22,7 +22,7 @@
     span {
         transition: all $transition-durations;
     }
-    // Add.
+    // Add
     &.ms-favourite-add-button-add {
         span {
             color: var(--color-gray-05);
@@ -32,7 +32,7 @@
         }
     }
 
-    // Add for not logged users.
+    // Add for not logged users
     &.ms-favourite-add-button-add-not-logged {
         span {
             color: var(--color-gray-05);
@@ -42,7 +42,7 @@
         }
     }
 
-    // Remove.
+    // Remove
     &.ms-favourite-add-button-remove {
         span {
             color: var(--color-favourites);
