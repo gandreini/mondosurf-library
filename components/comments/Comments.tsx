@@ -18,22 +18,22 @@ interface IComments {
 const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
-    const fetchedComments = useGetFetch(commentsQuery, {});
+    const fetchedComments = useGetFetch(commentsQuery);
 
     // Fetch comments
     useEffect(() => {
         setCommentsQuery('comments/' + props.resourceId);
     }, [props.resourceId]);
 
-    // Refresh comments
-    const refreshComments = () => {
-        setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
-    };
-
     // Updates the number of comments used by the loader
     useEffect(() => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
+
+    // Refresh comments
+    const refreshComments = () => {
+        setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
+    };
 
     return (
         <ul className="ms-comments">
@@ -76,7 +76,9 @@ const Comments: React.FC<IComments> = (props) => {
                         key={key}
                         ID={comment.ID}
                         comment_text={comment.comment_text}
-                        comment_author_name={comment.comment_author_name.split(' ')[0]}
+                        comment_author_name={
+                            comment.comment_author_name ? comment.comment_author_name.split(' ')[0] : ''
+                        }
                         comment_author_id={comment.comment_author_id}
                         comment_date={comment.comment_date}
                         callback={refreshComments}

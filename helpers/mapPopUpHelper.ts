@@ -1,5 +1,5 @@
+import { returnBottomLabel, returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { returnBottomLabel, returnDirectionLabel } from './labels.helpers';
 
 /**
  * Creates the popover that is displayed when clicking on a marker.
@@ -13,7 +13,7 @@ export function createPopUp(feature: any, layer: any, router: any): void {
     mondoLeafletPopup += '<div class="ms-map-tooltip__title">' + feature.properties.nm + '</div>';
     mondoLeafletPopup += '<div class="ms-map-tooltip__details">';
 
-    if (feature.properties.di !== '' && feature.properties.di !== '0' && feature.properties.di !== null) {
+    if (feature.properties.di !== '' && feature.properties.di !== '0' && feature.properties.di !== null && feature.properties.di !== undefined) {
         mondoLeafletPopup +=
             '<span class="ms-label-value"><span class="ms-label">' +
             mondoTranslate('basics.direction') +
@@ -22,7 +22,7 @@ export function createPopUp(feature: any, layer: any, router: any): void {
             '</span></span>';
     }
 
-    if (feature.properties.bo !== '' && feature.properties.bo !== '0' && feature.properties.bo !== null) {
+    if (feature.properties.bo !== '' && feature.properties.bo !== '0' && feature.properties.bo !== null && feature.properties.bo !== undefined) {
         mondoLeafletPopup +=
             '<span class="ms-label-value"><span class="ms-label">' +
             mondoTranslate('basics.bottom') +

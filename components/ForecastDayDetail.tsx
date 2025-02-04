@@ -39,10 +39,10 @@ interface IForecastDayDetail {
 }
 
 const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
-    // React router.
+    // React router
     const router = useRouterProxy();
 
-    // Dayjs plugins.
+    // Dayjs plugins
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -80,7 +80,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
         if (props.lastUpdate) setLastUpdate(props.lastUpdate);
 
-        // Cleanup here.
+        // Cleanup here
         return function cleanup() {
             setSurfSpotForecastQuery('');
         };

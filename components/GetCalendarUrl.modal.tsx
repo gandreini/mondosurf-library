@@ -2,19 +2,19 @@
 'use client';
 
 import { postApiAuthCall } from 'mondosurf-library/api/api';
-import toastService from 'mondosurf-library/services/toastService';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
+import modalService from 'mondosurf-library/services/modalService';
+import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { copyToClipboard } from 'proxies/copyToClipboard.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import modalService from 'mondosurf-library/services/modalService';
 
 interface IGetCalendarUrl {
     spotName: string;
@@ -23,20 +23,20 @@ interface IGetCalendarUrl {
 }
 
 const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
-    // Redux.
+    // Redux
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
     const googleCalTutorial = useSelector((state: RootState) => state.appConfig.tutorial_video_url_google_cal);
     const appleCalTutorial = useSelector((state: RootState) => state.appConfig.tutorial_video_url_apple_cal);
 
-    // Used to be sure spotId is a number.
+    // Used to be sure spotId is a number
     const spotId = typeof props.spotId === 'number' ? props.spotId : parseInt(props.spotId);
 
     const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl ? props.calendarUrl : '');
     const [calendarUrlRetrieved, setCalendarUrlRetrieved] = useState<boolean>(false);
     const [displayFavoriteCheckbox, setDisplayFavoriteCheckbox] = useState<boolean>(true);
 
-    // React hook form.
+    // React hook form
     const { register, getValues } = useForm({
         defaultValues: {
             addToFavoritesCheck: true

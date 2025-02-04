@@ -53,7 +53,7 @@ interface IMap {
 }
 
 const Map: React.FC<IMap> = (props: IMap) => {
-    // React router.
+    // React router
     const router = useRouterProxy();
 
     // Constants
