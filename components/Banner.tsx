@@ -18,7 +18,6 @@ interface IBanner {
     type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro' | 'addMissingSpot';
     spotName?: string;
     spotId?: number;
-    spotCalendarUrl?: string;
 }
 
 const Banner: React.FC<IBanner> = (props) => {
@@ -47,7 +46,7 @@ const Banner: React.FC<IBanner> = (props) => {
     // On click on calendar banner
     const onClickCalendarBanner = () => {
         if (props.spotId && props.spotName) {
-            openCalendarModal(props.spotId, props.spotName, props.spotCalendarUrl);
+            openCalendarModal(props.spotId, props.spotName);
             // Tracking
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
                 spotId: props.spotId,

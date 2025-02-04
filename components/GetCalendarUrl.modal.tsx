@@ -19,7 +19,6 @@ import { useSelector } from 'react-redux';
 interface IGetCalendarUrl {
     spotName: string;
     spotId: number;
-    calendarUrl?: string;
 }
 
 const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
@@ -32,7 +31,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     // Used to be sure spotId is a number
     const spotId = typeof props.spotId === 'number' ? props.spotId : parseInt(props.spotId);
 
-    const [calendarUrl, setCalendarUrl] = useState<string>(props.calendarUrl ? props.calendarUrl : '');
+    const [calendarUrl, setCalendarUrl] = useState<string>('');
     const [calendarUrlRetrieved, setCalendarUrlRetrieved] = useState<boolean>(false);
     const [displayFavoriteCheckbox, setDisplayFavoriteCheckbox] = useState<boolean>(true);
 
@@ -44,29 +43,27 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     });
 
     // Retrieves the calendar url from the API, if empty
-    // This happens when the user opens the modal before being logged in
     useEffect(() => {
-        if (!calendarUrl || calendarUrl === '') {
-            // Call to "calendar-url" API to retrieve the unique URL of the calendar
-            postApiAuthCall('calendar-url', accessToken, {
-                spot_id: spotId
-            })
-                .then((response: any) => {
-                    if (response && response.status === 200 && response.data.success === true) {
-                        setCalendarUrl(response.data.calendar_url);
-                        setCalendarUrlRetrieved(true);
-                    } else {
-                        toastService.error(mondoTranslate('toast.calendar.error_retrieving_calendar_url'));
-                        setCalendarUrlRetrieved(true);
-                    }
-                })
-                .catch(function (error) {
+        // Add check to prevent duplicate calls
+        if (calendarUrlRetrieved) return;
+
+        // Call to "calendar-url" API to retrieve the unique URL of the calendar
+        postApiAuthCall('calendar-url', accessToken, {
+            spot_id: spotId
+        })
+            .then((response: any) => {
+                if (response && response.status === 200 && response.data.success === true) {
+                    setCalendarUrl(response.data.calendar_url);
+                    setCalendarUrlRetrieved(true);
+                } else {
                     toastService.error(mondoTranslate('toast.calendar.error_retrieving_calendar_url'));
                     setCalendarUrlRetrieved(true);
-                });
-        } else {
-            setCalendarUrlRetrieved(true);
-        }
+                }
+            })
+            .catch(function (error) {
+                toastService.error(mondoTranslate('toast.calendar.error_retrieving_calendar_url'));
+                setCalendarUrlRetrieved(true);
+            });
 
         if (favoriteSpots && checkIfSpotIdIsInFavorites(favoriteSpots, spotId)) {
             setDisplayFavoriteCheckbox(false);
@@ -174,7 +171,8 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     return (
         <div className="ms-get_calendar_url_modal">
             {/* User has no permission to use the calendar */}
-            {!hasProPermissions() && (
+            {/* User has no permission to use the calendar */}
+            {!hasProPermissions() && calendarUrlRetrieved && (
                 <>
                     <p className="ms-body-text">
                         {mondoTranslate('calendar.get_calendar_url_modal.error_not_allowed')}

@@ -805,7 +805,7 @@
       "tutorial": "Most common calendar applications allow to add external calendars. Check the videos below to see how to add a calendar on Google Calendar and Apple calendar",
       "tutorial_link_1": "How to add a calendar on Google Calendar",
       "tutorial_link_2": "How to add a calendar on Apple Calendar",
-      "error_not_allowed": "Sorry, you're not allowed to use the calendars",
+      "error_not_allowed": "You're not allowed to use the calendars, try to log in again or subscribe to the Pro membership",
       "error_no_calendar_url": "It was not possible to retrieve the calendar URL"
     }
   },

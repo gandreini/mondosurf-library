@@ -2,6 +2,7 @@ import IGoodTime from 'mondosurf-library/model/iGoodTime';
 import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 import IVideoPreview from 'mondosurf-library/model/iVideoPreview';
 
+// calendar_url is deprecated
 export interface ISurfSpot {
     id: number;
     name: string;
@@ -23,7 +24,6 @@ export interface ISurfSpot {
     lng_parking?: number;
     description?: string;
     timezone: string;
-    calendar_url: string;
     direction?: string;
     bottom?: string;
     swell_direction?: string;
@@ -63,6 +63,7 @@ export interface ISurfSpot {
     forecast_conditions_wind_speed_max?: number;
     forecast_conditions_on_shore_wind_speed_max?: number;
     last_wp_update?: string;
+    calendar_url?: string;
 }
 
 export interface ISurfSpotWebcam {
