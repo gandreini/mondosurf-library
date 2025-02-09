@@ -18,8 +18,8 @@ import {
     markerClusterGroup as markerClusterGroup2,
     TileLayer
 } from 'leaflet';
-import { IMAGES_URL } from 'proxies/localConstants';
 import { getUserLocation } from 'proxies/getUserLocation';
+import { IMAGES_URL } from 'proxies/localConstants';
 
 /**
  * Provides the right icon for each point.
@@ -45,7 +45,7 @@ export function createMarker(
                 `${baseUrl}map-pin.svg`;
 
     // Icon class
-    const surfQuality = userIsPro === true ? properties.gd : properties.gds;
+    const surfQuality = properties.gd;
     const iconClass = 'quality-' + surfQuality;
 
     const icon = LeafletDivIcon({
@@ -250,7 +250,7 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
                 let highestMarkerQuality = -1;
                 for (let i = 0; i < cluster.getAllChildMarkers().length; i++) {
                     const currentMarker = cluster.getAllChildMarkers()[i];
-                    const spotSurfQuality = userIsPro === true ? currentMarker.feature!.properties.gd : currentMarker.feature!.properties.gds;
+                    const spotSurfQuality = currentMarker.feature!.properties.gd;
                     if (spotSurfQuality !== "null" && spotSurfQuality !== null && Number(spotSurfQuality) > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
 
                 }

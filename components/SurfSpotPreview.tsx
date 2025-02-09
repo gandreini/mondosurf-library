@@ -1,3 +1,4 @@
+import Banner from 'mondosurf-library/components/Banner';
 import FavoriteAddButton from 'mondosurf-library/components/FavoriteAddButton';
 import Icon from 'mondosurf-library/components/Icon';
 import SurfSpotDirection from 'mondosurf-library/components/SurfSpotDirection';
@@ -11,7 +12,6 @@ import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { FRONTEND_URL } from 'proxies/localConstants';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import Banner from 'mondosurf-library/components/Banner';
 
 const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) => {
     // Returns the root class of the component
