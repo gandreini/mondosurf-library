@@ -1,5 +1,5 @@
-import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import jwt_decode from 'jwt-decode';
+import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
 import { RootState } from 'mondosurf-library/redux/store';
 import { REFRESH_TOKEN_INTERVAL_SECONDS } from 'proxies/localConstants';
@@ -7,7 +7,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const AuthTokenExpiryCheck: React.FC = (props) => {
+// Never used
+
+/* const AuthTokenExpiryCheck: React.FC = (props) => {
     const tokenRefreshInterval: number = parseInt(REFRESH_TOKEN_INTERVAL_SECONDS!) * 1000;
     const logged = useSelector((state: RootState) => state.user.logged);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
@@ -35,4 +37,4 @@ const AuthTokenExpiryCheck: React.FC = (props) => {
 
     return <></>;
 };
-export default AuthTokenExpiryCheck;
+export default AuthTokenExpiryCheck; */

@@ -1,6 +1,6 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { isApp } from 'helpers/device.helpers';
-import { callApi } from 'mondosurf-library/api/api';
+import { callApi, callApiAuth } from 'mondosurf-library/api/api';
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import EmptyState from 'mondosurf-library/components/EmptyState';
 import GoodTime from 'mondosurf-library/components/GoodTime';
@@ -25,45 +25,16 @@ import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-/*
-List of statuses to test:
-
-1. User logged but has no favourites
-- !favoriteSpots || favoriteSpots.length === 0
-
-2. User logged has favourites, favourites forecast loading
-- favoriteSpots.length > 0 && favoriteSpots != null
-- fetchedFavoriteSpotsForecast.status === 'loading' || fetchedFavoriteSpotsForecast.status === 'init'
-
-3. User logged has favourites, favourites being filtered
-- favoriteSpots.length > 0 && favoriteSpots != null
-- fetchedFavoriteSpotsForecast.status === 'loaded'
-- favoritesArrayFiltered === false
-
-4. User logged has favourites, favourites forecast is empty
-- favoriteSpots.length > 0 && favoriteSpots != null
-- fetchedFavoriteSpotsForecast.status === 'loaded'
-- favoritesArrayFiltered === true
-- goodTimesFiltered.length === 0
-
-5. User logged has favourites, favourites forecast has good days
-- favoriteSpots.length > 0 && favoriteSpots != null
-- fetchedFavoriteSpotsForecast.status === 'loaded'
-- favoritesArrayFiltered === true
-- goodTimesFiltered.length > 0
-
-6. Error retrieving forecast.
-
-*/
-
-const HomeFavoritesForecast: React.FC = () => {
+const HomeFavoritesForecast2: React.FC = () => {
     // Redux
-    const userLogged = useSelector((state: RootState) => state.user.logged);
-    const accessToken = useSelector((state: RootState) => state.user.accessToken);
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
-    const storageRefreshToken = useSelector((state: RootState) => state.user.capacitorRefreshToken); // Used by ios and android
 
+    // React query
     const queryClient = useQueryClient();
+
+    const [ui, setUi] = useState<
+        'loading' | 'noFavorites' | 'favoritesLoading' | 'favoritesForecastEmpty' | 'favoritesForecast' | 'error'
+    >('loading');
 
     // This is switched to true when the good days are loaded and have been filtered to hide the ones in the past
     const [favoritesArrayFiltered, setFavoritesArrayFiltered] = useState<boolean>(false);
@@ -72,33 +43,49 @@ const HomeFavoritesForecast: React.FC = () => {
     const [goodTimesFiltered, setGoodTimesFiltered] = useState<IGoodTime[]>([]);
     const fetchedFavoriteSpotsForecast = useAuthGetFetch(favouriteSpotsQuery, {}, true);
 
-    useEffect(() => {
-        // Launches the actual query to the API
-        if (isApp()) {
-            // App: we also check if the Capacitor Refresh Token exists, before contacting the API
-            if (
-                accessToken &&
-                storageRefreshToken !== '' &&
-                userLogged === 'yes' &&
-                favoriteSpots != null &&
-                favoriteSpots.length > 0
-            ) {
-                setFavoriteSpotsQuery('user-favourites-forecast');
-            }
-        } else {
-            // Web: data check before contacting the API
-            if (accessToken && userLogged === 'yes' && favoriteSpots != null && favoriteSpots.length > 0) {
-                setFavoriteSpotsQuery('user-favourites-forecast');
-            }
-        }
+    // const [forecastData, setForecastData] = useState<ISurfSpot | null>(null);
+    // const [limitedGoodTimes, setLimitedGoodTimes] = useState<IGoodTime[] | null>(null);
 
-        // Tracking: no favorites
+    // Fetch favorites good times
+    // const { isPending, isError, data, error } = useQuery({
+    const favoritesQuery = useQuery({
+        queryKey: ['favoritesForecast'],
+        queryFn: () => callApiAuth('user-favourites-forecast', 'GET', []),
+        staleTime: FORECAST_STALE_TIME,
+        gcTime: FORECAST_GARBAGE_COLLECTOR_TIME
+    });
+
+    useEffect(() => {
+        // No favorites
         if (favoriteSpots === null || favoriteSpots.length === 0) {
+            setUi('noFavorites');
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.HomeFavsGTsShow, {
                 favorites: 0
             });
         }
-    }, [accessToken, userLogged, favoriteSpots, storageRefreshToken]);
+    }, [favoriteSpots]);
+
+    useEffect(() => {
+        // Error
+        if (favoriteSpots !== null && favoriteSpots.length > 0 && favoritesQuery.isError) {
+            setUi('error');
+        }
+
+        // Loading
+        if (favoriteSpots !== null && favoriteSpots.length > 0 && favoritesQuery.isPending) {
+            setUi('favoritesLoading');
+        }
+
+        // Data available
+        if (favoriteSpots !== null && favoriteSpots.length > 0 && favoritesQuery.data) {
+            setUi('favoritesLoading');
+            console.log(favoritesQuery);
+            /* const newLimitedGoodTimes = limitGoodTimesToDaysRange(favoritesQuery.data.good_times);
+            if (JSON.stringify(newLimitedGoodTimes) !== JSON.stringify(limitedGoodTimes)) {
+                setLimitedGoodTimes(newLimitedGoodTimes);
+            } */
+        }
+    }, [favoritesQuery]);
 
     useEffect(() => {
         if (fetchedFavoriteSpotsForecast.status === 'loaded') {
@@ -135,9 +122,7 @@ const HomeFavoritesForecast: React.FC = () => {
         }
     }, [fetchedFavoriteSpotsForecast]);
 
-    /**
-     * Tracking: Handles the events tracking.
-     */
+    // Tracking
     const trackOnLoad = (goodTimesLength: number, favorites: ISurfSpotPreview[] | null) => {
         if (goodTimesLength === 0) {
             Tracker.trackEvent(['mp', 'ga'], TrackingEvent.HomeFavsGTsShow, {
@@ -155,8 +140,8 @@ const HomeFavoritesForecast: React.FC = () => {
     return (
         <div className="ms-home-favorites-spots-forecast">
             <div className="ms-desktop-max-width ms-side-spacing">
-                {/* 1. User logged but has no favourites. */}
-                {(!favoriteSpots || favoriteSpots.length === 0) && (
+                {/* User has no favourites. */}
+                {ui === 'noFavorites' && (
                     <div
                         className="ms-home-favorites-spots-forecast__no-favourites ms-centered ms-max-width"
                         data-test="home-favorites-forecast-no-favs">
@@ -172,15 +157,12 @@ const HomeFavoritesForecast: React.FC = () => {
                     </div>
                 )}
 
-                {/* 2. User logged has favourites, favourites forecast loading */}
-                {(fetchedFavoriteSpotsForecast.status === 'loading' ||
-                    fetchedFavoriteSpotsForecast.status === 'init') &&
-                    favoriteSpots != null &&
-                    favoriteSpots.length > 0 && (
-                        <div className="ms-home-favorites-spots-forecast__loading">
-                            <Loader />
-                        </div>
-                    )}
+                {/* Has favourites, favourites forecast loading */}
+                {ui === 'favoritesLoading' && (
+                    <div className="ms-home-favorites-spots-forecast__loading">
+                        <Loader />
+                    </div>
+                )}
 
                 {/* 3. User logged has favourites, favourites being filtered */}
                 {fetchedFavoriteSpotsForecast.status === 'loaded' &&
@@ -250,18 +232,16 @@ const HomeFavoritesForecast: React.FC = () => {
                         </div>
                     )}
 
-                {/* Logged but error retrieving favourites */}
-                {favoriteSpots != null &&
-                    favoriteSpots.length > 0 &&
-                    fetchedFavoriteSpotsForecast.status === 'error' && (
-                        <div className="ms-home-favorites-spots-forecast__error ms-centered ms-max-width">
-                            <p className="ms-home-favorites-spots-forecast__error-text ms-body-text">
-                                {mondoTranslate('home.favourites.error')}
-                            </p>
-                        </div>
-                    )}
+                {/* Error retrieving favourites */}
+                {ui === 'error' && (
+                    <div className="ms-home-favorites-spots-forecast__error ms-centered ms-max-width">
+                        <p className="ms-home-favorites-spots-forecast__error-text ms-body-text">
+                            {mondoTranslate('home.favourites.error')}
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
 };
-export default HomeFavoritesForecast;
+export default HomeFavoritesForecast2;

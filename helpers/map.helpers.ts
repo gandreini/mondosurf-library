@@ -45,11 +45,11 @@ export function createMarker(
                 `${baseUrl}map-pin.svg`;
 
     // Icon class
-    const surfQuality = properties.gd;
-    const iconClass = 'quality-' + surfQuality;
+    const surfQuality = extractSurfQualityFromGeojsonFeature(properties.gd, userIsPro);
+    const iconClass = 'quality-' + surfQuality.toString();
 
     const icon = LeafletDivIcon({
-        html: surfQuality !== null && Number(surfQuality) >= 0 ? `
+        html: surfQuality >= 0 ? `
         <div class="ms-map-marker-icon ${iconClass}"> 
             <img class="ms-map-marker-icon__image" src="${iconUrl}" alt="${properties.nm}">
             <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -250,8 +250,8 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
                 let highestMarkerQuality = -1;
                 for (let i = 0; i < cluster.getAllChildMarkers().length; i++) {
                     const currentMarker = cluster.getAllChildMarkers()[i];
-                    const spotSurfQuality = currentMarker.feature!.properties.gd;
-                    if (spotSurfQuality !== "null" && spotSurfQuality !== null && Number(spotSurfQuality) > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
+                    const spotSurfQuality = extractSurfQualityFromGeojsonFeature(currentMarker.feature!.properties.gd, userIsPro);
+                    if (spotSurfQuality > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
 
                 }
                 return LeafletDivIcon({
@@ -320,4 +320,16 @@ export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (out
                 if (error.code === 3) callbackFunction('TIMEOUT');
             }
         });
+}
+
+/**
+ * Extracts the surf quality from a GeoJSON feature based on the user's pro status, eg [1,0]
+ *
+ * @param {(number | null)[]} gd - An array containing surf quality values, which can be numbers or null.
+ * @param {boolean | 'checking'} userIsPro - A flag indicating if the user is a pro (true) or not (false), or in a checking state.
+ * @returns {string} The surf quality as a string, or "-1" if the value is null.
+ */
+const extractSurfQualityFromGeojsonFeature = (gd: (number | null)[], userIsPro: boolean | 'checking'): number => {
+    const index = userIsPro === true ? 0 : 1; // Determine the index based on userIsPro
+    return gd[index] !== null ? gd[index] as number : -1; // Return the value or "-1" if null
 }

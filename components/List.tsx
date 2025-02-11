@@ -12,8 +12,8 @@ interface IList {
     // renderComponent: (item: T, key: number) => React.ReactNode; // A function is passed that will render each item in the 'items' array.
 }
 
-// It si not possible to pass <T>, it will generate some JSX errors.
-// Alternatives are <T extends unknown> or <T extends {}>.
+// It is not possible to pass <T>, it will generate some JSX errors
+// Alternatives are <T extends unknown> or <T extends {}>
 const List = (props: IList) => {
     const totalItems = props.components.length;
     const [displayedItems, setDisplayedItems] = useState<number>(props.pageSize ? props.pageSize : totalItems);

@@ -3,7 +3,6 @@ interface IRepeater<T> {
     repetitions: number;
 }
 
-// Component.
 const Repeater = <T,>(props: IRepeater<T>) => {
     const repetitionsArray = setRepeaterArray(props.repetitions);
     return <>{repetitionsArray.map((value: number, key: number) => props.children)}</>;

@@ -20,8 +20,7 @@ interface IAxiosState {
 // Note: before calling this be sure to verify that the user is logged (if needed) in and the URL is defined.
 
 export default function useAuthGetFetch(url: string, params?: any, needsAuth: boolean = false) {
-
-    // Redux.
+    // Redux
     const userLogged = useSelector((state: RootState) => state.user.logged);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
     const storageRefreshToken = useSelector((state: RootState) => state.user.capacitorRefreshToken); // Used by ios and android.
@@ -79,7 +78,7 @@ export default function useAuthGetFetch(url: string, params?: any, needsAuth: bo
             if (needsAuth === true && accessToken && userLogged === 'yes') {
                 const decodedToken: IAccessToken = jwt_decode(accessToken);
 
-                if (Math.floor(Date.now() / 1000) > (decodedToken.exp - 1)) {
+                if (Math.floor(Date.now() / 1000) > (decodedToken.exp - 60)) {
                     // Token is expired: 100 seconds to anticipate the renewal of the token
                     setState({ ...state, status: "loading" });
                     refreshToken(accessToken, deviceId)
