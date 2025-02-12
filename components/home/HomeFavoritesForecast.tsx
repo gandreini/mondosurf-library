@@ -114,7 +114,8 @@ const HomeFavoritesForecast: React.FC = () => {
                 if (goodTime.surf_spot_id) {
                     queryClient.prefetchQuery({
                         queryKey: ['spotGuide' + goodTime.surf_spot_id],
-                        queryFn: () => callApi('surf-spot/guide/' + goodTime.surf_spot_id, 'GET', []),
+                        queryFn: () =>
+                            callApi(PUBLIC_API_URL_V1! + 'surf-spot/guide/' + goodTime.surf_spot_id, 'GET', []),
                         staleTime: STABLE_STALE_TIME,
                         gcTime: STABLE_GARBAGE_COLLECTOR_TIME
                     });
@@ -124,7 +125,8 @@ const HomeFavoritesForecast: React.FC = () => {
                                 ? 'spotForecastPro' + goodTime.surf_spot_id
                                 : 'spotForecast' + goodTime.surf_spot_id
                         ],
-                        queryFn: () => callApi('surf-spot/forecast/' + goodTime.surf_spot_id, 'GET', []),
+                        queryFn: () =>
+                            callApi(PUBLIC_API_URL_V1! + 'surf-spot/forecast/' + goodTime.surf_spot_id, 'GET', []),
                         staleTime: FORECAST_STALE_TIME,
                         gcTime: FORECAST_GARBAGE_COLLECTOR_TIME
                     });
