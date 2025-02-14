@@ -1,4 +1,4 @@
-import { callApi } from "mondosurf-library/api/api";
+import { callApiNew } from "mondosurf-library/api/api";
 import { login } from "mondosurf-library/helpers/auth.helpers";
 import { generateSecurePassword } from "mondosurf-library/helpers/user.helpers";
 import modalService from "mondosurf-library/services/modalService";
@@ -41,9 +41,9 @@ export const handleWebGoogleSignIn = (response: any, deviceId: string, callback?
     const decodedToken = JSON.parse(atob(credential.split('.')[1]));
 
     // Verification of the credential on the server
-    callApi(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential })
+    callApiNew(JWT_API_URL! + 'verify-google-token', 'POST', { id_token: credential }, {}, false, true)
         .then((response) => {
-            if (response.data.success === true) {
+            if (response.success === true) {
                 // The password is only used if a new user is created
                 login(
                     decodedToken.email,
@@ -55,7 +55,7 @@ export const handleWebGoogleSignIn = (response: any, deviceId: string, callback?
                     decodedToken.sub
                 )
                     .then((response) => {
-                        if (response && response.data) {
+                        if (response) {
                             modalService.closeModal();
                             toastService.success(
                                 mondoTranslate('auth.welcome_back', { name: response.data.user_name })

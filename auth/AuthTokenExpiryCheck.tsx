@@ -29,7 +29,7 @@ import { useSelector } from 'react-redux';
     const checkToken = () => {
         if (accessToken && logged === 'yes') {
             const decodedToken: IAccessToken = jwt_decode(accessToken);
-            if (Math.floor(Date.now() / 1000) > decodedToken.exp) {
+            if (Math.floor(Date.now() / 1000) > decodedToken.exp - 60) {
                 refreshToken(accessToken, deviceId);
             }
         }

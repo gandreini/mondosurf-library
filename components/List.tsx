@@ -1,7 +1,7 @@
 'use client';
 
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 interface IList {
     pageSize?: number;
@@ -31,12 +31,14 @@ const List = (props: IList) => {
     return (
         <>
             {!props.wrapperClasses &&
-                props.components.slice(0, displayedItems).map((component, index) => <>{component}</>)}
+                props.components
+                    .slice(0, displayedItems)
+                    .map((component, key) => <React.Fragment key={key}>{component}</React.Fragment>)}
 
             {props.wrapperClasses && (
                 <div className={props.wrapperClasses} {...(props.dataTest && { 'data-test': props.dataTest })}>
-                    {props.components.slice(0, displayedItems).map((component, index) => (
-                        <>{component}</>
+                    {props.components.slice(0, displayedItems).map((component, key) => (
+                        <React.Fragment key={key}>{component}</React.Fragment>
                     ))}
                 </div>
             )}
@@ -53,23 +55,3 @@ const List = (props: IList) => {
     );
 };
 export default List;
-
-/* Usage example:
-
-<List
-    components={props.spots.map((item: ISurfSpotPreview, index: number) => (
-        <SurfSpotPreview
-            key={item.id}
-            {...item}
-            context="region"
-            showDirection={true}
-            showMetadata={true}
-        />
-    ))}
-    pageSize={4}
-    wrapperClasses="ms-home__good-days ms-grid-1-2 ms-grid-v-2"
-    dataTest="home-banners-calendar-banner"
-    buttonLabel="More Spots";
-/>
-
-*/
