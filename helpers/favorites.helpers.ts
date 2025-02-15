@@ -1,4 +1,5 @@
 import { openModalToExecuteProAction } from "features/modal/modal.helpers";
+import { queryClient } from "index";
 import { postApiAuthCall } from "mondosurf-library/api/api";
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
@@ -58,7 +59,7 @@ export const checkPermissionsAndAddSpotToFavorites = (spotId: number, spotName: 
 */
 export const addSpotToFavourites = (spotId: number, spotName: string): Promise<any> => {
     const state = store.getState();
-    const favoriteSpots: ISurfSpotPreview[] | null = state.user.favoriteSpots // Redux
+    const favoriteSpots: ISurfSpotPreview[] | null = state.user.favoriteSpots // Redux    
 
     // The user hasn't permission to add favourites
     // Not very useful if "checkPermissionsAndAddSpotToFavorites" is called before
@@ -87,6 +88,7 @@ export const addSpotToFavourites = (spotId: number, spotName: string): Promise<a
                     store.dispatch(setFavoriteSpots(response.data.favourites_surf_spots)); // To redux state
                     toastService.success(spotName + ' added to your favourites!', 'data-test-toast-favorite-added');
                     deleteLocalStorageData('suspended_favorite');
+                    queryClient.invalidateQueries({ queryKey: ['favoritesForecast'] }); // Reset React Query queryKey
                     resolve(true);
                 } else {
                     toastService.error(mondoTranslate('toast.favourites.added_to_favourites_error'));
@@ -114,7 +116,7 @@ export const addSpotToFavourites = (spotId: number, spotName: string): Promise<a
 */
 export const removeSpotFromFavourites = (spotId: number, spotName: string) => {
     const state = store.getState();
-    const favoriteSpots = state.user.favoriteSpots // Redux.
+    const favoriteSpots = state.user.favoriteSpots // Redux
 
     // Ensure spotId is a number
     spotId = typeof spotId === 'string' ? parseInt(spotId) : spotId; // Why do I have to do this?
@@ -135,6 +137,7 @@ export const removeSpotFromFavourites = (spotId: number, spotName: string) => {
                 if (response && response.status === 200 && response.data.success === true) {
                     store.dispatch(setFavoriteSpots(response.data.favourites_surf_spots)); // To redux state
                     toastService.success(mondoTranslate('toast.favourites.removed_from_favourites', { spotName: spotName }), 'data-test-toast-favorite-removed');
+                    queryClient.invalidateQueries({ queryKey: ['favoritesForecast'] }); // Reset React Query queryKey
                     resolve(true);
                 } else {
                     toastService.error(mondoTranslate('toast.favourites.removed_from_favourites_error'));

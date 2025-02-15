@@ -6,7 +6,7 @@ import { refreshToken } from 'mondosurf-library/helpers/auth.helpers';
 import IAccessToken from 'mondosurf-library/model/iAccessToken';
 import { store } from 'mondosurf-library/redux/store';
 import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
-import { JWT_API_URL, PUBLIC_API_URL_V1 } from 'proxies/localConstants';
+import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 
 /**
  * Fires an authorized POST api call to a given endpoint.
@@ -196,7 +196,6 @@ export const callApi = async (url: string, method: "GET" | "POST", params: objec
         .then(response => response)
         .catch(error => error);
 }
-
 
 /**
  * Makes an API call to a specified endpoint with the given method and parameters.
