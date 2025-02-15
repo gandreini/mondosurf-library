@@ -1,6 +1,6 @@
 import { openModalToExecuteProAction } from "features/modal/modal.helpers";
-import { queryClient } from "index";
 import { postApiAuthCall } from "mondosurf-library/api/api";
+import { queryClient } from "mondosurf-library/components/QueryClientProviderWrapper";
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { store } from "mondosurf-library/redux/store";
