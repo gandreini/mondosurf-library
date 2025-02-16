@@ -289,7 +289,7 @@
       "title": "Your forecast",
       "no_good_times_icon": "🧘‍♀️",
       "no_good_times_text": "Sorry, no good surf forecast for your favorite spots",
-      "error": "Ops, there was an error retrieving the forecast for your favorites spots, try reloading the app."
+      "error": "There was an error retrieving the forecast for your favorites spots, try reloading the app."
     },
     "pro_cta": {
       "register": {
