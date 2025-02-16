@@ -1,12 +1,14 @@
 import { openModalToExecuteProAction } from "features/modal/modal.helpers";
-import { postApiAuthCall } from "mondosurf-library/api/api";
+import { callApiNew, postApiAuthCall } from "mondosurf-library/api/api";
 import { queryClient } from "mondosurf-library/components/QueryClientProviderWrapper";
+import { getForecastStaleTime } from "mondosurf-library/helpers/reactQuery.helpers";
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { store } from "mondosurf-library/redux/store";
 import { setFavoriteSpots } from "mondosurf-library/redux/userSlice";
 import modalService from "mondosurf-library/services/modalService";
 import toastService from 'mondosurf-library/services/toastService';
+import { FORECAST_GARBAGE_COLLECTOR_TIME, STABLE_GARBAGE_COLLECTOR_TIME, STABLE_STALE_TIME } from "proxies/localConstants";
 import { deleteLocalStorageData, getLocalStorageData, setLocalStorageData } from "proxies/localStorage.helpers";
 import { mondoTranslate } from "proxies/mondoTranslate";
 
@@ -89,6 +91,7 @@ export const addSpotToFavourites = (spotId: number, spotName: string): Promise<a
                     toastService.success(spotName + ' added to your favourites!', 'data-test-toast-favorite-added');
                     deleteLocalStorageData('suspended_favorite');
                     queryClient.invalidateQueries({ queryKey: ['favoritesForecast'] }); // Reset React Query queryKey
+                    prefetchFavoritesGuidesAndForecast(favoriteSpots);
                     resolve(true);
                 } else {
                     toastService.error(mondoTranslate('toast.favourites.added_to_favourites_error'));
@@ -198,4 +201,46 @@ export const addFavoriteFromSuspendedFavorite = () => {
         }
     });
     deleteLocalStorageData('suspended_favorite');
+}
+
+/**
+ * Prefetches guides and forecast data for a list of favorite surf spots.
+ * The prefetching helps to optimize data retrieval by loading the necessary information in advance, reducing wait times when the user accesses the guides or forecasts.
+ * 
+ * @param {ISurfSpotPreview[] | null} favorites - An array of favorite surf spot objects. If null, no action is taken.
+ * @returns {void}
+ */
+export const prefetchFavoritesGuidesAndForecast = (favorites: ISurfSpotPreview[] | null) => {
+    if (favorites) {
+        favorites.forEach((favorite) => {
+            // Invalidate the previous spot guide query
+            // queryClient.invalidateQueries({ queryKey: ['spotGuide' + favorite.id] });
+
+            // Prefetch new spot guide data
+            queryClient.prefetchQuery({
+                queryKey: ['spotGuide' + favorite.id],
+                queryFn: () => callApiNew('surf-spot/guide/' + favorite.id, 'GET'),
+                staleTime: STABLE_STALE_TIME,
+                gcTime: STABLE_GARBAGE_COLLECTOR_TIME
+            });
+
+            // Invalidate the previous forecast query
+            /* const forecastKey = hasProPermissions()
+                ? 'spotForecastPro' + favorite.id
+                : 'spotForecast' + favorite.id;
+                queryClient.invalidateQueries({ queryKey: [forecastKey] }); */
+
+            // Prefetch new forecast data
+            queryClient.prefetchQuery({
+                queryKey: [
+                    hasProPermissions()
+                        ? 'spotForecastPro' + favorite.id
+                        : 'spotForecast' + favorite.id
+                ],
+                queryFn: () => callApiNew('surf-spot/forecast/' + favorite.id, 'GET'),
+                staleTime: getForecastStaleTime(),
+                gcTime: FORECAST_GARBAGE_COLLECTOR_TIME
+            });
+        });
+    }
 }

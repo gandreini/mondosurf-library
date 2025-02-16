@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
+import { prefetchFavoritesGuidesAndForecast } from 'mondosurf-library/helpers/favorites.helpers';
 import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -484,6 +485,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
     // Data available only for users who login (and don't register for the first time)
     if (!registration) {
         store.dispatch(setFavoriteSpots(response.data.favourite_spots ? response.data.favourite_spots : []));
+        if (response.data.favourite_spots) prefetchFavoritesGuidesAndForecast(response.data.favourite_spots); // Prefetch favorites
         if (response.data.timezone_id) store.dispatch(setTimezoneId(response.data.timezone_id));
         if (response.data.timezone_utc) store.dispatch(setTimezoneUTC(response.data.timezone_utc));
         if (response.data.timezone_dst) store.dispatch(setTimezoneDST(response.data.timezone_dst));
