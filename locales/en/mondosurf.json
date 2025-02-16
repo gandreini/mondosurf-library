@@ -287,8 +287,9 @@
       "no_favourites_subtext_1": "Browse Mondo and click on the icon",
       "no_favourites_subtext_2": "to add all your local spots to your favorites",
       "title": "Your forecast",
-      "no_good_times_icon": "🧘‍♀️",
-      "no_good_times_text": "Sorry, no good surf forecast for your favorite spots",
+      "no_good_times_icon": "🧘",
+      "no_good_times_title": "No waves, no worries",
+      "no_good_times_text": "Explore other spots or wait for the next forecast update",
       "error": "There was an error retrieving the forecast for your favorites spots, try reloading the app."
     },
     "pro_cta": {

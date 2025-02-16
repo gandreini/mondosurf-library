@@ -35,57 +35,53 @@ const HomeFavoritesForecast: React.FC<IHomeFavoritesForecast> = (props: IHomeFav
                             buttonLabel={mondoTranslate('basics.browse_spots')}
                             buttonUrl="/surf-spots-guides-forecasts"
                             buttonStyle="cta"
-                            buttonSize="xl"
+                            buttonSize="l"
                         />
                     </div>
                 )}
 
-                {(props.status === 'goodTimes' || props.status === 'empty') && (
+                {/* No good times */}
+                {props.status === 'empty' && (
+                    <div className="ms-home-favorites-spots-forecast__empty ms-centered ms-max-width">
+                        <EmptyState
+                            title={mondoTranslate('home.favourites.no_good_times_title')}
+                            text={mondoTranslate('home.favourites.no_good_times_text')}
+                            emoji={mondoTranslate('home.favourites.no_good_times_icon')}
+                        />
+                        {props.lastUpdate && (
+                            <div className="ms-home-favorites-spots-forecast__last-update">
+                                <LastUpdate lastUpdate={props.lastUpdate}></LastUpdate>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* God times */}
+                {props.status === 'goodTimes' && (
                     <div className="ms-home-favorites-spots-forecast__good-times">
-                        <div className={`${props.status === 'empty' ? ' is-empty ms-centered ms-max-width' : ''}`}>
-                            <h3 className="ms-home-favorites-spots-forecast__good-times-title ms-h2-title">
-                                {mondoTranslate('home.favourites.title')}
-                            </h3>
+                        <h3 className="ms-home-favorites-spots-forecast__good-times-title ms-h2-title">
+                            {mondoTranslate('home.favourites.title')}
+                        </h3>
 
-                            {/* No good times */}
-                            {props.status === 'empty' && (
-                                <div
-                                    className="ms-home-favorites-spots-forecast__no-good-times ms-centered ms-max-width"
-                                    data-test="home-favorites-forecast-no-good-times">
-                                    <p className="ms-emoji">{mondoTranslate('home.favourites.no_good_times_icon')}</p>
-                                    <p className="ms-body-text">
-                                        {mondoTranslate('home.favourites.no_good_times_text')}
-                                    </p>
-                                </div>
-                            )}
-
-                            {/* God times */}
-                            {props.status === 'goodTimes' && (
-                                <List
-                                    components={props.goodTimes!.map((goodTime: any, index: number) => (
-                                        <GoodTime
-                                            key={index}
-                                            {...goodTime}
-                                            defaultClickBehavior={true}
-                                            context="homeFavorites"
-                                        />
-                                    ))}
-                                    pageSize={4}
-                                    dataTest="home-favorites-forecast-good-times"
-                                    wrapperClasses="ms-home__good-days ms-grid-2 ms-grid-v-1"
+                        <List
+                            components={props.goodTimes!.map((goodTime: any, index: number) => (
+                                <GoodTime
+                                    key={index}
+                                    {...goodTime}
+                                    defaultClickBehavior={true}
+                                    context="homeFavorites"
                                 />
-                            )}
+                            ))}
+                            pageSize={4}
+                            dataTest="home-favorites-forecast-good-times"
+                            wrapperClasses="ms-home__good-days ms-grid-2 ms-grid-v-1"
+                        />
 
-                            {/* Forecast update */}
-                            {props.lastUpdate && (
-                                <div
-                                    className={`ms-home-favorites-spots-forecast__last-update ${
-                                        props.status === 'empty' ? 'has-ho-results' : ''
-                                    }`}>
-                                    <LastUpdate lastUpdate={props.lastUpdate}></LastUpdate>
-                                </div>
-                            )}
-                        </div>
+                        {props.lastUpdate && (
+                            <div className="ms-home-favorites-spots-forecast__last-update">
+                                <LastUpdate lastUpdate={props.lastUpdate}></LastUpdate>
+                            </div>
+                        )}
                     </div>
                 )}
 

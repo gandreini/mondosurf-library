@@ -10,22 +10,26 @@
 .ms-home-favorites-spots-forecast {
     margin-bottom: $space * 5;
 
-    // Loading.
+    // Loading
     &__loading {
         padding-top: $space * 4;
         padding-bottom: $space * 2;
     }
 
-    // Empty state.
-    &__no-favourites {
-        .mondo-icon {
-            @include font-size('xl');
-            color: var(--color-favourites);
-            vertical-align: middle;
+    // Empty state
+    &__empty {
+        margin-bottom: $space * 2;
+        overflow: hidden;
+        .ms-empty-state {
+            margin-bottom: 0;
+        }
+
+        .ms-empty-state__text {
+            margin-bottom: 0;
         }
     }
 
-    // Last update.
+    // Last update
     &__last-update {
         margin-top: $space * 1;
         margin-bottom: $space * 1;
