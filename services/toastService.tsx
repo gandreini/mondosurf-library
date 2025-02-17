@@ -86,6 +86,15 @@ const toastService = {
             toast.dismiss(msToast);
         }, 12000);
     },
+    JSXContent(content: JSX.Element, classes?: string, duration?: number) {
+        const msToast = toast(content, {
+            duration: Infinity,
+            className: classes ?? ''
+        });
+        setTimeout(function () {
+            toast.dismiss(msToast);
+        }, duration ?? TOAST_DURATION);
+    },
     customToast() {},
     closeToast() {},
     on(event: any, callback: Function) {

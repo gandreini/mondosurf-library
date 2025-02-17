@@ -1,0 +1,29 @@
+/**
+ * APP-UPDATE-TOAST-CONTENT
+ *
+ * Style for the content opf the toast to update the app.
+ */
+
+/* ------------------------------------ *\
+    #APP-UPDATE-TOAST-CONTENT
+\* ------------------------------------ */
+.ms-app-update-toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: $space * 1.5;
+
+    p {
+        margin: 0;
+        color: var(--color-text-inverse);
+    }
+
+    .ms-btn {
+        align-self: flex-start;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
