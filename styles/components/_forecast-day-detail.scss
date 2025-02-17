@@ -11,6 +11,15 @@
     &__content {
         padding-bottom: 50px;
     }
+
+    .ms-surf-forecast-day {
+        margin-bottom: $space;
+    }
+
+    &__last-update {
+        margin-bottom: $space * 3;
+    }
+
     &__footer {
         position: absolute;
         bottom: 0;

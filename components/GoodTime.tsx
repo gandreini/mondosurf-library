@@ -4,6 +4,7 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import ForecastDayDetail from 'mondosurf-library/components/ForecastDayDetail';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import GoodTimeShare from 'mondosurf-library/components/GoodTimeShare';
 import Icon from 'mondosurf-library/components/Icon';
@@ -17,16 +18,9 @@ import IGoodTime from 'mondosurf-library/model/iGoodTime';
 import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useRouterProxy } from 'proxies/useRouter';
 
-import ForecastDayDetail from './ForecastDayDetail';
-
-// Component.
 const GoodTime: React.FC<IGoodTime> = (props) => {
-    // React router.
-    const router = useRouterProxy();
-
-    // Dayjs plugins.
+    // Dayjs plugins
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -44,11 +38,11 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
     const endDate = dayjs(props.end_time).tz(props.timezone);
     const bestQuality = props.good_highest_value ? props.good_highest_value : 0; // defaults to 0
 
-    // Boolean true if the good time is currently active.
+    // Boolean true if the good time is currently active
     const isOn: boolean =
         dayjs().unix() > dayjs(props.start_time).unix() && dayjs().unix() < dayjs(props.end_time).unix() ? true : false;
 
-    // Modal to share good time.
+    // Modal to share good time
     const onShowShareModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
         modalService.openModal({
             text: mondoTranslate('good_time.share_text', {
@@ -75,7 +69,7 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
 
     // On click
     const onGoodTimeClick = () => {
-        // Tracking.
+        // Tracking
         trackEvent();
 
         modalService.openModal({
@@ -96,31 +90,6 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
             classes: 'ms-modal-full-forecast'
         });
     };
-
-    // Handles the click on the Good Time
-    /* const onGoodTimeClick = () => {
-        // Tracking.
-        trackEvent();
-
-        if (props.defaultClickBehavior && props.surf_spot_id && props.surf_spot_slug) {
-            // Default navigation to the surf spot page.
-            if (props.day_id !== -1)
-                router.push(
-                    `/surf-spot/${props.surf_spot_slug}/full-forecast/${props.surf_spot_id}?day=${startDate.format(
-                        'D'
-                    )}&hour=${startDate.format('H')}`
-                );
-        } else if (
-            !props.defaultClickBehavior &&
-            props.callback &&
-            props.surf_spot_id &&
-            props.surf_spot_slug &&
-            props.start_time
-        ) {
-            // Invoking the callback.
-            props.callback(props.surf_spot_id, props.surf_spot_slug, props.day_id, props.timezone, props.start_time);
-        }
-    }; */
 
     //Tracking: Tracks click event to Mixpanel and other trackers
     const trackEvent = () => {

@@ -1,10 +1,11 @@
 // Client
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
+import { callApiNew } from 'mondosurf-library/api/api';
 import Button from 'mondosurf-library/components/Button';
 import DayAstronomyTable from 'mondosurf-library/components/DayAstronomyTable';
 import LastUpdate from 'mondosurf-library/components/LastUpdate';
@@ -13,14 +14,16 @@ import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDa
 import TideTableDay from 'mondosurf-library/components/tide/TideTableDay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
+import { getForecastStaleTime } from 'mondosurf-library/helpers/reactQuery.helpers';
+import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import {
     ISurfForecastRow,
-    ISurfSpotForecastDay,
     ISurfSpotForecastDayTideHighLow,
     ISurfSpotGoodConditions
 } from 'mondosurf-library/model/iSurfSpot';
 import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { FORECAST_GARBAGE_COLLECTOR_TIME } from 'proxies/localConstants';
 import { useRouterProxy } from 'proxies/useRouter';
 import { useEffect, useState } from 'react';
 
@@ -28,14 +31,14 @@ interface IForecastDayDetail {
     dayId: number;
     spotId: number;
     spotSlug: string;
-    timezone?: string;
-    goodConditions?: ISurfSpotGoodConditions;
-    days?: ISurfSpotForecastDay[] | null;
-    lastUpdate?: number;
     dayToShow?: number;
     hourToShow?: number;
     origin: 'GoodTime' | 'FullForecast';
     showSpotButton?: boolean;
+    // lastUpdate?: number;
+    // days?: ISurfSpotForecastDay[] | null;
+    // goodConditions?: ISurfSpotGoodConditions;
+    // timezone?: string;
 }
 
 const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
@@ -46,10 +49,16 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
+    // Fetch forecast
+    const { isPending, isError, data, error } = useQuery({
+        queryKey: [hasProPermissions() ? 'spotForecastPro' + props.spotId : 'spotForecast' + props.spotId],
+        queryFn: () => callApiNew('surf-spot/forecast/' + props.spotId, 'GET'),
+        staleTime: getForecastStaleTime(),
+        gcTime: FORECAST_GARBAGE_COLLECTOR_TIME
+    });
+
     const showSpotButton = props.showSpotButton ? true : false;
 
-    const [surfSpotForecastQuery, setSurfSpotForecastQuery] = useState('');
-    const fetchedSurfSpotForecast = useAuthGetFetch(surfSpotForecastQuery, {}, false);
     const [spotTimezone, setSpotTimezone] = useState<string>('');
     const [spotGoodConditions, setSpotGoodContditions] = useState<ISurfSpotGoodConditions | null>(null);
     const [spotForecastDay, setSpotForecastDay] = useState<ISurfForecastRow[] | null>(null);
@@ -65,50 +74,28 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
     const [tide, setTide] = useState<ISurfSpotForecastDayTideHighLow[] | null>(null);
 
     useEffect(() => {
-        if (props.timezone && props.goodConditions && props.days) {
-            setSpotTimezone(props.timezone);
-            setSpotGoodContditions(props.goodConditions);
-            setSpotForecastDay(props.days[props.dayId].hourly_data);
-            setCivilDawn(props.days[props.dayId].civil_dawn);
-            setSunrise(props.days[props.dayId].sunrise);
-            setSunset(props.days[props.dayId].sunset);
-            setCivilDusk(props.days[props.dayId].civil_dusk);
-            setTide(props.days[props.dayId].tide.high_low);
-        } else {
-            setSurfSpotForecastQuery('surf-spot/forecast/' + props.spotId);
-        }
-
-        if (props.lastUpdate) setLastUpdate(props.lastUpdate);
-
-        // Cleanup here
-        return function cleanup() {
-            setSurfSpotForecastQuery('');
-        };
-    }, [props.spotId]);
-
-    useEffect(() => {
-        if (fetchedSurfSpotForecast.status === 'loaded') {
-            setSpotTimezone(fetchedSurfSpotForecast.payload.spot_forecast.timezone);
+        if (data) {
+            setSpotTimezone(data.spot_forecast.timezone);
             setSpotGoodContditions({
-                swellDirectionMin: fetchedSurfSpotForecast.payload.forecast_conditions_swell_direction_min,
-                swellDirectionMax: fetchedSurfSpotForecast.payload.forecast_conditions_swell_direction_max,
-                swellHeightMin: fetchedSurfSpotForecast.payload.forecast_conditions_swell_height_min,
-                swellHeightMax: fetchedSurfSpotForecast.payload.forecast_conditions_swell_height_max || null,
-                swellPeriodMin: fetchedSurfSpotForecast.payload.forecast_conditions_swell_period_min,
-                windDirectionMin: fetchedSurfSpotForecast.payload.forecast_conditions_wind_direction_min,
-                windDirectionMax: fetchedSurfSpotForecast.payload.forecast_conditions_wind_direction_max,
-                windOffShoreSpeedMax: fetchedSurfSpotForecast.payload.forecast_conditions_wind_speed_max || null,
-                windOnShoreSpeedMax: fetchedSurfSpotForecast.payload.forecast_conditions_on_shore_wind_speed_max || null
+                swellDirectionMin: data.forecast_conditions_swell_direction_min,
+                swellDirectionMax: data.forecast_conditions_swell_direction_max,
+                swellHeightMin: data.forecast_conditions_swell_height_min,
+                swellHeightMax: data.forecast_conditions_swell_height_max || null,
+                swellPeriodMin: data.forecast_conditions_swell_period_min,
+                windDirectionMin: data.forecast_conditions_wind_direction_min,
+                windDirectionMax: data.forecast_conditions_wind_direction_max,
+                windOffShoreSpeedMax: data.forecast_conditions_wind_speed_max || null,
+                windOnShoreSpeedMax: data.forecast_conditions_on_shore_wind_speed_max || null
             });
-            setSpotForecastDay(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].hourly_data);
-            setLastUpdate(fetchedSurfSpotForecast.payload.last_update);
-            setCivilDawn(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].civil_dawn);
-            setSunrise(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].sunrise);
-            setSunset(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].sunset);
-            setCivilDusk(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].civil_dusk);
-            setTide(fetchedSurfSpotForecast.payload.spot_forecast.days[props.dayId].tide.high_low);
+            setSpotForecastDay(data.spot_forecast.days[props.dayId].hourly_data);
+            setLastUpdate(data.spot_forecast.last_forecast_update);
+            setCivilDawn(data.spot_forecast.days[props.dayId].civil_dawn);
+            setSunrise(data.spot_forecast.days[props.dayId].sunrise);
+            setSunset(data.spot_forecast.days[props.dayId].sunset);
+            setCivilDusk(data.spot_forecast.days[props.dayId].civil_dusk);
+            setTide(data.spot_forecast.days[props.dayId].tide.high_low);
         }
-    }, [fetchedSurfSpotForecast, props.dayId]);
+    }, [data]);
 
     useEffect(() => {
         if (spotForecastDay && spotGoodConditions && spotTimezone) {
@@ -132,7 +119,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
         <div className="ms-forecast-day-detail">
             <div className="ms-forecast-day-detail__content">
                 {/* Loading */}
-                {!spotForecastDay && !spotGoodConditions && !spotTimezone && (
+                {isPending && (
                     <>
                         <SkeletonLoader height="45px" marginBottom="3px" />
                         <SkeletonLoader height="45px" marginBottom="3px" />
@@ -160,7 +147,8 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
                         <SkeletonLoader height="45px" marginBottom="3px" />
                     </>
                 )}
-                {/* List */}
+
+                {/* Forecast */}
                 {spotForecastDay && spotGoodConditions && spotTimezone && (
                     <SurfSpotForecastDay
                         day={spotForecastDay}
@@ -171,12 +159,14 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
                         hourToShow={props.hourToShow}
                     />
                 )}
+
                 {/* Last update */}
-                {/* {lastUpdate && (
-                <div className="ms-surf-spot-forecast__good-times-update">
-                    <LastUpdate lastUpdate={lastUpdate} />
-                </div>
-            )} */}
+                {lastUpdate && (
+                    <div className="ms-forecast-day-detail__last-update">
+                        <LastUpdate lastUpdate={lastUpdate} />
+                    </div>
+                )}
+
                 {/* Astronomy */}
                 {civilDawn && sunrise && sunset && civilDusk && spotTimezone && (
                     <DayAstronomyTable

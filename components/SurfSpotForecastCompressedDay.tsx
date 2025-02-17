@@ -11,13 +11,14 @@ import { ICompressedData, ISurfSpotForecastDay, ISurfSpotGoodConditions } from '
 import modalService from 'mondosurf-library/services/modalService';
 
 interface ISurfSpotForecastCompressedDay {
+    spotId: number;
+    spotName?: string;
+    spotSlug?: string;
     day: ICompressedData;
     dayId: number;
     days?: ISurfSpotForecastDay[];
     timezone: string;
     goodConditions: ISurfSpotGoodConditions;
-    spotName?: string;
-    spotSlug?: string;
 }
 
 const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = (
@@ -36,12 +37,13 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
                 dayjs(props.day.time).tz(props.timezone).format('ddd D MMM'),
             component: ForecastDayDetail,
             componentProps: {
-                dayId: props.dayId,
+                spotId: props.spotId,
                 spotSlug: props.spotSlug,
-                days: props.days,
-                timezone: props.timezone,
-                goodConditions: props.goodConditions,
+                dayId: props.dayId,
                 origin: 'FullForecast'
+                // days: props.days,
+                // timezone: props.timezone,
+                // goodConditions: props.goodConditions,
             },
             classes: 'ms-modal-full-forecast'
         });

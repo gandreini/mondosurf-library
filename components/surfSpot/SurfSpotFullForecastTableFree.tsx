@@ -43,6 +43,7 @@ const SurfSpotFullForecastTableFree: React.FC<ISurfSpotFullForecastTableFree> = 
                                 timezone={props.spot.timezone}
                                 spotName={props.spot.name}
                                 spotSlug={props.spot.slug}
+                                spotId={props.spot.id}
                             />
                         ))}
                     </>
