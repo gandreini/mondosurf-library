@@ -14,7 +14,7 @@
     border: 2px solid var(--color-gray-03);
     border-radius: $border-radius;
 
-    &__left {
+    &.ms-surf-spot-info-tide-has-text &__left {
         margin-bottom: $space * 2;
     }
 

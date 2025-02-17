@@ -1,14 +1,13 @@
-import Button from 'mondosurf-library/components/Button';
 import { returnMovementTideLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { returnTideDetails } from 'mondosurf-library/helpers/surfSpot.helpers';
 import { ISurfSpot, ISurfSpotForecast } from 'mondosurf-library/model/iSurfSpot';
-import { FRONTEND_URL } from 'proxies/localConstants';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
 interface ISurfSpotInfoTide {
     surfSpotData: ISurfSpot;
     forecastData?: ISurfSpotForecast;
     children?: React.ReactNode;
+    showText?: boolean;
 }
 
 const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
@@ -22,7 +21,8 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
         <>
             {/* Info provided */}
             {props.surfSpotData.tide && (
-                <section className="ms-surf-spot-info-tide">
+                <section
+                    className={`ms-surf-spot-info-tide ${props.showText ? 'ms-surf-spot-info-tide-has-text' : ''}`}>
                     <div className="ms-surf-spot-info-tide__left">
                         <h2 className="ms-surf-spot-info-tide__title ms-h3-title">
                             {mondoTranslate('tide.best_tide', { surfSpot: props.surfSpotData.name })}
@@ -70,22 +70,24 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
                             )}
                     </p> */}
                     </div>
-                    <div className="ms-surf-spot-info-tide__right">
-                        {tideAlwaysGood && (
-                            <p className="ms-small-text">
-                                {mondoTranslate('tide.explanation_medium_all_good', {
-                                    surfSpot: props.surfSpotData.name
-                                })}
-                            </p>
-                        )}
-                        {!tideAlwaysGood && (
-                            <p className="ms-small-text">
-                                {mondoTranslate('tide.explanation_medium_not_all_good', {
-                                    surfSpot: props.surfSpotData.name
-                                })}
-                            </p>
-                        )}
-                    </div>
+                    {props.showText && (
+                        <div className="ms-surf-spot-info-tide__right">
+                            {tideAlwaysGood && (
+                                <p className="ms-small-text">
+                                    {mondoTranslate('tide.explanation_medium_all_good', {
+                                        surfSpot: props.surfSpotData.name
+                                    })}
+                                </p>
+                            )}
+                            {!tideAlwaysGood && (
+                                <p className="ms-small-text">
+                                    {mondoTranslate('tide.explanation_medium_not_all_good', {
+                                        surfSpot: props.surfSpotData.name
+                                    })}
+                                </p>
+                            )}
+                        </div>
+                    )}
                 </section>
             )}
         </>
