@@ -45,7 +45,7 @@ export function createMarker(
                 `${baseUrl}map-pin.svg`;
 
     // Icon class
-    const surfQuality = extractSurfQualityFromGeojsonFeature(properties.gd, userIsPro);
+    const surfQuality = extractSurfQualityFromGeojsonFeature(properties, userIsPro);
     const iconClass = 'quality-' + surfQuality.toString();
 
     const icon = LeafletDivIcon({
@@ -250,7 +250,7 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
                 let highestMarkerQuality = -1;
                 for (let i = 0; i < cluster.getAllChildMarkers().length; i++) {
                     const currentMarker = cluster.getAllChildMarkers()[i];
-                    const spotSurfQuality = extractSurfQualityFromGeojsonFeature(currentMarker.feature!.properties.gd, userIsPro);
+                    const spotSurfQuality = extractSurfQualityFromGeojsonFeature(currentMarker.feature!.properties, userIsPro);
                     if (spotSurfQuality > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
 
                 }
@@ -325,11 +325,18 @@ export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (out
 /**
  * Extracts the surf quality from a GeoJSON feature based on the user's pro status, eg [1,0]
  *
- * @param {(number | null)[]} gd - An array containing surf quality values, which can be numbers or null.
+ * @param { [name: string]: any; } properties - An array containing surf quality values, which can be numbers or null.
  * @param {boolean | 'checking'} userIsPro - A flag indicating if the user is a pro (true) or not (false), or in a checking state.
- * @returns {string} The surf quality as a string, or "-1" if the value is null.
+ * @returns {number} The surf quality as a number, or -1 if the value is null.
  */
-const extractSurfQualityFromGeojsonFeature = (gd: (number | null)[], userIsPro: boolean | 'checking'): number => {
-    const index = userIsPro === true ? 0 : 1; // Determine the index based on userIsPro
-    return gd[index] !== null ? gd[index] as number : -1; // Return the value or "-1" if null
+const extractSurfQualityFromGeojsonFeature = (properties: { [name: string]: any; }, userIsPro: boolean | 'checking'): number => {
+    let surfQuality: number = -1;
+
+    if (userIsPro === true) {
+        surfQuality = parseFloat(properties.gd) || -1;
+    } else {
+        surfQuality = parseFloat(properties.gds) || -1;
+    }
+
+    return surfQuality;
 }
