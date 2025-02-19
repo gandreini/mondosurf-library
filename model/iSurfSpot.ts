@@ -38,6 +38,7 @@ export interface ISurfSpot {
     wave_length?: string;
     wave_steepness?: string;
     videos?: IVideoPreview[];
+    videos_count?: number;
     webcams?: ISurfSpotWebcam[];
     meteo_stations?: ISurfSpotMeteoStation[];
     crowd?: string;
