@@ -42,7 +42,7 @@ const SurfSpotFullForecastTablePro: React.FC<ISurfSpotFullForecastTablePro> = (p
                                     <SurfSpotForecastCompressedDay
                                         key={key}
                                         day={compressed_day}
-                                        dayId={key}
+                                        dayId={key + 3}
                                         days={props.proSpotForecast.days}
                                         goodConditions={{
                                             swellDirectionMin: props.spot.forecast_conditions_swell_direction_min,

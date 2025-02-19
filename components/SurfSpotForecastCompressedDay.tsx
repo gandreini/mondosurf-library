@@ -24,7 +24,7 @@ interface ISurfSpotForecastCompressedDay {
 const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = (
     props: ISurfSpotForecastCompressedDay
 ) => {
-    // Dayjs plugins.
+    // Dayjs plugins
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -41,9 +41,6 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
                 spotSlug: props.spotSlug,
                 dayId: props.dayId,
                 origin: 'FullForecast'
-                // days: props.days,
-                // timezone: props.timezone,
-                // goodConditions: props.goodConditions,
             },
             classes: 'ms-modal-full-forecast'
         });

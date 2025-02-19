@@ -45,13 +45,13 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
-    // Clone object: this will be returned.
+    // Clone object: this will be returned
     const clonedForecastData = cloneObject<ISurfSpotForecast>(forecastData);
 
-    // Current day in timezone at 00:00: day to start the forecast from.
+    // Current day in timezone at 00:00: day to start the forecast from
     const startDayInTimezone = dayjs().tz(spotTimezone).startOf('day');
 
-    // Days/Compressed Days: Id of the current day in timezone (in the "days" and "compressed days" arrays).
+    // Days/Compressed Days: Id of the current day in timezone (in the "days" and "compressed days" arrays)
     let firstDayId = 0;
     clonedForecastData.days.forEach((day, index) => {
         if (day.time === startDayInTimezone.format()) {
@@ -63,7 +63,7 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
     clonedForecastData.days = clonedForecastData.days.slice(firstDayId + firstDay, days + firstDayId);
     clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId + firstDay, days + firstDayId);
 
-    // Good times.
+    // Good times
     const periodEnd = startDayInTimezone.add(days, 'd');
     clonedForecastData.good_times = clonedForecastData.good_times.filter((goodTime: IGoodTime) => dayjs(goodTime.end_time).isBefore(periodEnd));
 

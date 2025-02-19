@@ -14,6 +14,7 @@ import SurfSpotForecastDay from 'mondosurf-library/components/SurfSpotForecastDa
 import TideTableDay from 'mondosurf-library/components/tide/TideTableDay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
+import { limitForecastToDaysRange } from 'mondosurf-library/helpers/forecast.helpers';
 import { getForecastStaleTime } from 'mondosurf-library/helpers/reactQuery.helpers';
 import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import {
@@ -35,10 +36,6 @@ interface IForecastDayDetail {
     hourToShow?: number;
     origin: 'GoodTime' | 'FullForecast';
     showSpotButton?: boolean;
-    // lastUpdate?: number;
-    // days?: ISurfSpotForecastDay[] | null;
-    // goodConditions?: ISurfSpotGoodConditions;
-    // timezone?: string;
 }
 
 const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
@@ -75,6 +72,9 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
     useEffect(() => {
         if (data) {
+            // This is done to take into account timezones
+            const limitedForecastData = limitForecastToDaysRange(data.spot_forecast, 8, data.spot_forecast.timezone);
+
             setSpotTimezone(data.spot_forecast.timezone);
             setSpotGoodContditions({
                 swellDirectionMin: data.forecast_conditions_swell_direction_min,
@@ -87,13 +87,13 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
                 windOffShoreSpeedMax: data.forecast_conditions_wind_speed_max || null,
                 windOnShoreSpeedMax: data.forecast_conditions_on_shore_wind_speed_max || null
             });
-            setSpotForecastDay(data.spot_forecast.days[props.dayId].hourly_data);
+            setSpotForecastDay(limitedForecastData.days[props.dayId].hourly_data);
             setLastUpdate(data.spot_forecast.last_forecast_update);
-            setCivilDawn(data.spot_forecast.days[props.dayId].civil_dawn);
-            setSunrise(data.spot_forecast.days[props.dayId].sunrise);
-            setSunset(data.spot_forecast.days[props.dayId].sunset);
-            setCivilDusk(data.spot_forecast.days[props.dayId].civil_dusk);
-            setTide(data.spot_forecast.days[props.dayId].tide.high_low);
+            setCivilDawn(limitedForecastData.days[props.dayId].civil_dawn);
+            setSunrise(limitedForecastData.days[props.dayId].sunrise);
+            setSunset(limitedForecastData.days[props.dayId].sunset);
+            setCivilDusk(limitedForecastData.days[props.dayId].civil_dusk);
+            setTide(limitedForecastData.days[props.dayId].tide.high_low);
         }
     }, [data]);
 
