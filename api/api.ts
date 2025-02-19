@@ -222,13 +222,20 @@ export const callApiNew = async (
     fullUrl: boolean = false
 ): Promise<any> => {
     try {
+        // Create a headers object based on customHeaders
+        const headers: Record<string, string> = { ...customHeaders };
+        if (method !== "GET") {
+            headers["Content-Type"] = "application/x-www-form-urlencoded";
+        }
+
         const config: AxiosRequestConfig = {
             method,
             url: fullUrl ? url : PUBLIC_API_URL_V1! + url,
-            headers: {
+            /* headers: {
                 "Content-Type": method === "GET" ? "application/json" : "application/x-www-form-urlencoded",
                 ...customHeaders
-            },
+            }, */
+            headers,
             ...(method === "GET" ? { params } : { data: formurlencoded(params) }),
             withCredentials: credentials
         };
