@@ -26,5 +26,5 @@ export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
 export const GEOJSON_FILE_URL = "https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json"
 
-export const APP_LATEST_VERSION = "4.12.0";
-export const APP_LATEST_VERSION_PROGRESSIVE = 61;
+export const APP_LATEST_VERSION = "4.13.0";
+export const APP_LATEST_VERSION_PROGRESSIVE = 62;
