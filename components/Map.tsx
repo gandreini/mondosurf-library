@@ -28,13 +28,14 @@ import {
     positionMap,
     tilesLayerToggle
 } from 'mondosurf-library/helpers/map.helpers';
-import { createPopUp } from 'mondosurf-library/helpers/mapPopUpHelper';
+import { createPopUpApp, createPopUpWeb } from 'mondosurf-library/helpers/mapPopUpHelper';
 import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { useRouterProxy } from 'proxies/useRouter';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { isApp } from 'helpers/device.helpers';
 
 interface IMap {
     lat?: number;
@@ -155,7 +156,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
 
                 // Wrap the createMarker function to pass the additional parameter
                 const wrappedCreatePopUp = (feature: Feature, layer: Layer) => {
-                    return createPopUp(feature, layer, router);
+                    return isApp() ? createPopUpApp(feature, layer, router) : createPopUpWeb(feature, layer, router);
                 };
 
                 // Map creation

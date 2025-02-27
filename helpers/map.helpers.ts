@@ -206,7 +206,7 @@ export const placeIcon = (map: LeafletMap, lat: number, lng: number, draggable?:
         iconUrl: customIcon
             ? IMAGES_URL + 'map-pins/' + customIcon
             : IMAGES_URL + 'map-pins/map-pin-a-frame.svg',
-        className: "no-custom-class" || ''
+        className: "no-custom-class"
     };
 
     const marker: LeafletMarker<any> = Marker([lat, lng], {
