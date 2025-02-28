@@ -21,8 +21,19 @@ $mapToolHeight: 600px;
 
     &__buttons {
         display: flex;
+        justify-content: space-between;
+        margin-bottom: $space * 2;
+    }
+
+    &__buttons-left {
+        display: flex;
+        align-items: center;
         gap: $space;
-        margin-bottom: $space;
+    }
+    &__buttons-right {
+        display: flex;
+        align-items: center;
+        gap: $space;
     }
 
     .ms-btn.is-active {

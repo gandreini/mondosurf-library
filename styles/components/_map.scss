@@ -102,7 +102,9 @@
     width: $map-cluster-size;
     height: $map-cluster-size;
     border-radius: $map-cluster-size;
-    box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+    box-shadow:
+        0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+        0 1px 5px 1px rgba(0, 0, 0, 0.1),
         0 0 0 var(--internal-border) var(--color-gray-04) inset;
     background-color: var(--color-gray-00);
 
@@ -115,13 +117,17 @@
 
     &.quality-0 {
         background-color: var(--color-gray-00);
-        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
             0 0 0 var(--internal-border) var(--color-forecast-poor) inset;
     }
 
     &.quality-1 {
         background-color: var(--color-forecast-good);
-        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
             0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
@@ -130,7 +136,9 @@
     }
     &.quality-2 {
         background-color: var(--color-forecast-very-good);
-        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
             0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
 
         .ms-map-cluster__text {
@@ -139,7 +147,9 @@
     }
     &.quality-3 {
         background-color: var(--color-forecast-epic);
-        box-shadow: 0 0 0 var(--external-border) rgba(255, 255, 255, 1), 0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
             0 0 0 var(--internal-border) rgba(0, 0, 0, 0.3) inset;
 
         .ms-map-cluster__text {
@@ -231,6 +241,26 @@
 
         &.is-displayed {
             display: flex;
+        }
+    }
+
+    &__center-on-lat-lng {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: $z-index-map-center-button;
+
+        width: $map-control-size;
+        height: $map-control-size;
+
+        @include map-control;
+        bottom: $map-control-margin;
+        left: $map-control-margin;
+        cursor: pointer;
+
+        [class*=' mondo-icon-'] {
+            font-size: $font-size-xl;
         }
     }
 }

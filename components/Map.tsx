@@ -42,6 +42,7 @@ interface IMap {
     lng?: number;
     // advancedFilters?: boolean;
     hideGeolocationButton?: boolean;
+    showCenterButton?: boolean;
     geojson?: FeatureCollection;
     draggableMarker?: boolean;
     topPadding?: number;
@@ -271,6 +272,14 @@ const Map: React.FC<IMap> = (props: IMap) => {
         setGeolocationStatus(outcome);
     };
 
+    // Centers the map
+    const centerMapOnLatLng = (): void => {
+        if (map.current && props.lat && props.lng) {
+            const currentZoom = map.current.getZoom();
+            map.current.setView(new LatLng(props.lat, props.lng), currentZoom);
+        }
+    };
+
     return (
         <>
             {/* The map */}
@@ -315,6 +324,12 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     <Icon icon="image" />
                 </div>
             </div>
+
+            {props.showCenterButton && (
+                <div className="ms-map__center-on-lat-lng" onClick={centerMapOnLatLng}>
+                    <Icon icon="crosshair" />
+                </div>
+            )}
 
             {!props.hideGeolocationButton && (
                 <div
