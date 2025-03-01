@@ -275,8 +275,8 @@ const Map: React.FC<IMap> = (props: IMap) => {
     // Centers the map
     const centerMapOnLatLng = (): void => {
         if (map.current && props.lat && props.lng) {
-            const currentZoom = map.current.getZoom();
-            map.current.setView(new LatLng(props.lat, props.lng), currentZoom);
+            // const currentZoom = map.current.getZoom();
+            map.current.setView(new LatLng(props.lat, props.lng), mapLatLngZoom);
         }
     };
 
