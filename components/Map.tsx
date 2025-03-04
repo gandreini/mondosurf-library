@@ -273,10 +273,10 @@ const Map: React.FC<IMap> = (props: IMap) => {
     };
 
     // Centers the map
-    const centerMapOnLatLng = (): void => {
+    const centerMapOnLatLng = (resetZoom: boolean = true): void => {
         if (map.current && props.lat && props.lng) {
-            // const currentZoom = map.current.getZoom();
-            map.current.setView(new LatLng(props.lat, props.lng), mapLatLngZoom);
+            const newZoom = resetZoom === true ? mapLatLngZoom : map.current.getZoom();
+            map.current.setView(new LatLng(props.lat, props.lng), newZoom);
         }
     };
 
@@ -323,13 +323,18 @@ const Map: React.FC<IMap> = (props: IMap) => {
                     }}>
                     <Icon icon="image" />
                 </div>
-            </div>
 
-            {props.showCenterButton && (
-                <div className="ms-map__center-on-lat-lng" onClick={centerMapOnLatLng}>
-                    <Icon icon="crosshair" />
-                </div>
-            )}
+                {props.showCenterButton && (
+                    <div className="ms-map__controls_bottom">
+                        <div className="ms-btn ms-btn-multiline" onClick={() => centerMapOnLatLng(false)}>
+                            Reset position
+                        </div>
+                        <div className="ms-btn ms-btn-multiline" onClick={() => centerMapOnLatLng(true)}>
+                            Reset position and zoom
+                        </div>
+                    </div>
+                )}
+            </div>
 
             {!props.hideGeolocationButton && (
                 <div

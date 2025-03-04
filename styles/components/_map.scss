@@ -165,8 +165,21 @@
     &__controls {
         position: absolute;
         top: $map-control-margin;
+        bottom: $map-control-margin;
         left: $map-control-margin;
         z-index: $z-index-map-zoom-buttons;
+    }
+
+    &__controls_bottom {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        gap: 2px;
+        flex-direction: column;
+
+        .ms-btn {
+            width: 200px;
+        }
     }
 
     /* Zoom */
@@ -241,26 +254,6 @@
 
         &.is-displayed {
             display: flex;
-        }
-    }
-
-    &__center-on-lat-lng {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        z-index: $z-index-map-center-button;
-
-        width: $map-control-size;
-        height: $map-control-size;
-
-        @include map-control;
-        bottom: $map-control-margin;
-        left: $map-control-margin;
-        cursor: pointer;
-
-        [class*=' mondo-icon-'] {
-            font-size: $font-size-xl;
         }
     }
 }
