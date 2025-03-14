@@ -32,12 +32,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
 
     return (
         <>
-            {props.isAddMissingSpot && (
-                <>
-                    TEST
-                    <Banner type={'addMissingSpot'} />
-                </>
-            )}
+            {props.isAddMissingSpot && <Banner type={'addMissingSpot'} />}
 
             {!props.isAddMissingSpot && (
                 <>

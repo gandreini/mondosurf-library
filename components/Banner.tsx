@@ -90,6 +90,7 @@ const Banner: React.FC<IBanner> = (props) => {
 
     return (
         <>
+            BANNER
             {/* Favorite banner */}
             {props.type === 'favorite' && props.spotId && props.spotName && (
                 <>
@@ -118,7 +119,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     )}
                 </>
             )}
-
             {/* Calendar banner */}
             {props.type === 'calendar' && props.spotId && props.spotName && (
                 <div
@@ -138,7 +138,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </div>
             )}
-
             {/* Widget banner */}
             {props.type === 'widget' && props.spotId && props.spotName && (
                 <a href="https://forms.gle/4BikoTaPPscGaiUW8" target="_blank" rel="noreferrer">
@@ -162,7 +161,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </a>
             )}
-
             {/* Talk to us banner */}
             {props.type === 'talkToUs' && (
                 <MondoLink
@@ -178,7 +176,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </MondoLink>
             )}
-
             {/* Get pro */}
             {props.type === 'getPro' && (
                 <MondoLink
@@ -195,7 +192,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </MondoLink>
             )}
-
             {/* Add missing spot */}
             {props.type === 'addMissingSpot' && (
                 <MondoLink className="ms-banner ms-banner-add-missing-spot" href={ADD_SPOT_URL} target="_blank">
@@ -210,7 +206,6 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </MondoLink>
             )}
-
             {/* Comment */}
             {props.type === 'comment' && (
                 <MondoLink
