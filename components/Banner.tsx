@@ -192,7 +192,6 @@ const Banner: React.FC<IBanner> = (props) => {
                 </MondoLink>
             )}
             {/* Add missing spot */}
-            {props.type === 'addMissingSpot' && <>CIAO</>}
             {props.type === 'addMissingSpot' && (
                 <MondoLink className="ms-banner ms-banner-add-missing-spot" href={ADD_SPOT_URL} target="_blank">
                     <Icon icon={'new-spot'} />
