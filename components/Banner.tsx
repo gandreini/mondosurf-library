@@ -90,7 +90,7 @@ const Banner: React.FC<IBanner> = (props) => {
 
     return (
         <>
-            BANNER
+            BANNER {props.type}
             {/* Favorite banner */}
             {props.type === 'favorite' && props.spotId && props.spotName && (
                 <>
