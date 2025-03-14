@@ -15,8 +15,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface IBanner {
-    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro' | 'addMissingSpot';
+    type: 'favorite' | 'calendar' | 'widget' | 'talkToUs' | 'getPro' | 'addMissingSpot' | 'comment';
     spotName?: string;
+    spotSlug?: string;
     spotId?: number;
 }
 
@@ -26,9 +27,14 @@ const Banner: React.FC<IBanner> = (props) => {
     const favoriteSpots = useSelector((state: RootState) => state.user.favoriteSpots);
 
     // Handles the visibility of the favorites banner
-    const [showFavoriteBanner, setShowFavoriteBanner] = useState(true);
+    const [showFavoriteBanner, setShowFavoriteBanner] = useState<'true' | 'false' | 'loading'>('loading');
+
     useEffect(() => {
-        if (props.type === 'favorite') setShowFavoriteBanner(shouldShowFavoritesBanner(Number(props.spotId)));
+        if (logged === 'yes' && props.type === 'favorite') {
+            setShowFavoriteBanner(shouldShowFavoritesBanner(Number(props.spotId)) ? 'true' : 'false');
+        } else if (logged === 'no' && props.type === 'favorite') {
+            setShowFavoriteBanner('true');
+        }
     }, [props.spotId, logged, props.type, favoriteSpots]);
 
     // On click on favorite banner
@@ -87,7 +93,7 @@ const Banner: React.FC<IBanner> = (props) => {
             {/* Favorite banner */}
             {props.type === 'favorite' && props.spotId && props.spotName && (
                 <>
-                    {showFavoriteBanner && (
+                    {showFavoriteBanner === 'true' && (
                         <div
                             className="ms-banner ms-banner-favorite"
                             onClick={onClickFavoriteBanner}
@@ -105,7 +111,7 @@ const Banner: React.FC<IBanner> = (props) => {
                             </div>
                         </div>
                     )}
-                    {!showFavoriteBanner && (
+                    {showFavoriteBanner === 'false' && (
                         <div
                             className="ms-banner ms-banner-favorite is-empty"
                             data-test="surf-spot-forecast-favorite-hidden-banner"></div>
@@ -193,9 +199,30 @@ const Banner: React.FC<IBanner> = (props) => {
             {/* Add missing spot */}
             {props.type === 'addMissingSpot' && (
                 <MondoLink className="ms-banner ms-banner-add-missing-spot" href={ADD_SPOT_URL} target="_blank">
+                    <Icon icon={'new-spot'} />
                     <div className="ms-banner__texts">
-                        <p className="ms-h3-title ms-banner__text">Missing a spot?</p>
-                        <p className="ms-banner__subtext ms-body-text">Click here to add it to Mondo!</p>
+                        <p className="ms-h3-title ms-banner__text">
+                            {mondoTranslate('banner.banner_missing_spot_text')}
+                        </p>
+                        <p className="ms-banner__subtext ms-body-text">
+                            {mondoTranslate('banner.banner_missing_spot_subtext')}
+                        </p>
+                    </div>
+                </MondoLink>
+            )}
+
+            {/* Comment */}
+            {props.type === 'comment' && (
+                <MondoLink
+                    className="ms-banner ms-banner-comment"
+                    href={`/surf-spot/${props.spotSlug}/comments/${props.spotId}`}>
+                    <div className="ms-banner__emoji">💬</div>
+                    <div className="ms-banner__texts">
+                        <p className="ms-h3-title ms-banner__text">
+                            {mondoTranslate('banner.banner_comment_text', {
+                                name: props.spotName
+                            })}
+                        </p>
                     </div>
                 </MondoLink>
             )}

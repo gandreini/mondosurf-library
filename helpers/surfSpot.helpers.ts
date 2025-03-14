@@ -247,7 +247,7 @@ export const addBannerToSpotsList = (spots: ISurfSpotPreview[]): ISurfSpotPrevie
             isAddMissingSpot: true
         };
 
-        return index > 0 && index % 4 === 0 ? [fakeSpot, item] : [item];
+        return index > 0 && index % 15 === 0 ? [fakeSpot, item] : [item];
     });
 
     return modifiedSurfSpots;

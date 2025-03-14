@@ -812,16 +812,19 @@
   },
   "banner": {
     "banner_calendar_text": "Add this surf report to your calendar",
-    "banner_calendar_subtext": "Have the good surf at hand on your Google or Apple calendar and never miss a session",
+    "banner_calendar_subtext": "compatible with Google or Apple calendar",
     "banner_favorite_text": "Add {{name}} to your favorites",
-    "banner_favorite_subtext": "And receive the forecast in your daily surf bulletin",
-    "banner_widget_text": "Add Mondo't forecast widget to your website",
-    "banner_widget_subtext": "Show the updated surf forecast for {{name}}",
+    "banner_favorite_subtext": "and get daily forecasts by email",
+    "banner_widget_text": "Add forecast widget to your website",
+    "banner_widget_subtext": "show the updated surf forecast for {{name}}",
     "banner_talk_to_us_text": "Talk to us and get 3 free months of Mondo Pro!",
     "banner_talk_to_us_subtext": "Click here to plan your 30-mins session!",
     "banner_get_pro_text": "Subscribe to Mondo Pro and get the full forecast",
     "banner_get_pro_subtext": "Share your thoughts and experiences on a 30-minute interview and get 3 free months. Click here to schedule your session!",
-    "banner_get_pro_button": "Start here"
+    "banner_get_pro_button": "Start here",
+    "banner_missing_spot_text": "Missing a surf spot?",
+    "banner_missing_spot_subtext": "Add it here and get the daily forecast",
+    "banner_comment_text": "Leave a comment about {{name}}"
   },
   "swell_quality": {
     "0_icon": "💩",

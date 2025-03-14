@@ -31,6 +31,8 @@
     // Main colors
     --color-first: #406fcb; //#00aced;
     --color-first-dark: #234280;
+    --color-first-light: #eef4ff;
+    --color-first-light-hover: #d7e5ff;
     --color-second: rgb(146, 165, 204);
     --color-third: #6bcc95;
 
@@ -42,6 +44,8 @@
     // Alerts and notifications.
     --color-favourites: #ea4c89;
     --color-favourites-rgb: 234, 76, 137;
+    --color-favourites-light: #fff4f8;
+    --color-favourites-light-hover: #fde7ef;
     --color-favourites-hover: #b40146;
     --color-error: #ff5b5b;
     --color-error-rgb: 255, 100, 63;
@@ -55,6 +59,8 @@
     // Forecast
     --color-forecast-poor: #86e090;
     --color-forecast-good: #45c46f;
+    --color-forecast-good-light: #f2fff6;
+    --color-forecast-good-light-hover: #dff8e7;
     // --color-forecast-good-border: #3dae63;
     --color-forecast-very-good: #1e8f4e;
     // --color-forecast-very-good-border: #18763f;

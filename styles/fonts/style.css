@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'mondo-icon';
-  src:  url('fonts/mondo-icon.eot?6rr2nf');
-  src:  url('fonts/mondo-icon.eot?6rr2nf#iefix') format('embedded-opentype'),
-    url('fonts/mondo-icon.ttf?6rr2nf') format('truetype'),
-    url('fonts/mondo-icon.woff?6rr2nf') format('woff'),
-    url('fonts/mondo-icon.svg?6rr2nf#mondo-icon') format('svg');
+  src:  url('fonts/mondo-icon.eot?sn2d2r');
+  src:  url('fonts/mondo-icon.eot?sn2d2r#iefix') format('embedded-opentype'),
+    url('fonts/mondo-icon.ttf?sn2d2r') format('truetype'),
+    url('fonts/mondo-icon.woff?sn2d2r') format('woff'),
+    url('fonts/mondo-icon.svg?sn2d2r#mondo-icon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mondo-icon-new-spot:before {
+  content: "\e933";
+  color: #4b5053;
+}
 .mondo-icon-share:before {
   content: "\e91f";
   color: #4b5053;

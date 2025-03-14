@@ -50,6 +50,7 @@ export interface IIcon {
     | 'tab-bar-active-home'
     | 'enlarge'
     | 'share'
+    | 'new-spot'
     | 'mondo-logo';
     color?: string;
 }

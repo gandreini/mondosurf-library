@@ -12,7 +12,7 @@ import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -23,11 +23,11 @@ interface ICommentsForm {
 }
 
 const CommentsForm: React.FC<ICommentsForm> = (props) => {
-    // Dayjs plugins.
+    // Dayjs plugins
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
-    // React hook form stuff.
+    // React hook form stuff
     const {
         register,
         handleSubmit,
@@ -41,7 +41,7 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
         formState: { errors }
     } = useForm({ reValidateMode: 'onSubmit' });
 
-    // Redux.
+    // Redux
     const accessTokenRedux = useSelector((state: RootState) => state.user.accessToken);
     const login = useSelector((state: RootState) => state.user.logged);
     const userNameRedux = useSelector((state: RootState) => state.user.userName);
@@ -49,6 +49,11 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
     const [savingComment, setSavingComment] = useState<boolean>(false);
 
     const fieldContent = watch('commentText');
+
+    // Set focus on the textarea when the component mounts
+    useEffect(() => {
+        setFocus('commentText');
+    }, [setFocus]);
 
     // Save comment (checks for login status and shows the modal if needed)
     const onSaveComment = () => {
