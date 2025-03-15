@@ -27,8 +27,13 @@ const SurfSpotMainMetadata: React.FC<ISurfSpotMainMetadata> = (props) => {
                     </p>
                 </div>
             )}
+
             {props.surfSpotData.forecast_conditions_swell_direction_min !== undefined &&
-                props.surfSpotData.forecast_conditions_swell_direction_max !== undefined && (
+                props.surfSpotData.forecast_conditions_swell_direction_max !== undefined &&
+                !(
+                    props.surfSpotData.forecast_conditions_swell_direction_min === 0 &&
+                    props.surfSpotData.forecast_conditions_swell_direction_max === 0
+                ) && (
                     <div className="ms-surf-spot-main-metadata__metadata ms-surf-spot-main-metadata__swell">
                         <p className="ms-label">{mondoTranslate('surf_spot.best_swell')}</p>
 
@@ -43,7 +48,11 @@ const SurfSpotMainMetadata: React.FC<ISurfSpotMainMetadata> = (props) => {
                 )}
 
             {props.surfSpotData.forecast_conditions_wind_direction_min !== undefined &&
-                props.surfSpotData.forecast_conditions_wind_direction_max !== undefined && (
+                props.surfSpotData.forecast_conditions_wind_direction_max !== undefined &&
+                !(
+                    props.surfSpotData.forecast_conditions_wind_direction_min === 0 &&
+                    props.surfSpotData.forecast_conditions_wind_direction_max === 0
+                ) && (
                     <div className="ms-surf-spot-main-metadata__metadata ms-surf-spot-main-metadata__wind">
                         <p className="ms-label">{mondoTranslate('surf_spot.best_wind')}</p>
                         <SurfSpotDirection

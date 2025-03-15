@@ -60,7 +60,7 @@ const SurfSpotAdditionalMetadata: React.FC<ISurfSpotAdditionalMetadata> = (props
                 )}
 
                 {/* Wave steepness */}
-                {props.surfSpotData.wave_steepness && (
+                {props.surfSpotData.wave_steepness !== '0' && (
                     <Metadata
                         label={mondoTranslate('surf_spot.wave_steepness')}
                         value={returnWaveSteepnessLabel(props.surfSpotData.wave_steepness)!}

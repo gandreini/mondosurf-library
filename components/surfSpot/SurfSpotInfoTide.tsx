@@ -35,11 +35,11 @@ const SurfSpotInfoTide: React.FC<ISurfSpotInfoTide> = (props) => {
                                 {!tideAlwaysGood && <>{returnTideDetails(props.surfSpotData.tide)}</>}
                             </span>{' '}
                             {/* Tide movement */}
-                            {props.surfSpotData.tide_movement && props.surfSpotData.tide_movement.length === 2 && (
+                            {/* {props.surfSpotData.tide_movement && props.surfSpotData.tide_movement.length === 2 && (
                                 <span className="ms-body-text ms-surf-spot-info-tide__details-movement-text">
                                     ({mondoTranslate('tide.tide_movement_always_good')})
                                 </span>
-                            )}
+                            )} */}
                             {props.surfSpotData.tide_movement &&
                                 props.surfSpotData.tide_movement.length > 0 &&
                                 props.surfSpotData.tide_movement.length < 2 && (
