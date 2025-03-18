@@ -33,6 +33,7 @@ export class Tracker {
 
     /**
      * Initialize Google Analytics.
+     * Currently not used.
      *
      * @param   {string} gaId Google Analytics Measurement ID retrieved from backend API in app-config.
      * @returns {void}
@@ -55,7 +56,7 @@ export class Tracker {
         const authorizedTracking = state.user.authorizedTracking;
         let trackingStatus: boolean = true;
 
-        // Retrieves the cookie tracking set by Iubenda.
+        // Retrieves the cookie tracking set by Iubenda
         let cookieTracking: boolean;
         if (getCookie("tracking_cookie_allowed") === "false") {
             cookieTracking = false;
@@ -65,7 +66,7 @@ export class Tracker {
         // The user has rejected the "measurement" cookies.
         if ((logged === "no" || logged === "checking") && !cookieTracking) trackingStatus = false;
         // The user has refused tracking when registering (or was disabled by the admin).
-        if (logged === "yes" && !authorizedTracking) trackingStatus = false;
+        if (!authorizedTracking) trackingStatus = false;
         // Checks the global local variable DISABLE_TRACKING.
         if (DISABLE_TRACKING === "true") trackingStatus = false;
 
@@ -129,7 +130,7 @@ export class Tracker {
             }
 
             /* Google */
-            if (destinations.includes('ga') && typeof gtag === 'function' && Tracker.gaSetUpDone) {
+            /* if (destinations.includes('ga') && typeof gtag === 'function' && Tracker.gaSetUpDone) {
                 if (isDebug()) console.log("gtag", gtag);
                 if (parameters) {
                     gtag('event', eventName, {
@@ -142,27 +143,27 @@ export class Tracker {
                         'event_category': 'MondoEvent'
                     });
                 }
-            }
+            } */
 
             /* Amplitude */
-            if (destinations.includes('at')) {
+            /* if (destinations.includes('at')) {
                 // amplitude.getInstance().logEvent(eventName, parameters);
-            }
+            } */
 
             /* Sendinblue */
-            if (destinations.includes('sb')) {
+            /* if (destinations.includes('sb')) {
                 // sendinblue.track(eventName, parameters);
-            }
+            } */
 
             /* Facebook pixel */
-            if (destinations.includes('fb')) {
+            /* if (destinations.includes('fb')) {
                 // fbq('track', eventName);
-            }
+            } */
 
             /* Facebook App */
-            if (destinations.includes('fbapp')) {
+            /* if (destinations.includes('fbapp')) {
                 // if (isApp()) FacebookAnalytics.logEvent({ event: eventName, params: parameters });
-            }
+            } */
         }
     }
 }

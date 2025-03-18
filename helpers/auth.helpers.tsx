@@ -12,7 +12,7 @@ import {
     setAccountType,
     setAccountVerified,
     setApprovedTerms,
-    setAuthorizedTracking,
+    setAuthorizedTrackingFalse,
     setCapacitorRefreshToken,
     setFavoriteSpots,
     setLevel,
@@ -34,7 +34,7 @@ import {
 import toastService from 'mondosurf-library/services/toastService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { JWT_API_URL } from 'proxies/localConstants';
-import { deleteLocalStorageData, setLocalStorageData } from 'proxies/localStorage.helpers';
+import { deleteLocalStorageData, getLocalStorageData, setLocalStorageData } from 'proxies/localStorage.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
 /**
@@ -462,7 +462,7 @@ export const passwordReset = (token: string, newPassword: string) => {
  * @returns {returnType} Return description.
  */
 export const updateUserStatus = (response: AxiosResponse<any>, registration: boolean = false) => {
-    // To redux state.
+    // To redux state
     store.dispatch(setAccessToken(response.data.access_token));
     store.dispatch(setUserId(response.data.user_id));
     store.dispatch(setUserName(response.data.user_name));
@@ -470,7 +470,6 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
     if (response.data.user_picture_url) store.dispatch(setUserPictureUrl(response.data.user_picture_url));
     store.dispatch(setAccountVerified(response.data.account_verified));
     store.dispatch(setApprovedTerms(response.data.approved_terms));
-    store.dispatch(setAuthorizedTracking(response.data.authorized_tracking));
     store.dispatch(setRegistrationDate(response.data.registration_date));
     store.dispatch(setAccountType(response.data.account_type));
     if (response.data.user_trial_activation_date)
@@ -513,6 +512,17 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                 response.data.user_stripe_subscription_id
             );
         }
+
+        // Checks if the user must be ignored in tracking, stores the info in local storage
+        if (response.data.authorized_tracking === false) {
+            store.dispatch(setAuthorizedTrackingFalse());
+            setLocalStorageData('user_authorized_tracking', 'false');
+        }
+        getLocalStorageData('user_authorized_tracking').then((response) => {
+            if (response && response === 'false') {
+                store.dispatch(setAuthorizedTrackingFalse());
+            }
+        });
 
         // ! TODO If iOS we can check for purchases status
     }

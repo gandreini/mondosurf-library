@@ -11,7 +11,6 @@ export interface IUserSliceValue {
     capacitorRefreshToken: string;
     accountVerified: boolean;
     approvedTerms: boolean;
-    authorizedTracking: boolean;
     registrationDate: number;
     favoriteSpots: ISurfSpotPreview[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
     timezoneId: string;
@@ -32,7 +31,8 @@ export interface IUserSliceValue {
     preferences: {
         userBulletinFrequency: "daily" | "weekly" | "never";
         userBulletinWeekDay: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
-    }
+    },
+    authorizedTracking: boolean;
 }
 
 const initialState: IUserSliceValue = {
@@ -45,7 +45,6 @@ const initialState: IUserSliceValue = {
     capacitorRefreshToken: '',
     accountVerified: false,
     approvedTerms: true,
-    authorizedTracking: true,
     registrationDate: -1,
     favoriteSpots: null,
     timezoneId: '',
@@ -66,7 +65,8 @@ const initialState: IUserSliceValue = {
     preferences: {
         userBulletinFrequency: "daily",
         userBulletinWeekDay: "monday"
-    }
+    },
+    authorizedTracking: true
 };
 
 export const userSlice = createSlice({
@@ -104,9 +104,6 @@ export const userSlice = createSlice({
         },
         setApprovedTerms: (state, action) => {
             return { ...state, approvedTerms: action.payload };
-        },
-        setAuthorizedTracking: (state, action) => {
-            return { ...state, authorizedTracking: action.payload };
         },
         setRegistrationDate: (state, action) => {
             return { ...state, registrationDate: action.payload };
@@ -170,6 +167,9 @@ export const userSlice = createSlice({
         setPreferences: (state, action) => {
             return { ...state, preferences: action.payload };
         },
+        setAuthorizedTrackingFalse: (state) => {
+            state.authorizedTracking = false;
+        },
         logOut: (state) => {
             return {
                 ...state,
@@ -181,7 +181,6 @@ export const userSlice = createSlice({
                 capacitorRefreshToken: '',
                 accountVerified: false,
                 approvedTerms: true,
-                authorizedTracking: true,
                 registrationDate: -1,
                 favoriteSpots: null,
                 timezoneId: '',
@@ -197,6 +196,7 @@ export const userSlice = createSlice({
                 subscriptionExpiration: -1,
                 subscriptionDuration: 'notset',
                 trialActivation: -1
+                // authorizedTracking: true, // We don't reset the tracking status when user logs out, we keep not tracking
             }
         }
     }
@@ -211,7 +211,6 @@ export const { setLogin,
     setCapacitorRefreshToken,
     setAccountVerified,
     setApprovedTerms,
-    setAuthorizedTracking,
     setRegistrationDate,
     setFavoriteSpots,
     setTimezoneId,
@@ -230,5 +229,6 @@ export const { setLogin,
     setTrialDuration,
     setPreferences,
     setSubscriptionDuration,
+    setAuthorizedTrackingFalse,
     logOut } = userSlice.actions;
 export default userSlice.reducer;
