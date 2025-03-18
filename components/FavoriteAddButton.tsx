@@ -42,7 +42,7 @@ const FavoriteAddButton: React.FC<IFavouriteAddButton> = (props: IFavouriteAddBu
     // Adds a spot to the user's favourites
     const onAddToFavourites = (e: React.MouseEvent<HTMLButtonElement>) => {
         // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavIconTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.FavIconTap, {
             surfSpotName: props.spotName,
             action: 'add',
             context: props.context,

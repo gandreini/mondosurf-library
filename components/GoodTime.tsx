@@ -57,7 +57,7 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
             mobileFromBottom: true
         });
         // Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.GTShareTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.GTShareTap, {
             surfSpotName: props.surf_spot_name,
             surfSpotId: props.surf_spot_id,
             quality: props.good_average,
@@ -93,7 +93,7 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
 
     //Tracking: Tracks click event to Mixpanel and other trackers
     const trackEvent = () => {
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.GTTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.GTTap, {
             surfSpotName: props.surf_spot_name,
             surfSpotId: props.surf_spot_id,
             quality: props.good_average,

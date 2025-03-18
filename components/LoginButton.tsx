@@ -23,7 +23,7 @@ const LoginButton: React.FC<ILoginButton> = (props) => {
     const onLoginClick = () => {
         // Tracking.
         if (props.trackingEvent) {
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.NavLoginTap, {
+            Tracker.trackEvent(['mp'], TrackingEvent.NavLoginTap, {
                 context: props.context
             });
         }

@@ -57,7 +57,7 @@ const GoodTimeShare: React.FC<IGoodTimes> = (props: IGoodTimes) => {
     // Handles click on Whatsapp button, for tracking
     const onWhatsappClick = () => {
         // Tracking.
-        /*  Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalGTWaTap, {
+        /*  Tracker.trackEvent(['mp'], TrackingEvent.ModalGTWaTap, {
             surfSpotName: props.surf_spot_name,
             surfSpotId: props.surf_spot_id,
             quality: props.good_average,
@@ -68,7 +68,7 @@ const GoodTimeShare: React.FC<IGoodTimes> = (props: IGoodTimes) => {
     // Handles click on Facebook button, for tracking
     const onFacebookClick = () => {
         // Tracking.
-        /*  Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalGTFbTap, {
+        /*  Tracker.trackEvent(['mp'], TrackingEvent.ModalGTFbTap, {
             surfSpotName: props.surf_spot_name,
             surfSpotId: props.surf_spot_id,
             quality: props.good_average,
@@ -82,7 +82,7 @@ const GoodTimeShare: React.FC<IGoodTimes> = (props: IGoodTimes) => {
             toastService.success(mondoTranslate('toast.good_time_url_copied'));
         });
         // Tracking.
-        /* Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalGTURLTap, {
+        /* Tracker.trackEvent(['mp'], TrackingEvent.ModalGTURLTap, {
             surfSpotName: props.surf_spot_name,
             surfSpotId: props.surf_spot_id,
             quality: props.good_average,

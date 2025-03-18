@@ -29,13 +29,13 @@ const ProWeb: React.FC = (props) => {
     // Handles click on Yearly button on web just for tracking
     const onYearlyWebButton = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalProTap, { subscriptionDuration: 'yearly' });
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalProTap, { subscriptionDuration: 'yearly' });
     };
 
     // Handles click on Monthly button on web just for tracking
     const onMonthlyWebButton = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalProTap, { subscriptionDuration: 'monthly' });
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalProTap, { subscriptionDuration: 'monthly' });
     };
 
     return (

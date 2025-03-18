@@ -116,7 +116,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         // Tracking.
         if (formState === 'email') {
             setTimeout(() => setFocus('email'), 100);
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalEmailShow, {
+            Tracker.trackEvent(['mp'], TrackingEvent.ModalEmailShow, {
                 context: props.context
             });
         }
@@ -126,7 +126,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         // Tracking.
         if (formState === 'login') {
             setTimeout(() => setFocus('loginPassword'), 100);
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalLoginShow, {
+            Tracker.trackEvent(['mp'], TrackingEvent.ModalLoginShow, {
                 context: props.context
             });
         }
@@ -136,7 +136,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         // Tracking.
         if (formState === 'register') {
             setTimeout(() => setFocus('registerName'), 100);
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalSignupShow, {
+            Tracker.trackEvent(['mp'], TrackingEvent.ModalSignupShow, {
                 context: props.context
             });
         }
@@ -157,12 +157,12 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
         const emailValue: string = getValues('email');
         setFormState('email_waiting');
         //Tracking.
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalEmailTap, { context: props.context });
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalEmailTap, { context: props.context });
         emailCheck(emailValue)
             .then((response: AxiosResponse<any, any> | undefined) => {
                 if (response && response.data) {
                     //Tracking.
-                    Tracker.trackEvent(['mp', 'ga'], TrackingEvent.EmailCheckApi, {
+                    Tracker.trackEvent(['mp'], TrackingEvent.EmailCheckApi, {
                         context: props.context,
                         next: 'login'
                     });
@@ -171,7 +171,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                     setValue('loginEmail', emailValue);
                 } else {
                     //Tracking.
-                    Tracker.trackEvent(['mp', 'ga'], TrackingEvent.EmailCheckApi, {
+                    Tracker.trackEvent(['mp'], TrackingEvent.EmailCheckApi, {
                         context: props.context,
                         next: 'register'
                     });
@@ -221,7 +221,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             const loginPassword: string = getValues('loginPassword');
             setFormState('login_loading');
             //Tracking.
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalLoginTap, { context: props.context });
+            Tracker.trackEvent(['mp'], TrackingEvent.ModalLoginTap, { context: props.context });
             login(loginEmail, loginPassword, deviceId)
                 .then((response) => {
                     if (response && response.data) {
@@ -229,7 +229,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         toastService.success(mondoTranslate('auth.welcome_back', { name: response.data.user_name }));
                         if (props.callback) props.callback(response.data.access_token, response.data.user_name); // Callback is invoked only after registration.
                         //Tracking.
-                        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.LoginCompleteApi, {
+                        Tracker.trackEvent(['mp'], TrackingEvent.LoginCompleteApi, {
                             context: props.context
                         });
                     } else {
@@ -299,7 +299,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
             const registerTermsConditions: boolean = getValues('registerTermsConditions');
             setFormState('register_loading');
             //Tracking.
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalSignupTap, { context: props.context });
+            Tracker.trackEvent(['mp'], TrackingEvent.ModalSignupTap, { context: props.context });
             userRegister(registerName, registerEmail, registerPassword, registerTermsConditions, deviceId)
                 .then((response) => {
                     if (response && response.data) {
@@ -308,7 +308,7 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         if (props.callback) props.callback(response.data.access_token, response.data.user_name);
 
                         //Tracking.
-                        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SignupCompleteApi, {
+                        Tracker.trackEvent(['mp'], TrackingEvent.SignupCompleteApi, {
                             context: props.context
                         });
 

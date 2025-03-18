@@ -70,7 +70,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
         }
 
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalShow, {
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalCalShow, {
             spotName: props.spotName,
             spotId: props.spotId
         });
@@ -99,7 +99,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
             );
         });
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalURLTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalCalURLTap, {
             spotName: props.spotName,
             spotId: props.spotId,
             addFavorite: addToFavoritesForTracking()
@@ -128,7 +128,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
                 toastService.error(mondoTranslate('toast.calendar.error_sending_email'));
             });
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalEmailTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalCalEmailTap, {
             spotName: props.spotName,
             spotId: props.spotId,
             addFavorite: addToFavoritesForTracking()
@@ -153,7 +153,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     // Click on the link to watch the tutorial, for tracking purposes only
     const onGoogleTutorial = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalGoogleTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalCalGoogleTap, {
             spotName: props.spotName,
             spotId: props.spotId
         });
@@ -162,7 +162,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
     // Click on the link to watch the tutorial, for tracking purposes only
     const onAppleTutorial = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ModalCalAppleTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.ModalCalAppleTap, {
             spotName: props.spotName,
             spotId: props.spotId
         });

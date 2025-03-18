@@ -21,7 +21,7 @@ const SpotsList: React.FC = (props) => {
 
     useEffect(() => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.ProStartedShow, { subscriptionDuration: 'monthly' });
+        Tracker.trackEvent(['mp'], TrackingEvent.ProStartedShow, { subscriptionDuration: 'monthly' });
 
         getLocalStorageData('visitedSpots').then((visitedSpots) => {
             if (visitedSpots) {

@@ -42,7 +42,7 @@ const Banner: React.FC<IBanner> = (props) => {
         if (props.spotId && props.spotName) {
             checkPermissionsAndAddSpotToFavorites(props.spotId, props.spotName);
             // Tracking
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FavBannerTap, {
+            Tracker.trackEvent(['mp'], TrackingEvent.FavBannerTap, {
                 spotId: props.spotId,
                 spotName: props.spotName
             });
@@ -54,7 +54,7 @@ const Banner: React.FC<IBanner> = (props) => {
         if (props.spotId && props.spotName) {
             openCalendarModal(props.spotId, props.spotName);
             // Tracking
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CalBannerTap, {
+            Tracker.trackEvent(['mp'], TrackingEvent.CalBannerTap, {
                 spotId: props.spotId,
                 spotName: props.spotName
             });
@@ -64,7 +64,7 @@ const Banner: React.FC<IBanner> = (props) => {
     // On click on Widget banner
     const onClickWidgetBanner = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.WidgetBannerTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.WidgetBannerTap, {
             spotId: props.spotId,
             spotName: props.spotName
         });
@@ -73,7 +73,7 @@ const Banner: React.FC<IBanner> = (props) => {
     // On click get pro banner
     const onGetProBannerClick = () => {
         // Tracking
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.FullForecastGetProBannerTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.FullForecastGetProBannerTap, {
             spotId: props.spotId,
             spotName: props.spotName
         });

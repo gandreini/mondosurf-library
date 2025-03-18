@@ -99,7 +99,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
     useEffect(() => {
         if (spotForecastDay && spotGoodConditions && spotTimezone) {
-            Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SpotForecastDetailsShow, {
+            Tracker.trackEvent(['mp'], TrackingEvent.SpotForecastDetailsShow, {
                 spotId: props.spotId,
                 origin: props.origin
             });

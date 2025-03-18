@@ -94,7 +94,7 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
                 if (props.callback) props.callback();
 
                 // Tracking
-                Tracker.trackEvent(['mp', 'ga'], TrackingEvent.CommentAddedApi, {
+                Tracker.trackEvent(['mp'], TrackingEvent.CommentAddedApi, {
                     resourceName: props.resourceName,
                     resourceId: resourceId
                 });

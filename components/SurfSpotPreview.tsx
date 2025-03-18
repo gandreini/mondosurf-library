@@ -23,7 +23,7 @@ const SurfSpotPreview: React.FC<ISurfSpotPreview> = (props: ISurfSpotPreview) =>
 
     const clickOnPreview = (e: React.MouseEvent) => {
         // Tracker
-        Tracker.trackEvent(['mp', 'ga'], TrackingEvent.SpotPreviewTap, {
+        Tracker.trackEvent(['mp'], TrackingEvent.SpotPreviewTap, {
             context: props.context,
             surfSpotId: props.id,
             surfSpotName: props.name
