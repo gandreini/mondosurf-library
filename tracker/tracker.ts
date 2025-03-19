@@ -38,11 +38,11 @@ export class Tracker {
      * @param   {string} gaId Google Analytics Measurement ID retrieved from backend API in app-config.
      * @returns {void}
      */
-    static gaInit(gaId: string) {
+    /* static gaInit(gaId: string) {
         gtag("js", new Date());
         gtag("config", gaId);
         Tracker.gaSetUpDone = true;
-    }
+    } */
 
     /**
      * Check if tracking is active.
