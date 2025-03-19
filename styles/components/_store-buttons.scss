@@ -12,6 +12,10 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: $space;
+
+    img {
+        display: block;
+    }
 }
 
 /* ------------------------------------ *\

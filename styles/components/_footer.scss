@@ -15,15 +15,26 @@
     border-top: 1px solid $color-border-light;
 
     &__content {
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr;
-        gap: $space * 2;
         position: relative;
         max-width: $page-max-width;
         padding: $space * 5 0;
         margin-left: auto;
         margin-right: auto;
         color: var(--color-text);
+
+        display: block;
+        column-count: 3;
+        column-gap: $space * 3;
+
+        // Add auto-flow to make items flow across columns
+        grid-auto-flow: dense;
+        grid-auto-rows: min-content;
+    }
+
+    &__list-item,
+    &__column-title {
+        break-inside: avoid;
+        page-break-inside: avoid; /* For older browsers */
     }
 
     &__column {
@@ -36,6 +47,10 @@
         font-weight: $font-weight-bold;
         font-size: $font-size-l-fluid;
         line-height: 1.1;
+    }
+
+    &__column-title:not(:first-child) {
+        margin-top: $space * 2.5;
     }
 
     // Lists
@@ -81,20 +96,36 @@
     &__bottom-content {
         max-width: $page-max-width;
         margin: 0 auto;
-        padding: $space * 2 0;
+        padding: $space * 5 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: $space * 2;
+    }
+
+    &__bottom-left {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 1;
+    }
+
+    &__bottom-right {
+        display: flex;
+        justify-content: flex-end;
+
+        .ms-store-buttons {
+            justify-content: flex-end;
+        }
     }
 
     &__bottom-main {
-        color: var(--color-text-light);
-        font-size: $font-size-xxs-fluid;
+        color: var(--color-text);
+        font-size: $font-size-m-fluid;
     }
 
     &__bottom-secondary {
         color: var(--color-text-light);
-        font-size: $font-size-xxs-fluid;
+        font-size: $font-size-xs-fluid;
 
         a {
             color: var(--color-text-light);
@@ -102,6 +133,17 @@
             &:hover {
                 color: var(--color-text-link);
             }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: 900px) {
+    .ms-footer {
+        &__content {
+            column-count: 4;
         }
     }
 }
