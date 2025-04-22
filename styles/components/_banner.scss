@@ -140,6 +140,7 @@
 \* ------------------------------------ */
 .ms-banner-add-missing-spot {
     @include card-box-shadow;
+    grid-column: 1 / -1;
 
     &:hover {
         @include card-box-shadow-hover;
