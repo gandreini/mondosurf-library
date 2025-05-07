@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
+// import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
 // import { basicMapFiltersCheck } from 'features/map/mapFilters.helpers';
 import { Feature, FeatureCollection } from 'geojson';
 import {
@@ -118,20 +118,20 @@ const Map: React.FC<IMap> = (props: IMap) => {
     }, []);
 
     // Tiles
-    /* const vectorTiles = useRef<TileLayer>(
+    const vectorTiles = useRef<TileLayer>(
         tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'], // Only for Google stuff
             noWrap: true,
             attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>'
         })
-    ); */
+    );
 
-    const vectorTiles = useRef<TileLayer>(
+    /* const vectorTiles = useRef<TileLayer>(
         new MaptilerLayer({
             apiKey: 'jkkNWMxIibSduqPbQtcw',
             style: '51fb4646-7688-4b5d-a227-09837b7b7770'
         })
-    );
+    ); */
 
     const satelliteTiles1 = useRef<TileLayer>(
         tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
