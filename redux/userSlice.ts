@@ -31,6 +31,9 @@ export interface IUserSliceValue {
     preferences: {
         userBulletinFrequency: "daily" | "weekly" | "never";
         userBulletinWeekDay: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+        userPrefsHeight: "meters" | "feet";
+        userPrefsSpeed: "kph" | "mph" | "kn";
+        userPrefsTemperature: "c" | "f";
     },
     authorizedTracking: boolean;
 }
@@ -64,7 +67,10 @@ const initialState: IUserSliceValue = {
     trialDuration: 30,
     preferences: {
         userBulletinFrequency: "daily",
-        userBulletinWeekDay: "monday"
+        userBulletinWeekDay: "monday",
+        userPrefsHeight: "meters",
+        userPrefsSpeed: "kph",
+        userPrefsTemperature: "c"
     },
     authorizedTracking: true
 };
@@ -165,7 +171,8 @@ export const userSlice = createSlice({
             return { ...state, trialDuration: action.payload };
         },
         setPreferences: (state, action) => {
-            return { ...state, preferences: action.payload };
+            // Merges new preferences with existing ones (does not replace the entire object)
+            return { ...state, preferences: { ...state.preferences, ...action.payload } };
         },
         setAuthorizedTrackingFalse: (state) => {
             state.authorizedTracking = false;

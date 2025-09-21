@@ -15,6 +15,9 @@ interface IProfilePreferencesEdit {
     preferences: {
         userBulletinFrequency: 'daily' | 'weekly' | 'never';
         userBulletinWeekDay: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+        userPrefsHeight: 'meters' | 'feet';
+        userPrefsSpeed: 'kph' | 'mph' | 'kn';
+        userPrefsTemperature: 'c' | 'f';
     };
 }
 
@@ -42,6 +45,9 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
     useEffect(() => {
         setValue('preferencesBulletinFrequency', props.preferences.userBulletinFrequency);
         setValue('preferencesBulletinWeekDay', props.preferences.userBulletinWeekDay);
+        setValue('preferencesHeight', props.preferences.userPrefsHeight);
+        setValue('preferencesSpeed', props.preferences.userPrefsSpeed);
+        setValue('preferencesTemperature', props.preferences.userPrefsTemperature);
         if (props.preferences.userBulletinFrequency === 'weekly') setFrequencyIsWeekly(true);
     }, []);
 
@@ -50,13 +56,19 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
         setSavingPreferences(true);
         const bulletinFrequency: string = getValues('preferencesBulletinFrequency');
         const bulletinWeekDay: string = getValues('preferencesBulletinWeekDay');
+        const height: string = getValues('preferencesHeight');
+        const speed: string = getValues('preferencesSpeed');
+        const temperature: string = getValues('preferencesTemperature');
 
         postApiAuthCall(
             'user-preferences-update',
             accessToken,
             {
                 bulletin_frequency: bulletinFrequency,
-                bulletin_week_day: bulletinWeekDay
+                bulletin_week_day: bulletinWeekDay,
+                prefs_height: height,
+                prefs_speed: speed,
+                prefs_temperature: temperature
             },
             true
         )
@@ -64,7 +76,10 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                 store.dispatch(
                     setPreferences({
                         userBulletinFrequency: bulletinFrequency,
-                        userBulletinWeekDay: bulletinWeekDay
+                        userBulletinWeekDay: bulletinWeekDay,
+                        userPrefsHeight: height,
+                        userPrefsSpeed: speed,
+                        userPrefsTemperature: temperature
                     })
                 ); // To redux state
                 setSavingPreferences(false);
@@ -119,6 +134,40 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                             </select>
                         </div>
                     )}
+
+                    <hr className="ms-profile-preferences-edit__separator" />
+
+                    <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
+                        {mondoTranslate('profile.units')}
+                    </h2>
+                    <div className="ms-form__input">
+                        <label className="ms-form__label" htmlFor="preferences_height">
+                            {mondoTranslate('profile.height_unit_label')}
+                        </label>
+                        <select {...register('preferencesHeight')}>
+                            <option value="meters">{mondoTranslate('profile.height_unit_meters')}</option>
+                            <option value="feet">{mondoTranslate('profile.height_unit_feet')}</option>
+                        </select>
+                    </div>
+                    <div className="ms-form__input">
+                        <label className="ms-form__label" htmlFor="preferences_speed">
+                            {mondoTranslate('profile.speed_unit_label')}
+                        </label>
+                        <select {...register('preferencesSpeed')}>
+                            <option value="kph">{mondoTranslate('profile.speed_unit_kph')}</option>
+                            <option value="mph">{mondoTranslate('profile.speed_unit_mph')}</option>
+                            <option value="kn">{mondoTranslate('profile.speed_unit_kn')}</option>
+                        </select>
+                    </div>
+                    <div className="ms-form__input">
+                        <label className="ms-form__label" htmlFor="preferences_temperature">
+                            {mondoTranslate('profile.temperature_unit_label')}
+                        </label>
+                        <select {...register('preferencesTemperature')}>
+                            <option value="c">{mondoTranslate('profile.temperature_unit_celsius')}</option>
+                            <option value="f">{mondoTranslate('profile.temperature_unit_fahrenheit')}</option>
+                        </select>
+                    </div>
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">
                     <button type="submit" className="ms-btn ms-btn-cta ms-btn-l">

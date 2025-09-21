@@ -453,6 +453,17 @@
     "bulletin_week_day_friday": "Friday",
     "bulletin_week_day_saturday": "Saturday",
     "bulletin_week_day_sunday": "Sunday",
+    "units": "Units",
+    "height_unit_label": "Wave Height",
+    "height_unit_meters": "Meters",
+    "height_unit_feet": "Feet",
+    "speed_unit_label": "Wind Speed",
+    "speed_unit_kph": "Kilometers per hour",
+    "speed_unit_mph": "Miles per hour",
+    "speed_unit_kn": "Knots",
+    "temperature_unit_label": "Temperature",
+    "temperature_unit_celsius": "Celsius (°C)",
+    "temperature_unit_fahrenheit": "Fahrenheit (°F)",
     "save_preferences": "Save preferences"
   },
   "pro": {

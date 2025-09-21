@@ -491,13 +491,24 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
         if (response.data.user_level) store.dispatch(setLevel(response.data.user_level));
         if (response.data.user_surfing_from) store.dispatch(setSurfingFrom(response.data.user_surfing_from));
         if (response.data.user_surfboards) store.dispatch(setSurfboards(response.data.user_surfboards));
-        if (response.data.user_bulletin_frequency && response.data.user_bulletin_week_day)
-            store.dispatch(
-                setPreferences({
-                    userBulletinFrequency: response.data.user_bulletin_frequency,
+
+        // Update preferences with available data from endpoint
+        store.dispatch(
+            setPreferences({
+                ...(response.data.user_bulletin_frequency && {
+                    userBulletinFrequency: response.data.user_bulletin_frequency
+                }),
+                ...(response.data.user_bulletin_week_day && {
                     userBulletinWeekDay: response.data.user_bulletin_week_day
+                }),
+                ...(response.data.user_prefs_height && { userPrefsHeight: response.data.user_prefs_height }),
+                ...(response.data.user_prefs_speed && { userPrefsSpeed: response.data.user_prefs_speed }),
+                ...(response.data.user_prefs_temperature && {
+                    userPrefsTemperature: response.data.user_prefs_temperature
                 })
-            );
+            })
+        );
+
         if (
             response.data.account_type === 'pro' &&
             response.data.user_subscription_expiration_date &&
