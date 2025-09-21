@@ -8,8 +8,8 @@ interface ITideTableWeeklyLevels {
 
 const TideTableWeeklyLevels = async (props: ITideTableWeeklyLevels) => {
     const state = store.getState();
-    const lengthUnit: string = state.units.lengthUnit; // Redux.
-    const lengthUnitLabel = lengthUnit === 'mt' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
+    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
+    const lengthUnitLabel = lengthUnit === 'meters' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
 
     return (
         <div className="ms-tide-table-weekly-levels">

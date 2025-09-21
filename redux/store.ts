@@ -5,12 +5,10 @@ import debugSlice from 'mondosurf-library/redux/debugSlice';
 import mapFiltersSlice from 'mondosurf-library/redux/mapFiltersSlice';
 import modalSlice from 'mondosurf-library/redux/modalSlice';
 import RevenueCatSlice from 'mondosurf-library/redux/RevenueCatSlice';
-import unitsSlice from 'mondosurf-library/redux/unitsSlice';
 import userSlice from 'mondosurf-library/redux/userSlice';
 
 const rootReducer = combineReducers({
     mapFilters: mapFiltersSlice,
-    units: unitsSlice,
     modalSlice: modalSlice,
     appConfig: appConfigSlice,
     appStatus: appStatusSlice,

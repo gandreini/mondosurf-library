@@ -202,33 +202,6 @@ export const returnTideDetails = (
 }
 
 /**
- * Returns swell range size in a readable format, given the swell min and max returned by the API.
- * Example: "Good from 0.6 to 2.4 meters"
- * 
- * @param   {number | undefined} swellMin The minimum size of the swell that's good for the spot
- * @param   {number} swellMax The maximum size of the swell that's good for the spot
- * @returns {string | undefined} Returns the min and max swell sizes at which a spot is working, in a readable format: "Good from 0.6 to 2.4 meters"
- */
-export const returnSwellSizeRange = (
-    swellMin?: number | undefined,
-    swellMax?: number,
-): string | undefined => {
-    let returnString = "";
-    if (!swellMin && swellMin === undefined && !swellMax && swellMax === undefined) return undefined;
-
-    if (swellMin && swellMin > 0 && (!swellMax || swellMax === undefined)) {
-        returnString = mondoTranslate('basics.swell_good_from', { min: oneDecimal(convertSizeFromMeters(swellMin)) }) + ' ' + returnLengthUnitLabel();
-    }
-    if ((!swellMax || swellMax === undefined || swellMax === 0) && swellMax && swellMax > 0) {
-        returnString = mondoTranslate('basics.swell_good_till', { max: oneDecimal(convertSizeFromMeters(swellMax)) }) + ' ' + returnLengthUnitLabel();
-    }
-    if (swellMin && swellMin > 0 && swellMax && swellMax > 0) {
-        returnString = mondoTranslate('basics.swell_good_from_till', { min: oneDecimal(convertSizeFromMeters(swellMin)), max: oneDecimal(convertSizeFromMeters(swellMax)) }) + ' ' + returnLengthUnitLabel();
-    }
-    return returnString;
-}
-
-/**
  * Adds a "add a spot" banner to the list of surf spots at every N position.
  * 
  * @param {ISurfSpotPreview[]} spots - An array of surf spot previews.

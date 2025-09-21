@@ -8,9 +8,10 @@ import {
     returnWaveLengthLabel,
     returnWaveSteepnessLabel
 } from 'mondosurf-library/helpers/labels.helpers';
-import { experienceText, returnReadableArray, returnSwellSizeRange } from 'mondosurf-library/helpers/surfSpot.helpers';
+import { experienceText, returnReadableArray } from 'mondosurf-library/helpers/surfSpot.helpers';
 import { ISurfSpot } from 'mondosurf-library/model/iSurfSpot';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 
 interface ISurfSpotAdditionalMetadata {
     surfSpotData: ISurfSpot;
@@ -28,26 +29,48 @@ const SurfSpotAdditionalMetadata: React.FC<ISurfSpotAdditionalMetadata> = (props
                     />
                 )}
 
-                {/* Best size */}
+                {/* Best size - Min and max*/}
                 {props.surfSpotData.forecast_conditions_swell_height_min &&
                     props.surfSpotData.forecast_conditions_swell_height_max && (
                         <Metadata
                             label={mondoTranslate('surf_spot.best_size')}
                             value={
-                                returnSwellSizeRange(
-                                    props.surfSpotData.forecast_conditions_swell_height_min,
-                                    props.surfSpotData.forecast_conditions_swell_height_max
-                                )!
+                                <>
+                                    {mondoTranslate('basics.swell_good_from')}{' '}
+                                    <UnitDisplay
+                                        unit="height"
+                                        value={props.surfSpotData.forecast_conditions_swell_height_min}
+                                        mode="value"
+                                    />{' '}
+                                    {mondoTranslate('basics.to')}{' '}
+                                    <UnitDisplay
+                                        unit="height"
+                                        value={props.surfSpotData.forecast_conditions_swell_height_max}
+                                        mode="both"
+                                        shortLabel={false}
+                                    />
+                                </>
                             }
                         />
                     )}
 
+                {/* Best size - Min only */}
                 {props.surfSpotData.forecast_conditions_swell_height_min &&
                     (!props.surfSpotData.forecast_conditions_swell_height_max ||
                         props.surfSpotData.forecast_conditions_swell_height_max === -1) && (
                         <Metadata
                             label={mondoTranslate('surf_spot.best_size')}
-                            value={returnSwellSizeRange(props.surfSpotData.forecast_conditions_swell_height_min)!}
+                            value={
+                                <>
+                                    {mondoTranslate('basics.swell_good_from')}{' '}
+                                    <UnitDisplay
+                                        unit="height"
+                                        value={props.surfSpotData.forecast_conditions_swell_height_min}
+                                        mode="both"
+                                        shortLabel={false}
+                                    />
+                                </>
+                            }
                         />
                     )}
 

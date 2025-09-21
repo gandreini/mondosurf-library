@@ -1,11 +1,9 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import TideGoodMoments from 'mondosurf-library/components/tide/TideGoodMoments';
 import { removeFirstAndLastItem } from 'mondosurf-library/helpers/arrays.helpers';
 import { extDayFormat, hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
 import { convertSizeFromMeters } from 'mondosurf-library/helpers/units.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { ISurfSpotForecastDay, ISurfSpotForecastDayTideHighLow } from 'mondosurf-library/model/iSurfSpot';
 import { store } from 'mondosurf-library/redux/store';
 import { mondoTranslate } from 'proxies/mondoTranslate';
@@ -21,8 +19,8 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
     dayjs.extend(timezone);
 
     const state = store.getState();
-    const lengthUnit: string = state.units.lengthUnit; // Redux.
-    const lengthUnitLabel = lengthUnit === 'mt' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
+    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
+    const lengthUnitLabel = lengthUnit === 'meters' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
 
     return (
         <table className="ms-tide-table-days ms-table">

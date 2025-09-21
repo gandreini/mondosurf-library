@@ -5,17 +5,17 @@ import { store } from 'mondosurf-library/redux/store';
  * Default given value is always meters.
  * 
  * @param size number Size given in meters.
- * @param unit "mt" | "ft" Meters or feet.
+ * @returns number Size given in the current unit.
  */
 export function convertSizeFromMeters(
     size: number
 ): number {
     const state = store.getState();
-    const lengthUnit: string = state.units.lengthUnit; // Redux.
+    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
     let returnSize = 0;
-    if (lengthUnit === 'mt') {
+    if (lengthUnit === 'meters') {
         returnSize = size;
-    } else if (lengthUnit === 'ft') {
+    } else if (lengthUnit === 'feet') {
         returnSize = size * 3.2808;
     }
     return returnSize;
@@ -26,18 +26,20 @@ export function convertSizeFromMeters(
  * Default given value is always kilometers per hour.
  * 
  * @param speed number Speed given in kilometers per hour.
- * @param unit 'kmh' | 'kn' Kilometers per hour or knots.
+ * @returns number Speed given in the current unit.
  */
 export function convertSpeedFromKph(
     speed: number
 ): number {
     const state = store.getState();
-    const speedUnit: string = state.units.speedUnit; // Redux.
+    const speedUnit: string = state.user.preferences.userPrefsSpeed; // Redux
     let returnSpeed = 0;
     if (speedUnit === 'kph') {
         returnSpeed = speed;
     } else if (speedUnit === 'kn') {
         returnSpeed = speed / 1.852;
+    } else if (speedUnit === 'mph') {
+        returnSpeed = speed * 0.621371;
     }
     return returnSpeed;
 }
@@ -53,7 +55,7 @@ export function convertTemperatureFromC(
     temperature: number
 ): number {
     const state = store.getState();
-    const temperatureUnit: string = state.units.temperatureUnit; // Redux.
+    const temperatureUnit: string = state.user.preferences.userPrefsTemperature; // Redux
     let returnTemperature = 0;
     if (temperatureUnit === 'c') {
         returnTemperature = temperature;

@@ -216,11 +216,11 @@ export function returnMovementTideLabel(
  */
 export function returnLengthUnitLabel(): string {
     const state = store.getState();
-    const lengthUnit: string = state.units.lengthUnit; // Redux.
+    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
     switch (lengthUnit) {
-        case 'mt':
+        case 'meters':
             return mondoTranslate('units.meters');
-        case 'ft':
+        case 'feet':
             return mondoTranslate('units.feet');
         default:
             return mondoTranslate('units.meters');
@@ -234,11 +234,11 @@ export function returnLengthUnitLabel(): string {
  */
 export function returnLengthUnitShortLabel(): string {
     const state = store.getState();
-    const lengthUnit: string = state.units.lengthUnit; // Redux.
+    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
     switch (lengthUnit) {
-        case 'mt':
+        case 'meters':
             return mondoTranslate('units.meters_short');
-        case 'ft':
+        case 'feet':
             return mondoTranslate('units.feet_short');
         default:
             return mondoTranslate('units.meters_short');
@@ -246,36 +246,40 @@ export function returnLengthUnitShortLabel(): string {
 }
 
 /**
- * Returns speed units label given "kph" or "kn".
+ * Returns speed units label given "kph", "mph" or "kn".
  * 
- * @param speed string Speed provided as "kph", "kn".
+ * @param speed string Speed provided as "kph", "kn", "mph".
  */
 export function returnSpeedUnitLabel(): string {
     const state = store.getState();
-    const speedUnit: string = state.units.speedUnit; // Redux.
+    const speedUnit: string = state.user.preferences.userPrefsSpeed; // Redux
     switch (speedUnit) {
         case 'kph':
             return mondoTranslate('units.kph');
         case 'kn':
             return mondoTranslate('units.kn');
+        case 'mph':
+            return mondoTranslate('units.mph');
         default:
             return mondoTranslate('units.kph');
     }
 }
 
 /**
- * Returns speed units short label given "kph" or "kn".
+ * Returns speed units short label given "kph", "mph" or "kn".
  * 
- * @param speed string Speed provided as "kph", "kn".
+ * @param speed string Speed provided as "kph", "kn", "mph".
  */
 export function returnSpeedUnitShortLabel(): string {
     const state = store.getState();
-    const speedUnit: string = state.units.speedUnit; // Redux.
+    const speedUnit: string = state.user.preferences.userPrefsSpeed; // Redux
     switch (speedUnit) {
         case 'kph':
             return mondoTranslate('units.kph_short');
         case 'kn':
             return mondoTranslate('units.kn_short');
+        case 'mph':
+            return mondoTranslate('units.mph_short');
         default:
             return mondoTranslate('units.kph_short');
     }

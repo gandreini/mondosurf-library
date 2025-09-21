@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc';
 import DirectionArrow from 'mondosurf-library/components/DirectionArrow';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import Icon from 'mondosurf-library/components/Icon';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 import { directionIsWithinRange } from 'mondosurf-library/helpers/forecast.helpers';
 import { ISurfForecastRow } from 'mondosurf-library/model/iSurfSpot';
 
@@ -96,8 +97,12 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                         'is-no-good'
                     }`}>
                     <div className="ms-forecast-row__swell-size-content">
-                        <span className="ms-forecast-row__swell-size-value">{props.row.swell_height.toFixed(1)}</span>
-                        <span className="ms-forecast-row__swell-size-unit">mt</span>
+                        <span className="ms-forecast-row__swell-size-value">
+                            <UnitDisplay unit="height" value={props.row.swell_height} mode="value" decimals={1} />
+                        </span>
+                        <span className="ms-forecast-row__swell-size-unit">
+                            <UnitDisplay unit="height" mode="unit" shortLabel={true} />
+                        </span>
                     </div>
                 </div>
 
@@ -136,8 +141,12 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     }`}>
                     {/* <div className="ms-forecast-row__wind-speed-label">Wind</div> */}
                     <div className="ms-forecast-row__wind-speed-content">
-                        <div className="ms-forecast-row__wind-speed-value">{props.row.wind_speed.toFixed(1)}</div>
-                        <div className="ms-forecast-row__wind-speed-unit">kph</div>
+                        <div className="ms-forecast-row__wind-speed-value">
+                            <UnitDisplay unit="speed" value={props.row.wind_speed} mode="value" decimals={1} />
+                        </div>
+                        <div className="ms-forecast-row__wind-speed-unit">
+                            <UnitDisplay unit="speed" mode="unit" shortLabel={true} />
+                        </div>
                     </div>
                 </div>
 
@@ -170,9 +179,16 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                     }`}>
                     <div className="ms-forecast-row__swell-size-content">
                         <span className="ms-forecast-row__swell-size-value">
-                            {props.row.secondary_swell_height.toFixed(1)}
+                            <UnitDisplay
+                                unit="height"
+                                value={props.row.secondary_swell_height}
+                                mode="value"
+                                decimals={1}
+                            />
                         </span>
-                        <span className="ms-forecast-row__swell-size-unit">mt</span>
+                        <span className="ms-forecast-row__swell-size-unit">
+                            <UnitDisplay unit="height" mode="unit" shortLabel={true} />
+                        </span>
                     </div>
                 </div>
 
