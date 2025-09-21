@@ -3,10 +3,8 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { removeFirstAndLastItem } from 'mondosurf-library/helpers/arrays.helpers';
 import { extDayFormat, hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
-import { convertSizeFromMeters } from 'mondosurf-library/helpers/units.helpers';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 import { ISurfSpotForecastDay, ISurfSpotForecastDayTideHighLow } from 'mondosurf-library/model/iSurfSpot';
-import { store } from 'mondosurf-library/redux/store';
-import { mondoTranslate } from 'proxies/mondoTranslate';
 
 interface ITideTableDays {
     days: any;
@@ -17,10 +15,6 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);
-
-    const state = store.getState();
-    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
-    const lengthUnitLabel = lengthUnit === 'meters' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
 
     return (
         <table className="ms-tide-table-days ms-table">
@@ -64,8 +58,12 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
                                                                     .format(hourMinFormat())}
                                                             </span>
                                                             <span className="ms-tide-table-days__size">
-                                                                {convertSizeFromMeters(value.height).toFixed(2)}{' '}
-                                                                {lengthUnitLabel}
+                                                                <UnitDisplay
+                                                                    unit="height"
+                                                                    value={value.height}
+                                                                    mode="both"
+                                                                    decimals={2}
+                                                                />
                                                             </span>
                                                         </td>
                                                     )

@@ -3,6 +3,7 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { removeFirstAndLastItem } from 'mondosurf-library/helpers/arrays.helpers';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 import { ISurfSpotForecastDayTideHighLow } from 'mondosurf-library/model/iSurfSpot';
 
 interface ITideTableDay {
@@ -29,7 +30,9 @@ const TideTableDay: React.FC<ITideTableDay> = (props) => {
                             {value.type === 'high' && <>🔼</>}
                             {value.type === 'low' && <>🔽</>}
                         </td>
-                        <td className="ms-tide-table-day__size">{value.height.toFixed(2)}</td>
+                        <td className="ms-tide-table-day__size">
+                            <UnitDisplay unit="height" value={value.height} mode="both" decimals={2} />
+                        </td>
                         <td className="ms-tide-table-day__time">
                             ⏰ {dayjs(value.time).tz(props.timezone).format(hourMinFormat())}
                         </td>

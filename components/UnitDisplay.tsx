@@ -27,11 +27,11 @@ const UnitDisplay: React.FC<IUnitDisplayProps> = ({ unit, value, mode = 'both', 
     // Force re-render when user preferences change
     const userPreferences = useSelector((state: RootState) => state.user.preferences);
     const userLoggedIn = useSelector((state: RootState) => state.user.logged);
-    
+
     // Wait until user preferences are loaded to prevent flash of wrong units
     // If user is not logged in or still checking, show loading state to avoid flash
     const isPreferencesReady = userLoggedIn === 'yes' || userLoggedIn === 'no';
-    
+
     if (!isPreferencesReady) {
         return null; // Or return a loading placeholder if you prefer
     }

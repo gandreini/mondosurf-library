@@ -1,5 +1,4 @@
-import { convertSizeFromMeters } from 'mondosurf-library/helpers/units.helpers';
-import { store } from 'mondosurf-library/redux/store';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 
 interface ITideTableWeeklyLevels {
@@ -7,10 +6,6 @@ interface ITideTableWeeklyLevels {
 }
 
 const TideTableWeeklyLevels = async (props: ITideTableWeeklyLevels) => {
-    const state = store.getState();
-    const lengthUnit: string = state.user.preferences.userPrefsHeight; // Redux
-    const lengthUnitLabel = lengthUnit === 'meters' ? mondoTranslate('basics.meters') : mondoTranslate('basics.feet');
-
     return (
         <div className="ms-tide-table-weekly-levels">
             <p className="ms-tide-table-weekly-levels__title">{mondoTranslate('tide.weekly_tide_levels')}</p>
@@ -18,25 +13,25 @@ const TideTableWeeklyLevels = async (props: ITideTableWeeklyLevels) => {
                 <div className="ms-tide-table-weekly-levels__value">
                     {mondoTranslate('tide.low')}{' '}
                     <span>
-                        {convertSizeFromMeters(props.weeklyLimits[0]).toFixed(2)} {lengthUnitLabel}
+                        <UnitDisplay unit="height" value={props.weeklyLimits[0]} mode="both" decimals={2} />
                     </span>
                 </div>
                 <div className="ms-tide-table-weekly-levels__value">
                     {mondoTranslate('tide.low_to_medium')}{' '}
                     <span>
-                        {convertSizeFromMeters(props.weeklyLimits[1]).toFixed(2)} {lengthUnitLabel}
+                        <UnitDisplay unit="height" value={props.weeklyLimits[1]} mode="both" decimals={2} />
                     </span>
                 </div>
                 <div className="ms-tide-table-weekly-levels__value">
                     {mondoTranslate('tide.medium_to_high')}{' '}
                     <span>
-                        {convertSizeFromMeters(props.weeklyLimits[2]).toFixed(2)} {lengthUnitLabel}
+                        <UnitDisplay unit="height" value={props.weeklyLimits[2]} mode="both" decimals={2} />
                     </span>
                 </div>
                 <div className="ms-tide-table-weekly-levels__value">
                     {mondoTranslate('tide.high')}{' '}
                     <span>
-                        {convertSizeFromMeters(props.weeklyLimits[3]).toFixed(2)} {lengthUnitLabel}
+                        <UnitDisplay unit="height" value={props.weeklyLimits[3]} mode="both" decimals={2} />
                     </span>
                 </div>
             </div>

@@ -8,12 +8,10 @@ import ForecastDayDetail from 'mondosurf-library/components/ForecastDayDetail';
 import GoodTimeQuality from 'mondosurf-library/components/GoodTimeQuality';
 import GoodTimeShare from 'mondosurf-library/components/GoodTimeShare';
 import Icon from 'mondosurf-library/components/Icon';
+import UnitDisplay from 'mondosurf-library/components/UnitDisplay';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { extDayMonthFormat, hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
-import { returnLengthUnitShortLabel, returnSpeedUnitShortLabel } from 'mondosurf-library/helpers/labels.helpers';
 import { directionAcronym } from 'mondosurf-library/helpers/labels.helpers';
-import { convertSizeFromMeters, convertSpeedFromKph } from 'mondosurf-library/helpers/units.helpers';
-import { oneDecimal } from 'mondosurf-library/helpers/various.helpers';
 import IGoodTime from 'mondosurf-library/model/iGoodTime';
 import modalService from 'mondosurf-library/services/modalService';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
@@ -145,9 +143,11 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
                             </div>
                             <div className="ms-good-time__details-value">
                                 <span className="ms-good-time__details-value-data">
-                                    {oneDecimal(convertSizeFromMeters(props.swell_height))}
+                                    <UnitDisplay unit="height" value={props.swell_height} mode="value" decimals={1} />
                                 </span>
-                                <span className="ms-good-time__details-value-unit">{returnLengthUnitShortLabel()}</span>
+                                <span className="ms-good-time__details-value-unit">
+                                    <UnitDisplay unit="height" mode="unit" shortLabel={true} />
+                                </span>
                                 <span className="ms-good-time__details-value-separator">{', '}</span>
                                 <span className="ms-good-time__details-value-data">{props.swell_period}</span>
                                 <span className="ms-good-time__details-value-unit">s</span>
@@ -163,9 +163,11 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
                             </div>
                             <div className="ms-good-time__details-value">
                                 <span className="ms-good-time__details-value-data">
-                                    {oneDecimal(convertSpeedFromKph(props.wind_speed))}
+                                    <UnitDisplay unit="speed" value={props.wind_speed} mode="value" decimals={1} />
                                 </span>
-                                <span className="ms-good-time__details-value-unit">{returnSpeedUnitShortLabel()}</span>
+                                <span className="ms-good-time__details-value-unit">
+                                    <UnitDisplay unit="speed" mode="unit" shortLabel={true} />
+                                </span>
                                 <span className="ms-good-time__details-value-separator">{', '}</span>
                                 <span className="ms-good-time__details-value-data">
                                     {directionAcronym(props.wind_direction)}
