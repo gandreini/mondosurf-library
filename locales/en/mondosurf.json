@@ -710,8 +710,10 @@
     "meters_short": "mt",
     "feet_short": "ft",
     "kph": "kph",
+    "mph": "mph",
     "kn": "knots",
     "kph_short": "kph",
+    "mph_short": "mph",
     "kn_short": "kt"
   },
   "wave_length": {
