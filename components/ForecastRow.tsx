@@ -68,7 +68,7 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                 .tz(props.timezone)
                 .format('H')}`}
             className={`ms-forecast-row ${!props.row.is_light ? 'ms-forecast-row-night' : ''} ${
-                'ms-forecast-row-quality' + props.row.is_good.toString()
+                'ms-forecast-row-quality' + (props.row.is_good ?? -1).toString()
             }`}>
             <div className="ms-forecast-row__first-column">
                 {/* Time */}
@@ -81,7 +81,9 @@ const ForecastRow: React.FC<IForecastRow> = (props: IForecastRow) => {
                 {/* Quality */}
                 <div className="ms-forecast-row__quality">
                     {!props.row.is_light && <Icon icon={'night-2'} />}
-                    {props.row.is_light && <GoodTimeQuality quality={props.row.is_good} vertical={true} size="s" />}
+                    {props.row.is_light && (
+                        <GoodTimeQuality quality={props.row.is_good ?? -1} vertical={true} size="s" />
+                    )}
                 </div>
             </div>
 
