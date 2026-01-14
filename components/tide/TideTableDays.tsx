@@ -30,7 +30,7 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
                                     {dayjs(value.civil_dawn).tz(props.timezone).format(extDayFormat())}
                                 </td>
                                 <td className="ms-tide-table-days__values">
-                                    {/* {hasProPermissions() && (
+                                    {/* 
                                         <div className="ms-tide-table-days__good-moments">
                                             <p className="ms-tide-table-days__good-moments-text">
                                                 <TideGoodMoments
@@ -39,7 +39,7 @@ const TideTableDays: React.FC<ITideTableDays> = (props) => {
                                                 />
                                             </p>
                                         </div>
-                                    )} */}
+                                    */}
                                     <table className="ms-tide-table-days__details">
                                         <tbody>
                                             <tr>

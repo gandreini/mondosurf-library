@@ -84,28 +84,13 @@ const Map: React.FC<IMap> = (props: IMap) => {
     const geojsonLayer = useRef<GeoJSON | null>(null);
     const markers = useRef<LeafletMarkerClusterGroup | null>(null);
 
-    const [userIsPro, setUserIsPro] = useState<boolean | 'checking'>('checking');
-
     // Geolocation request status: used to show a loader inside the button.
     const [geolocationStatus, setGeolocationStatus] = useState<
         'INIT' | 'REQUESTING' | 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT'
     >('INIT');
 
-    // Redux.
+    // Redux
     const logged = useSelector((state: RootState) => state.user.logged);
-    const accountType = useSelector((state: RootState) => state.user.accountType);
-
-    // We check if the user is pro before initializing the map
-    useEffect(() => {
-        if (logged === 'no') setUserIsPro(false);
-        if (logged === 'yes') {
-            if (accountType === 'admin' || accountType === 'pro' || accountType === 'trial') {
-                setUserIsPro(true);
-            } else {
-                setUserIsPro(true);
-            }
-        }
-    }, [accountType, logged]);
 
     useEffect(() => {
         // Removes the map when leaving the page
@@ -152,7 +137,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
             if (typeof window !== 'undefined' && mapNode !== null && !map.current) {
                 // Wrap the createMarker function to pass the additional parameter
                 const wrappedCreateMarker = (feature: Feature, latlng: LatLng) => {
-                    return createMarker(feature, latlng, userIsPro);
+                    return createMarker(feature, latlng);
                 };
 
                 // Wrap the createMarker function to pass the additional parameter
@@ -233,7 +218,6 @@ const Map: React.FC<IMap> = (props: IMap) => {
                         markers.current,
                         defaultPadding,
                         topPadding,
-                        userIsPro,
                         cluster
                     );
 
@@ -251,17 +235,15 @@ const Map: React.FC<IMap> = (props: IMap) => {
                 }
             }
         },
-        [cluster, isDraggable, lat, lng, props, topPadding, userIsPro]
+        [cluster, isDraggable, lat, lng, props, topPadding]
     );
 
     // We check if the user is pro before initializing the map
     const mapRef = useCallback(
         (mapNode: HTMLDivElement | null) => {
-            if (userIsPro !== 'checking') {
-                initializeMap(mapNode);
-            }
+            initializeMap(mapNode);
         },
-        [initializeMap, userIsPro]
+        [initializeMap]
     );
 
     // Gets feedback about user geolocation from centerMapOnUserPosition

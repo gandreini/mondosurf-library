@@ -4,7 +4,6 @@
 import { openLoginModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
@@ -52,7 +51,7 @@ const TabBarUser: React.FC<ITabBarUser> = (props: ITabBarUser) => {
                             )}
 
                             {props.active && <span className="ms-tab-bar__item-label">{userName}</span>}
-                            {hasProPermissions() && <span className="ms-tab-bar__pro">PRO</span>}
+                            {/* <span className="ms-tab-bar__pro">PRO</span> */}
                         </>
                     </MondoLink>
                 </>

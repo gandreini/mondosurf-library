@@ -290,25 +290,12 @@
       "no_good_times_text": "Explore other spots or wait for the next forecast update",
       "error": "There was an error retrieving the forecast for your favorites spots, try reloading the app."
     },
-    "pro_cta": {
-      "register": {
-        "icon": "🏄‍♀️",
-        "title": "Want to surf more?",
-        "text": "Register to Mondo and get full access to:",
-        "button_text_1": "Register to Mondo",
-        "button_text_2": "and start your {{duration}} days free trial",
-        "sub_text": "Already a member? Click to log in"
-      },
-      "pro": {
-        "icon": "🏄‍♀️",
-        "title": "Subscribe to\nMondo Pro",
-        "text_expired": "Your trial period has expired, subscribe to the paid membership to keep using the Pro features.",
-        "text_expiring_in_days": "Your trial period will expire in {{days}} days. Subscribe to the paid membership to keep using the Pro features.",
-        "text_expiring_in_hours": "Your {{duration}} days trial period will expire in {{hours}} hours. Subscribe to the paid membership to keep using the Pro features.",
-        "button_text_1": "Get Mondo Pro",
-        "button_text_2": "Starting at {{price}}/month",
-        "sub_text": "Cancel anytime"
-      }
+    "register_cta": {
+      "icon": "🏄‍♀️",
+      "title": "Want to surf more?",
+      "text": "Register to Mondo and get full access to:",
+      "button_text_1": "Register to Mondo for free",
+      "sub_text": "Already a member? Click to log in"
     },
     "geolocation_unsupported": "Sorry, geolocation is not supported on your device"
   },
@@ -507,7 +494,9 @@
       "icon_3": "💌",
       "text_3": "daily bulletin email",
       "icon_4": "🗓",
-      "text_4": "surf forecast calendars"
+      "text_4": "surf forecast calendars",
+      "icon_5": "💬",
+      "text_5": "writing comments"
     },
     "login_modal": {
       "trial_title": "Log in or register",

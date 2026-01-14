@@ -15,7 +15,7 @@
     padding: 0 0 $space * 2 0;
     margin: 0 auto;
 
-    // Main content.
+    // Main content
     &__main-content {
         display: flex;
         flex-direction: column;
@@ -25,10 +25,17 @@
         margin: 0 auto;
     }
 
-    // Description.
+    // Guide contents
+    &__guide-contents {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 3.5;
+    }
+
+    // Description
     &__description {
         @include consistent;
-        margin-bottom: $space * 3.5;
+        // margin-bottom: $space * 3.5;
         // padding-bottom: $space * 3;
         // border-bottom: 1px solid $color-border-normal;
         @include fix-android-wrong-font-size;
@@ -36,11 +43,6 @@
         .ms-body-text {
             margin-bottom: 0;
         }
-    }
-
-    // Guide banner
-    &__guide-banner {
-        margin-bottom: $space * 3.5;
     }
 }
 

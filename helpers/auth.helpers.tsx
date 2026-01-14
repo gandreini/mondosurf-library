@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
-import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
+// import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
 import { prefetchFavoritesGuidesAndForecast } from 'mondosurf-library/helpers/favorites.helpers';
-import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
+// import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
     logOut,
@@ -24,8 +24,8 @@ import {
     setTimezoneDST,
     setTimezoneId,
     setTimezoneUTC,
-    setTrialActivation,
-    setTrialDuration,
+    // setTrialActivation,
+    // setTrialDuration,
     setUserEmail,
     setUserId,
     setUserName,
@@ -116,7 +116,7 @@ export const login = (
                 updateUserStatus(response);
                 Tracker.identifyUser(response.data.user_id);
                 // iOS: Logs in the user to Revenue Cat
-                if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
+                // if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
                 return response;
             } else {
                 store.dispatch(setLogin('no'));
@@ -139,9 +139,9 @@ export const login = (
  * @returns {Promise} Response.success is true if the user was correctly logged out.
  */
 export const logout = (accessToken: string, deviceId: string) => {
-    // iOs and Android refresh token handling.
+    // iOs and Android refresh token handling
     const state = store.getState();
-    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
+    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux
 
     /* store.dispatch(
         addDebugLogItem(
@@ -194,9 +194,9 @@ export const logout = (accessToken: string, deviceId: string) => {
  */
 export const refreshToken = (accessToken: string, deviceId: string) => {
     const state = store.getState();
-    // iOs and Android refresh token handling.
-    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux.
-    const appIsOnline: boolean = state.appStatus.online; // Redux
+    // iOs and Android refresh token handling
+    const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux
+    const appIsOnline: boolean = state.appStatus.online; // Redu
 
     if (isApp() && !appIsOnline) {
         toastService.error(mondoTranslate('toast.offline'), 'data-test-offline', 4000);
@@ -219,10 +219,10 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
             .then((response) => {
                 if (response.status === 200) {
                     if (response && response.data.success === true) {
-                        store.dispatch(setAccessToken(response.data.access_token)); // To redux state
+                        store.dispatch(setAccessToken(response.data.access_token)); // Redux
                         if (isApp()) {
                             setLocalStorageData('refresh_token', response.data.refresh_token);
-                            store.dispatch(setCapacitorRefreshToken(response.data.refresh_token)); // To redux state
+                            store.dispatch(setCapacitorRefreshToken(response.data.refresh_token)); // Redux
                         }
                     } else {
                         handleActualLogout('Refresh token failed', response);
@@ -276,7 +276,7 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | nul
                 updateUserStatus(response);
                 Tracker.identifyUser(response.data.user_id);
                 // iOS: Logs in the user to Revenue Cat
-                if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
+                // if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
             } else {
                 handleActualLogout('checkIfUserIsLoggedOnOpen failed', response);
             }
@@ -462,7 +462,7 @@ export const passwordReset = (token: string, newPassword: string) => {
  * @returns {returnType} Return description.
  */
 export const updateUserStatus = (response: AxiosResponse<any>, registration: boolean = false) => {
-    // To redux state
+    // Redux
     store.dispatch(setAccessToken(response.data.access_token));
     store.dispatch(setUserId(response.data.user_id));
     store.dispatch(setUserName(response.data.user_name));
@@ -472,9 +472,10 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
     store.dispatch(setApprovedTerms(response.data.approved_terms));
     store.dispatch(setRegistrationDate(response.data.registration_date));
     store.dispatch(setAccountType(response.data.account_type));
-    if (response.data.user_trial_activation_date)
+
+    /* if (response.data.user_trial_activation_date)
         store.dispatch(setTrialActivation(response.data.user_trial_activation_date));
-    if (response.data.user_trial_duration) store.dispatch(setTrialDuration(response.data.user_trial_duration));
+    if (response.data.user_trial_duration) store.dispatch(setTrialDuration(response.data.user_trial_duration)); */
 
     // Only if first time registration
     if (registration) {
@@ -509,7 +510,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
             })
         );
 
-        if (
+        /* if (
             response.data.account_type === 'pro' &&
             response.data.user_subscription_expiration_date &&
             response.data.user_subscription_duration
@@ -522,7 +523,7 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                 response.data.user_stripe_user_id,
                 response.data.user_stripe_subscription_id
             );
-        }
+        } */
 
         // Checks if the user must be ignored in tracking, stores the info in local storage
         if (response.data.authorized_tracking === false) {
@@ -534,14 +535,12 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                 store.dispatch(setAuthorizedTrackingFalse());
             }
         });
-
-        // ! TODO If iOS we can check for purchases status
     }
 
     // We also store the user id in the local storage, used for the re-auth
     setLocalStorageData('user', response.data.user_id.toString());
 
-    // Handling of the refresh token is different on mobile App.
+    // Handling of the refresh token is different on mobile App
     if (isApp()) {
         setLocalStorageData('refresh_token', response.data.refresh_token);
         store.dispatch(setCapacitorRefreshToken(response.data.refresh_token));
@@ -559,7 +558,6 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
  * @returns {void}
  */
 export const handleActualLogout = (why?: string, whyObject?: any): void => {
-    // toastService.emoji('Loggin out: ' + why, '🛟', '', 10000);
     store.dispatch(logOut()); // Redux
     if (isApp()) {
         deleteLocalStorageData('refresh_token');

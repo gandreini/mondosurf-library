@@ -9,11 +9,13 @@
 \* ------------------------------------ */
 .ms-surf-spot-webcam-stations {
     &__section {
-        margin-bottom: $space * 5;
-
         .ms-h3-title {
             margin-bottom: $space * 1.5;
         }
+    }
+
+    &__section:not(:last-child) {
+        margin-bottom: $space * 3.5;
     }
 }
 

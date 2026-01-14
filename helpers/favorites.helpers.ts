@@ -1,8 +1,7 @@
-import { openModalToExecuteProAction } from "features/modal/modal.helpers";
+import { openLoginModal } from "features/modal/modal.helpers";
 import { callApiNew, postApiAuthCall } from "mondosurf-library/api/api";
 import { queryClient } from "mondosurf-library/components/QueryClientProviderWrapper";
 import { getForecastStaleTime } from "mondosurf-library/helpers/reactQuery.helpers";
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import ISurfSpotPreview from "mondosurf-library/model/iSurfSpotPreview";
 import { store } from "mondosurf-library/redux/store";
 import { setFavoriteSpots } from "mondosurf-library/redux/userSlice";
@@ -30,17 +29,13 @@ export const checkPermissionsAndAddSpotToFavorites = (spotId: number, spotName: 
     const state = store.getState();
     const logged = state.user.logged;
 
-    // Opens the modal if user is not logged or has no pro permissions
-    if (logged === 'no' || (logged === 'yes' && !hasProPermissions())) {
+    // Opens the modal if user is not logged
+    if (logged === 'no') {
         return new Promise(resolve => {
-            openModalToExecuteProAction(
+            openLoginModal(
                 'favoriteAddButton',
                 mondoTranslate('favorites.log_in_modal_title'),
                 mondoTranslate('favorites.log_in_modal_text', { spotName: spotName }),
-                mondoTranslate('favorites.trial_modal_title'),
-                mondoTranslate('favorites.trial_modal_text', { spotName: spotName }),
-                mondoTranslate('favorites.subscribe_modal_title'),
-                mondoTranslate('favorites.subscribe_modal_text', { spotName: spotName }),
                 () => {
                     modalService.closeModal();
                     resolve(addSpotToFavourites(spotId, spotName));
@@ -62,12 +57,6 @@ export const checkPermissionsAndAddSpotToFavorites = (spotId: number, spotName: 
 export const addSpotToFavourites = (spotId: number, spotName: string): Promise<any> => {
     const state = store.getState();
     const favoriteSpots: ISurfSpotPreview[] | null = state.user.favoriteSpots // Redux    
-
-    // The user hasn't permission to add favourites
-    // Not very useful if "checkPermissionsAndAddSpotToFavorites" is called before
-    if (!hasProPermissions()) {
-        return Promise.reject();
-    }
 
     // Ensure spotId is a number
     spotId = typeof spotId === 'string' ? parseInt(spotId) : spotId;
@@ -224,19 +213,9 @@ export const prefetchFavoritesGuidesAndForecast = (favorites: ISurfSpotPreview[]
                 gcTime: STABLE_GARBAGE_COLLECTOR_TIME
             });
 
-            // Invalidate the previous forecast query
-            /* const forecastKey = hasProPermissions()
-                ? 'spotForecastPro' + favorite.id
-                : 'spotForecast' + favorite.id;
-                queryClient.invalidateQueries({ queryKey: [forecastKey] }); */
-
             // Prefetch new forecast data
             queryClient.prefetchQuery({
-                queryKey: [
-                    hasProPermissions()
-                        ? 'spotForecastPro' + favorite.id
-                        : 'spotForecast' + favorite.id
-                ],
+                queryKey: ['spotForecastPro' + favorite.id],
                 queryFn: () => callApiNew('surf-spot/forecast/' + favorite.id, 'GET'),
                 staleTime: getForecastStaleTime(),
                 gcTime: FORECAST_GARBAGE_COLLECTOR_TIME

@@ -5,7 +5,6 @@ import { postApiAuthCall } from 'mondosurf-library/api/api';
 import Loader from 'mondosurf-library/components/Loader';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { addSpotToFavourites, checkIfSpotIdIsInFavorites } from 'mondosurf-library/helpers/favorites.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
@@ -60,7 +59,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
                     setCalendarUrlRetrieved(true);
                 }
             })
-            .catch(function (error) {
+            .catch(() => {
                 toastService.error(mondoTranslate('toast.calendar.error_retrieving_calendar_url'));
                 setCalendarUrlRetrieved(true);
             });
@@ -78,11 +77,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
 
     // Takes care of classes of the modal, for vertical alignment
     useEffect(() => {
-        if (
-            !hasProPermissions() ||
-            !calendarUrlRetrieved ||
-            ((!calendarUrl || calendarUrl === '') && calendarUrlRetrieved && hasProPermissions())
-        ) {
+        if (!calendarUrlRetrieved || ((!calendarUrl || calendarUrl === '') && calendarUrlRetrieved)) {
             modalService.updateClasses({ classes: 'ms-modal-content-centered' });
         } else {
             modalService.updateClasses({ classes: '' });
@@ -170,21 +165,11 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
 
     return (
         <div className="ms-get_calendar_url_modal">
-            {/* User has no permission to use the calendar */}
-            {/* User has no permission to use the calendar */}
-            {!hasProPermissions() && calendarUrlRetrieved && (
-                <>
-                    <p className="ms-body-text">
-                        {mondoTranslate('calendar.get_calendar_url_modal.error_not_allowed')}
-                    </p>
-                </>
-            )}
-
             {/* Retrieving calendar URL */}
             {!calendarUrlRetrieved && <Loader />}
 
             {/* Calendar URL is empty */}
-            {(!calendarUrl || calendarUrl === '') && calendarUrlRetrieved && hasProPermissions() && (
+            {(!calendarUrl || calendarUrl === '') && calendarUrlRetrieved && (
                 <>
                     <p className="ms-body-text">
                         {mondoTranslate('calendar.get_calendar_url_modal.error_no_calendar_url')}
@@ -193,7 +178,7 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
             )}
 
             {/* Ready to go */}
-            {calendarUrl && calendarUrl !== '' && calendarUrlRetrieved && hasProPermissions() && (
+            {calendarUrl && calendarUrl !== '' && calendarUrlRetrieved && (
                 <>
                     {/* Copy url */}
                     <section className="ms-get_calendar_url_modal__section" data-test="get-calendar-url-ready">

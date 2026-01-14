@@ -30,8 +30,7 @@ import { IMAGES_URL } from 'proxies/localConstants';
  */
 export function createMarker(
     feature: Feature,
-    latlng: LatLng,
-    userIsPro: boolean | 'checking'
+    latlng: LatLng
 
 ): LeafletMarker {
     // Properties of the spot
@@ -45,7 +44,7 @@ export function createMarker(
                 `${baseUrl}map-pin.svg`;
 
     // Icon class
-    const surfQuality = extractSurfQualityFromGeojsonFeature(properties, userIsPro);
+    const surfQuality = extractSurfQualityFromGeojsonFeature(properties);
     const iconClass = 'quality-' + surfQuality.toString();
 
     const icon = LeafletDivIcon({
@@ -234,11 +233,10 @@ export const placeIcon = (map: LeafletMap, lat: number, lng: number, draggable?:
  * @param {LeafletMarkerClusterGroup | null} markers - An optional Leaflet marker cluster group. If null, markers will not be clustered.
  * @param {number} defaultPadding - The default padding to be used when zooming to bounds.
  * @param {number} topPadding - The top padding to be used when zooming to bounds.
- * @param {boolean | 'checking'} userIsPro - If the user has access to pro features.
  * @param {boolean} [cluster] - Optional parameter to specify whether markers should be clustered. Defaults to false.
  *
  */
-export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers: LeafletMarkerClusterGroup | null, defaultPadding: number, topPadding: number, userIsPro: boolean | 'checking', cluster?: boolean) => {
+export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers: LeafletMarkerClusterGroup | null, defaultPadding: number, topPadding: number, cluster?: boolean) => {
     // Clean the map
     map.removeLayer(geojsonLayer);
     if (markers) map.removeLayer(markers);
@@ -250,7 +248,7 @@ export const addMarkersOnMap = (map: LeafletMap, geojsonLayer: GeoJSON, markers:
                 let highestMarkerQuality = -1;
                 for (let i = 0; i < cluster.getAllChildMarkers().length; i++) {
                     const currentMarker = cluster.getAllChildMarkers()[i];
-                    const spotSurfQuality = extractSurfQualityFromGeojsonFeature(currentMarker.feature!.properties, userIsPro);
+                    const spotSurfQuality = extractSurfQualityFromGeojsonFeature(currentMarker.feature!.properties);
                     if (spotSurfQuality > highestMarkerQuality) highestMarkerQuality = spotSurfQuality;
 
                 }
@@ -326,17 +324,10 @@ export const centerMapOnUserPosition = (map: LeafletMap, callbackFunction?: (out
  * Extracts the surf quality from a GeoJSON feature based on the user's pro status, eg [1,0]
  *
  * @param { [name: string]: any; } properties - An array containing surf quality values, which can be numbers or null.
- * @param {boolean | 'checking'} userIsPro - A flag indicating if the user is a pro (true) or not (false), or in a checking state.
  * @returns {number} The surf quality as a number, or -1 if the value is null.
  */
-const extractSurfQualityFromGeojsonFeature = (properties: { [name: string]: any; }, userIsPro: boolean | 'checking'): number => {
+const extractSurfQualityFromGeojsonFeature = (properties: { [name: string]: any; }): number => {
     let surfQuality: number = -1;
-
-    if (userIsPro === true) {
-        surfQuality = parseFloat(properties.gd) || -1;
-    } else {
-        surfQuality = parseFloat(properties.gds) || -1;
-    }
-
+    surfQuality = parseFloat(properties.gd) || -1;
     return surfQuality;
 }

@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import { openCalendarModal, openModalToExecuteProAction } from 'features/modal/modal.helpers';
+import { openCalendarModal } from 'features/modal/modal.helpers';
 import Icon from 'mondosurf-library/components/Icon';
 import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { checkPermissionsAndAddSpotToFavorites } from 'mondosurf-library/helpers/favorites.helpers';
@@ -70,7 +70,7 @@ const Banner: React.FC<IBanner> = (props) => {
         });
     };
 
-    // On click get pro banner
+    /* // On click get pro banner
     const onGetProBannerClick = () => {
         // Tracking
         Tracker.trackEvent(['mp'], TrackingEvent.FullForecastGetProBannerTap, {
@@ -86,7 +86,7 @@ const Banner: React.FC<IBanner> = (props) => {
             undefined,
             mondoTranslate('pro.pro_modal.get_full_forecast')
         );
-    };
+    }; */
 
     return (
         <>
@@ -118,6 +118,7 @@ const Banner: React.FC<IBanner> = (props) => {
                     )}
                 </>
             )}
+
             {/* Calendar banner */}
             {props.type === 'calendar' && props.spotId && props.spotName && (
                 <div
@@ -137,6 +138,7 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </div>
             )}
+
             {/* Widget banner */}
             {props.type === 'widget' && props.spotId && props.spotName && (
                 <a href="https://forms.gle/4BikoTaPPscGaiUW8" target="_blank" rel="noreferrer">
@@ -160,8 +162,9 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </a>
             )}
+
             {/* Talk to us banner */}
-            {props.type === 'talkToUs' && (
+            {/* {props.type === 'talkToUs' && (
                 <MondoLink
                     className="ms-banner ms-banner-talk-to-us"
                     href="https://calendar.app.google/ZJcGjybqNqqrEh17A"
@@ -174,23 +177,22 @@ const Banner: React.FC<IBanner> = (props) => {
                         </p>
                     </div>
                 </MondoLink>
-            )}
+            )} */}
+
             {/* Get pro */}
-            {props.type === 'getPro' && (
+            {/* {props.type === 'getPro' && (
                 <MondoLink
                     className="ms-banner ms-banner-get-pro"
                     onClickCallback={onGetProBannerClick}
                     dataTest="surf-spot-full-forecast-banner">
                     <div className="ms-banner__emoji">🌊</div>
                     <div className="ms-banner__texts">
-                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_get_pro_text')}</p>
-                        {/* <p className="ms-banner__subtext ms-small-text">
-                            {mondoTranslate('banner.banner_get_pro_subtext')}
-                        </p> */}
+                        <p className="ms-h3-title ms-banner__text">{mondoTranslate('banner.banner_get_pro_text')}</p>                       
                         <div className="ms-btn ms-btn-cta">{mondoTranslate('banner.banner_get_pro_button')}</div>
                     </div>
                 </MondoLink>
-            )}
+            )} */}
+
             {/* Add missing spot */}
             {props.type === 'addMissingSpot' && (
                 <MondoLink className="ms-banner ms-banner-add-missing-spot" href={ADD_SPOT_URL} target="_blank">
@@ -205,6 +207,7 @@ const Banner: React.FC<IBanner> = (props) => {
                     </div>
                 </MondoLink>
             )}
+
             {/* Comment */}
             {props.type === 'comment' && (
                 <MondoLink

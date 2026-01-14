@@ -16,7 +16,6 @@ import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { hourMinFormat } from 'mondosurf-library/helpers/date.helpers';
 import { limitForecastToDaysRange } from 'mondosurf-library/helpers/forecast.helpers';
 import { getForecastStaleTime } from 'mondosurf-library/helpers/reactQuery.helpers';
-import { hasProPermissions } from 'mondosurf-library/helpers/user.helpers';
 import {
     ISurfForecastRow,
     ISurfSpotForecastDayTideHighLow,
@@ -48,7 +47,7 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
     // Fetch forecast
     const { isPending, isError, data, error } = useQuery({
-        queryKey: [hasProPermissions() ? 'spotForecastPro' + props.spotId : 'spotForecast' + props.spotId],
+        queryKey: ['spotForecastPro' + props.spotId],
         queryFn: () => callApiNew('surf-spot/forecast/' + props.spotId, 'GET'),
         staleTime: getForecastStaleTime(),
         gcTime: FORECAST_GARBAGE_COLLECTOR_TIME

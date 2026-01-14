@@ -1,5 +1,4 @@
 import useGetFetch from "mondosurf-library/api/useGetFetch";
-import { hasProPermissions } from "mondosurf-library/helpers/user.helpers";
 import { useEffect, useState } from "react";
 
 /**
@@ -21,15 +20,8 @@ export const useGeoJsonFetch = () => {
     const fetchedMap = useGetFetch(geoJsonQuery || '', geoJsonQueryParams);
 
     useEffect(() => {
-        // Check if the user has "pro" permissions
-        if (hasProPermissions()) {
-            // Set query parameters for pro users
-            setGeoJsonQueryParams({ "is_pro": true });
-            setGeoJsonQuery('geojson');
-        } else {
-            // Set the API endpoint for non-pro users
-            setGeoJsonQuery('geojson');
-        }
+        setGeoJsonQueryParams({ "is_pro": true });
+        setGeoJsonQuery('geojson');
 
         // Cleanup function to reset the query when the component is unmounted
         return function cleanup() {
