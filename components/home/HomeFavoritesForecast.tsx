@@ -42,7 +42,9 @@ const HomeFavoritesForecast: React.FC<IHomeFavoritesForecast> = (props: IHomeFav
 
                 {/* No good times */}
                 {props.status === 'empty' && (
-                    <div className="ms-home-favorites-spots-forecast__empty ms-centered ms-max-width">
+                    <div
+                        className="ms-home-favorites-spots-forecast__empty ms-centered ms-max-width"
+                        data-test="home-favorites-forecast-no-good-times">
                         <EmptyState
                             title={mondoTranslate('home.favourites.no_good_times_title')}
                             text={mondoTranslate('home.favourites.no_good_times_text')}
@@ -56,7 +58,7 @@ const HomeFavoritesForecast: React.FC<IHomeFavoritesForecast> = (props: IHomeFav
                     </div>
                 )}
 
-                {/* God times */}
+                {/* Good times */}
                 {props.status === 'goodTimes' && (
                     <div className="ms-home-favorites-spots-forecast__good-times">
                         <h3 className="ms-home-favorites-spots-forecast__good-times-title ms-h2-title">

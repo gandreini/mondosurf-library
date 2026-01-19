@@ -307,12 +307,12 @@ const Auth: React.FC<IAuth> = (props: IAuth) => {
                         toastService.success(mondoTranslate('auth.welcome', { name: response.data.user_name }));
                         if (props.callback) props.callback(response.data.access_token, response.data.user_name);
 
-                        //Tracking.
+                        //Tracking
                         Tracker.trackEvent(['mp'], TrackingEvent.SignupCompleteApi, {
                             context: props.context
                         });
 
-                        router.push('/trial-confirmed');
+                        // router.push('/trial-confirmed');
                     } else {
                         setError('registerForm', {
                             type: 'wrongRegisterForm',

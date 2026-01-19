@@ -193,12 +193,6 @@ const GetCalendarUrl: React.FC<IGetCalendarUrl> = (props) => {
                                 spotName: props.spotName
                             })}
                         </button>
-                        {/* For automated testing purposes only */}
-                        {process.env.REACT_APP_DEBUG_MODE === 'true' && (
-                            <a className="is-hidden" data-test="get-calendar-url-test-url" href={calendarUrl}>
-                                C
-                            </a>
-                        )}
                     </section>
 
                     {/* Send via email */}

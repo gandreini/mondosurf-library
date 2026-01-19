@@ -7,6 +7,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 // import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
 // import { basicMapFiltersCheck } from 'features/map/mapFilters.helpers';
 import { Feature, FeatureCollection } from 'geojson';
+import { isApp } from 'helpers/device.helpers';
 import {
     control as LeafletControl,
     GeoJSON,
@@ -30,12 +31,9 @@ import {
 } from 'mondosurf-library/helpers/map.helpers';
 import { createPopUpApp, createPopUpWeb } from 'mondosurf-library/helpers/mapPopUpHelper';
 import { getUrlParameter } from 'mondosurf-library/helpers/various.helpers';
-import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { useRouterProxy } from 'proxies/useRouter';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { isApp } from 'helpers/device.helpers';
+import { useEffect, useRef, useState } from 'react';
 
 interface IMap {
     lat?: number;
@@ -78,8 +76,10 @@ const Map: React.FC<IMap> = (props: IMap) => {
     // If the map is draggable
     const isDraggable = !screenWiderThan(760) && props.noDragOnMobile ? false : true;
 
-    // Used to avoid the error "Map container is already initialized.".
-    let map = useRef<LeafletMap | null>(null);
+    // Holds the Leaflet map instance (not a DOM element)
+    const map = useRef<LeafletMap | null>(null);
+    // Holds a reference to the DOM div element: Container ref for the map div
+    const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
     const geojsonLayer = useRef<GeoJSON | null>(null);
     const markers = useRef<LeafletMarkerClusterGroup | null>(null);
@@ -89,18 +89,27 @@ const Map: React.FC<IMap> = (props: IMap) => {
         'INIT' | 'REQUESTING' | 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT'
     >('INIT');
 
-    // Redux
-    const logged = useSelector((state: RootState) => state.user.logged);
-
+    // Initialize map on mount and cleanup on unmount.
+    // We use useEffect instead of a callback ref for React 18 StrictMode compatibility.
+    // StrictMode double-renders components, and callback refs don't re-fire when React
+    // reuses the same DOM element, causing the map to be destroyed but not re-created.
     useEffect(() => {
-        // Removes the map when leaving the page
+        // Get the DOM element where Leaflet will render the map
+        const mapNode = mapContainerRef.current;
+        // Only initialize if: 1) the DOM element exists, 2) map hasn't been created yet
+        if (mapNode && !map.current) {
+            initializeMap(mapNode);
+        }
+
+        // Cleanup: removes the map when the component unmounts
         return () => {
             if (map.current) {
-                map.current.remove();
-                map.current = null;
+                map.current.remove(); // Leaflet cleanup: removes all layers and event listeners
+                map.current = null; // Reset ref so map can be re-initialized if component remounts
             }
         };
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Empty deps = run once on mount. initializeMap is intentionally omitted.
 
     // Tiles
     const vectorTiles = useRef<TileLayer>(
@@ -132,119 +141,94 @@ const Map: React.FC<IMap> = (props: IMap) => {
         })
     );
 
-    const initializeMap = useCallback(
-        (mapNode: HTMLDivElement | null) => {
-            if (typeof window !== 'undefined' && mapNode !== null && !map.current) {
-                // Wrap the createMarker function to pass the additional parameter
-                const wrappedCreateMarker = (feature: Feature, latlng: LatLng) => {
-                    return createMarker(feature, latlng);
-                };
+    const initializeMap = (mapNode: HTMLDivElement | null) => {
+        if (typeof window !== 'undefined' && mapNode !== null && !map.current) {
+            // Wrap createPopUp to inject the router dependency
+            const wrappedCreatePopUp = (feature: Feature, layer: Layer) => {
+                return isApp() ? createPopUpApp(feature, layer, router) : createPopUpWeb(feature, layer, router);
+            };
 
-                // Wrap the createMarker function to pass the additional parameter
-                const wrappedCreatePopUp = (feature: Feature, layer: Layer) => {
-                    return isApp() ? createPopUpApp(feature, layer, router) : createPopUpWeb(feature, layer, router);
-                };
+            // Map creation
+            map.current = new LeafletMap(mapNode, {
+                dragging: isDraggable,
+                zoomControl: false,
+                attributionControl: false,
+                maxZoom: maxZoom,
+                minZoom: 1.5,
+                touchZoom: true,
+                wheelPxPerZoomLevel: 20,
+                maxBoundsViscosity: 1.0
+            });
 
-                // Map creation
-                map.current = new LeafletMap(mapNode, {
-                    dragging: isDraggable,
-                    zoomControl: false,
-                    attributionControl: false,
-                    maxZoom: maxZoom, // Depends on the tiles you use
-                    minZoom: 1.5,
-                    touchZoom: true,
-                    // zoomSnap: zoomSnap,
-                    wheelPxPerZoomLevel: 20, // Smaller values will make wheel-zooming faster
-                    maxBoundsViscosity: 1.0
+            // Sets the bounds for the dragging of the map
+            map.current.setMaxBounds([
+                [-90, -180],
+                [90, 180]
+            ]);
+
+            // Attribution/Copyright position
+            LeafletControl.attribution({
+                position: 'topright'
+            }).addTo(map.current);
+
+            // Adds map layer based on user preferences set in local storage
+            if (localStorage.getItem('ms_map_style') === 'satellite1') {
+                map.current.addLayer(satelliteTiles1.current);
+                setMapStyle('satellite1');
+            } else if (localStorage.getItem('ms_map_style') === 'satellite2') {
+                map.current.addLayer(satelliteTiles2.current);
+                setMapStyle('satellite2');
+            } else {
+                map.current.addLayer(vectorTiles.current);
+                setMapStyle('vector');
+            }
+
+            if (lat && lng && props.draggableMarker) {
+                // Edit surf spot: centers on a spot and draggable marker
+                positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
+
+                placeIcon(
+                    map.current,
+                    lat,
+                    lng,
+                    props.draggableMarker,
+                    props.customIcon,
+                    props.updateLatLngCallback
+                );
+            } else {
+                // Main map with all spots
+                geojsonLayer.current = new GeoJSON(props.geojson, {
+                    // Swaps Lat and Lng in case they are swapped
+                    coordsToLatLng: function (coords: number[]) {
+                        return new LatLng(coords[0], coords[1], coords[2]);
+                    },
+                    pointToLayer: createMarker,
+                    onEachFeature: wrappedCreatePopUp
                 });
 
-                // Sets the bounds for the dragging of the map
-                map.current.setMaxBounds([
-                    [-90, -180],
-                    [90, 180]
-                ]);
+                addMarkersOnMap(
+                    map.current,
+                    geojsonLayer.current,
+                    markers.current,
+                    defaultPadding,
+                    topPadding,
+                    cluster
+                );
 
-                // Attribution/Copyright position
-                LeafletControl.attribution({
-                    position: 'topright'
-                }).addTo(map.current);
-
-                // Adds map layer based on user preferences set in local storage
-                if (localStorage.getItem('ms_map_style') === 'satellite1') {
-                    map.current.addLayer(satelliteTiles1.current);
-                    setMapStyle('satellite1');
-                } else if (localStorage.getItem('ms_map_style') === 'satellite2') {
-                    map.current.addLayer(satelliteTiles2.current);
-                    setMapStyle('satellite2');
-                } else {
-                    map.current.addLayer(vectorTiles.current);
-                    setMapStyle('vector');
-                }
-
-                if (lat && lng && props.draggableMarker) {
-                    // Edit surf spot: centers on a spot and draggable marker
-                    // Map positioning
-                    positionMap(map.current, mapLatLngZoom, defaultPadding, topPadding, geojsonLayer.current, lat, lng);
-
-                    // Draggable marker
-                    placeIcon(
-                        map.current,
-                        lat,
-                        lng,
-                        props.draggableMarker,
-                        props.customIcon,
-                        props.updateLatLngCallback
-                    );
-                } else {
-                    // Other maps
-                    // Adds spots
-                    geojsonLayer.current = new GeoJSON(props.geojson, {
-                        // Swaps Lat and Lng in case they are swapped
-                        coordsToLatLng: function (coords: number[]) {
-                            return new LatLng(coords[0], coords[1], coords[2]);
-                        },
-                        pointToLayer: wrappedCreateMarker,
-                        onEachFeature: wrappedCreatePopUp // Popover
-                        // Filter
-                        /* filter: (feature) => {
-                            return basicMapFiltersCheck(feature, props.countryId, props.regionId);
-                        } */
-                    });
-
-                    // Add the actual markers and clusters on the map
-                    addMarkersOnMap(
-                        map.current,
-                        geojsonLayer.current,
-                        markers.current,
-                        defaultPadding,
-                        topPadding,
-                        cluster
-                    );
-
-                    positionMap(
-                        map.current,
-                        mapLatLngZoom,
-                        defaultPadding,
-                        topPadding,
-                        geojsonLayer.current,
-                        lat,
-                        lng,
-                        countryId,
-                        regionId
-                    );
-                }
+                positionMap(
+                    map.current,
+                    mapLatLngZoom,
+                    defaultPadding,
+                    topPadding,
+                    geojsonLayer.current,
+                    lat,
+                    lng,
+                    countryId,
+                    regionId
+                );
             }
-        },
-        [cluster, isDraggable, lat, lng, props, topPadding]
-    );
-
-    // We check if the user is pro before initializing the map
-    const mapRef = useCallback(
-        (mapNode: HTMLDivElement | null) => {
-            initializeMap(mapNode);
-        },
-        [initializeMap]
-    );
+        }
+    };
 
     // Gets feedback about user geolocation from centerMapOnUserPosition
     const updateUserGeolocation = (outcome: 'RETRIEVED' | 'PERMISSION_DENIED' | 'POSITION_UNAVAILABLE' | 'TIMEOUT') => {
@@ -257,7 +241,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
     // Centers the map
     const centerMapOnLatLng = (resetZoom: boolean = true): void => {
         if (map.current && props.lat && props.lng) {
-            const newZoom = resetZoom === true ? mapLatLngZoom : map.current.getZoom();
+            const newZoom = resetZoom ? mapLatLngZoom : map.current.getZoom();
             map.current.setView(new LatLng(props.lat, props.lng), newZoom);
         }
     };
@@ -265,7 +249,7 @@ const Map: React.FC<IMap> = (props: IMap) => {
     return (
         <>
             {/* The map */}
-            <div ref={mapRef} className="ms-map-global__container" data-test="surf-spot-map" />
+            <div ref={mapContainerRef} className="ms-map-global__container" data-test="surf-spot-map" />
 
             {/* Controls */}
             <div className="ms-map__controls" data-test="surf-spot-map-controls">

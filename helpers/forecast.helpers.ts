@@ -3,7 +3,7 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { openLoginModal } from 'features/modal/modal.helpers';
 import { postApiAuthCall } from 'mondosurf-library/api/api';
-import { FORECAST_UPDATES, PRO_USER_MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
+import { FORECAST_UPDATES, MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
 import { cloneObject } from "mondosurf-library/helpers/object.helpers";
 import IGoodTime from "mondosurf-library/model/iGoodTime";
 import { ISurfSpotForecast } from "mondosurf-library/model/iSurfSpot";
@@ -11,13 +11,14 @@ import { store } from "mondosurf-library/redux/store";
 import toastService from 'mondosurf-library/services/toastService';
 
 /**
- * Returns the number of forecast days to be displayed to the user, depending on the account type.
+ * Returns the number of forecast days to be displayed to the user.
+ * Returns 0 for disabled accounts, otherwise returns the max forecast days.
  *
  * @returns {number} Number of days of forecast and GoodTimes to show.
  */
 export const forecastDays = (): number => {
     const accountType = store.getState().user.accountType;
-    return accountType === "disabled" ? 0 : PRO_USER_MAX_FORECAST_DAYS;
+    return accountType === "disabled" ? 0 : MAX_FORECAST_DAYS;
 }
 
 /**
