@@ -46,7 +46,7 @@ const Comments: React.FC<IComments> = (props) => {
             )}
 
             {/* Guide text only shown when no comments exist */}
-            {!hasComments && (
+            {!hasComments && fetchedComments.status === 'loaded' && (
                 <p className="ms-small-text">
                     {mondoTranslate(
                         props.shortText ? 'comments.spot_comment_guide_short' : 'comments.spot_comment_guide',
@@ -56,8 +56,12 @@ const Comments: React.FC<IComments> = (props) => {
             )}
 
             {/* Show form at top when no comments */}
-            {!hasComments && (
-                <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
+            {!hasComments && fetchedComments.status === 'loaded' && (
+                <CommentsForm
+                    resourceId={props.resourceId}
+                    resourceName={props.resourceName}
+                    callback={refreshComments}
+                />
             )}
 
             {/* Loading */}
@@ -91,8 +95,12 @@ const Comments: React.FC<IComments> = (props) => {
                 ))}
 
             {/* Show form at bottom when there are comments */}
-            {hasComments && (
-                <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
+            {hasComments && fetchedComments.status === 'loaded' && (
+                <CommentsForm
+                    resourceId={props.resourceId}
+                    resourceName={props.resourceName}
+                    callback={refreshComments}
+                />
             )}
         </ul>
     );
