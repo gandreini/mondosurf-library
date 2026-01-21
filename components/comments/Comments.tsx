@@ -35,6 +35,8 @@ const Comments: React.FC<IComments> = (props) => {
         setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
     };
 
+    const hasComments = fetchedComments.status === 'loaded' && fetchedComments.payload.length > 0;
+
     return (
         <ul className="ms-comments">
             {fetchedComments.status === 'loaded' && fetchedComments.payload.length === 0 && (
@@ -43,24 +45,25 @@ const Comments: React.FC<IComments> = (props) => {
                 </p>
             )}
 
-            {!props.shortText && (
+            {/* Guide text only shown when no comments exist */}
+            {!hasComments && (
                 <p className="ms-small-text">
-                    {mondoTranslate('comments.spot_comment_guide', { resource_name: props.resourceName })}
+                    {mondoTranslate(
+                        props.shortText ? 'comments.spot_comment_guide_short' : 'comments.spot_comment_guide',
+                        { resource_name: props.resourceName }
+                    )}
                 </p>
             )}
 
-            {props.shortText && (
-                <p className="ms-small-text">
-                    {mondoTranslate('comments.spot_comment_guide_short', { resource_name: props.resourceName })}
-                </p>
+            {/* Show form at top when no comments */}
+            {!hasComments && (
+                <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
             )}
-
-            <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
 
             {/* Loading */}
             {fetchedComments.status !== 'loaded' && (
                 <>
-                    {Array.from({ length: numberOfComments }).map((item, key) => (
+                    {Array.from({ length: numberOfComments }).map((_, key) => (
                         <div className="ms-comments__skeleton" key={key}>
                             <SkeletonLoader height="20px" width="180px" marginBottom="12px" />
                             <SkeletonLoader height="26px" />
@@ -86,6 +89,11 @@ const Comments: React.FC<IComments> = (props) => {
                         commented_resource_id={Number(props.resourceId)}
                     />
                 ))}
+
+            {/* Show form at bottom when there are comments */}
+            {hasComments && (
+                <CommentsForm resourceId={props.resourceId} resourceName={props.resourceName} callback={refreshComments} />
+            )}
         </ul>
     );
 };
