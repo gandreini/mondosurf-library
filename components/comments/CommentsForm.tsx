@@ -20,6 +20,7 @@ interface ICommentsForm {
     resourceId: string;
     resourceName: string;
     callback?: () => void;
+    autoFocus?: boolean;
 }
 
 const CommentsForm: React.FC<ICommentsForm> = (props) => {
@@ -50,10 +51,12 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
 
     const fieldContent = watch('commentText');
 
-    // Set focus on the textarea when the component mounts
+    // Set focus on the textarea when the component mounts (only if autoFocus is true)
     useEffect(() => {
-        setFocus('commentText');
-    }, [setFocus]);
+        if (props.autoFocus) {
+            setFocus('commentText');
+        }
+    }, [setFocus, props.autoFocus]);
 
     // Save comment (checks for login status and shows the modal if needed)
     const onSaveComment = () => {

@@ -12,6 +12,7 @@ import toastService from 'mondosurf-library/services/toastService';
 import { truncateTextAfterNCharacters } from 'mondosurf-library/helpers/strings.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { IComment } from 'mondosurf-library/model/iComment';
+import ExpandableText from '../ExpandableText';
 
 const Comment: React.FC<IComment> = (props) => {
     // Dayjs plugins
@@ -52,7 +53,7 @@ const Comment: React.FC<IComment> = (props) => {
     };
 
     return (
-        <li className="ms-comment" data-test="comment">
+        <li className="ms-comment" data-test="comment" data-comment-id={props.ID}>
             <div className="ms-comment__header">
                 <div className="ms-comment__header-left">
                     {props.commented_spot_name && (
@@ -79,7 +80,9 @@ const Comment: React.FC<IComment> = (props) => {
                 )}
             </div>
             <div className="ms-comment__content">
-                <p className="ms-comment__text ms-body-text">{props.comment_text}</p>
+                <p className="ms-comment__text ms-body-text">
+                    <ExpandableText text={props.comment_text} expandable={props.expandable} initialExpanded={props.initialExpanded} />
+                </p>
             </div>
         </li>
     );

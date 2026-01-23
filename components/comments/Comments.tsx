@@ -18,7 +18,19 @@ interface IComments {
 const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
+    const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
     const fetchedComments = useGetFetch(commentsQuery);
+
+    // Read URL hash on mount to determine which comment to focus
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const hash = window.location.hash; // e.g., "#comment-123"
+            const match = hash.match(/^#comment-(\d+)$/);
+            if (match) {
+                setFocusedCommentId(parseInt(match[1], 10));
+            }
+        }
+    }, []);
 
     // Fetch comments
     useEffect(() => {
@@ -29,6 +41,16 @@ const Comments: React.FC<IComments> = (props) => {
     useEffect(() => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
+
+    // Scroll to focused comment when comments are loaded
+    useEffect(() => {
+        if (focusedCommentId && fetchedComments.status === 'loaded') {
+            const element = document.querySelector(`[data-comment-id="${focusedCommentId}"]`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [focusedCommentId, fetchedComments.status]);
 
     // Refresh comments
     const refreshComments = () => {
@@ -61,6 +83,7 @@ const Comments: React.FC<IComments> = (props) => {
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}
                     callback={refreshComments}
+                    autoFocus={true}
                 />
             )}
 
@@ -91,6 +114,7 @@ const Comments: React.FC<IComments> = (props) => {
                         callback={refreshComments}
                         allow_editing={true}
                         commented_resource_id={Number(props.resourceId)}
+                        initialExpanded={focusedCommentId === comment.ID}
                     />
                 ))}
 
@@ -100,6 +124,7 @@ const Comments: React.FC<IComments> = (props) => {
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}
                     callback={refreshComments}
+                    autoFocus={false}
                 />
             )}
         </ul>

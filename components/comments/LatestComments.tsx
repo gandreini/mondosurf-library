@@ -45,7 +45,7 @@ const LatestComments: React.FC = (props) => {
                             components={fetchedComments.payload.map((comment: IComment, index: number) => (
                                 <MondoLink
                                     key={index}
-                                    href={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}`}>
+                                    href={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}#comment-${comment.ID}`}>
                                     <Comment
                                         comment_text={comment.comment_text}
                                         comment_author_name={
@@ -57,6 +57,7 @@ const LatestComments: React.FC = (props) => {
                                         commented_spot_name={comment.commented_spot_name}
                                         commented_spot_slug={comment.commented_spot_slug}
                                         ID={comment.ID}
+                                        expandable={false}
                                     />
                                 </MondoLink>
                             ))}

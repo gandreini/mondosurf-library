@@ -1,0 +1,52 @@
+/**
+ * EXPANDABLE TEXT
+ *
+ * A component for displaying truncated text with expand/collapse functionality.
+// SEO-friendly: Full text is always in the DOM for search engines.
+ */
+
+/* ------------------------------------ *\
+    #EXPANDABLE TEXT
+\* ------------------------------------ */
+
+.ms-expandable-text {
+    position: relative;
+
+    // Main text content
+    &__content {
+        font-size: inherit;
+        line-height: inherit;
+        color: var(--color-text);
+
+        // Collapsed state with line clamping
+        &--collapsed {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            // -webkit-line-clamp is set dynamically via inline style
+        }
+    }
+
+    // Action container
+    &__action {
+        margin-top: $space;
+    }
+
+    // Button styled as a link
+    &__button {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: var(--color-text-link);
+        font-family: inherit;
+        font-size: inherit;
+        text-decoration: none;
+        transition: color $transition-durations;
+        cursor: pointer;
+
+        &:hover {
+            outline: none;
+        }
+    }
+}

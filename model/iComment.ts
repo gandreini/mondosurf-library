@@ -9,4 +9,6 @@ export interface IComment {
     commented_spot_slug?: string;
     allow_editing?: boolean;
     callback?: () => void;
+    expandable?: boolean;
+    initialExpanded?: boolean;
 }
