@@ -3,15 +3,16 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { RootState } from 'mondosurf-library/redux/store';
-import { useSelector } from 'react-redux';
-import Icon from 'mondosurf-library/components/Icon';
-import modalService from 'mondosurf-library/services/modalService';
 import { deleteApiAuthCall } from 'mondosurf-library/api/api';
-import toastService from 'mondosurf-library/services/toastService';
+import Icon from 'mondosurf-library/components/Icon';
 import { truncateTextAfterNCharacters } from 'mondosurf-library/helpers/strings.helpers';
-import { mondoTranslate } from 'proxies/mondoTranslate';
 import { IComment } from 'mondosurf-library/model/iComment';
+import { RootState } from 'mondosurf-library/redux/store';
+import modalService from 'mondosurf-library/services/modalService';
+import toastService from 'mondosurf-library/services/toastService';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+import { useSelector } from 'react-redux';
+
 import ExpandableText from '../ExpandableText';
 
 const Comment: React.FC<IComment> = (props) => {
@@ -81,7 +82,11 @@ const Comment: React.FC<IComment> = (props) => {
             </div>
             <div className="ms-comment__content">
                 <p className="ms-comment__text ms-body-text">
-                    <ExpandableText text={props.comment_text} expandable={props.expandable} initialExpanded={props.initialExpanded} />
+                    <ExpandableText
+                        text={props.comment_text}
+                        expandable={props.expandable}
+                        initialExpanded={props.initialExpanded}
+                    />
                 </p>
             </div>
         </li>
