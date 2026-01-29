@@ -80,6 +80,7 @@ const GoodTime: React.FC<IGoodTime> = (props) => {
                 dayId: props.day_id,
                 spotId: props.surf_spot_id,
                 spotSlug: props.surf_spot_slug,
+                startTime: props.start_time,
                 dayToShow: dayjs(props.start_time).tz(props.timezone).format('D'),
                 hourToShow: dayjs(props.start_time).tz(props.timezone).format('H'),
                 showSpotButton: props.context === 'homeFavorites' || props.context === 'homeNearSpots' ? true : false,

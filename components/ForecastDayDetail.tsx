@@ -35,6 +35,7 @@ interface IForecastDayDetail {
     hourToShow?: number;
     origin: 'GoodTime' | 'FullForecast';
     showSpotButton?: boolean;
+    startTime?: string;  // ISO date string to start the forecast from
 }
 
 const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
@@ -71,8 +72,16 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
 
     useEffect(() => {
         if (data) {
-            // This is done to take into account timezones
-            const limitedForecastData = limitForecastToDaysRange(data.spot_forecast, 8, data.spot_forecast.timezone);
+            // Pass startTime to slice from the correct day; when provided, days[0] IS the correct day
+            const limitedForecastData = limitForecastToDaysRange(
+                data.spot_forecast,
+                8,
+                data.spot_forecast.timezone,
+                props.startTime
+            );
+
+            // When startTime is provided, days[0] is the target day; otherwise use dayId for backward compatibility
+            const dayIndex = props.startTime ? 0 : props.dayId;
 
             setSpotTimezone(data.spot_forecast.timezone);
             setSpotGoodContditions({
@@ -86,13 +95,13 @@ const ForecastDayDetail: React.FC<IForecastDayDetail> = (props) => {
                 windOffShoreSpeedMax: data.forecast_conditions_wind_speed_max || null,
                 windOnShoreSpeedMax: data.forecast_conditions_on_shore_wind_speed_max || null
             });
-            setSpotForecastDay(limitedForecastData.days[props.dayId].hourly_data);
+            setSpotForecastDay(limitedForecastData.days[dayIndex].hourly_data);
             setLastUpdate(data.spot_forecast.last_forecast_update);
-            setCivilDawn(limitedForecastData.days[props.dayId].civil_dawn);
-            setSunrise(limitedForecastData.days[props.dayId].sunrise);
-            setSunset(limitedForecastData.days[props.dayId].sunset);
-            setCivilDusk(limitedForecastData.days[props.dayId].civil_dusk);
-            setTide(limitedForecastData.days[props.dayId].tide.high_low);
+            setCivilDawn(limitedForecastData.days[dayIndex].civil_dawn);
+            setSunrise(limitedForecastData.days[dayIndex].sunrise);
+            setSunset(limitedForecastData.days[dayIndex].sunset);
+            setCivilDusk(limitedForecastData.days[dayIndex].civil_dusk);
+            setTide(limitedForecastData.days[dayIndex].tide.high_low);
         }
     }, [data]);
 

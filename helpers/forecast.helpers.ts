@@ -23,16 +23,16 @@ export const forecastDays = (): number => {
 
 /**
  * Takes the whole forecast object (type: ISurfSpotForecast) and limits the number of days.
- * The first day considered is the current day in the timezone of the spot.
+ * The first day considered is either the provided startDate or the current day in the timezone of the spot.
  * The last day is the first day + the number of days to be displayed (parameter: days).
  *
  * @param   {ISurfSpotForecast} forecastData Full forecast object for the given surf spot.
  * @param   {number} days Days to leave in the object.
- * @param   {string} timezone Timezone of the spot.
- * @param   {number} firstDay The first day to retrieve.
+ * @param   {string} spotTimezone Timezone of the spot.
+ * @param   {string} startDate Optional ISO date string to start from (instead of current day).
  * @returns {ISurfSpotForecast} Object with the forecast limited to the number of days.
  */
-export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string, firstDay: number = 0): ISurfSpotForecast => {
+export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string, startDate?: string): ISurfSpotForecast => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);
@@ -40,20 +40,24 @@ export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: 
     // Clone object: this will be returned
     const clonedForecastData = cloneObject<ISurfSpotForecast>(forecastData);
 
-    // Current day in timezone at 00:00: day to start the forecast from
-    const startDayInTimezone = dayjs().tz(spotTimezone).startOf('day');
+    // Use provided startDate or default to current day in timezone at 00:00
+    const startDayInTimezone = startDate
+        ? dayjs(startDate).tz(spotTimezone).startOf('day')
+        : dayjs().tz(spotTimezone).startOf('day');
 
-    // Days/Compressed Days: Id of the current day in timezone (in the "days" and "compressed days" arrays)
-    let firstDayId = 0;
-    clonedForecastData.days.forEach((day, index) => {
-        if (day.time === startDayInTimezone.format()) {
-            firstDayId = index;
-        }
-    });
+    // Days/Compressed Days: Find the index of the start day using .isSame() for safer comparison
+    let firstDayId = clonedForecastData.days.findIndex(day =>
+        dayjs(day.time).isSame(startDayInTimezone, 'day')
+    );
 
-    // Days: cuts the days before the current day, and those after the given number of days (both for "days" and "compressed days")
-    clonedForecastData.days = clonedForecastData.days.slice(firstDayId + firstDay, days + firstDayId);
-    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId + firstDay, days + firstDayId);
+    // Fallback to 0 if date not found
+    if (firstDayId === -1) {
+        firstDayId = 0;
+    }
+
+    // Days: cuts the days before the start day, and those after the given number of days (both for "days" and "compressed days")
+    clonedForecastData.days = clonedForecastData.days.slice(firstDayId, days + firstDayId);
+    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId, days + firstDayId);
 
     // Good times
     const periodEnd = startDayInTimezone.add(days, 'd');

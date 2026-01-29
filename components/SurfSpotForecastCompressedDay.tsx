@@ -40,6 +40,7 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
                 spotId: props.spotId,
                 spotSlug: props.spotSlug,
                 dayId: props.dayId,
+                startTime: props.day.time,
                 origin: 'FullForecast'
             },
             classes: 'ms-modal-full-forecast'
