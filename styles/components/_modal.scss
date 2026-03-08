@@ -285,6 +285,25 @@
 }
 
 /* ------------------------------------ *\
+   #DELETE ACCOUNT
+\* ------------------------------------ */
+.ms-modal.ms-modal-delete-account {
+    .ms-btn-cta {
+        @extend .ms-btn-danger;
+    }
+
+    .ms-delete-account-modal {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 2;
+
+        input[type='text'] {
+            width: 100%;
+        }
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {

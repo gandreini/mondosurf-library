@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+import { postApiAuthCall } from 'mondosurf-library/api/api';
 // import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
@@ -563,6 +564,42 @@ export const handleActualLogout = (why?: string, whyObject?: any): void => {
         deleteLocalStorageData('refresh_token');
         store.dispatch(setCapacitorRefreshToken('')); // Redux
     }
+};
+
+/**
+ * Deletes the user account via the API, performs full local cleanup,
+ * and navigates to the home page.
+ *
+ * Endpoint: 'request-account-cancellation' (now performs actual deletion)
+ *
+ * @param   {string} accessToken Access JWT token stored in Redux.
+ *
+ * @returns {Promise} Response from the API.
+ * @throws  {Error} If the API call fails or returns an error code.
+ */
+export const deleteAccount = async (accessToken: string): Promise<any> => {
+    const response: any = await postApiAuthCall('request-account-cancellation', accessToken, { self_delete: true });
+
+    if (!response || response.status !== 200 || response.data?.success !== true) {
+        throw response;
+    }
+
+    // Full local cleanup (superset of handleActualLogout)
+    store.dispatch(logOut());
+
+    // Clear all user-related local storage
+    deleteLocalStorageData('user');
+    deleteLocalStorageData('refresh_token');
+    deleteLocalStorageData('visitedSpots');
+    deleteLocalStorageData('suspended_favorite');
+    deleteLocalStorageData('user_authorized_tracking');
+    deleteLocalStorageData('google_auth_in_progress');
+
+    if (isApp()) {
+        store.dispatch(setCapacitorRefreshToken(''));
+    }
+
+    return response;
 };
 
 /**
