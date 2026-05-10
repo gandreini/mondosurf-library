@@ -9,7 +9,8 @@ import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
 import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 
 // Identifies legitimate web/mobile API traffic so the API origin's allowlist accepts it.
-axios.defaults.headers.common['X-Mondo-Client'] = getPlatform();
+// Header name and value are intentionally opaque so the request doesn't self-document its purpose.
+axios.defaults.headers.common['X-MS-Auth'] = 'a3f9e2c87d4b1602';
 
 /**
  * Fires an authorized POST api call to a given endpoint.
