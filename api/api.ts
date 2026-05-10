@@ -8,6 +8,9 @@ import { store } from 'mondosurf-library/redux/store';
 import { setCapacitorRefreshToken } from 'mondosurf-library/redux/userSlice';
 import { PUBLIC_API_URL_V1 } from 'proxies/localConstants';
 
+// Identifies legitimate web/mobile API traffic so the API origin's allowlist accepts it.
+axios.defaults.headers.common['X-Mondo-Client'] = getPlatform();
+
 /**
  * Fires an authorized POST api call to a given endpoint.
  * 
