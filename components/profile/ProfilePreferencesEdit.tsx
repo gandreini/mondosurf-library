@@ -182,30 +182,27 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     <hr className="ms-profile-preferences-edit__separator" />
 
                     <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
-                        Email notifications
+                        Notifications
                     </h2>
-                    <p className="ms-small-text">
-                        Choose what we email you about. You can change these any time.
-                    </p>
 
                     <ToggleSwitch
                         id="notifyCommentReplyEmail"
                         label="Replies to your comments"
-                        description="Email me when someone replies to one of my comments."
+                        description="Email me when someone replies to one of my comments"
                         dataTest="pref-notify-reply-email"
                         {...register('notifyCommentReplyEmail')}
                     />
                     <ToggleSwitch
                         id="notifyCommentLikeEmail"
                         label="Likes on your comments"
-                        description="Email me when someone likes one of my comments."
+                        description="Email me when someone likes one of my comments"
                         dataTest="pref-notify-like-email"
                         {...register('notifyCommentLikeEmail')}
                     />
                     <ToggleSwitch
                         id="notifyFavoriteSpotCommentEmail"
                         label="New comments on your favorite spots"
-                        description="Email me when someone comments on a spot you've favorited."
+                        description="Email me when someone comments on a spot you've favorited"
                         dataTest="pref-notify-favorite-spot-email"
                         {...register('notifyFavoriteSpotCommentEmail')}
                     />
