@@ -5,6 +5,7 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { deleteApiAuthCall } from 'mondosurf-library/api/api';
 import Icon from 'mondosurf-library/components/Icon';
+import { relativeDate } from 'mondosurf-library/helpers/date.helpers';
 import { truncateTextAfterNCharacters } from 'mondosurf-library/helpers/strings.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { RootState } from 'mondosurf-library/redux/store';
@@ -89,8 +90,10 @@ const Comment: React.FC<ICommentProps> = (props) => {
                             : props.comment_author_name.split(' ')[0]}
                     </p>
                     <p className="ms-small-text"> • </p>
-                    <p className="ms-comment__date ms-small-text">
-                        {dayjs(props.comment_date).format('DD-MM-YYYY HH:mm')}
+                    <p
+                        className="ms-comment__date ms-small-text"
+                        title={dayjs(props.comment_date).format('DD MMM YYYY HH:mm')}>
+                        {relativeDate(props.comment_date)}
                     </p>
                 </div>
                 {canDelete && (

@@ -1,4 +1,13 @@
 {
+  "dates": {
+    "just_now": "just now",
+    "one_minute_ago": "1 minute ago",
+    "minutes_ago": "{{count}} minutes ago",
+    "one_hour_ago": "1 hour ago",
+    "hours_ago": "{{count}} hours ago",
+    "one_day_ago": "1 day ago",
+    "days_ago": "{{count}} days ago"
+  },
   "basics": {
     "mondo_surf": "Mondo Surf",
     "mondo": "Mondo",
