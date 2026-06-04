@@ -18,24 +18,21 @@ interface IProfilePreferencesEdit {
         userPrefsHeight: 'meters' | 'feet';
         userPrefsSpeed: 'kph' | 'mph' | 'kn';
         userPrefsTemperature: 'c' | 'f';
+        notifyCommentReplyEmail: boolean;
+        notifyCommentLikeEmail: boolean;
+        notifyFavoriteSpotCommentEmail: boolean;
     };
 }
 
 const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
-    // React hook form stuff.
     const {
         register,
         handleSubmit,
-        clearErrors,
-        setError,
-        setFocus,
         getValues,
         setValue,
-        trigger,
         formState: { errors }
     } = useForm({ reValidateMode: 'onSubmit' });
 
-    // Redux.
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
 
     const [savingPreferences, setSavingPreferences] = useState<boolean>(false);
@@ -48,6 +45,9 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
         setValue('preferencesHeight', props.preferences.userPrefsHeight);
         setValue('preferencesSpeed', props.preferences.userPrefsSpeed);
         setValue('preferencesTemperature', props.preferences.userPrefsTemperature);
+        setValue('notifyCommentReplyEmail', props.preferences.notifyCommentReplyEmail);
+        setValue('notifyCommentLikeEmail', props.preferences.notifyCommentLikeEmail);
+        setValue('notifyFavoriteSpotCommentEmail', props.preferences.notifyFavoriteSpotCommentEmail);
         if (props.preferences.userBulletinFrequency === 'weekly') setFrequencyIsWeekly(true);
     }, []);
 
@@ -59,6 +59,9 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
         const height: string = getValues('preferencesHeight');
         const speed: string = getValues('preferencesSpeed');
         const temperature: string = getValues('preferencesTemperature');
+        const notifyReply: boolean = !!getValues('notifyCommentReplyEmail');
+        const notifyLike: boolean = !!getValues('notifyCommentLikeEmail');
+        const notifyFavSpot: boolean = !!getValues('notifyFavoriteSpotCommentEmail');
 
         postApiAuthCall(
             'user-preferences-update',
@@ -68,24 +71,30 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                 bulletin_week_day: bulletinWeekDay,
                 prefs_height: height,
                 prefs_speed: speed,
-                prefs_temperature: temperature
+                prefs_temperature: temperature,
+                notify_comment_reply_email: notifyReply,
+                notify_comment_like_email: notifyLike,
+                notify_favorite_spot_comment_email: notifyFavSpot
             },
             true
         )
-            .then((response: any) => {
+            .then(() => {
                 store.dispatch(
                     setPreferences({
                         userBulletinFrequency: bulletinFrequency,
                         userBulletinWeekDay: bulletinWeekDay,
                         userPrefsHeight: height,
                         userPrefsSpeed: speed,
-                        userPrefsTemperature: temperature
+                        userPrefsTemperature: temperature,
+                        notifyCommentReplyEmail: notifyReply,
+                        notifyCommentLikeEmail: notifyLike,
+                        notifyFavoriteSpotCommentEmail: notifyFavSpot
                     })
-                ); // To redux state
+                );
                 setSavingPreferences(false);
                 toastService.success('Preferences updated correctly');
             })
-            .catch((error) => {
+            .catch(() => {
                 setSavingPreferences(false);
                 toastService.error('Error saving your preferences, please try again');
             });
@@ -167,6 +176,46 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                             <option value="c">{mondoTranslate('profile.temperature_unit_celsius')}</option>
                             <option value="f">{mondoTranslate('profile.temperature_unit_fahrenheit')}</option>
                         </select>
+                    </div>
+
+                    <hr className="ms-profile-preferences-edit__separator" />
+
+                    <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
+                        {mondoTranslate('profile.notifications_section_title')}
+                    </h2>
+                    <p className="ms-small-text">
+                        {mondoTranslate('profile.notifications_section_description')}
+                    </p>
+
+                    <div className="ms-form__input ms-form__input--inline">
+                        <label className="ms-form__checkbox-label">
+                            <input
+                                type="checkbox"
+                                {...register('notifyCommentReplyEmail')}
+                                data-test="pref-notify-reply-email"
+                            />
+                            <span>{mondoTranslate('profile.notify_comment_reply_email_label')}</span>
+                        </label>
+                    </div>
+                    <div className="ms-form__input ms-form__input--inline">
+                        <label className="ms-form__checkbox-label">
+                            <input
+                                type="checkbox"
+                                {...register('notifyCommentLikeEmail')}
+                                data-test="pref-notify-like-email"
+                            />
+                            <span>{mondoTranslate('profile.notify_comment_like_email_label')}</span>
+                        </label>
+                    </div>
+                    <div className="ms-form__input ms-form__input--inline">
+                        <label className="ms-form__checkbox-label">
+                            <input
+                                type="checkbox"
+                                {...register('notifyFavoriteSpotCommentEmail')}
+                                data-test="pref-notify-favorite-spot-email"
+                            />
+                            <span>{mondoTranslate('profile.notify_favorite_spot_comment_email_label')}</span>
+                        </label>
                     </div>
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">

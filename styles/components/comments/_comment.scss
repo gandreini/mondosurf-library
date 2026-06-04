@@ -69,6 +69,93 @@
 
     &__text {
     }
+
+    &__deleted-placeholder {
+        font-style: italic;
+        color: var(--color-gray-04);
+    }
+
+    &.is-deleted {
+        .ms-comment__author.ms-small-text {
+            color: var(--color-gray-04);
+            font-weight: $font-weight-normal;
+            font-style: italic;
+        }
+    }
+
+    &.is-reply {
+        margin-left: $space * 2;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $space * 1;
+        margin-top: $space * 0.5;
+    }
+
+    &__like-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: $space * 0.5;
+        // Reserve space for icon + up to 2-digit count to prevent layout shift.
+        min-width: 40px;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--color-gray-04);
+
+        .mondo-icon {
+            font-size: $font-size-s-fluid;
+            transition: color 120ms ease;
+        }
+
+        &:hover:not(:disabled) .mondo-icon {
+            color: var(--color-text-link);
+        }
+
+        &.is-liked .mondo-icon {
+            color: var(--color-text-link);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+    }
+
+    &__like-count {
+        font-weight: $font-weight-bold;
+    }
+
+    &__reply-btn {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--color-text-link);
+        font-weight: $font-weight-bold;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // Deep-link highlight: applied briefly when scrolling to #comment-{id}.
+    &.is-highlighted {
+        animation: ms-comment-highlight 1500ms ease-out;
+    }
+
+    // Avoid sticky-header overlap when scrollIntoView lands on this comment.
+    scroll-margin-top: var(--header-height, 64px);
+}
+
+@keyframes ms-comment-highlight {
+    0% { background-color: rgba(var(--color-text-link-rgb, 33, 150, 243), 0.18); }
+    100% { background-color: transparent; }
 }
 
 /* ------------------------------------ *\

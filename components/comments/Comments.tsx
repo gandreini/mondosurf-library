@@ -2,9 +2,10 @@
 'use client';
 
 import useGetFetch from 'mondosurf-library/api/useGetFetch';
-import Comment from 'mondosurf-library/components/comments/Comment';
+import CommentThread from 'mondosurf-library/components/comments/CommentThread';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
+import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useState } from 'react';
@@ -21,15 +22,12 @@ const Comments: React.FC<IComments> = (props) => {
     const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
     const fetchedComments = useGetFetch(commentsQuery);
 
-    // Read URL hash on mount to determine which comment to focus
+    // Read URL hash on mount to determine which comment to focus.
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const hash = window.location.hash; // e.g., "#comment-123"
-            const match = hash.match(/^#comment-(\d+)$/);
-            if (match) {
-                setFocusedCommentId(parseInt(match[1], 10));
-            }
-        }
+        if (typeof window === 'undefined') return;
+        const hash = window.location.hash;
+        const match = hash.match(/^#comment-(\d+)$/);
+        if (match) setFocusedCommentId(parseInt(match[1], 10));
     }, []);
 
     // Fetch comments
@@ -37,18 +35,17 @@ const Comments: React.FC<IComments> = (props) => {
         setCommentsQuery('comments/' + props.resourceId);
     }, [props.resourceId]);
 
-    // Updates the number of comments used by the loader
+    // Updates the number of comments used by the loader.
     useEffect(() => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
-    // Scroll to focused comment when comments are loaded
+    // Scroll to the focused comment once the list is in the DOM + briefly highlight it.
     useEffect(() => {
         if (focusedCommentId && fetchedComments.status === 'loaded') {
-            const element = document.querySelector(`[data-comment-id="${focusedCommentId}"]`);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            // Defer one tick so React has flushed the rendered comments into the DOM.
+            const timeout = window.setTimeout(() => scrollToCommentFromHash(), 0);
+            return () => window.clearTimeout(timeout);
         }
     }, [focusedCommentId, fetchedComments.status]);
 
@@ -99,22 +96,15 @@ const Comments: React.FC<IComments> = (props) => {
                 </>
             )}
 
-            {/* Loaded */}
+            {/* Loaded — threaded shape: top-level Comments with their replies */}
             {fetchedComments.status === 'loaded' &&
-                fetchedComments.payload.map((comment: IComment, key: number) => (
-                    <Comment
-                        key={key}
-                        ID={comment.ID}
-                        comment_text={comment.comment_text}
-                        comment_author_name={
-                            comment.comment_author_name ? comment.comment_author_name.split(' ')[0] : ''
-                        }
-                        comment_author_id={comment.comment_author_id}
-                        comment_date={comment.comment_date}
-                        callback={refreshComments}
-                        allow_editing={true}
-                        commented_resource_id={Number(props.resourceId)}
-                        initialExpanded={focusedCommentId === comment.ID}
+                fetchedComments.payload.map((comment: IComment) => (
+                    <CommentThread
+                        key={comment.ID}
+                        comment={comment}
+                        resourceId={Number(props.resourceId)}
+                        refreshComments={refreshComments}
+                        focusedCommentId={focusedCommentId}
                     />
                 ))}
 

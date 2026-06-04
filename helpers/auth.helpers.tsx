@@ -507,6 +507,17 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                 ...(response.data.user_prefs_speed && { userPrefsSpeed: response.data.user_prefs_speed }),
                 ...(response.data.user_prefs_temperature && {
                     userPrefsTemperature: response.data.user_prefs_temperature
+                }),
+                // Notification email preferences are booleans — guard against
+                // dropping an explicit `false`. Use a typeof check, NOT truthiness.
+                ...(typeof response.data.notify_comment_reply_email === 'boolean' && {
+                    notifyCommentReplyEmail: response.data.notify_comment_reply_email
+                }),
+                ...(typeof response.data.notify_comment_like_email === 'boolean' && {
+                    notifyCommentLikeEmail: response.data.notify_comment_like_email
+                }),
+                ...(typeof response.data.notify_favorite_spot_comment_email === 'boolean' && {
+                    notifyFavoriteSpotCommentEmail: response.data.notify_favorite_spot_comment_email
                 })
             })
         );

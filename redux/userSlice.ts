@@ -34,6 +34,12 @@ export interface IUserSliceValue {
         userPrefsHeight: "meters" | "feet";
         userPrefsSpeed: "kph" | "mph" | "kn";
         userPrefsTemperature: "c" | "f";
+        // Notification email preferences (Phase C). Default ON for all three —
+        // existing users with no value get true via strict null-check lazy-default
+        // on the server.
+        notifyCommentReplyEmail: boolean;
+        notifyCommentLikeEmail: boolean;
+        notifyFavoriteSpotCommentEmail: boolean;
     },
     authorizedTracking: boolean;
 }
@@ -70,7 +76,10 @@ const initialState: IUserSliceValue = {
         userBulletinWeekDay: "monday",
         userPrefsHeight: "meters",
         userPrefsSpeed: "kph",
-        userPrefsTemperature: "c"
+        userPrefsTemperature: "c",
+        notifyCommentReplyEmail: true,
+        notifyCommentLikeEmail: true,
+        notifyFavoriteSpotCommentEmail: true
     },
     authorizedTracking: true
 };

@@ -1,0 +1,20 @@
+/**
+ * REPLY FORM
+ *
+ * Inline form opened beneath a top-level comment when the user taps Reply.
+ * Mirrors comments-form layout, indented to match replies.
+ */
+
+.ms-reply-form {
+    margin-left: $space * 2;
+
+    &__contents {
+        margin-bottom: $space * 0.5;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: $space * 0.5;
+        justify-content: flex-end;
+    }
+}
