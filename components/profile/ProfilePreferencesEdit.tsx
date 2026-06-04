@@ -39,16 +39,17 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
     const [savingPreferences, setSavingPreferences] = useState<boolean>(false);
     const [frequencyIsWeekly, setFrequencyIsWeekly] = useState<boolean>(false);
 
-    // Set defaults
+    // Set defaults for the select fields. The 3 notification toggles are
+    // initialised via `defaultChecked` on the inputs themselves below —
+    // setValue doesn't update an uncontrolled checkbox's DOM `checked`
+    // state, so initial state would otherwise visually disagree with the
+    // form state.
     useEffect(() => {
         setValue('preferencesBulletinFrequency', props.preferences.userBulletinFrequency);
         setValue('preferencesBulletinWeekDay', props.preferences.userBulletinWeekDay);
         setValue('preferencesHeight', props.preferences.userPrefsHeight);
         setValue('preferencesSpeed', props.preferences.userPrefsSpeed);
         setValue('preferencesTemperature', props.preferences.userPrefsTemperature);
-        setValue('notifyCommentReplyEmail', props.preferences.notifyCommentReplyEmail);
-        setValue('notifyCommentLikeEmail', props.preferences.notifyCommentLikeEmail);
-        setValue('notifyFavoriteSpotCommentEmail', props.preferences.notifyFavoriteSpotCommentEmail);
         if (props.preferences.userBulletinFrequency === 'weekly') setFrequencyIsWeekly(true);
     }, []);
 
@@ -190,6 +191,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                         label="Replies to your comments"
                         description="Email me when someone replies to one of my comments"
                         dataTest="pref-notify-reply-email"
+                        defaultChecked={props.preferences.notifyCommentReplyEmail}
                         {...register('notifyCommentReplyEmail')}
                     />
                     <ToggleSwitch
@@ -197,6 +199,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                         label="Likes on your comments"
                         description="Email me when someone likes one of my comments"
                         dataTest="pref-notify-like-email"
+                        defaultChecked={props.preferences.notifyCommentLikeEmail}
                         {...register('notifyCommentLikeEmail')}
                     />
                     <ToggleSwitch
@@ -204,6 +207,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                         label="New comments on your favorite spots"
                         description="Email me when someone comments on a spot you've favorited"
                         dataTest="pref-notify-favorite-spot-email"
+                        defaultChecked={props.preferences.notifyFavoriteSpotCommentEmail}
                         {...register('notifyFavoriteSpotCommentEmail')}
                     />
                 </div>

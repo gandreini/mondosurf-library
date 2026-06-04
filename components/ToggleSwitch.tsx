@@ -1,6 +1,6 @@
 'use client';
 
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 
 interface IToggleSwitch extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'className'> {
     id: string;
@@ -12,15 +12,20 @@ interface IToggleSwitch extends Omit<InputHTMLAttributes<HTMLInputElement>, 'typ
 /**
  * iOS-style toggle switch — label on the left, switch on the right.
  *
- * The backing element is a real <input type="checkbox">. Any extra props
+ * The backing element is a real <input type="checkbox">. Extra props
  * (e.g. the spread from react-hook-form's `register('field')`, or
- * `defaultChecked`, `checked`, `onChange`) are forwarded onto the input.
+ * `defaultChecked`, `checked`, `onChange`) are forwarded onto the input,
+ * and the component is a forwardRef so `register`'s ref reaches the
+ * input — required for the form to read the toggle's value.
  *
  * Use this for binary on/off settings where the label is the primary
  * content of the row. For terms-acceptance and similar inline forms
  * with no visual prominence, prefer the smaller `.ms-checkbox` component.
  */
-const ToggleSwitch: React.FC<IToggleSwitch> = ({ id, label, description, dataTest, disabled, ...inputProps }) => {
+const ToggleSwitch = forwardRef<HTMLInputElement, IToggleSwitch>(function ToggleSwitch(
+    { id, label, description, dataTest, disabled, ...inputProps },
+    ref
+) {
     return (
         <label className={'ms-toggle-switch' + (disabled ? ' is-disabled' : '')} htmlFor={id}>
             <span className="ms-toggle-switch__text">
@@ -30,6 +35,7 @@ const ToggleSwitch: React.FC<IToggleSwitch> = ({ id, label, description, dataTes
             <span className="ms-toggle-switch__control">
                 <input
                     {...inputProps}
+                    ref={ref}
                     id={id}
                     type="checkbox"
                     className="ms-toggle-switch__input"
@@ -42,5 +48,5 @@ const ToggleSwitch: React.FC<IToggleSwitch> = ({ id, label, description, dataTes
             </span>
         </label>
     );
-};
+});
 export default ToggleSwitch;
