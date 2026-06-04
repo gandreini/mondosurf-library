@@ -3,6 +3,7 @@
 
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 import Loader from 'mondosurf-library/components/Loader';
+import ToggleSwitch from 'mondosurf-library/components/ToggleSwitch';
 import { RootState, store } from 'mondosurf-library/redux/store';
 import { setPreferences } from 'mondosurf-library/redux/userSlice';
 import toastService from 'mondosurf-library/services/toastService';
@@ -187,48 +188,27 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                         Choose what we email you about. You can change these any time.
                     </p>
 
-                    <div className="ms-form__input">
-                        <label className="ms-checkbox" htmlFor="notifyCommentReplyEmail">
-                            <input
-                                id="notifyCommentReplyEmail"
-                                type="checkbox"
-                                className="ms-checkbox__check"
-                                {...register('notifyCommentReplyEmail')}
-                                data-test="pref-notify-reply-email"
-                            />
-                            <span className="ms-checkbox__label">
-                                Email me when someone replies to one of my comments
-                            </span>
-                        </label>
-                    </div>
-                    <div className="ms-form__input">
-                        <label className="ms-checkbox" htmlFor="notifyCommentLikeEmail">
-                            <input
-                                id="notifyCommentLikeEmail"
-                                type="checkbox"
-                                className="ms-checkbox__check"
-                                {...register('notifyCommentLikeEmail')}
-                                data-test="pref-notify-like-email"
-                            />
-                            <span className="ms-checkbox__label">
-                                Email me when someone likes one of my comments
-                            </span>
-                        </label>
-                    </div>
-                    <div className="ms-form__input">
-                        <label className="ms-checkbox" htmlFor="notifyFavoriteSpotCommentEmail">
-                            <input
-                                id="notifyFavoriteSpotCommentEmail"
-                                type="checkbox"
-                                className="ms-checkbox__check"
-                                {...register('notifyFavoriteSpotCommentEmail')}
-                                data-test="pref-notify-favorite-spot-email"
-                            />
-                            <span className="ms-checkbox__label">
-                                Email me when someone comments on one of my favorite spots
-                            </span>
-                        </label>
-                    </div>
+                    <ToggleSwitch
+                        id="notifyCommentReplyEmail"
+                        label="Replies to your comments"
+                        description="Email me when someone replies to one of my comments."
+                        dataTest="pref-notify-reply-email"
+                        {...register('notifyCommentReplyEmail')}
+                    />
+                    <ToggleSwitch
+                        id="notifyCommentLikeEmail"
+                        label="Likes on your comments"
+                        description="Email me when someone likes one of my comments."
+                        dataTest="pref-notify-like-email"
+                        {...register('notifyCommentLikeEmail')}
+                    />
+                    <ToggleSwitch
+                        id="notifyFavoriteSpotCommentEmail"
+                        label="New comments on your favorite spots"
+                        description="Email me when someone comments on a spot you've favorited."
+                        dataTest="pref-notify-favorite-spot-email"
+                        {...register('notifyFavoriteSpotCommentEmail')}
+                    />
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">
                     <button type="submit" className="ms-btn ms-btn-cta ms-btn-l">
