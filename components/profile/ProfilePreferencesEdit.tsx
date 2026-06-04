@@ -181,40 +181,52 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     <hr className="ms-profile-preferences-edit__separator" />
 
                     <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
-                        {mondoTranslate('profile.notifications_section_title')}
+                        Email notifications
                     </h2>
                     <p className="ms-small-text">
-                        {mondoTranslate('profile.notifications_section_description')}
+                        Choose what we email you about. You can change these any time.
                     </p>
 
-                    <div className="ms-form__input ms-form__input--inline">
-                        <label className="ms-form__checkbox-label">
+                    <div className="ms-form__input">
+                        <label className="ms-checkbox" htmlFor="notifyCommentReplyEmail">
                             <input
+                                id="notifyCommentReplyEmail"
                                 type="checkbox"
+                                className="ms-checkbox__check"
                                 {...register('notifyCommentReplyEmail')}
                                 data-test="pref-notify-reply-email"
                             />
-                            <span>{mondoTranslate('profile.notify_comment_reply_email_label')}</span>
+                            <span className="ms-checkbox__label">
+                                Email me when someone replies to one of my comments
+                            </span>
                         </label>
                     </div>
-                    <div className="ms-form__input ms-form__input--inline">
-                        <label className="ms-form__checkbox-label">
+                    <div className="ms-form__input">
+                        <label className="ms-checkbox" htmlFor="notifyCommentLikeEmail">
                             <input
+                                id="notifyCommentLikeEmail"
                                 type="checkbox"
+                                className="ms-checkbox__check"
                                 {...register('notifyCommentLikeEmail')}
                                 data-test="pref-notify-like-email"
                             />
-                            <span>{mondoTranslate('profile.notify_comment_like_email_label')}</span>
+                            <span className="ms-checkbox__label">
+                                Email me when someone likes one of my comments
+                            </span>
                         </label>
                     </div>
-                    <div className="ms-form__input ms-form__input--inline">
-                        <label className="ms-form__checkbox-label">
+                    <div className="ms-form__input">
+                        <label className="ms-checkbox" htmlFor="notifyFavoriteSpotCommentEmail">
                             <input
+                                id="notifyFavoriteSpotCommentEmail"
                                 type="checkbox"
+                                className="ms-checkbox__check"
                                 {...register('notifyFavoriteSpotCommentEmail')}
                                 data-test="pref-notify-favorite-spot-email"
                             />
-                            <span>{mondoTranslate('profile.notify_favorite_spot_comment_email_label')}</span>
+                            <span className="ms-checkbox__label">
+                                Email me when someone comments on one of my favorite spots
+                            </span>
                         </label>
                     </div>
                 </div>
