@@ -183,29 +183,29 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     <hr className="ms-profile-preferences-edit__separator" />
 
                     <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
-                        Notifications
+                        {mondoTranslate('profile.notifications_section_title')}
                     </h2>
 
                     <ToggleSwitch
                         id="notifyCommentReplyEmail"
-                        label="Replies to your comments"
-                        description="Email me when someone replies to one of my comments"
+                        label={mondoTranslate('profile.notify_comment_reply_email_label')}
+                        description={mondoTranslate('profile.notify_comment_reply_email_description')}
                         dataTest="pref-notify-reply-email"
                         defaultChecked={props.preferences.notifyCommentReplyEmail}
                         {...register('notifyCommentReplyEmail')}
                     />
                     <ToggleSwitch
                         id="notifyCommentLikeEmail"
-                        label="Likes on your comments"
-                        description="Email me when someone likes one of my comments"
+                        label={mondoTranslate('profile.notify_comment_like_email_label')}
+                        description={mondoTranslate('profile.notify_comment_like_email_description')}
                         dataTest="pref-notify-like-email"
                         defaultChecked={props.preferences.notifyCommentLikeEmail}
                         {...register('notifyCommentLikeEmail')}
                     />
                     <ToggleSwitch
                         id="notifyFavoriteSpotCommentEmail"
-                        label="New comments on your favorite spots"
-                        description="Email me when someone comments on a spot you've favorited"
+                        label={mondoTranslate('profile.notify_favorite_spot_comment_email_label')}
+                        description={mondoTranslate('profile.notify_favorite_spot_comment_email_description')}
                         dataTest="pref-notify-favorite-spot-email"
                         defaultChecked={props.preferences.notifyFavoriteSpotCommentEmail}
                         {...register('notifyFavoriteSpotCommentEmail')}
