@@ -144,6 +144,11 @@
         }
     }
 
+    &__reply-count {
+        color: var(--color-gray-04);
+        margin-left: auto;
+    }
+
     // Deep-link highlight: applied briefly when scrolling to #comment-{id}.
     &.is-highlighted {
         animation: ms-comment-highlight 1500ms ease-out;

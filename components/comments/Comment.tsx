@@ -134,6 +134,16 @@ const Comment: React.FC<ICommentProps> = (props) => {
                             {mondoTranslate('comments.reply')}
                         </button>
                     )}
+                    {/* Reply count indicator: shown when the comment has replies
+                        (only meaningful on the homepage feed where replies are
+                        hidden; on the spot page replies are rendered inline). */}
+                    {!isReply && (props.reply_count ?? 0) > 0 && (
+                        <span className="ms-comment__reply-count ms-small-text" data-test="comment-reply-count">
+                            {props.reply_count === 1
+                                ? mondoTranslate('comments.one_reply')
+                                : mondoTranslate('comments.many_replies', { count: props.reply_count })}
+                        </span>
+                    )}
                 </div>
             )}
         </li>

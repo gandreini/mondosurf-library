@@ -64,6 +64,7 @@ const LatestComments: React.FC = (props) => {
                                         likes_count={comment.likes_count}
                                         user_has_liked={comment.user_has_liked}
                                         is_deleted={comment.is_deleted}
+                                        reply_count={comment.reply_count}
                                     />
                                 </MondoLink>
                             ))}

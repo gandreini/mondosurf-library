@@ -117,7 +117,9 @@
     "like_aria_label": "Like this comment",
     "unlike_aria_label": "Remove your like from this comment",
     "reply_field_placeholder": "Write your reply",
-    "send_reply": "Send reply"
+    "send_reply": "Send reply",
+    "one_reply": "1 reply",
+    "many_replies": "{{count}} replies"
   },
   "app": {
     "offline_icon": "🤷",
