@@ -54,11 +54,16 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             });
     };
 
-    const onClick = () => {
+    const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // Stop the click from bubbling up — the comment card on the homepage
+        // (LatestComments) wraps each Comment in an <a> that navigates to the
+        // comment's deep-link. We don't want liking to also navigate.
+        e.stopPropagation();
+        e.preventDefault();
+
         if (pending) return;
         if (login !== 'yes') {
             openLoginModal('likeButton', undefined, mondoTranslate('comments.login_modal_text'), () => {
-                // After login, perform the action.
                 callApi();
             });
             return;
