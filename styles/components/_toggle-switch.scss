@@ -70,8 +70,8 @@ $toggle-switch-padding: 3px;
         position: absolute;
         inset: 0;
         border-radius: $toggle-switch-height;
-        background-color: $color-background-base;
-        border: 2px solid $color-border-normal;
+        background-color: $color-background-light;
+        border: 2px solid $color-border-dark;
         transition: background-color $transition-durations, border-color $transition-durations;
     }
 
@@ -82,7 +82,7 @@ $toggle-switch-padding: 3px;
         width: $toggle-switch-thumb-size;
         height: $toggle-switch-thumb-size;
         border-radius: 50%;
-        background-color: $color-border-normal;
+        background-color: $color-border-dark;
         transition:
             transform $transition-durations,
             background-color $transition-durations;
