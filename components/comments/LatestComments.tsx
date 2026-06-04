@@ -1,6 +1,6 @@
 'use client';
 
-import useGetFetch from 'mondosurf-library/api/useGetFetch';
+import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import Comment from 'mondosurf-library/components/comments/Comment';
 import { IComment } from 'mondosurf-library/model/iComment';
 import MondoLink from 'proxies/MondoLink';
@@ -12,7 +12,10 @@ import SkeletonLoader from '../SkeletonLoader';
 
 const LatestComments: React.FC = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
-    const fetchedComments = useGetFetch(commentsQuery, {});
+    // useAuthGetFetch with needsAuth=false sends the access token when the user
+    // is logged in, falls back to anonymous when not. Required for the backend
+    // to return the per-user `user_has_liked` flag on each comment.
+    const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
 
     // Fetch comments
     useEffect(() => {
@@ -58,6 +61,9 @@ const LatestComments: React.FC = (props) => {
                                         commented_spot_slug={comment.commented_spot_slug}
                                         ID={comment.ID}
                                         expandable={false}
+                                        likes_count={comment.likes_count}
+                                        user_has_liked={comment.user_has_liked}
+                                        is_deleted={comment.is_deleted}
                                     />
                                 </MondoLink>
                             ))}

@@ -1,7 +1,7 @@
 // Client
 'use client';
 
-import useGetFetch from 'mondosurf-library/api/useGetFetch';
+import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import CommentThread from 'mondosurf-library/components/comments/CommentThread';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
@@ -20,7 +20,9 @@ const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
     const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
-    const fetchedComments = useGetFetch(commentsQuery);
+    // Auth-aware GET: sends the token when logged in (so the backend can return
+    // per-user `user_has_liked`), falls back to anonymous otherwise.
+    const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
 
     // Read URL hash on mount to determine which comment to focus.
     useEffect(() => {
