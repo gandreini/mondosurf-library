@@ -36,21 +36,39 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
         setLikesCount(nextCount);
         setPending(true);
 
+        // Keep the button disabled for at least this long so a fast double-tap
+        // doesn't blow past the backend's 2-second per-(user, comment) rate
+        // limit. Backend currently rejects with HTTP 429 / code=rate_limited
+        // when re-toggled within 2s.
+        const LIKE_COOLDOWN_MS = 2000;
+        const startedAt = Date.now();
+        const releaseAfterCooldown = () => {
+            const elapsed = Date.now() - startedAt;
+            const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
+            window.setTimeout(() => setPending(false), remaining);
+        };
+
         const request = nextLiked ? likeComment(props.commentId) : unlikeComment(props.commentId);
 
         request
             .then((response) => {
-                setPending(false);
                 setLikesCount(response.likes_count);
                 setUserHasLiked(response.user_has_liked);
                 if (props.onToggle) props.onToggle(response.likes_count, response.user_has_liked);
+                releaseAfterCooldown();
             })
-            .catch(() => {
-                // Revert.
-                setPending(false);
+            .catch((error: any) => {
+                // Revert optimistic update.
                 setUserHasLiked(prevLiked);
                 setLikesCount(prevCount);
-                toastService.error(mondoTranslate('comments.toast_like_error'));
+                // Suppress the toast for rate-limit specifically — the client
+                // cooldown above is the user-facing guard, this is just a
+                // safety net for edge cases (clock skew, multi-tab). Show
+                // the toast for any other failure (network down, 5xx, etc.).
+                if (error?.code !== 'rate_limited') {
+                    toastService.error(mondoTranslate('comments.toast_like_error'));
+                }
+                releaseAfterCooldown();
             });
     };
 
