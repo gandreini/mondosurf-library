@@ -20,6 +20,11 @@ $toggle-switch-padding: 3px;
     padding: $space * 0.75 0;
     margin: 0;
     cursor: pointer;
+    // The global `label` rule (styles/global/_forms.scss) applies
+    // text-transform: uppercase + bold + uppercase font-size to every
+    // <label>. Reset that here so the toggle copy reads as natural text.
+    text-transform: none;
+    font-weight: $font-weight-normal;
 
     &__text {
         display: flex;
@@ -34,10 +39,13 @@ $toggle-switch-padding: 3px;
         font-size: $font-size-m;
         font-weight: $font-weight-normal;
         line-height: 1.4;
+        text-transform: none;
     }
 
     &__description {
         color: var(--color-gray-04);
+        text-transform: none;
+        font-weight: $font-weight-normal;
     }
 
     &__control {
