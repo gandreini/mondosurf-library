@@ -90,34 +90,33 @@
     &__actions {
         display: flex;
         align-items: center;
-        gap: $space * 1;
+        gap: $space * 0.5;
         margin-top: $space * 0.5;
     }
 
-    &__like-btn {
+    // Reddit-style action pill: light gray rounded chip with icon + label/count.
+    // Shared base for like and reply actions in the comment footer.
+    &__action-pill {
         display: inline-flex;
         align-items: center;
         gap: $space * 0.5;
-        // Reserve space for icon + up to 2-digit count to prevent layout shift.
-        min-width: 40px;
-        padding: 0;
-        margin: 0;
+        padding: $space * 0.25 $space * 0.75;
+        border-radius: 999px;
         border: 0;
-        background-color: transparent;
+        background-color: $color-background-light;
+        color: var(--color-text);
+        font-weight: $font-weight-normal;
+        line-height: 1;
         cursor: pointer;
-        color: var(--color-gray-04);
+        transition: background-color 120ms ease, color 120ms ease;
 
         .mondo-icon {
             font-size: $font-size-s-fluid;
             transition: color 120ms ease;
         }
 
-        &:hover:not(:disabled) .mondo-icon {
-            color: var(--color-text-link);
-        }
-
-        &.is-liked .mondo-icon {
-            color: var(--color-text-link);
+        &:hover:not(:disabled) {
+            background-color: $color-background-medium;
         }
 
         &:disabled {
@@ -126,30 +125,35 @@
         }
     }
 
+    &__like-btn {
+        @extend .ms-comment__action-pill;
+        // Reserve enough width that count appearing doesn't shift the layout.
+        min-width: 44px;
+
+        &.is-liked {
+            background-color: rgba(var(--color-text-link-rgb, 64, 111, 203), 0.12);
+            color: var(--color-text-link);
+
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+
+        &.is-liked:hover:not(:disabled) {
+            background-color: rgba(var(--color-text-link-rgb, 64, 111, 203), 0.2);
+        }
+    }
+
     &__like-count {
         font-weight: $font-weight-bold;
     }
 
     &__reply-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: $space * 0.5;
-        padding: 0;
-        margin: 0;
-        border: 0;
-        background-color: transparent;
-        cursor: pointer;
-        color: var(--color-text-link);
-        font-weight: $font-weight-bold;
-
-        &:hover {
-            text-decoration: underline;
-        }
+        @extend .ms-comment__action-pill;
     }
 
-    &__reply-count {
-        color: var(--color-gray-04);
-        margin-left: auto;
+    &__reply-count-text {
+        font-weight: $font-weight-bold;
     }
 
     // Deep-link highlight: applied briefly when scrolling to #comment-{id}.

@@ -126,7 +126,12 @@ const Comment: React.FC<ICommentProps> = (props) => {
                         likesCount={props.likes_count ?? 0}
                         userHasLiked={props.user_has_liked ?? false}
                     />
-                    {/* Reply button: only on top-level, only when handler provided (Phase B). */}
+                    {/* Reply pill, top-level only. Two flavors:
+                        - Spot page (onReplyClick provided): button that opens the
+                          inline ReplyForm. Shows "Reply" + count when there are replies.
+                        - Homepage card (no onReplyClick): purely informational, only
+                          rendered when there are replies. The whole card is wrapped
+                          in a link so clicking still works. */}
                     {!isReply && props.onReplyClick && (
                         <button
                             type="button"
@@ -136,16 +141,17 @@ const Comment: React.FC<ICommentProps> = (props) => {
                             data-test="comment-reply-btn">
                             <Icon icon="reply" />
                             <span>{mondoTranslate('comments.reply')}</span>
+                            {(props.reply_count ?? 0) > 0 && (
+                                <span className="ms-comment__reply-count-text">{props.reply_count}</span>
+                            )}
                         </button>
                     )}
-                    {/* Reply count indicator: shown when the comment has replies
-                        (only meaningful on the homepage feed where replies are
-                        hidden; on the spot page replies are rendered inline). */}
-                    {!isReply && (props.reply_count ?? 0) > 0 && (
-                        <span className="ms-comment__reply-count ms-small-text" data-test="comment-reply-count">
-                            {props.reply_count === 1
-                                ? mondoTranslate('comments.one_reply')
-                                : mondoTranslate('comments.many_replies', { count: props.reply_count })}
+                    {!isReply && !props.onReplyClick && (props.reply_count ?? 0) > 0 && (
+                        <span
+                            className="ms-comment__reply-btn ms-small-text"
+                            data-test="comment-reply-count">
+                            <Icon icon="reply" />
+                            <span className="ms-comment__reply-count-text">{props.reply_count}</span>
                         </span>
                     )}
                 </div>
