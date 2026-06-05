@@ -111,7 +111,12 @@
         transition: background-color 120ms ease, color 120ms ease;
 
         .mondo-icon {
-            font-size: $font-size-s-fluid;
+            // display:block + line-height:1 strips the descent space the icon
+            // font reserves below its glyph, so align-items: center can
+            // actually centre the visible glyph instead of the glyph + descent.
+            display: block;
+            line-height: 1;
+            font-size: $font-size-m;
             transition: color 120ms ease;
         }
 
