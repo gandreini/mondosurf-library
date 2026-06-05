@@ -28,6 +28,12 @@
     font-palette: --palette0;
     color: currentColor;
 }
+.mondo-icon-upvote:before {
+    content: "\f01a";
+}
+.mondo-icon-reply:before {
+    content: "\f01b";
+}
 .mondo-icon-trash:before {
     content: "\f019";
 }
