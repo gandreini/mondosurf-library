@@ -134,7 +134,8 @@ const Comment: React.FC<ICommentProps> = (props) => {
                             onClick={props.onReplyClick}
                             aria-expanded={props.replyFormOpen ?? false}
                             data-test="comment-reply-btn">
-                            {mondoTranslate('comments.reply')}
+                            <Icon icon="reply" />
+                            <span>{mondoTranslate('comments.reply')}</span>
                         </button>
                     )}
                     {/* Reply count indicator: shown when the comment has replies

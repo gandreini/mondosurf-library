@@ -98,7 +98,7 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             data-test="comment-like-btn"
             aria-pressed={userHasLiked}
             aria-label={mondoTranslate(userHasLiked ? 'comments.unlike_aria_label' : 'comments.like_aria_label')}>
-            <Icon icon={userHasLiked ? 'heart' : 'heart-empty'} />
+            <Icon icon="upvote" />
             {likesCount > 0 && <span className="ms-comment__like-count">{likesCount}</span>}
         </button>
     );
