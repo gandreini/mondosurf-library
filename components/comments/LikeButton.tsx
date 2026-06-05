@@ -1,12 +1,13 @@
 'use client';
 
 import { openLoginModal } from 'features/modal/modal.helpers';
+import AnimatedNumber from 'mondosurf-library/components/AnimatedNumber';
 import Icon from 'mondosurf-library/components/Icon';
 import { likeComment, unlikeComment } from 'mondosurf-library/helpers/comments.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface ILikeButton {
@@ -16,66 +17,80 @@ interface ILikeButton {
     onToggle?: (newCount: number, newUserHasLiked: boolean) => void;
 }
 
+// Keep in sync with the backend's per-(user, comment) rate-limit window.
+const LIKE_COOLDOWN_MS = 2000;
+// Brief scale-pulse on the icon whenever the user toggles the like state.
+const ICON_PULSE_MS = 380;
+
 const LikeButton: React.FC<ILikeButton> = (props) => {
     const login = useSelector((state: RootState) => state.user.logged);
 
     const [likesCount, setLikesCount] = useState<number>(props.likesCount ?? 0);
     const [userHasLiked, setUserHasLiked] = useState<boolean>(props.userHasLiked ?? false);
     const [pending, setPending] = useState<boolean>(false);
+    const [iconPulsing, setIconPulsing] = useState<boolean>(false);
+    const pulseTimeoutRef = useRef<number | undefined>(undefined);
+
+    const triggerIconPulse = () => {
+        if (pulseTimeoutRef.current !== undefined) window.clearTimeout(pulseTimeoutRef.current);
+        setIconPulsing(true);
+        pulseTimeoutRef.current = window.setTimeout(() => setIconPulsing(false), ICON_PULSE_MS);
+    };
 
     const callApi = () => {
-        // Snapshot for revert.
-        const prevCount = likesCount;
         const prevLiked = userHasLiked;
-
+        const prevCount = likesCount;
         const nextLiked = !prevLiked;
-        const nextCount = prevCount + (nextLiked ? 1 : -1);
 
-        // Optimistic.
+        // Icon flips immediately — instant visual acknowledgement of the click.
+        // The COUNT update is held back: the AnimatedNumber slot animation
+        // reveals it at the end of the cooldown window for a satisfying beat.
         setUserHasLiked(nextLiked);
-        setLikesCount(nextCount);
+        triggerIconPulse();
         setPending(true);
 
-        // Keep the button disabled for at least this long so a fast double-tap
-        // doesn't blow past the backend's 2-second per-(user, comment) rate
-        // limit. Backend currently rejects with HTTP 429 / code=rate_limited
-        // when re-toggled within 2s.
-        const LIKE_COOLDOWN_MS = 2000;
         const startedAt = Date.now();
-        const releaseAfterCooldown = () => {
-            const elapsed = Date.now() - startedAt;
-            const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
-            window.setTimeout(() => setPending(false), remaining);
-        };
-
         const request = nextLiked ? likeComment(props.commentId) : unlikeComment(props.commentId);
 
         request
             .then((response) => {
-                setLikesCount(response.likes_count);
-                setUserHasLiked(response.user_has_liked);
-                if (props.onToggle) props.onToggle(response.likes_count, response.user_has_liked);
-                releaseAfterCooldown();
+                // Reveal the new count when the cooldown releases (a 2s beat
+                // counted from the click). Until then likesCount stays at its
+                // previous value and the AnimatedNumber sits idle.
+                const elapsed = Date.now() - startedAt;
+                const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
+                window.setTimeout(() => {
+                    setLikesCount(response.likes_count);
+                    // Re-sync in case the server's idea of liked-state drifted
+                    // (e.g. simultaneous toggle from another tab).
+                    setUserHasLiked(response.user_has_liked);
+                    setPending(false);
+                    if (props.onToggle) props.onToggle(response.likes_count, response.user_has_liked);
+                }, remaining);
             })
             .catch((error: any) => {
-                // Revert optimistic update.
+                // Revert the icon immediately on failure — don't make the user
+                // wait the full cooldown to find out their click was rejected.
                 setUserHasLiked(prevLiked);
-                setLikesCount(prevCount);
-                // Suppress the toast for rate-limit specifically — the client
-                // cooldown above is the user-facing guard, this is just a
-                // safety net for edge cases (clock skew, multi-tab). Show
-                // the toast for any other failure (network down, 5xx, etc.).
+                triggerIconPulse();
+                // Suppress the toast for rate-limit (the cooldown is the
+                // user-facing guard; 429 is just an edge-case safety net).
                 if (error?.code !== 'rate_limited') {
                     toastService.error(mondoTranslate('comments.toast_like_error'));
                 }
-                releaseAfterCooldown();
+                // Still honour the cooldown for re-clicking.
+                const elapsed = Date.now() - startedAt;
+                const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
+                window.setTimeout(() => setPending(false), remaining);
+                // Keep prevCount referenced to silence the unused-var linter
+                // and document the intent: we deliberately never touched
+                // likesCount, so there's nothing to revert here.
+                void prevCount;
             });
     };
 
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        // Stop the click from bubbling up — the comment card on the homepage
-        // (LatestComments) wraps each Comment in an <a> that navigates to the
-        // comment's deep-link. We don't want liking to also navigate.
+        // Prevent the click bubbling to the outer card link on the homepage.
         e.stopPropagation();
         e.preventDefault();
 
@@ -98,8 +113,14 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             data-test="comment-like-btn"
             aria-pressed={userHasLiked}
             aria-label={mondoTranslate(userHasLiked ? 'comments.unlike_aria_label' : 'comments.like_aria_label')}>
-            <Icon icon={userHasLiked ? 'upvote-fill' : 'upvote'} />
-            {likesCount > 0 && <span className="ms-comment__like-count">{likesCount}</span>}
+            <span className={`ms-comment__like-icon${iconPulsing ? ' is-popping' : ''}`}>
+                <Icon icon={userHasLiked ? 'upvote-fill' : 'upvote'} />
+            </span>
+            {likesCount > 0 && (
+                <span className="ms-comment__like-count">
+                    <AnimatedNumber value={likesCount} />
+                </span>
+            )}
         </button>
     );
 };

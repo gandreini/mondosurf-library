@@ -149,6 +149,30 @@
         }
     }
 
+    // Wrapper around the upvote glyph. The `.is-popping` class is added
+    // briefly on every like-state toggle so the icon scale-pulses — keyed
+    // on a React state flag (not :hover), so the bounce is tied to the
+    // action, not the cursor.
+    &__like-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        // Smooth colour transition on the glyph when .is-liked toggles.
+        .mondo-icon {
+            transition: color 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        &.is-popping {
+            animation: ms-like-icon-pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    }
+
+    @keyframes ms-like-icon-pop {
+        0%   { transform: scale(1); }
+        45%  { transform: scale(1.32); }
+        100% { transform: scale(1); }
+    }
+
     &__like-count {
         font-size: $font-size-xs-fluid;
     }
