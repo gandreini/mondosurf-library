@@ -24,8 +24,7 @@
         gap: $space * 1;
     }
 
-    &__header-right {
-    }
+    &__header-right {}
 
     &__delete {
         width: 24px;
@@ -61,14 +60,11 @@
         color: var(--color-text);
     }
 
-    &__date.ms-small-text {
-    }
+    &__date.ms-small-text {}
 
-    &__content {
-    }
+    &__content {}
 
-    &__text {
-    }
+    &__text {}
 
     &__deleted-placeholder {
         font-style: italic;
@@ -100,7 +96,7 @@
         display: inline-flex;
         align-items: center;
         gap: $space * 0.5;
-        padding: $space * 0.25 $space * 0.75;
+        padding: $space * 0.25 $space * 1;
         border-radius: 999px;
         border: 0;
         background-color: $color-background-light;
@@ -118,6 +114,7 @@
             line-height: 1;
             font-size: $font-size-m;
             transition: color 120ms ease;
+            border: 1px solid var(--color-gray-04);
         }
 
         &:hover:not(:disabled) {
@@ -133,7 +130,7 @@
     &__like-btn {
         @extend .ms-comment__action-pill;
         // Reserve enough width that count appearing doesn't shift the layout.
-        min-width: 44px;
+        // min-width: 44px;
 
         &.is-liked {
             background-color: rgba(var(--color-text-link-rgb, 64, 111, 203), 0.12);
@@ -150,7 +147,8 @@
     }
 
     &__like-count {
-        font-weight: $font-weight-bold;
+        font-size: $font-size-xs-fluid;
+        border: 1px solid red;
     }
 
     &__reply-btn {
@@ -158,7 +156,7 @@
     }
 
     &__reply-count-text {
-        font-weight: $font-weight-bold;
+        font-size: $font-size-xs-fluid;
     }
 
     // Deep-link highlight: applied briefly when scrolling to #comment-{id}.
@@ -171,12 +169,16 @@
 }
 
 @keyframes ms-comment-highlight {
-    0% { background-color: rgba(var(--color-text-link-rgb, 33, 150, 243), 0.18); }
-    100% { background-color: transparent; }
+    0% {
+        background-color: rgba(var(--color-text-link-rgb, 33, 150, 243), 0.18);
+    }
+
+    100% {
+        background-color: transparent;
+    }
 }
 
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {
-}
+@media all and (min-width: breakpoint-desktop) {}
