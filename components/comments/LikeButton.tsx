@@ -1,7 +1,7 @@
 'use client';
 
 import { openLoginModal } from 'features/modal/modal.helpers';
-import AnimatedNumber from 'mondosurf-library/components/AnimatedNumber';
+import Odometer from 'mondosurf-library/components/Odometer';
 import Icon from 'mondosurf-library/components/Icon';
 import { likeComment, unlikeComment } from 'mondosurf-library/helpers/comments.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
@@ -118,7 +118,7 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             </span>
             {likesCount > 0 && (
                 <span className="ms-comment__like-count">
-                    <AnimatedNumber value={likesCount} />
+                    <Odometer value={likesCount} />
                 </span>
             )}
         </button>
