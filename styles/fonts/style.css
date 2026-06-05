@@ -28,6 +28,9 @@
     font-palette: --palette0;
     color: currentColor;
 }
+.mondo-icon-upvote-fill:before {
+    content: "\f01c";
+}
 .mondo-icon-upvote:before {
     content: "\f01a";
 }
