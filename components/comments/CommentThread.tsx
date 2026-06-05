@@ -22,7 +22,7 @@ const CommentThread: React.FC<ICommentThread> = ({ comment, resourceId, refreshC
 
     const onReplyClick = () => {
         if (login !== 'yes') {
-            openLoginModal('replyButton', undefined, mondoTranslate('comments.login_modal_text'), () => {
+            openLoginModal('replyButton', undefined, mondoTranslate('comments.login_modal_text_reply'), () => {
                 setReplyFormOpen(true);
             });
             return;

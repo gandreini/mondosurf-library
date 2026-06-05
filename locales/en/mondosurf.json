@@ -128,7 +128,9 @@
     "reply_field_placeholder": "Write your reply",
     "send_reply": "Send reply",
     "one_reply": "1 reply",
-    "many_replies": "{{count}} replies"
+    "many_replies": "{{count}} replies",
+    "login_modal_text_like": "Please log in or register to vote a comment",
+    "login_modal_text_reply": "Please log in or register to reply to a comment"
   },
   "app": {
     "offline_icon": "🤷",

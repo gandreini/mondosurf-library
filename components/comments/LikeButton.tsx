@@ -81,7 +81,7 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
 
         if (pending) return;
         if (login !== 'yes') {
-            openLoginModal('likeButton', undefined, mondoTranslate('comments.login_modal_text'), () => {
+            openLoginModal('likeButton', undefined, mondoTranslate('comments.login_modal_text_like'), () => {
                 callApi();
             });
             return;
