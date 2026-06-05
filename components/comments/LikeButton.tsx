@@ -92,7 +92,7 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
     return (
         <button
             type="button"
-            className={`ms-comment__like-btn ms-small-text${userHasLiked ? ' is-liked' : ''}`}
+            className={`ms-comment__like-btn ${userHasLiked ? ' is-liked' : ''}`}
             onClick={onClick}
             disabled={pending}
             data-test="comment-like-btn"

@@ -135,7 +135,7 @@ const Comment: React.FC<ICommentProps> = (props) => {
                     {!isReply && props.onReplyClick && (
                         <button
                             type="button"
-                            className="ms-comment__reply-btn ms-small-text"
+                            className="ms-comment__reply-btn"
                             onClick={props.onReplyClick}
                             aria-expanded={props.replyFormOpen ?? false}
                             data-test="comment-reply-btn">
@@ -148,7 +148,7 @@ const Comment: React.FC<ICommentProps> = (props) => {
                     )}
                     {!isReply && !props.onReplyClick && (props.reply_count ?? 0) > 0 && (
                         <span
-                            className="ms-comment__reply-btn ms-small-text"
+                            className="ms-comment__reply-btn"
                             data-test="comment-reply-count">
                             <Icon icon="reply" />
                             <span className="ms-comment__reply-count-text">{props.reply_count}</span>

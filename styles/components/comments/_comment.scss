@@ -8,6 +8,8 @@
     #COMMENT  
 \* ------------------------------------ */
 .ms-comment {
+    padding-bottom: $space * 2.5;
+
     &__header {
         display: flex;
         flex-direction: row;
@@ -64,7 +66,9 @@
 
     &__content {}
 
-    &__text {}
+    &__text.ms-body-text {
+        margin-bottom: $space * 1;
+    }
 
     &__deleted-placeholder {
         font-style: italic;
@@ -93,10 +97,10 @@
     // Reddit-style action pill: light gray rounded chip with icon + label/count.
     // Shared base for like and reply actions in the comment footer.
     &__action-pill {
-        display: inline-flex;
+        display: flex !important;
         align-items: center;
-        gap: $space * 0.5;
-        padding: $space * 0.25 $space * 1;
+        gap: $space * 0.25;
+        padding: $space * 0.75 $space * 1;
         border-radius: 999px;
         border: 0;
         background-color: $color-background-light;
@@ -114,7 +118,6 @@
             line-height: 1;
             font-size: $font-size-m;
             transition: color 120ms ease;
-            border: 1px solid var(--color-gray-04);
         }
 
         &:hover:not(:disabled) {
@@ -148,7 +151,6 @@
 
     &__like-count {
         font-size: $font-size-xs-fluid;
-        border: 1px solid red;
     }
 
     &__reply-btn {
