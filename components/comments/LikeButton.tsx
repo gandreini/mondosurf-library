@@ -116,11 +116,15 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             <span className={`ms-comment__like-icon${iconPulsing ? ' is-popping' : ''}`}>
                 <Icon icon={userHasLiked ? 'upvote-fill' : 'upvote'} />
             </span>
-            {likesCount > 0 && (
-                <span className="ms-comment__like-count">
-                    <Odometer value={likesCount} />
-                </span>
-            )}
+            {/* Wrapper is always mounted so the 0 ↔ 1 boundary can animate
+                (expand/collapse). The CSS `.is-empty` class collapses the
+                width and fades out when there's no count to show. Inside,
+                the Odometer keeps tracking the value so when we transition
+                back through 0 → 1 the digit rolls into view as the wrapper
+                opens. */}
+            <span className={`ms-comment__like-count${likesCount === 0 ? ' is-empty' : ''}`}>
+                <Odometer value={Math.max(1, likesCount)} />
+            </span>
         </button>
     );
 };

@@ -132,21 +132,9 @@
 
     &__like-btn {
         @extend .ms-comment__action-pill;
-        // Reserve enough width that count appearing doesn't shift the layout.
-        // min-width: 44px;
-
-        &.is-liked {
-            background-color: rgba(var(--color-text-link-rgb, 64, 111, 203), 0.12);
-            color: var(--color-text-link);
-
-            .mondo-icon {
-                color: var(--color-text-link);
-            }
-        }
-
-        &.is-liked:hover:not(:disabled) {
-            background-color: rgba(var(--color-text-link-rgb, 64, 111, 203), 0.2);
-        }
+        // The liked state is conveyed solely by the glyph swap (upvote →
+        // upvote-fill). No background, text colour, or icon tint change —
+        // the filled arrow on its own is the indicator.
     }
 
     // Wrapper around the upvote glyph. The `.is-popping` class is added
@@ -173,8 +161,27 @@
         100% { transform: scale(1); }
     }
 
+    // The like count wrapper. Always rendered so the 0 ↔ 1 boundary can
+    // animate: at 0 the wrapper collapses to zero width (the .is-empty
+    // class), and when the count appears it expands smoothly while the
+    // odometer inside rolls into view.
     &__like-count {
         font-size: $font-size-xs-fluid;
+        display: inline-block;
+        overflow: hidden;
+        // Generous max-width that comfortably holds up to ~5 digits with
+        // tabular-nums. The natural content width is always <= this, so
+        // transitioning to/from 0 is smooth.
+        max-width: 5ch;
+        opacity: 1;
+        transition:
+            max-width 420ms cubic-bezier(0.34, 1.32, 0.5, 1),
+            opacity 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+        &.is-empty {
+            max-width: 0;
+            opacity: 0;
+        }
     }
 
     &__reply-btn {
