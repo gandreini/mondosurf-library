@@ -161,26 +161,53 @@
         100% { transform: scale(1); }
     }
 
-    // The like count wrapper. Always rendered so the 0 ↔ 1 boundary can
-    // animate: at 0 the wrapper collapses to zero width (the .is-empty
-    // class), and when the count appears it expands smoothly while the
-    // odometer inside rolls into view.
+    // The like count wrapper. Two-stage choreography across the 0 ↔ 1 line:
+    //
+    //   Forward (0 → 1): the wrapper expands first to make room (max-width
+    //   transitions 0 → 5ch), then the digit pops in with a fade + slight
+    //   scale + slide-up. transition-delay on the inner element waits for
+    //   the wrapper to be mostly open before revealing.
+    //
+    //   Reverse (1 → 0): the digit fades + sinks out first, then the
+    //   wrapper collapses (the wrapper's max-width transition is delayed).
+    //
+    // The reveal is on `.ms-odometer` because that's the inner element
+    // whose content represents the digit; <Odometer> is always mounted, so
+    // we can transition it instead of remounting on every change.
     &__like-count {
         font-size: $font-size-xs-fluid;
         display: inline-block;
         overflow: hidden;
-        // Generous max-width that comfortably holds up to ~5 digits with
-        // tabular-nums. The natural content width is always <= this, so
-        // transitioning to/from 0 is smooth.
         max-width: 5ch;
-        opacity: 1;
-        transition:
-            max-width 420ms cubic-bezier(0.34, 1.32, 0.5, 1),
-            opacity 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition: max-width 360ms cubic-bezier(0.34, 1.32, 0.5, 1);
+
+        > * {
+            display: inline-flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transform-origin: center 60%;
+            // Reveal: starts AFTER the wrapper has begun opening (delay
+            // ~180ms) so the user reads it as "pill makes space, then
+            // digit drops in". Slight overshoot bezier for a pop.
+            transition:
+                opacity 260ms cubic-bezier(0.2, 0.8, 0.2, 1) 180ms,
+                transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1) 180ms;
+        }
 
         &.is-empty {
             max-width: 0;
-            opacity: 0;
+            // Wait for the digit to disappear before collapsing the wrapper.
+            transition: max-width 360ms cubic-bezier(0.4, 0, 1, 1) 160ms;
+
+            > * {
+                opacity: 0;
+                transform: translateY(4px) scale(0.55);
+                // Disappear fast and with no delay, so the wrapper has
+                // something to wait for.
+                transition:
+                    opacity 160ms cubic-bezier(0.4, 0, 1, 1),
+                    transform 180ms cubic-bezier(0.4, 0, 1, 1);
+            }
         }
     }
 
