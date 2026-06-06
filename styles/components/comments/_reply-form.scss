@@ -10,6 +10,13 @@
 
     &__contents {
         margin-bottom: $space * 0.5;
+
+        // Match the comments-form pattern so the textarea fills the
+        // available width instead of defaulting to its cols attribute.
+        textarea {
+            width: 100%;
+            height: 80px;
+        }
     }
 
     &__buttons {

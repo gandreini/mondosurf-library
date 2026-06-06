@@ -59,7 +59,7 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
                 </div>
                 <div className="ms-reply-form__buttons">
                     <button
-                        className="ms-btn ms-btn-m"
+                        className="ms-btn ms-btn-s"
                         type="button"
                         onClick={props.onCancel}
                         disabled={submitting}>
@@ -67,7 +67,7 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
                     </button>
                     <button
                         type="submit"
-                        className="ms-btn ms-btn-cta ms-btn-m"
+                        className="ms-btn ms-btn-cta ms-btn-s"
                         disabled={!canSubmit}
                         data-test="reply-submit">
                         {submitting && <Loader size="small" />}
