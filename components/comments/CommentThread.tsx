@@ -41,6 +41,14 @@ const CommentThread: React.FC<ICommentThread> = ({ comment, resourceId, refreshC
 
     const replies = comment.replies ?? [];
 
+    // Thread layout (conversation model):
+    //   1. Parent comment
+    //   2. Existing replies, oldest → newest (backend already sorts ASC)
+    //   3. Reply form (only when open)
+    //
+    // Form-at-end + ASC reply order means the new reply lands right where
+    // the form was — no visual jump after posting. Reads like a growing
+    // conversation rather than a reverse-chronological feed.
     return (
         <>
             <Comment
@@ -52,14 +60,6 @@ const CommentThread: React.FC<ICommentThread> = ({ comment, resourceId, refreshC
                 onReplyClick={onReplyClick}
                 replyFormOpen={replyFormOpen}
             />
-            {replyFormOpen && (
-                <ReplyForm
-                    parentCommentId={comment.ID}
-                    spotId={resourceId}
-                    onCancel={onCancelReply}
-                    onReplyPosted={onReplyPosted}
-                />
-            )}
             {replies.map((reply) => (
                 <Comment
                     key={reply.ID}
@@ -70,6 +70,14 @@ const CommentThread: React.FC<ICommentThread> = ({ comment, resourceId, refreshC
                     initialExpanded={focusedCommentId === reply.ID}
                 />
             ))}
+            {replyFormOpen && (
+                <ReplyForm
+                    parentCommentId={comment.ID}
+                    spotId={resourceId}
+                    onCancel={onCancelReply}
+                    onReplyPosted={onReplyPosted}
+                />
+            )}
         </>
     );
 };
