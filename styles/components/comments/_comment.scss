@@ -135,6 +135,12 @@
         // The liked state is conveyed solely by the glyph swap (upvote →
         // upvote-fill). No background, text colour, or icon tint change —
         // the filled arrow on its own is the indicator.
+
+        // Hover: tint the glyph brand-blue (in addition to the pill bg
+        // shift inherited from action-pill).
+        &:hover:not(:disabled) .mondo-icon {
+            color: var(--color-text-link);
+        }
     }
 
     // Wrapper around the upvote glyph. The `.is-popping` class is added
@@ -223,6 +229,21 @@
     &__reply-btn {
         @extend .ms-comment__action-pill;
         font-size: $font-size-s-fluid;
+
+        // Interactive variant (spot-page button): glyph turns brand-blue on
+        // hover, matching the like pill.
+        &:not(.is-static):hover {
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+
+        // Static informational variant (homepage card): the pill itself isn't
+        // clickable — the wrapping MondoLink handles navigation — so suppress
+        // both the inherited bg-hover and any icon tint.
+        &.is-static:hover {
+            background-color: $color-background-light;
+        }
     }
 
     &__reply-count-text {

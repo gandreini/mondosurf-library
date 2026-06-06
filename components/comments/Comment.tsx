@@ -141,14 +141,11 @@ const Comment: React.FC<ICommentProps> = (props) => {
                             data-test="comment-reply-btn">
                             <Icon icon="reply" />
                             <span>{mondoTranslate('comments.reply')}</span>
-                            {(props.reply_count ?? 0) > 0 && (
-                                <span className="ms-comment__reply-count-text">{props.reply_count}</span>
-                            )}
                         </button>
                     )}
                     {!isReply && !props.onReplyClick && (props.reply_count ?? 0) > 0 && (
                         <span
-                            className="ms-comment__reply-btn"
+                            className="ms-comment__reply-btn is-static"
                             data-test="comment-reply-count">
                             <Icon icon="reply" />
                             <span className="ms-comment__reply-count-text">{props.reply_count}</span>
