@@ -20,6 +20,12 @@ const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
     const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
+    // Tracks which thread's reply form is currently open. Only ONE reply form
+    // can be open at a time across the whole list — clicking Reply on another
+    // comment closes the previous one. Stored as the parent comment id, or
+    // null when no form is open. State lives here (not in each CommentThread)
+    // so the constraint is enforced globally.
+    const [openReplyCommentId, setOpenReplyCommentId] = useState<number | null>(null);
     // Auth-aware GET: sends the token when logged in (so the backend can return
     // per-user `user_has_liked`), falls back to anonymous otherwise.
     const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
@@ -107,6 +113,8 @@ const Comments: React.FC<IComments> = (props) => {
                         resourceId={Number(props.resourceId)}
                         refreshComments={refreshComments}
                         focusedCommentId={focusedCommentId}
+                        openReplyCommentId={openReplyCommentId}
+                        setOpenReplyCommentId={setOpenReplyCommentId}
                     />
                 ))}
 

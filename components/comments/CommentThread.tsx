@@ -6,7 +6,6 @@ import { IComment } from 'mondosurf-library/model/iComment';
 import { openLoginModal } from 'features/modal/modal.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface ICommentThread {
@@ -14,28 +13,47 @@ interface ICommentThread {
     resourceId: number;
     refreshComments: () => void;
     focusedCommentId?: number | null;
+    // Lifted state — parent Comments component owns "which thread has its
+    // reply form open" so the rule "only one form at a time" is enforced
+    // globally. Each CommentThread derives its own open flag from comparison.
+    openReplyCommentId?: number | null;
+    setOpenReplyCommentId?: (id: number | null) => void;
 }
 
-const CommentThread: React.FC<ICommentThread> = ({ comment, resourceId, refreshComments, focusedCommentId }) => {
+const CommentThread: React.FC<ICommentThread> = ({
+    comment,
+    resourceId,
+    refreshComments,
+    focusedCommentId,
+    openReplyCommentId,
+    setOpenReplyCommentId
+}) => {
     const login = useSelector((state: RootState) => state.user.logged);
-    const [replyFormOpen, setReplyFormOpen] = useState<boolean>(false);
+    const replyFormOpen = openReplyCommentId === comment.ID;
+
+    const openThisForm = () => setOpenReplyCommentId?.(comment.ID);
+    const closeForm = () => setOpenReplyCommentId?.(null);
 
     const onReplyClick = () => {
         if (login !== 'yes') {
             openLoginModal('replyButton', undefined, mondoTranslate('comments.login_modal_text_reply'), () => {
-                setReplyFormOpen(true);
+                openThisForm();
             });
             return;
         }
-        setReplyFormOpen((open) => !open);
+        // Toggle: clicking the Reply button on this comment either opens this
+        // thread's form (closing any other) or closes it if it's already open.
+        if (replyFormOpen) {
+            closeForm();
+        } else {
+            openThisForm();
+        }
     };
 
-    const onCancelReply = () => {
-        setReplyFormOpen(false);
-    };
+    const onCancelReply = () => closeForm();
 
     const onReplyPosted = () => {
-        setReplyFormOpen(false);
+        closeForm();
         refreshComments();
     };
 

@@ -17,10 +17,15 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
     const [text, setText] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const formRef = useRef<HTMLLIElement | null>(null);
 
-    // Auto-focus when the form mounts.
+    // Auto-focus the textarea + scroll the form into view on mount. The form
+    // sits at the bottom of the reply thread, so on long threads it may be
+    // off-screen when the user clicks Reply. preventScroll on focus stops the
+    // browser's instant focus-scroll from competing with our smooth scroll.
     useEffect(() => {
-        textareaRef.current?.focus();
+        textareaRef.current?.focus({ preventScroll: true });
+        formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, []);
 
     const trimmed = text.trim();
@@ -44,7 +49,7 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
     };
 
     return (
-        <li className="ms-comments__comment ms-reply-form">
+        <li ref={formRef} className="ms-comments__comment ms-reply-form">
             <form className="ms-form" onSubmit={handleSubmit}>
                 <div className="ms-reply-form__contents">
                     <div className="ms-form__input">
