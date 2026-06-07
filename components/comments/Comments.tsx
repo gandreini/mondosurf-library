@@ -8,7 +8,7 @@ import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface IComments {
     resourceId: string;
@@ -20,37 +20,25 @@ const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
     const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
-    // Tracks which thread's reply form is currently open. Only ONE reply form
-    // can be open at a time across the whole list — clicking Reply on another
-    // comment closes the previous one. Stored as the parent comment id, or
-    // null when no form is open. State lives here (not in each CommentThread)
-    // so the constraint is enforced globally.
+    // Only one reply form open at a time — parent owns the state so the rule
+    // is enforced globally across threads.
     const [openReplyCommentId, setOpenReplyCommentId] = useState<number | null>(null);
-    // Auth-aware GET: sends the token when logged in (so the backend can return
-    // per-user `user_has_liked`), falls back to anonymous otherwise.
+    // Auth-aware GET. The hook preserves the previous payload during a
+    // refresh (stale-while-revalidate), so refreshComments() doesn't blank
+    // the list mid-flight.
     const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
 
-    // Stale-while-revalidate cache for the comments list. The underlying
-    // useAuthGetFetch hook resets its payload to [] while loading, so during
-    // a refetch (e.g. after posting a reply) the list would otherwise
-    // disappear and the skeleton loaders would flash in — causing a visible
-    // up/down jump. Mirroring the payload into local state and only
-    // updating on successful 'loaded' transitions keeps the rendered list
-    // stable across refetches.
-    const [cachedComments, setCachedComments] = useState<IComment[]>([]);
-    const [hasLoadedOnce, setHasLoadedOnce] = useState<boolean>(false);
+    // One-shot flag for first successful load — used to know whether to show
+    // skeletons. After first load, refreshes keep showing the stale payload.
+    const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
     useEffect(() => {
-        if (fetchedComments.status === 'loaded') {
-            setCachedComments(fetchedComments.payload);
-            setHasLoadedOnce(true);
-        }
-    }, [fetchedComments]);
+        if (fetchedComments.status === 'loaded') setHasLoadedOnce(true);
+    }, [fetchedComments.status]);
 
     // Read URL hash on mount to determine which comment to focus.
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        const hash = window.location.hash;
-        const match = hash.match(/^#comment-(\d+)$/);
+        const match = window.location.hash.match(/^#comment-(\d+)$/);
         if (match) setFocusedCommentId(parseInt(match[1], 10));
     }, []);
 
@@ -64,38 +52,28 @@ const Comments: React.FC<IComments> = (props) => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
-    // Scroll to the focused comment ONCE, the first time the comment list lands
-    // in the DOM after page load. Subsequent re-fetches (e.g. after posting a
-    // reply) also flip fetchedComments.status back to 'loaded', but at that
-    // point the user is interacting with the page — snapping them back to
-    // the deep-link target every time would be jarring.
-    const hasScrolledToHashRef = useRef<boolean>(false);
+    // Scroll to the focused comment once the list is in the DOM, then clear
+    // focusedCommentId so refreshes don't re-snap the viewport.
     useEffect(() => {
-        if (hasScrolledToHashRef.current) return;
-        if (focusedCommentId && fetchedComments.status === 'loaded') {
-            // Defer one tick so React has flushed the rendered comments into the DOM.
-            const timeout = window.setTimeout(() => {
-                scrollToCommentFromHash();
-                hasScrolledToHashRef.current = true;
-            }, 0);
-            return () => window.clearTimeout(timeout);
-        }
+        if (!focusedCommentId || fetchedComments.status !== 'loaded') return;
+        // Defer one tick so React has flushed the rendered comments into the DOM.
+        const timeout = window.setTimeout(() => {
+            scrollToCommentFromHash();
+            setFocusedCommentId(null);
+        }, 0);
+        return () => window.clearTimeout(timeout);
     }, [focusedCommentId, fetchedComments.status]);
 
-    // Refresh comments
     const refreshComments = () => {
         setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
     };
 
-    const hasComments = hasLoadedOnce && cachedComments.length > 0;
-    // Skeletons only on the FIRST load. Subsequent refetches keep the existing
-    // list visible (stale-while-revalidate) so posting a reply doesn't flash
-    // skeletons → no up/down jump.
-    const showSkeletons = !hasLoadedOnce;
+    const comments = fetchedComments.payload as IComment[];
+    const hasComments = hasLoadedOnce && comments.length > 0;
 
     return (
         <ul className="ms-comments">
-            {hasLoadedOnce && cachedComments.length === 0 && (
+            {hasLoadedOnce && comments.length === 0 && (
                 <p className="ms-comments__first-comment ms-body-text">
                     {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
                 </p>
@@ -121,8 +99,10 @@ const Comments: React.FC<IComments> = (props) => {
                 />
             )}
 
-            {/* Loading skeletons — only on the initial load. */}
-            {showSkeletons && (
+            {/* Skeleton loaders — only on the very first load. After that the
+                hook keeps the previous payload during refreshes, so the list
+                stays visible. */}
+            {!hasLoadedOnce && (
                 <>
                     {Array.from({ length: numberOfComments }).map((_, key) => (
                         <div className="ms-comments__skeleton" key={key}>
@@ -133,10 +113,9 @@ const Comments: React.FC<IComments> = (props) => {
                 </>
             )}
 
-            {/* Loaded — threaded shape: top-level Comments with their replies.
-                Render the CACHED list so the UI stays stable during refetches. */}
+            {/* Loaded — threaded shape: top-level Comments with their replies. */}
             {hasLoadedOnce &&
-                cachedComments.map((comment: IComment) => (
+                comments.map((comment) => (
                     <CommentThread
                         key={comment.ID}
                         comment={comment}
