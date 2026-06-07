@@ -8,7 +8,7 @@ import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface IComments {
     resourceId: string;
@@ -52,16 +52,20 @@ const Comments: React.FC<IComments> = (props) => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
-    // Scroll to the focused comment once the list is in the DOM, then clear
-    // focusedCommentId so refreshes don't re-snap the viewport.
+    // Scroll to the focused comment once, the first time the list lands in the
+    // DOM. The ref guard keeps the scroll a one-shot — subsequent refetches
+    // (e.g. after posting a reply) shouldn't re-snap the viewport.
+    const hasScrolledToHashRef = useRef<boolean>(false);
     useEffect(() => {
+        if (hasScrolledToHashRef.current) return;
         if (!focusedCommentId || fetchedComments.status !== 'loaded') return;
-        // Defer one tick so React has flushed the rendered comments into the DOM.
-        const timeout = window.setTimeout(() => {
+        // Defer to the next animation frame so the comments React just queued
+        // are committed to the DOM before we look them up by id.
+        const handle = window.requestAnimationFrame(() => {
             scrollToCommentFromHash();
-            setFocusedCommentId(null);
-        }, 0);
-        return () => window.clearTimeout(timeout);
+            hasScrolledToHashRef.current = true;
+        });
+        return () => window.cancelAnimationFrame(handle);
     }, [focusedCommentId, fetchedComments.status]);
 
     const refreshComments = () => {
