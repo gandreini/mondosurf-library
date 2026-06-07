@@ -30,6 +30,22 @@ const Comments: React.FC<IComments> = (props) => {
     // per-user `user_has_liked`), falls back to anonymous otherwise.
     const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
 
+    // Stale-while-revalidate cache for the comments list. The underlying
+    // useAuthGetFetch hook resets its payload to [] while loading, so during
+    // a refetch (e.g. after posting a reply) the list would otherwise
+    // disappear and the skeleton loaders would flash in — causing a visible
+    // up/down jump. Mirroring the payload into local state and only
+    // updating on successful 'loaded' transitions keeps the rendered list
+    // stable across refetches.
+    const [cachedComments, setCachedComments] = useState<IComment[]>([]);
+    const [hasLoadedOnce, setHasLoadedOnce] = useState<boolean>(false);
+    useEffect(() => {
+        if (fetchedComments.status === 'loaded') {
+            setCachedComments(fetchedComments.payload);
+            setHasLoadedOnce(true);
+        }
+    }, [fetchedComments]);
+
     // Read URL hash on mount to determine which comment to focus.
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -71,18 +87,22 @@ const Comments: React.FC<IComments> = (props) => {
         setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
     };
 
-    const hasComments = fetchedComments.status === 'loaded' && fetchedComments.payload.length > 0;
+    const hasComments = hasLoadedOnce && cachedComments.length > 0;
+    // Skeletons only on the FIRST load. Subsequent refetches keep the existing
+    // list visible (stale-while-revalidate) so posting a reply doesn't flash
+    // skeletons → no up/down jump.
+    const showSkeletons = !hasLoadedOnce;
 
     return (
         <ul className="ms-comments">
-            {fetchedComments.status === 'loaded' && fetchedComments.payload.length === 0 && (
+            {hasLoadedOnce && cachedComments.length === 0 && (
                 <p className="ms-comments__first-comment ms-body-text">
                     {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
                 </p>
             )}
 
             {/* Guide text only shown when no comments exist */}
-            {!hasComments && fetchedComments.status === 'loaded' && (
+            {hasLoadedOnce && !hasComments && (
                 <p className="ms-small-text">
                     {mondoTranslate(
                         props.shortText ? 'comments.spot_comment_guide_short' : 'comments.spot_comment_guide',
@@ -92,7 +112,7 @@ const Comments: React.FC<IComments> = (props) => {
             )}
 
             {/* Show form at top when no comments */}
-            {!hasComments && fetchedComments.status === 'loaded' && (
+            {hasLoadedOnce && !hasComments && (
                 <CommentsForm
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}
@@ -101,8 +121,8 @@ const Comments: React.FC<IComments> = (props) => {
                 />
             )}
 
-            {/* Loading */}
-            {fetchedComments.status !== 'loaded' && (
+            {/* Loading skeletons — only on the initial load. */}
+            {showSkeletons && (
                 <>
                     {Array.from({ length: numberOfComments }).map((_, key) => (
                         <div className="ms-comments__skeleton" key={key}>
@@ -113,9 +133,10 @@ const Comments: React.FC<IComments> = (props) => {
                 </>
             )}
 
-            {/* Loaded — threaded shape: top-level Comments with their replies */}
-            {fetchedComments.status === 'loaded' &&
-                fetchedComments.payload.map((comment: IComment) => (
+            {/* Loaded — threaded shape: top-level Comments with their replies.
+                Render the CACHED list so the UI stays stable during refetches. */}
+            {hasLoadedOnce &&
+                cachedComments.map((comment: IComment) => (
                     <CommentThread
                         key={comment.ID}
                         comment={comment}
@@ -128,7 +149,7 @@ const Comments: React.FC<IComments> = (props) => {
                 ))}
 
             {/* Show form at bottom when there are comments */}
-            {hasComments && fetchedComments.status === 'loaded' && (
+            {hasComments && (
                 <CommentsForm
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}
