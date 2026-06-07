@@ -99,7 +99,7 @@ $toggle-switch-padding: 3px;
     }
 
     &__input:focus-visible ~ &__track {
-        box-shadow: 0 0 0 3px rgba(var(--color-text-link-rgb, 33, 150, 243), 0.25);
+        box-shadow: 0 0 0 3px rgba(var(--color-text-link-rgb), 0.25);
     }
 
     &:hover &__track {

@@ -26,8 +26,6 @@
         gap: $space * 1;
     }
 
-    &__header-right {}
-
     &__delete {
         width: 24px;
         height: 24px;
@@ -61,10 +59,6 @@
         font-weight: $font-weight-bold;
         color: var(--color-text);
     }
-
-    &__date.ms-small-text {}
-
-    &__content {}
 
     &__text.ms-body-text {
         margin-bottom: $space * 1.5;
@@ -154,11 +148,11 @@
 
         // Smooth colour transition on the glyph when .is-liked toggles.
         .mondo-icon {
-            transition: color 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: color $duration-standard $easing-smooth;
         }
 
         &.is-popping {
-            animation: ms-like-icon-pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: ms-like-icon-pop $duration-pop $easing-overshoot;
         }
     }
 
@@ -194,7 +188,7 @@
         display: inline-block;
         overflow: hidden;
         max-width: 5ch;
-        transition: max-width 360ms cubic-bezier(0.34, 1.32, 0.5, 1);
+        transition: max-width $duration-reveal $easing-mechanical;
 
         >* {
             display: inline-flex;
@@ -205,14 +199,14 @@
             // ~180ms) so the user reads it as "pill makes space, then
             // digit drops in". Slight overshoot bezier for a pop.
             transition:
-                opacity 260ms cubic-bezier(0.2, 0.8, 0.2, 1) 180ms,
-                transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1) 180ms;
+                opacity $duration-medium $easing-smooth 180ms,
+                transform $duration-long $easing-overshoot 180ms;
         }
 
         &.is-empty {
             max-width: 0;
             // Wait for the digit to disappear before collapsing the wrapper.
-            transition: max-width 360ms cubic-bezier(0.4, 0, 1, 1) 160ms;
+            transition: max-width $duration-reveal $easing-easeout 160ms;
 
             >* {
                 opacity: 0;
@@ -220,8 +214,8 @@
                 // Disappear fast and with no delay, so the wrapper has
                 // something to wait for.
                 transition:
-                    opacity 160ms cubic-bezier(0.4, 0, 1, 1),
-                    transform 180ms cubic-bezier(0.4, 0, 1, 1);
+                    opacity $duration-fast $easing-easeout,
+                    transform $duration-quick $easing-easeout;
             }
         }
     }
@@ -261,7 +255,7 @@
 
 @keyframes ms-comment-highlight {
     0% {
-        background-color: rgba(var(--color-text-link-rgb, 33, 150, 243), 0.18);
+        background-color: rgba(var(--color-text-link-rgb), 0.18);
     }
 
     100% {

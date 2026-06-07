@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 
 import ExpandableText from '../ExpandableText';
 import LikeButton from './LikeButton';
+import ReplyPill from './ReplyPill';
 
 interface ICommentProps extends IComment {
     // Whether to render the Reply button (top-level comments only; Phase B).
@@ -126,30 +127,14 @@ const Comment: React.FC<ICommentProps> = (props) => {
                         likesCount={props.likes_count ?? 0}
                         userHasLiked={props.user_has_liked ?? false}
                     />
-                    {/* Reply pill, top-level only. Two flavors:
-                        - Spot page (onReplyClick provided): button that opens the
-                          inline ReplyForm. Shows "Reply" + count when there are replies.
-                        - Homepage card (no onReplyClick): purely informational, only
-                          rendered when there are replies. The whole card is wrapped
-                          in a link so clicking still works. */}
-                    {!isReply && props.onReplyClick && (
-                        <button
-                            type="button"
-                            className="ms-comment__reply-btn"
+                    {/* Reply pill — top-level only. Picks interactive (button)
+                        vs static (span + count) flavor based on onReplyClick. */}
+                    {!isReply && (
+                        <ReplyPill
                             onClick={props.onReplyClick}
-                            aria-expanded={props.replyFormOpen ?? false}
-                            data-test="comment-reply-btn">
-                            <Icon icon="reply" />
-                            <span>{mondoTranslate('comments.reply')}</span>
-                        </button>
-                    )}
-                    {!isReply && !props.onReplyClick && (props.reply_count ?? 0) > 0 && (
-                        <span
-                            className="ms-comment__reply-btn is-static"
-                            data-test="comment-reply-count">
-                            <Icon icon="reply" />
-                            <span className="ms-comment__reply-count-text">{props.reply_count}</span>
-                        </span>
+                            replyFormOpen={props.replyFormOpen}
+                            count={props.reply_count}
+                        />
                     )}
                 </div>
             )}

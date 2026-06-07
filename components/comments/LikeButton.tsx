@@ -1,14 +1,12 @@
 'use client';
 
-import { openLoginModal } from 'features/modal/modal.helpers';
 import Odometer from 'mondosurf-library/components/Odometer';
 import Icon from 'mondosurf-library/components/Icon';
+import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { likeComment, unlikeComment } from 'mondosurf-library/helpers/comments.helpers';
-import { RootState } from 'mondosurf-library/redux/store';
 import toastService from 'mondosurf-library/services/toastService';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 interface ILikeButton {
     commentId: number;
@@ -23,8 +21,6 @@ const LIKE_COOLDOWN_MS = 2000;
 const ICON_PULSE_MS = 380;
 
 const LikeButton: React.FC<ILikeButton> = (props) => {
-    const login = useSelector((state: RootState) => state.user.logged);
-
     const [likesCount, setLikesCount] = useState<number>(props.likesCount ?? 0);
     const [userHasLiked, setUserHasLiked] = useState<boolean>(props.userHasLiked ?? false);
     const [pending, setPending] = useState<boolean>(false);
@@ -43,8 +39,8 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
         const nextLiked = !prevLiked;
 
         // Icon flips immediately — instant visual acknowledgement of the click.
-        // The COUNT update is held back: the AnimatedNumber slot animation
-        // reveals it at the end of the cooldown window for a satisfying beat.
+        // The COUNT update is held back: the Odometer roll reveals it at the
+        // end of the cooldown window for a satisfying beat.
         setUserHasLiked(nextLiked);
         triggerIconPulse();
         setPending(true);
@@ -93,15 +89,8 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
         // Prevent the click bubbling to the outer card link on the homepage.
         e.stopPropagation();
         e.preventDefault();
-
         if (pending) return;
-        if (login !== 'yes') {
-            openLoginModal('likeButton', undefined, mondoTranslate('comments.login_modal_text_like'), () => {
-                callApi();
-            });
-            return;
-        }
-        callApi();
+        withLoginGate('likeButton', 'comments.login_modal_text_like', callApi);
     };
 
     return (

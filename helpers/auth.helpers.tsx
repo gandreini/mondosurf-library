@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+import { openLoginModal } from 'features/modal/modal.helpers';
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 // import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
@@ -634,4 +635,31 @@ export const requestAccountVerificationEmail = (): void => {
                 toastService.error(mondoTranslate('toast.auth.verification_email_sent_error'));
             });
     }
+};
+
+/**
+ * Gates an action on the user being logged in.
+ *
+ *   - If already logged in: invokes `onAuthed` synchronously, immediately.
+ *   - If not logged in: opens the login modal with a feature-specific
+ *     message, and invokes `onAuthed` only once the user successfully
+ *     authenticates from inside the modal.
+ *
+ * Centralises the "tap something, get prompted to log in, then continue
+ * what you were doing" pattern. Call from any component that has a
+ * logged-in-only action (like, reply, favorite, post-comment, etc.).
+ *
+ *   withLoginGate('likeButton', 'comments.login_modal_text_like', () => callApi());
+ */
+export const withLoginGate = (
+    feature: string,
+    messageKey: string,
+    onAuthed: () => void
+): void => {
+    const login = store.getState().user.logged;
+    if (login === 'yes') {
+        onAuthed();
+        return;
+    }
+    openLoginModal(feature, undefined, mondoTranslate(messageKey), () => onAuthed());
 };

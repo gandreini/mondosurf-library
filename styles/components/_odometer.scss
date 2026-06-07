@@ -39,7 +39,7 @@
         transition-property: transform;
         // Snappy with a tiny overshoot so a single-digit ±1 roll feels
         // mechanical without being mushy.
-        transition-timing-function: cubic-bezier(0.34, 1.32, 0.5, 1);
+        transition-timing-function: $easing-mechanical;
         will-change: transform;
     }
 

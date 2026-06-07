@@ -2,11 +2,8 @@
 
 import Comment from 'mondosurf-library/components/comments/Comment';
 import ReplyForm from 'mondosurf-library/components/comments/ReplyForm';
+import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
-import { openLoginModal } from 'features/modal/modal.helpers';
-import { RootState } from 'mondosurf-library/redux/store';
-import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useSelector } from 'react-redux';
 
 interface ICommentThread {
     comment: IComment;
@@ -28,26 +25,19 @@ const CommentThread: React.FC<ICommentThread> = ({
     openReplyCommentId,
     setOpenReplyCommentId
 }) => {
-    const login = useSelector((state: RootState) => state.user.logged);
     const replyFormOpen = openReplyCommentId === comment.ID;
 
     const openThisForm = () => setOpenReplyCommentId?.(comment.ID);
     const closeForm = () => setOpenReplyCommentId?.(null);
 
     const onReplyClick = () => {
-        if (login !== 'yes') {
-            openLoginModal('replyButton', undefined, mondoTranslate('comments.login_modal_text_reply'), () => {
-                openThisForm();
-            });
-            return;
-        }
-        // Toggle: clicking the Reply button on this comment either opens this
-        // thread's form (closing any other) or closes it if it's already open.
-        if (replyFormOpen) {
-            closeForm();
-        } else {
-            openThisForm();
-        }
+        // Toggle behaviour: clicking the Reply button on this comment either
+        // opens this thread's form (closing any other) or closes it if it's
+        // already open. withLoginGate prompts a login first when needed.
+        withLoginGate('replyButton', 'comments.login_modal_text_reply', () => {
+            if (replyFormOpen) closeForm();
+            else openThisForm();
+        });
     };
 
     const onCancelReply = () => closeForm();
