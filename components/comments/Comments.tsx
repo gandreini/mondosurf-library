@@ -8,7 +8,7 @@ import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
 import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface IComments {
     resourceId: string;
@@ -48,11 +48,20 @@ const Comments: React.FC<IComments> = (props) => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
-    // Scroll to the focused comment once the list is in the DOM + briefly highlight it.
+    // Scroll to the focused comment ONCE, the first time the comment list lands
+    // in the DOM after page load. Subsequent re-fetches (e.g. after posting a
+    // reply) also flip fetchedComments.status back to 'loaded', but at that
+    // point the user is interacting with the page — snapping them back to
+    // the deep-link target every time would be jarring.
+    const hasScrolledToHashRef = useRef<boolean>(false);
     useEffect(() => {
+        if (hasScrolledToHashRef.current) return;
         if (focusedCommentId && fetchedComments.status === 'loaded') {
             // Defer one tick so React has flushed the rendered comments into the DOM.
-            const timeout = window.setTimeout(() => scrollToCommentFromHash(), 0);
+            const timeout = window.setTimeout(() => {
+                scrollToCommentFromHash();
+                hasScrolledToHashRef.current = true;
+            }, 0);
             return () => window.clearTimeout(timeout);
         }
     }, [focusedCommentId, fetchedComments.status]);
