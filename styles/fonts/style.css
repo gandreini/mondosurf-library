@@ -1,200 +1,186 @@
 @font-face {
-  font-family: 'mondo-icon';
-  src:  url('fonts/mondo-icon.eot?sn2d2r');
-  src:  url('fonts/mondo-icon.eot?sn2d2r#iefix') format('embedded-opentype'),
-    url('fonts/mondo-icon.ttf?sn2d2r') format('truetype'),
-    url('fonts/mondo-icon.woff?sn2d2r') format('woff'),
-    url('fonts/mondo-icon.svg?sn2d2r#mondo-icon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: "mondo-icon";
+    src: url("fonts/mondo-icon.woff2") format("woff2"),
+        url("fonts/mondo-icon.ttf") format("truetype"),
+        url("fonts/mondo-icon.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
+@font-palette-values --palette0 {
+    font-family: "mondo-icon";
+    base-palette: 0
+}
+.mondo-icon, [class^="mondo-icon-"], [class*=" mondo-icon-"] {
+    /* Use !important to prevent extensions from overriding this font. */
+    font-family: "mondo-icon" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-[class^="mondo-icon-"], [class*=" mondo-icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'mondo-icon' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
-.mondo-icon-new-spot:before {
-  content: "\e933";
-  color: #4b5053;
-}
-.mondo-icon-share:before {
-  content: "\e91f";
-  color: #4b5053;
-}
-.mondo-icon-enlarge:before {
-  content: "\e931";
-  color: #4b5053;
-}
-.mondo-icon-add-calendar:before {
-  content: "\e932";
-  color: #4b5053;
-}
-.mondo-icon-mondo-logo:before {
-  content: "\e930";
-  color: #4b5053;
-}
-.mondo-icon-night-2:before {
-  content: "\e92e";
-}
-.mondo-icon-night-1:before {
-  content: "\e92f";
-}
-.mondo-icon-arrow-left:before {
-  content: "\e92d";
-}
-.mondo-icon-tab-bar-active-favorites:before {
-  content: "\e925";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-favorites:before {
-  content: "\e92a";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-active-search:before {
-  content: "\e921";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-search:before {
-  content: "\e922";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-active-me:before {
-  content: "\e923";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-active-map:before {
-  content: "\e924";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-active-spots:before {
-  content: "\e926";
-  color: #4b5053;
+.palette0 {
+    font-palette: --palette0;
+    color: currentColor;
 }
 .mondo-icon-tab-bar-spots:before {
-  content: "\e927";
-  color: #4b5053;
-}
-.mondo-icon-tab-bar-map:before {
-  content: "\e928";
-  color: #4b5053;
+    content: "\f028";
 }
 .mondo-icon-tab-bar-me:before {
-  content: "\e929";
-  color: #4b5053;
+    content: "\f029";
+}
+.mondo-icon-tab-bar-map:before {
+    content: "\f02a";
 }
 .mondo-icon-tab-bar-home:before {
-  content: "\e92b";
-  color: #4b5053;
+    content: "\f02b";
+}
+.mondo-icon-tab-bar-favorites:before {
+    content: "\f02c";
+}
+.mondo-icon-tab-bar-active-spots:before {
+    content: "\f02d";
+}
+.mondo-icon-tab-bar-active-me:before {
+    content: "\f02e";
+}
+.mondo-icon-tab-bar-active-map:before {
+    content: "\f02f";
 }
 .mondo-icon-tab-bar-active-home:before {
-  content: "\e92c";
-  color: #4b5053;
+    content: "\f030";
+}
+.mondo-icon-tab-bar-active-favorites:before {
+    content: "\f031";
+}
+.mondo-icon-arrow-left:before {
+    content: "\f027";
 }
 .mondo-icon-search:before {
-  content: "\e920";
-}
-.mondo-icon-angle-left:before {
-  content: "\e91e";
-}
-.mondo-icon-plus:before {
-  content: "\e91c";
-}
-.mondo-icon-minus:before {
-  content: "\e91d";
-}
-.mondo-icon-star:before {
-  content: "\e91b";
-}
-.mondo-icon-eye:before {
-  content: "\e916";
-}
-.mondo-icon-eye-slash:before {
-  content: "\e91a";
-}
-.mondo-icon-trash:before {
-  content: "\e915";
-}
-.mondo-icon-wetsuit-freeze1:before {
-  content: "\e914";
-}
-.mondo-icon-drag:before {
-  content: "\e917";
-}
-.mondo-icon-heart-empty:before {
-  content: "\e918";
-}
-.mondo-icon-heart:before {
-  content: "\e919";
-}
-.mondo-icon-checkbox:before {
-  content: "\e912";
-}
-.mondo-icon-checkbox-checked:before {
-  content: "\e913";
-}
-.mondo-icon-wetsuit-freeze:before {
-  content: "\e90d";
-}
-.mondo-icon-springsuit:before {
-  content: "\e90e";
-}
-.mondo-icon-swimsuit:before {
-  content: "\e90f";
-}
-.mondo-icon-wetsuit-full:before {
-  content: "\e910";
+    content: "\f026";
 }
 .mondo-icon-wetsuit-winter:before {
-  content: "\e911";
+    content: "\f025";
 }
-.mondo-icon-filter:before {
-  content: "\e900";
+.mondo-icon-wetsuit-full:before {
+    content: "\f024";
 }
-.mondo-icon-angle-down:before {
-  content: "\e901";
-}
-.mondo-icon-angle-right:before {
-  content: "\e902";
-}
-.mondo-icon-crosshair:before {
-  content: "\e903";
-}
-.mondo-icon-ellipsis-h:before {
-  content: "\e904";
-}
-.mondo-icon-ellipsis-v:before {
-  content: "\e905";
-}
-.mondo-icon-hamburger:before {
-  content: "\e906";
-}
-.mondo-icon-image:before {
-  content: "\e907";
-}
-.mondo-icon-times:before {
-  content: "\e908";
-}
-.mondo-icon-wave-a-frame:before {
-  content: "\e909";
-}
-.mondo-icon-wave-left:before {
-  content: "\e90a";
-}
-.mondo-icon-wave-right:before {
-  content: "\e90b";
+.mondo-icon-wetsuit-freeze:before {
+    content: "\f023";
 }
 .mondo-icon-wave:before {
-  content: "\e90c";
+    content: "\f022";
+}
+.mondo-icon-wave-right:before {
+    content: "\f021";
+}
+.mondo-icon-wave-left:before {
+    content: "\f020";
+}
+.mondo-icon-wave-a-frame:before {
+    content: "\f01a";
+}
+.mondo-icon-upvote:before {
+    content: "\f01c";
+}
+.mondo-icon-upvote-fill:before {
+    content: "\f019";
+}
+.mondo-icon-trash:before {
+    content: "\f018";
+}
+.mondo-icon-times:before {
+    content: "\f01f";
+}
+.mondo-icon-swimsuit:before {
+    content: "\f017";
+}
+.mondo-icon-star:before {
+    content: "\f01e";
+}
+.mondo-icon-springsuit:before {
+    content: "\f002";
+}
+.mondo-icon-share:before {
+    content: "\f01b";
+}
+.mondo-icon-reply:before {
+    content: "\f016";
+}
+.mondo-icon-plus:before {
+    content: "\f001";
+}
+.mondo-icon-new-spot:before {
+    content: "\f003";
+}
+.mondo-icon-mondo-logo:before {
+    content: "\f015";
+}
+.mondo-icon-minus:before {
+    content: "\f014";
+}
+.mondo-icon-image:before {
+    content: "\f005";
+}
+.mondo-icon-heart:before {
+    content: "\f004";
+}
+.mondo-icon-heart-empty:before {
+    content: "\f013";
+}
+.mondo-icon-hamburger:before {
+    content: "\f012";
+}
+.mondo-icon-filter:before {
+    content: "\f011";
+}
+.mondo-icon-eye:before {
+    content: "\f010";
+}
+.mondo-icon-eye-slash:before {
+    content: "\f00f";
+}
+.mondo-icon-enlarge:before {
+    content: "\f00e";
+}
+.mondo-icon-ellipsis-v:before {
+    content: "\f00d";
+}
+.mondo-icon-ellipsis-h:before {
+    content: "\f00c";
+}
+.mondo-icon-drag:before {
+    content: "\f00b";
+}
+.mondo-icon-crosshair:before {
+    content: "\f00a";
+}
+.mondo-icon-checkbox:before {
+    content: "\f009";
+}
+.mondo-icon-checkbox-checked:before {
+    content: "\f008";
+}
+.mondo-icon-angle-right:before {
+    content: "\f007";
+}
+.mondo-icon-angle-left:before {
+    content: "\f006";
+}
+.mondo-icon-angledown:before {
+    content: "\f000";
+}
+.mondo-icon-add-calendar:before {
+    content: "\f01d";
+}
+.mondo-icon-night-2:before {
+    content: "\e92e";
+}
+.mondo-icon-night-1:before {
+    content: "\e92f";
 }
