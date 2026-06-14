@@ -7,12 +7,126 @@
 /* ------------------------------------ *\
     #SURF SPOT MAP
 \* ------------------------------------ */
+// MapLibre canvas always fills its parent (guide reserved box, fullscreen, map page).
+.ms-map-gl {
+    width: 100%;
+    height: 100%;
+}
+
 .ms-surf-spot-map {
     &__map {
+        position: relative;
         width: 100%;
         overflow: hidden;
         .ms-map-global {
+            position: relative;
             height: 300px;
+        }
+        // Placeholder shown in the reserved 300px box until the live MapLibre
+        // map mounts at idle — keeps layout stable (no CLS).
+        .ms-map-gl__skeleton {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-gray-02);
+        }
+
+        // Transparent tap layer over the inline preview: a tap opens fullscreen,
+        // a scroll does not (click vs touchmove). Removed in fullscreen.
+        .ms-map-gl__tap-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        // Expand affordance on the preview: an icon button (top-right, where the
+        // small map has no controls). Sits above the tap-layer so it's clickable;
+        // tapping anywhere else on the preview also expands (via the tap-layer).
+        .ms-map-gl__expand,
+        .ms-map-gl__collapse {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background-color: var(--color-gray-00);
+            color: var(--color-text);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .ms-map-gl__expand {
+            top: $space;
+            right: $space;
+            z-index: 3; // above the tap-layer
+        }
+
+        // Fullscreen: the same map instance grows to fill the viewport.
+        &.is-fullscreen {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100dvh;
+            z-index: 1000;
+            overflow: hidden;
+            background-color: var(--color-gray-00);
+
+            .ms-map-global {
+                height: 100%;
+            }
+        }
+
+        // Collapse button in fullscreen: top-left (the zoom/layer/geolocation
+        // controls sit top-right) + iOS notch safe area. Above the map controls.
+        .ms-map-gl__collapse {
+            top: $space;
+            left: $space;
+            margin-top: env(safe-area-inset-top, 0);
+            z-index: 1001;
+        }
+
+        .ms-map-gl__layer-toggle-btn {
+            font-size: 16px;
+            line-height: 29px;
+        }
+
+        // Spot preview popover (clicking an individual spot in fullscreen).
+        .ms-map-popup {
+            .maplibregl-popup-content {
+                padding: $space $space * 1.5;
+                border-radius: $space;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            }
+
+            .ms-map-popup__link {
+                display: flex;
+                flex-direction: column;
+                gap: $space/4;
+                text-decoration: none;
+                color: var(--color-text);
+            }
+
+            .ms-map-popup__title {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-s;
+            }
+
+            .ms-map-popup__detail {
+                font-size: $font-size-xs;
+                color: var(--color-gray-06);
+                @include first-letter-capital;
+            }
         }
     }
 

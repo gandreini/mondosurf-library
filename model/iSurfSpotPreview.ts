@@ -7,6 +7,8 @@ export default interface ISurfSpotPreview {
     region: string;
     regionSlug: string;
     flag?: string;
+    lat?: number; // present unless the spot hides its location (for the guide map preview)
+    lng?: number;
     direction?: string;
     bottom?: string;
     swell_direction_min?: number;

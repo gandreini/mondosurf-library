@@ -1,0 +1,375 @@
+'use client';
+
+// MapLibre GL map. CLIENT-ONLY (WebGL) — per library convention.
+// One component for every map surface:
+//   - guide inline preview  : pins + interactive=false
+//   - guide fullscreen      : interactive + loadAllSpots + showControls
+//   - /surf-spots-map        : loadAllSpots + interactive + showControls
+//   - forecast-edit          : draggableMarker + onMarkerDragEnd
+import 'maplibre-gl/dist/maplibre-gl.css';
+
+import maplibregl, {
+    GeolocateControl,
+    type IControl,
+    Map as MapLibreMap,
+    Marker,
+    NavigationControl,
+    Popup
+} from 'maplibre-gl';
+import type { FeatureCollection } from 'geojson';
+import { useEffect, useRef } from 'react';
+import { IMAGES_URL } from 'proxies/localConstants';
+import { isApp } from 'helpers/device.helpers';
+import { useRouterProxy } from 'proxies/useRouter';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+import { returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
+import toastService from 'mondosurf-library/services/toastService';
+import {
+    addSpotsClusterLayers,
+    fetchAllSpots,
+    getMapGlStyle,
+    nextMapGlLayer,
+    normaliseSpots,
+    pinSvgUrl,
+    readMapGlLayer,
+    removeSpotsClusterLayers,
+    setMapInteractivity,
+    type SpotPointClick,
+    SPOTS_SOURCE_ID,
+    wirePinImages,
+    wireSpotsClusterEvents,
+    writeMapGlLayer,
+    type MapGlLayer
+} from 'mondosurf-library/helpers/mapGl.helpers';
+
+export interface IMapGlPin {
+    id: number;
+    slug: string;
+    name: string;
+    lat: number;
+    lng: number;
+    direction?: string;
+    quality?: number;
+}
+
+interface IMapGl {
+    lat?: number;
+    lng?: number;
+    zoom?: number;
+    /** Local pins (e.g. guide spot + nearby). Shown only when not in loadAllSpots mode. */
+    pins?: IMapGlPin[];
+    /** Pan/zoom enabled. Toggled at runtime for the inline → fullscreen grow. */
+    interactive?: boolean;
+    /** Fetch the world spots file and render it clustered (fullscreen / map page). */
+    loadAllSpots?: boolean;
+    /** Show zoom + layer-toggle + geolocation controls. */
+    showControls?: boolean;
+    /** Single draggable marker at lat/lng (forecast-edit). */
+    draggableMarker?: boolean;
+    /** Marker icon filename under map-pins/ (e.g. parking). */
+    customIcon?: string;
+    onMarkerDragEnd?: (lat: number, lng: number) => void;
+}
+
+// Shared marker DOM builder (used by spot pins and the draggable edit marker).
+const markerElement = (src: string, opts: { alt?: string; quality?: number } = {}): HTMLElement => {
+    const el = document.createElement('div');
+    el.className = 'ms-map-marker-icon' + (opts.quality !== undefined ? ' quality-' + opts.quality : '');
+    const img = document.createElement('img');
+    img.className = 'ms-map-marker-icon__image';
+    img.src = src;
+    img.alt = opts.alt ?? '';
+    el.appendChild(img);
+    return el;
+};
+
+// Keyboard-accessible, clickable spot pin.
+const createPinElement = (pin: IMapGlPin): HTMLElement => {
+    const el = markerElement(pinSvgUrl(pin.direction), { alt: pin.name, quality: pin.quality });
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', pin.name);
+    el.style.cursor = 'pointer';
+    return el;
+};
+
+const MapGl: React.FC<IMapGl> = ({
+    lat,
+    lng,
+    zoom = 12,
+    pins = [],
+    interactive = false,
+    loadAllSpots = false,
+    showControls = false,
+    draggableMarker = false,
+    customIcon,
+    onMarkerDragEnd
+}: IMapGl) => {
+    const router = useRouterProxy();
+    // App (Capacitor) navigates via the router; web does a full-page navigation
+    // (matches the old map's web <a href> / app router.push split).
+    const goToSpot = (slug: string, id: number) => {
+        const path = `/surf-spot/${slug}/guide/${id}`;
+        if (isApp()) router.push(path);
+        else window.location.assign(path);
+    };
+    const pinClick = (pin: IMapGlPin) => goToSpot(pin.slug, pin.id);
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<MapLibreMap | null>(null);
+    const markersRef = useRef<Marker[]>([]);
+    const popupRef = useRef<Popup | null>(null);
+    const allSpotsRef = useRef<FeatureCollection | null>(null);
+    const layerRef = useRef<MapGlLayer>('vector');
+    const loadedAllRef = useRef(false);
+    const controlsAddedRef = useRef(false);
+    // Tracks the LATEST desired world state so an async loadWorld that resolves
+    // after a collapse doesn't add world clusters onto the inline preview.
+    const wantWorldRef = useRef(false);
+
+    const closePopup = () => {
+        popupRef.current?.remove();
+        popupRef.current = null;
+    };
+
+    // Clicking a clustered spot opens a small preview popover (name + direction)
+    // that links to the guide — instead of navigating away immediately.
+    const showSpotPopup = (spot: SpotPointClick) => {
+        const map = mapRef.current;
+        if (!map) return;
+        const path = `/surf-spot/${spot.slug}/guide/${spot.id}`;
+        const link = document.createElement('a');
+        link.className = 'ms-map-popup__link';
+        link.href = path;
+        const dir = returnDirectionLabel(spot.direction);
+        link.innerHTML =
+            `<span class="ms-map-popup__title">${spot.name}</span>` +
+            (dir ? `<span class="ms-map-popup__detail">${dir}</span>` : '');
+        // In the app, route via the SPA router rather than a full navigation.
+        link.addEventListener('click', (ev) => {
+            if (isApp()) {
+                ev.preventDefault();
+                router.push(path);
+            }
+        });
+        closePopup();
+        popupRef.current = new Popup({ offset: 28, closeButton: true, className: 'ms-map-popup' })
+            .setLngLat(spot.lngLat)
+            .setDOMContent(link)
+            .addTo(map);
+    };
+
+    // --- init once ---
+    useEffect(() => {
+        if (!containerRef.current || mapRef.current) return;
+
+        const layer = readMapGlLayer();
+        layerRef.current = layer;
+
+        const map = new maplibregl.Map({
+            container: containerRef.current,
+            style: getMapGlStyle(layer),
+            center: lat != null && lng != null ? [lng, lat] : [0, 20],
+            zoom: lat != null && lng != null ? zoom : 1.5,
+            attributionControl: true,
+            fadeDuration: 0
+        });
+        mapRef.current = map;
+
+        if (!interactive) setMapInteractivity(map, false);
+        // Controls are added by the showControls effect (runs right after this on mount).
+
+        // Lazy-load the teardrop pin images for the clustered points layer (survives setStyle).
+        wirePinImages(map);
+
+        // Wire cluster/point click + hover ONCE. Handlers are bound by layer id, so
+        // they survive setStyle and tolerate the layers not existing yet — no re-wiring.
+        wireSpotsClusterEvents(map, showSpotPopup);
+
+        map.on('load', () => {
+            if (draggableMarker && lat != null && lng != null) {
+                const el = customIcon ? markerElement(IMAGES_URL + 'map-pins/' + customIcon) : undefined;
+                const marker = new Marker({ element: el, draggable: true, anchor: 'bottom' })
+                    .setLngLat([lng, lat])
+                    .addTo(map);
+                marker.on('dragend', () => {
+                    const p = marker.getLngLat();
+                    if (onMarkerDragEnd) onMarkerDragEnd(p.lat, p.lng);
+                });
+                markersRef.current.push(marker);
+                return;
+            }
+            // World loading is owned solely by the loadAllSpots effect (single owner).
+            if (!loadAllSpots) markersRef.current = addDomPins(map, pins, pinClick);
+        });
+
+        // Re-add the clustered source/layers after a layer switch (setStyle wipes
+        // sources/layers; the layer-id click/hover handlers above survive).
+        map.on('styledata', () => {
+            if (loadedAllRef.current && allSpotsRef.current && map.isStyleLoaded() && !map.getSource(SPOTS_SOURCE_ID)) {
+                addSpotsClusterLayers(map, allSpotsRef.current);
+            }
+        });
+
+        // Resize when the container changes size (inline → fullscreen grow, orientation,
+        // viewport) — replaces a fragile fixed timeout. Guard against the rAF firing
+        // after unmount (map.resize() on a removed map throws).
+        let resizeRaf: number | undefined;
+        const ro = new ResizeObserver(() => {
+            if (resizeRaf) cancelAnimationFrame(resizeRaf);
+            resizeRaf = requestAnimationFrame(() => {
+                if (mapRef.current === map) map.resize();
+            });
+        });
+        ro.observe(containerRef.current);
+
+        return () => {
+            ro.disconnect();
+            if (resizeRaf) cancelAnimationFrame(resizeRaf);
+            closePopup();
+            markersRef.current.forEach((m) => m.remove());
+            markersRef.current = [];
+            map.remove();
+            mapRef.current = null;
+            loadedAllRef.current = false;
+            controlsAddedRef.current = false;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // init once
+
+    // --- react to interactive toggle (inline → fullscreen grow) ---
+    useEffect(() => {
+        const map = mapRef.current;
+        if (map) setMapInteractivity(map, interactive);
+        // Resize on the grow is handled by the ResizeObserver (container size change).
+    }, [interactive]);
+
+    // --- add controls when they become enabled (guide: inline has none, fullscreen does) ---
+    useEffect(() => {
+        const map = mapRef.current;
+        if (map && showControls) addControls(map);
+        // addControls is a stable closure guarded by controlsAddedRef — intentionally not a dep.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showControls]);
+
+    function addControls(map: MapLibreMap) {
+        // Idempotent: in the guide flow showControls flips true on every fullscreen
+        // open, but the same map instance must not accumulate duplicate controls.
+        if (controlsAddedRef.current) return;
+        controlsAddedRef.current = true;
+        map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
+        map.addControl(
+            new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: false }),
+            'top-right'
+        );
+        map.addControl(makeLayerToggleControl(map, layerRef, closePopup), 'top-right');
+    }
+
+    // --- react to loadAllSpots toggling (fullscreen open/close) ---
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map) return;
+        wantWorldRef.current = loadAllSpots;
+        if (loadAllSpots && !loadedAllRef.current) {
+            if (map.isStyleLoaded()) void loadWorld(map);
+            else map.once('load', () => void loadWorld(map));
+        } else if (!loadAllSpots && loadedAllRef.current) {
+            unloadWorld(map);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loadAllSpots]);
+
+    // Load the world spots: drop local DOM pins, fetch (once, cached) + cluster.
+    // Cluster click/hover handlers were wired once at init (survive setStyle).
+    const loadWorld = async (map: MapLibreMap) => {
+        if (loadedAllRef.current) return;
+        loadedAllRef.current = true;
+        try {
+            const data = allSpotsRef.current ?? normaliseSpots(await fetchAllSpots());
+            // Bail if the map was replaced/removed OR the user collapsed back to the
+            // inline preview during the fetch — otherwise we'd dump world clusters
+            // onto the small map.
+            if (mapRef.current !== map || !wantWorldRef.current) {
+                loadedAllRef.current = false;
+                return;
+            }
+            allSpotsRef.current = data; // cached already-normalised — no re-map on layer switch / re-open
+            addSpotsClusterLayers(map, data);
+            // Remove the local DOM pins only after the clusters are in, so a throw
+            // above leaves the inline preview pins intact.
+            markersRef.current.forEach((m) => m.remove());
+            markersRef.current = [];
+        } catch (e) {
+            // Non-blocking: the map stays usable; local pins (if any) were already shown.
+            loadedAllRef.current = false;
+            // eslint-disable-next-line no-console
+            console.error('MapGl: failed to load world spots', e);
+            toastService.error(mondoTranslate('surf_spot.map_spots_load_error'));
+        }
+    };
+
+    // Collapse back to the inline preview: remove cluster layers/source, restore
+    // local DOM pins, recenter on the spot. World data stays cached for re-open.
+    const unloadWorld = (map: MapLibreMap) => {
+        closePopup();
+        removeSpotsClusterLayers(map);
+        loadedAllRef.current = false;
+        markersRef.current = addDomPins(map, pins, pinClick);
+        if (lat != null && lng != null) map.easeTo({ center: [lng, lat], zoom, duration: 300 });
+    };
+
+    return <div ref={containerRef} className="ms-map-gl" data-test="surf-spot-map" />;
+};
+
+// --- helpers kept local to the component (DOM/control glue) ---
+
+function addDomPins(map: MapLibreMap, pins: IMapGlPin[], onClick: (pin: IMapGlPin) => void): Marker[] {
+    const created: Marker[] = [];
+    for (const pin of pins) {
+        if (!Number.isFinite(pin.lat) || !Number.isFinite(pin.lng)) continue;
+        const el = createPinElement(pin);
+        el.addEventListener('click', () => onClick(pin));
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClick(pin);
+            }
+        });
+        created.push(new Marker({ element: el, anchor: 'bottom' }).setLngLat([pin.lng, pin.lat]).addTo(map));
+    }
+    return created;
+}
+
+// Minimal custom control: a button that cycles street → satellite → hybrid.
+function makeLayerToggleControl(
+    map: MapLibreMap,
+    layerRef: { current: MapGlLayer },
+    onBeforeStyleChange: () => void
+): IControl {
+    const container = document.createElement('div');
+    container.className = 'maplibregl-ctrl maplibregl-ctrl-group ms-map-gl__layer-toggle';
+    container.setAttribute('data-test', 'surf-spot-map-controls');
+    const button = document.createElement('button');
+    button.type = 'button';
+    const label = mondoTranslate('surf_spot.switch_map_layer');
+    button.title = label;
+    button.setAttribute('aria-label', label);
+    button.className = 'ms-map-gl__layer-toggle-btn';
+    button.textContent = '🗺️';
+    button.addEventListener('click', () => {
+        onBeforeStyleChange(); // drop any open spot popover — setStyle won't remove it
+        const next = nextMapGlLayer(layerRef.current);
+        layerRef.current = next;
+        writeMapGlLayer(next);
+        map.setStyle(getMapGlStyle(next));
+    });
+    container.appendChild(button);
+    return {
+        onAdd: () => container,
+        onRemove: () => {
+            container.parentNode?.removeChild(container);
+        }
+    };
+}
+
+export default MapGl;

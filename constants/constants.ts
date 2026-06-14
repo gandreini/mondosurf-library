@@ -23,7 +23,10 @@ export const PRIVACY_POLICY_URL = "https://www.mondo.surf/privacy-policy";
 export const IOS_EULA_URL = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 export const MAIN_CONTACT_EMAIL = "hello@mondo.surf";
 
-export const GEOJSON_FILE_URL = "https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json"
+// Defaults to production; override in dev via NEXT_PUBLIC_GEOJSON_FILE_URL
+// (production Cloudflare blocks a localhost origin, so local dev points at the MAMP copy).
+export const GEOJSON_FILE_URL =
+    process.env.NEXT_PUBLIC_GEOJSON_FILE_URL || "https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json"
 
 export const APP_LATEST_VERSION = "4.16.1";
 export const APP_LATEST_VERSION_PROGRESSIVE = 68;
