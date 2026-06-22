@@ -31,8 +31,7 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
     const trimmed = text.trim();
     const canSubmit = trimmed.length > 0 && !submitting;
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const submitReply = () => {
         if (!canSubmit) return;
         setSubmitting(true);
         postReply(props.parentCommentId, props.spotId, trimmed)
@@ -48,6 +47,19 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
             });
     };
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        submitReply();
+    };
+
+    // Enter submits the reply; Shift+Enter inserts a newline (chat-style UX).
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            submitReply();
+        }
+    };
+
     return (
         <li ref={formRef} className="ms-comments__comment ms-reply-form">
             <form className="ms-form" onSubmit={handleSubmit}>
@@ -58,6 +70,7 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
                             data-test="reply-field"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
+                            onKeyDown={handleKeyDown}
                             placeholder={mondoTranslate('comments.reply_field_placeholder')}
                         />
                     </div>

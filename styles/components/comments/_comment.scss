@@ -130,10 +130,15 @@
         // upvote-fill). No background, text colour, or icon tint change —
         // the filled arrow on its own is the indicator.
 
-        // Hover: tint the glyph brand-blue (in addition to the pill bg
-        // shift inherited from action-pill).
-        &:hover:not(:disabled) .mondo-icon {
+        // Hover: tint both the glyph AND the count text brand-blue (in
+        // addition to the pill bg shift inherited from action-pill). The count
+        // inherits `color` from the pill, so setting it here covers it too.
+        &:hover:not(:disabled) {
             color: var(--color-text-link);
+
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
         }
     }
 
@@ -224,9 +229,12 @@
         @extend .ms-comment__action-pill;
         font-size: $font-size-s-fluid;
 
-        // Interactive variant (spot-page button): glyph turns brand-blue on
-        // hover, matching the like pill.
+        // Interactive variant (spot-page button): glyph AND label turn
+        // brand-blue on hover, matching the like pill. The label inherits
+        // `color` from the pill, so setting it here covers it.
         &:not(.is-static):hover {
+            color: var(--color-text-link);
+
             .mondo-icon {
                 color: var(--color-text-link);
             }
@@ -234,7 +242,8 @@
 
         // Static informational variant (homepage card): the pill itself isn't
         // clickable — the wrapping MondoLink handles navigation — so suppress
-        // both the inherited bg-hover and any icon tint.
+        // both the inherited bg-hover and any icon/text tint. (Per design, the
+        // homepage replies-count pill must NOT react to hover.)
         &.is-static:hover {
             background-color: $color-background-light;
         }
@@ -244,23 +253,13 @@
         font-size: $font-size-s-fluid;
     }
 
-    // Deep-link highlight: applied briefly when scrolling to #comment-{id}.
-    &.is-highlighted {
-        animation: ms-comment-highlight 1500ms ease-out;
-    }
+    // Deep-link target: we still scroll to #comment-{id}, but per design the
+    // brief background-flash highlight was removed (it read as distracting).
+    // The scroll-margin-top below keeps the sticky header from covering the
+    // landed comment.
 
     // Avoid sticky-header overlap when scrollIntoView lands on this comment.
     scroll-margin-top: var(--header-height, 64px);
-}
-
-@keyframes ms-comment-highlight {
-    0% {
-        background-color: rgba(var(--color-text-link-rgb), 0.18);
-    }
-
-    100% {
-        background-color: transparent;
-    }
 }
 
 /* ------------------------------------ *\

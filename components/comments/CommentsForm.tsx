@@ -79,6 +79,19 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
         }
     };
 
+    // Enter submits the comment; Shift+Enter inserts a newline (chat-style UX).
+    // Routes through react-hook-form's handleSubmit so validation/login-gate
+    // run exactly as they do for a button click.
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const value: string = getValues('commentText');
+            if (value && value.trim() !== '' && !savingComment) {
+                handleSubmit(onSaveComment)();
+            }
+        }
+    };
+
     // The actual comment saving after login
     const actualCommentSaving = (accessToken: string, userName: string, resourceId: string, commentText: string) => {
         setSavingComment(true);
@@ -124,6 +137,7 @@ const CommentsForm: React.FC<ICommentsForm> = (props) => {
                             </label> */}
                             <textarea
                                 {...register('commentText')}
+                                onKeyDown={handleKeyDown}
                                 data-test="comment-field"
                                 placeholder={mondoTranslate('comments.comment_field_placeholder', {
                                     resource_name: props.resourceName

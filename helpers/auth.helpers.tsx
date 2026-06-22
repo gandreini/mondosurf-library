@@ -6,6 +6,7 @@ import { postApiAuthCall } from 'mondosurf-library/api/api';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
 import { prefetchFavoritesGuidesAndForecast } from 'mondosurf-library/helpers/favorites.helpers';
+import { LoginModalContext } from 'mondosurf-library/model/loginModalContext';
 // import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -652,7 +653,7 @@ export const requestAccountVerificationEmail = (): void => {
  *   withLoginGate('likeButton', 'comments.login_modal_text_like', () => callApi());
  */
 export const withLoginGate = (
-    feature: string,
+    feature: LoginModalContext,
     messageKey: string,
     onAuthed: () => void
 ): void => {

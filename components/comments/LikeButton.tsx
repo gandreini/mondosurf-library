@@ -6,7 +6,7 @@ import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { likeComment, unlikeComment } from 'mondosurf-library/helpers/comments.helpers';
 import toastService from 'mondosurf-library/services/toastService';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface ILikeButton {
     commentId: number;
@@ -26,6 +26,20 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
     const [pending, setPending] = useState<boolean>(false);
     const [iconPulsing, setIconPulsing] = useState<boolean>(false);
     const pulseTimeoutRef = useRef<number | undefined>(undefined);
+
+    // Re-sync from props when they change after mount. The key case: an
+    // anonymous user taps the heart, logs in via the gate, and the parent
+    // refetches the comments — at which point the server reports the
+    // freshly-recorded like. Because the count/liked state is seeded into
+    // useState (which only reads props on mount), without this effect the heart
+    // would stay empty until a full page refresh. Skip while a local toggle is
+    // in flight so we never clobber the optimistic update with stale props.
+    useEffect(() => {
+        if (pending) return;
+        setLikesCount(props.likesCount ?? 0);
+        setUserHasLiked(props.userHasLiked ?? false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.commentId, props.likesCount, props.userHasLiked]);
 
     const triggerIconPulse = () => {
         if (pulseTimeoutRef.current !== undefined) window.clearTimeout(pulseTimeoutRef.current);

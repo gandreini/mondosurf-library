@@ -36,7 +36,9 @@ $toggle-switch-padding: 3px;
 
     &__label {
         color: var(--color-text);
-        font-size: $font-size-m;
+        // One step up from -m (15px) to -l (18px) so the toggle title reads as
+        // a heading above its smaller description line. (Description unchanged.)
+        font-size: $font-size-l;
         font-weight: $font-weight-normal;
         line-height: 1.4;
         text-transform: none;
