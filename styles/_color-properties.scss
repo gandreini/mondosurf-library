@@ -23,6 +23,10 @@
     --color-text-light: #828791;
     --color-text-inverse: #ffffff;
     --color-text-link: #406fcb;
+    // RGB triplet of --color-text-link for use inside rgba():
+    //   rgba(var(--color-text-link-rgb), 0.18)
+    // Avoids hardcoding the hex when an alpha-blended brand tint is needed.
+    --color-text-link-rgb: 64, 111, 203;
     --color-text-hover: #2d529a;
     --color-text-visited: #2d529a;
     --color-text-form-placeholder: #a5a8ad;

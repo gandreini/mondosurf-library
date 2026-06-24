@@ -1,4 +1,13 @@
 {
+  "dates": {
+    "just_now": "just now",
+    "one_minute_ago": "1 minute ago",
+    "minutes_ago": "{{count}} minutes ago",
+    "one_hour_ago": "1 hour ago",
+    "hours_ago": "{{count}} hours ago",
+    "one_day_ago": "1 day ago",
+    "days_ago": "{{count}} days ago"
+  },
   "basics": {
     "mondo_surf": "Mondo Surf",
     "mondo": "Mondo",
@@ -110,7 +119,18 @@
     "delete_modal_text": "Are you 100% sure you want to delete the comment:\n\"{{comment_text}}\"?",
     "delete_modal_button": "Yes, delete comment",
     "toast_deletion_successful": "Comment deleted!",
-    "toast_deletion_error": "Error deleting comment!"
+    "toast_deletion_error": "Error deleting comment!",
+    "reply": "Reply",
+    "deleted_placeholder": "[deleted]",
+    "toast_like_error": "Could not update like, please try again",
+    "like_aria_label": "Like this comment",
+    "unlike_aria_label": "Remove your like from this comment",
+    "reply_field_placeholder": "Write your reply",
+    "send_reply": "Send reply",
+    "one_reply": "1 reply",
+    "many_replies": "{{count}} replies",
+    "login_modal_text_like": "Please log in or register to vote a comment",
+    "login_modal_text_reply": "Please log in or register to reply to a comment"
   },
   "app": {
     "offline_icon": "🤷",
@@ -449,7 +469,14 @@
     "temperature_unit_label": "Temperature",
     "temperature_unit_celsius": "Celsius (°C)",
     "temperature_unit_fahrenheit": "Fahrenheit (°F)",
-    "save_preferences": "Save preferences"
+    "save_preferences": "Save preferences",
+    "notifications_section_title": "Notifications",
+    "notify_comment_reply_email_label": "Replies to your comments",
+    "notify_comment_reply_email_description": "Email me when someone replies to one of my comments",
+    "notify_comment_like_email_label": "Likes on your comments",
+    "notify_comment_like_email_description": "Email me when someone likes one of my comments",
+    "notify_favorite_spot_comment_email_label": "New comments on your favorite spots",
+    "notify_favorite_spot_comment_email_description": "Email me when someone comments on a spot you've favorited"
   },
   "pro": {
     "yearly": "Yearly",

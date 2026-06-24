@@ -1,13 +1,14 @@
 // Client
 'use client';
 
-import useGetFetch from 'mondosurf-library/api/useGetFetch';
-import Comment from 'mondosurf-library/components/comments/Comment';
+import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
+import CommentThread from 'mondosurf-library/components/comments/CommentThread';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
+import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface IComments {
     resourceId: string;
@@ -19,17 +20,26 @@ const Comments: React.FC<IComments> = (props) => {
     const [commentsQuery, setCommentsQuery] = useState('');
     const [numberOfComments, setNumberOfComments] = useState(3);
     const [focusedCommentId, setFocusedCommentId] = useState<number | null>(null);
-    const fetchedComments = useGetFetch(commentsQuery);
+    // Only one reply form open at a time — parent owns the state so the rule
+    // is enforced globally across threads.
+    const [openReplyCommentId, setOpenReplyCommentId] = useState<number | null>(null);
+    // Auth-aware GET. The hook preserves the previous payload during a
+    // refresh (stale-while-revalidate), so refreshComments() doesn't blank
+    // the list mid-flight.
+    const fetchedComments = useAuthGetFetch(commentsQuery, {}, false);
 
-    // Read URL hash on mount to determine which comment to focus
+    // One-shot flag for first successful load — used to know whether to show
+    // skeletons. After first load, refreshes keep showing the stale payload.
+    const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const hash = window.location.hash; // e.g., "#comment-123"
-            const match = hash.match(/^#comment-(\d+)$/);
-            if (match) {
-                setFocusedCommentId(parseInt(match[1], 10));
-            }
-        }
+        if (fetchedComments.status === 'loaded') setHasLoadedOnce(true);
+    }, [fetchedComments.status]);
+
+    // Read URL hash on mount to determine which comment to focus.
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const match = window.location.hash.match(/^#comment-(\d+)$/);
+        if (match) setFocusedCommentId(parseInt(match[1], 10));
     }, []);
 
     // Fetch comments
@@ -37,38 +47,44 @@ const Comments: React.FC<IComments> = (props) => {
         setCommentsQuery('comments/' + props.resourceId);
     }, [props.resourceId]);
 
-    // Updates the number of comments used by the loader
+    // Updates the number of comments used by the loader.
     useEffect(() => {
         if (fetchedComments.status === 'loaded') setNumberOfComments(fetchedComments.payload.length);
     }, [fetchedComments]);
 
-    // Scroll to focused comment when comments are loaded
+    // Scroll to the focused comment once, the first time the list lands in the
+    // DOM. The ref guard keeps the scroll a one-shot — subsequent refetches
+    // (e.g. after posting a reply) shouldn't re-snap the viewport.
+    const hasScrolledToHashRef = useRef<boolean>(false);
     useEffect(() => {
-        if (focusedCommentId && fetchedComments.status === 'loaded') {
-            const element = document.querySelector(`[data-comment-id="${focusedCommentId}"]`);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
+        if (hasScrolledToHashRef.current) return;
+        if (!focusedCommentId || fetchedComments.status !== 'loaded') return;
+        // Defer to the next animation frame so the comments React just queued
+        // are committed to the DOM before we look them up by id.
+        const handle = window.requestAnimationFrame(() => {
+            scrollToCommentFromHash();
+            hasScrolledToHashRef.current = true;
+        });
+        return () => window.cancelAnimationFrame(handle);
     }, [focusedCommentId, fetchedComments.status]);
 
-    // Refresh comments
     const refreshComments = () => {
         setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
     };
 
-    const hasComments = fetchedComments.status === 'loaded' && fetchedComments.payload.length > 0;
+    const comments = fetchedComments.payload as IComment[];
+    const hasComments = hasLoadedOnce && comments.length > 0;
 
     return (
         <ul className="ms-comments">
-            {fetchedComments.status === 'loaded' && fetchedComments.payload.length === 0 && (
+            {hasLoadedOnce && comments.length === 0 && (
                 <p className="ms-comments__first-comment ms-body-text">
                     {mondoTranslate('comments.be_the_first', { resource_name: props.resourceName })}
                 </p>
             )}
 
             {/* Guide text only shown when no comments exist */}
-            {!hasComments && fetchedComments.status === 'loaded' && (
+            {hasLoadedOnce && !hasComments && (
                 <p className="ms-small-text">
                     {mondoTranslate(
                         props.shortText ? 'comments.spot_comment_guide_short' : 'comments.spot_comment_guide',
@@ -78,7 +94,7 @@ const Comments: React.FC<IComments> = (props) => {
             )}
 
             {/* Show form at top when no comments */}
-            {!hasComments && fetchedComments.status === 'loaded' && (
+            {hasLoadedOnce && !hasComments && (
                 <CommentsForm
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}
@@ -87,8 +103,10 @@ const Comments: React.FC<IComments> = (props) => {
                 />
             )}
 
-            {/* Loading */}
-            {fetchedComments.status !== 'loaded' && (
+            {/* Skeleton loaders — only on the very first load. After that the
+                hook keeps the previous payload during refreshes, so the list
+                stays visible. */}
+            {!hasLoadedOnce && (
                 <>
                     {Array.from({ length: numberOfComments }).map((_, key) => (
                         <div className="ms-comments__skeleton" key={key}>
@@ -99,27 +117,22 @@ const Comments: React.FC<IComments> = (props) => {
                 </>
             )}
 
-            {/* Loaded */}
-            {fetchedComments.status === 'loaded' &&
-                fetchedComments.payload.map((comment: IComment, key: number) => (
-                    <Comment
-                        key={key}
-                        ID={comment.ID}
-                        comment_text={comment.comment_text}
-                        comment_author_name={
-                            comment.comment_author_name ? comment.comment_author_name.split(' ')[0] : ''
-                        }
-                        comment_author_id={comment.comment_author_id}
-                        comment_date={comment.comment_date}
-                        callback={refreshComments}
-                        allow_editing={true}
-                        commented_resource_id={Number(props.resourceId)}
-                        initialExpanded={focusedCommentId === comment.ID}
+            {/* Loaded — threaded shape: top-level Comments with their replies. */}
+            {hasLoadedOnce &&
+                comments.map((comment) => (
+                    <CommentThread
+                        key={comment.ID}
+                        comment={comment}
+                        resourceId={Number(props.resourceId)}
+                        refreshComments={refreshComments}
+                        focusedCommentId={focusedCommentId}
+                        openReplyCommentId={openReplyCommentId}
+                        setOpenReplyCommentId={setOpenReplyCommentId}
                     />
                 ))}
 
             {/* Show form at bottom when there are comments */}
-            {hasComments && fetchedComments.status === 'loaded' && (
+            {hasComments && (
                 <CommentsForm
                     resourceId={props.resourceId}
                     resourceName={props.resourceName}

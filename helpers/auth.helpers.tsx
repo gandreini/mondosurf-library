@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+import { openLoginModal } from 'features/modal/modal.helpers';
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 // import { revenueCatRecognizeUser } from 'features/pro/revenueCat.helpers';
 import formurlencoded from 'form-urlencoded';
 import { getPlatform, isApp, isAppiOs } from 'helpers/device.helpers';
 import { prefetchFavoritesGuidesAndForecast } from 'mondosurf-library/helpers/favorites.helpers';
+import { LoginModalContext } from 'mondosurf-library/model/loginModalContext';
 // import { userIsPro } from 'mondosurf-library/helpers/pro.helpers';
 import { store } from 'mondosurf-library/redux/store';
 import {
@@ -507,6 +509,17 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
                 ...(response.data.user_prefs_speed && { userPrefsSpeed: response.data.user_prefs_speed }),
                 ...(response.data.user_prefs_temperature && {
                     userPrefsTemperature: response.data.user_prefs_temperature
+                }),
+                // Notification email preferences are booleans — guard against
+                // dropping an explicit `false`. Use a typeof check, NOT truthiness.
+                ...(typeof response.data.notify_comment_reply_email === 'boolean' && {
+                    notifyCommentReplyEmail: response.data.notify_comment_reply_email
+                }),
+                ...(typeof response.data.notify_comment_like_email === 'boolean' && {
+                    notifyCommentLikeEmail: response.data.notify_comment_like_email
+                }),
+                ...(typeof response.data.notify_favorite_spot_comment_email === 'boolean' && {
+                    notifyFavoriteSpotCommentEmail: response.data.notify_favorite_spot_comment_email
                 })
             })
         );
@@ -623,4 +636,31 @@ export const requestAccountVerificationEmail = (): void => {
                 toastService.error(mondoTranslate('toast.auth.verification_email_sent_error'));
             });
     }
+};
+
+/**
+ * Gates an action on the user being logged in.
+ *
+ *   - If already logged in: invokes `onAuthed` synchronously, immediately.
+ *   - If not logged in: opens the login modal with a feature-specific
+ *     message, and invokes `onAuthed` only once the user successfully
+ *     authenticates from inside the modal.
+ *
+ * Centralises the "tap something, get prompted to log in, then continue
+ * what you were doing" pattern. Call from any component that has a
+ * logged-in-only action (like, reply, favorite, post-comment, etc.).
+ *
+ *   withLoginGate('likeButton', 'comments.login_modal_text_like', () => callApi());
+ */
+export const withLoginGate = (
+    feature: LoginModalContext,
+    messageKey: string,
+    onAuthed: () => void
+): void => {
+    const login = store.getState().user.logged;
+    if (login === 'yes') {
+        onAuthed();
+        return;
+    }
+    openLoginModal(feature, undefined, mondoTranslate(messageKey), () => onAuthed());
 };
