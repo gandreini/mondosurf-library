@@ -124,6 +124,7 @@ const Comment: React.FC<ICommentProps> = (props) => {
                 <div className="ms-comment__actions">
                     <LikeButton
                         commentId={props.ID}
+                        spotId={props.commented_resource_id}
                         likesCount={props.likes_count ?? 0}
                         userHasLiked={props.user_has_liked ?? false}
                     />

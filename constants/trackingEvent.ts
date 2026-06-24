@@ -77,4 +77,8 @@ export enum TrackingEvent {
 
     // Comments
     CommentAddedApi = 'Comment Added_Api',
+    CommentLikeAddedApi = 'Comment Like Added_Api',
+    CommentLikeRemovedApi = 'Comment Like Removed_Api',
+    CommentReplyTap = 'Comment Reply_Tap',
+    CommentReplyAddedApi = 'Comment Reply Added_Api',
 }

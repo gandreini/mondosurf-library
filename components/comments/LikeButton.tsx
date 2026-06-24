@@ -5,6 +5,8 @@ import Icon from 'mondosurf-library/components/Icon';
 import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { likeComment, unlikeComment } from 'mondosurf-library/helpers/comments.helpers';
 import toastService from 'mondosurf-library/services/toastService';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useRef, useState } from 'react';
 
@@ -12,6 +14,8 @@ interface ILikeButton {
     commentId: number;
     likesCount: number;
     userHasLiked: boolean;
+    // Spot the comment belongs to — used only for analytics context.
+    spotId?: number;
     onToggle?: (newCount: number, newUserHasLiked: boolean) => void;
 }
 
@@ -64,6 +68,12 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
 
         request
             .then((response) => {
+                // Analytics (Mixpanel): the toggle is now recorded server-side.
+                Tracker.trackEvent(
+                    ['mp'],
+                    nextLiked ? TrackingEvent.CommentLikeAddedApi : TrackingEvent.CommentLikeRemovedApi,
+                    { spot_id: props.spotId, comment_id: props.commentId }
+                );
                 // Reveal the new count when the cooldown releases (a 2s beat
                 // counted from the click). Until then likesCount stays at its
                 // previous value and the AnimatedNumber sits idle.

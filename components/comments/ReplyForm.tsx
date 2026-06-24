@@ -1,8 +1,10 @@
 'use client';
 
 import Loader from 'mondosurf-library/components/Loader';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { postReply } from 'mondosurf-library/helpers/comments.helpers';
 import toastService from 'mondosurf-library/services/toastService';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useRef, useState } from 'react';
 
@@ -36,6 +38,11 @@ const ReplyForm: React.FC<IReplyForm> = (props) => {
         setSubmitting(true);
         postReply(props.parentCommentId, props.spotId, trimmed)
             .then(() => {
+                // Analytics (Mixpanel): reply recorded server-side.
+                Tracker.trackEvent(['mp'], TrackingEvent.CommentReplyAddedApi, {
+                    spot_id: props.spotId,
+                    parent_comment_id: props.parentCommentId
+                });
                 setSubmitting(false);
                 setText('');
                 props.onReplyPosted();

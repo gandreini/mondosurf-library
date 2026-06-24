@@ -126,6 +126,11 @@
 
     &__like-btn {
         @extend .ms-comment__action-pill;
+        // Spacing between the arrow and the count is owned by the count's own
+        // margin-left (see &__like-count), NOT the inherited flex gap. With the
+        // gap zeroed, an empty count reserves no space, so the lone arrow stays
+        // centred in the pill (equal left/right padding).
+        gap: 0;
         // The liked state is conveyed solely by the glyph swap (upvote →
         // upvote-fill). No background, text colour, or icon tint change —
         // the filled arrow on its own is the indicator.
@@ -193,7 +198,12 @@
         display: inline-block;
         overflow: hidden;
         max-width: 5ch;
-        transition: max-width $duration-reveal $easing-mechanical;
+        // The gap from the arrow lives here (not the pill's flex gap) so it
+        // collapses to 0 together with the width when empty — see &.is-empty.
+        margin-left: $space * 0.5;
+        transition:
+            max-width $duration-reveal $easing-mechanical,
+            margin-left $duration-reveal $easing-mechanical;
 
         >* {
             display: inline-flex;
@@ -210,8 +220,13 @@
 
         &.is-empty {
             max-width: 0;
+            // Collapse the arrow-gap alongside the width so the lone arrow
+            // centres in the pill.
+            margin-left: 0;
             // Wait for the digit to disappear before collapsing the wrapper.
-            transition: max-width $duration-reveal $easing-easeout 160ms;
+            transition:
+                max-width $duration-reveal $easing-easeout 160ms,
+                margin-left $duration-reveal $easing-easeout 160ms;
 
             >* {
                 opacity: 0;

@@ -2,8 +2,10 @@
 
 import Comment from 'mondosurf-library/components/comments/Comment';
 import ReplyForm from 'mondosurf-library/components/comments/ReplyForm';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
 import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
+import { Tracker } from 'mondosurf-library/tracker/tracker';
 
 interface ICommentThread {
     comment: IComment;
@@ -35,8 +37,16 @@ const CommentThread: React.FC<ICommentThread> = ({
         // opens this thread's form (closing any other) or closes it if it's
         // already open. withLoginGate prompts a login first when needed.
         withLoginGate('replyButton', 'comments.login_modal_text_reply', () => {
-            if (replyFormOpen) closeForm();
-            else openThisForm();
+            if (replyFormOpen) {
+                closeForm();
+            } else {
+                openThisForm();
+                // Analytics (Mixpanel): user opened the reply form.
+                Tracker.trackEvent(['mp'], TrackingEvent.CommentReplyTap, {
+                    spot_id: resourceId,
+                    comment_id: comment.ID
+                });
+            }
         });
     };
 
