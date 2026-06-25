@@ -328,17 +328,6 @@
       "title": "",
       "description": ""
     },
-    "spot_guide": {
-      "description": "Discover everything about surfing in {{spot}}. Our guide covers spot characteristics, location, bottom, surf quality, crowd factor, and expert advice for surfers."
-    },
-    "spot_good_times": {
-      "title": "{{spot}} - Best surfing times - 🌊 Mondo",
-      "description": "Discover when to catch the best waves at {{spot}}. Our forecast highlights the upcoming good surf times, and you can add them to your calendar."
-    },
-    "spot_full_forecast": {
-      "title": "{{spot}} - Hourly surf forecast - 🌊 Mondo",
-      "description": "Explore the full hourly surf forecast for {{spot}}. Get in-depth details on swell and wind conditions and plan your best surf times."
-    },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - 🌊 Mondo",
       "description": "Explore surf spots located near {{spot}}. Each nearby surf spot comes with complete guides, optimal surf times, and accurate swell and wind forecasts."

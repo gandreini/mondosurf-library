@@ -355,25 +355,6 @@
       "title": "",
       "description": ""
     },
-    "spot_guide": {
-      "description": "Discover everything about the surf spot {{spot}} including surf map, bottom, best swell and wind directions, tides, surf quality, webcams, and more"
-    },
-    "spot_comments": {
-      "title": "{{spot}} - Surf spot comments and reviews",
-      "description": "Read the latest comments and reviews about the surf spot {{spot}}, including tips from surfers, local insights, wave conditions, shared by the community."
-    },
-    "spot_good_times": {
-      "title": "{{spot}} - Good surf next 7 days - Mondo",
-      "description": "Catch the best waves at the surf spot {{spot}}. Look at the webcams, check our forecast report with the upcoming good surf, and add it to your calendar"
-    },
-    "spot_full_forecast": {
-      "title": "{{spot}} - Hourly surf forecast report - Mondo",
-      "description": "Explore the full hourly surf forecast for the surf spot {{spot}}. Get in-depth details on swell and wind surf reports and plan your next surfing sessions"
-    },
-    "spot_full_tide": {
-      "title": "{{spot}} - Tide Times and Tide Charts - Mondo",
-      "description": "Discover the tide for the surf spot {{spot}}. Access detailed tide times and charts for today and the next 7 days to perfectly plan your surfing sessions"
-    },
     "spot_near_spots": {
       "title": "{{spot}} - Near surf spots - Mondo",
       "description": "Explore surf spots near {{spot}}. Each spot comes with a guide, surf map, surf report for the next 7 days, accurate swell and wind forecasts, webcams"
