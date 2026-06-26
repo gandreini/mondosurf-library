@@ -72,6 +72,9 @@ export enum TrackingEvent {
     PageSpotNearbyShow = 'Page Spot Nearby_Show',
     PageSpotVideoShow = 'Page Spot Video_Show',
 
+    // Outbound link inside a spot description (SEO link exchange)
+    SpotDescLinkTap = 'Spot Desc Link_Tap',
+
     // Forecast details
     SpotForecastDetailsShow = 'Spot Forecast Details_Show',
 
