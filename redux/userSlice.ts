@@ -1,31 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit'
+import ISurfSpotPreview from 'mondosurf-library/model/iSurfSpotPreview';
 
 export interface IUserSliceValue {
     logged: 'yes' | 'no' | 'checking';
     userId: number;
     userName: string;
     userEmail: string;
+    userPictureUrl: string | null;
     accessToken: string;
     capacitorRefreshToken: string;
     accountVerified: boolean;
     approvedTerms: boolean;
-    authorizedTracking: boolean;
     registrationDate: number;
-    favoriteSpotsIds: number[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
+    favoriteSpots: ISurfSpotPreview[] | null; // Better to have null as default, to understand when the data is loaded (even if empty)
     timezoneId: string;
     timezoneUTC: number | null;
     timezoneDST: number | null;
     level: number;
     surfingFrom: number;
     surfboards: number[];
-    accountType: 'free' | 'trial' | 'pro' | 'admin' | 'disabled';
-    stripeUserId: string;
-    productId: string;
-    stripeSubscriptionId: string;
-    subscriptionExpiration: number;
-    subscriptionDuration: 'notset' | 'yearly' | 'monthly';
-    trialActivation: number;
-    trialBurned: boolean;
+    accountType: 'free' | 'admin' | 'disabled';
+    // proService: 'none' | 'stripe' | 'apple';
+    // stripeUserId: string;
+    // productId: string;
+    // stripeSubscriptionId: string;
+    // subscriptionExpiration: number;
+    // subscriptionDuration: 'notset' | 'yearly' | 'monthly';
+    // trialActivation: number;
+    // trialDuration: number;
+    preferences: {
+        userBulletinFrequency: "daily" | "weekly" | "never";
+        userBulletinWeekDay: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+        userPrefsHeight: "meters" | "feet";
+        userPrefsSpeed: "kph" | "mph" | "kn";
+        userPrefsTemperature: "c" | "f";
+        // Notification email preferences (Phase C). Default ON for all three —
+        // existing users with no value get true via strict null-check lazy-default
+        // on the server.
+        notifyCommentReplyEmail: boolean;
+        notifyCommentLikeEmail: boolean;
+        notifyFavoriteSpotCommentEmail: boolean;
+    },
+    authorizedTracking: boolean;
 }
 
 const initialState: IUserSliceValue = {
@@ -33,13 +49,13 @@ const initialState: IUserSliceValue = {
     userId: -1,
     userName: '',
     userEmail: '',
+    userPictureUrl: null,
     accessToken: '',
     capacitorRefreshToken: '',
     accountVerified: false,
     approvedTerms: true,
-    authorizedTracking: true,
     registrationDate: -1,
-    favoriteSpotsIds: null,
+    favoriteSpots: null,
     timezoneId: '',
     timezoneUTC: null,
     timezoneDST: null,
@@ -47,13 +63,25 @@ const initialState: IUserSliceValue = {
     surfingFrom: -1,
     surfboards: [],
     accountType: 'free',
-    stripeUserId: '',
-    productId: '',
-    stripeSubscriptionId: '',
-    subscriptionExpiration: -1,
-    subscriptionDuration: 'notset',
-    trialActivation: -1,
-    trialBurned: false
+    // proService: 'none',
+    // stripeUserId: '',
+    // productId: '',
+    // stripeSubscriptionId: '',
+    // subscriptionExpiration: -1,
+    // subscriptionDuration: 'notset',
+    // trialActivation: -1,
+    // trialDuration: 30,
+    preferences: {
+        userBulletinFrequency: "daily",
+        userBulletinWeekDay: "monday",
+        userPrefsHeight: "meters",
+        userPrefsSpeed: "kph",
+        userPrefsTemperature: "c",
+        notifyCommentReplyEmail: true,
+        notifyCommentLikeEmail: true,
+        notifyFavoriteSpotCommentEmail: true
+    },
+    authorizedTracking: true
 };
 
 export const userSlice = createSlice({
@@ -72,6 +100,9 @@ export const userSlice = createSlice({
         setUserEmail: (state, action) => {
             return { ...state, userEmail: action.payload };
         },
+        setUserPictureUrl: (state, action) => {
+            return { ...state, userPictureUrl: action.payload };
+        },
         setAccessToken: (state, action) => {
             return { ...state, accessToken: action.payload };
         },
@@ -89,17 +120,14 @@ export const userSlice = createSlice({
         setApprovedTerms: (state, action) => {
             return { ...state, approvedTerms: action.payload };
         },
-        setAuthorizedTracking: (state, action) => {
-            return { ...state, authorizedTracking: action.payload };
-        },
         setRegistrationDate: (state, action) => {
             return { ...state, registrationDate: action.payload };
         },
-        setFavoriteSpotsIds: (state, action) => {
+        setFavoriteSpots: (state, action) => {
             if (action.payload && action.payload != null && Array.isArray(action.payload) && action.payload.length > 0) {
-                return { ...state, favoriteSpotsIds: action.payload };
+                return { ...state, favoriteSpots: action.payload };
             } else {
-                return { ...state, favoriteSpotsIds: [] };
+                return { ...state, favoriteSpots: [] };
             }
         },
         setTimezoneId: (state, action) => {
@@ -127,6 +155,9 @@ export const userSlice = createSlice({
         setAccountType: (state, action) => {
             return { ...state, accountType: action.payload };
         },
+        /* setProService: (state, action) => {
+            return { ...state, proService: action.payload };
+        },
         setStripeUserId: (state, action) => {
             return { ...state, stripeUserId: action.payload };
         },
@@ -141,12 +172,19 @@ export const userSlice = createSlice({
         },
         setSubscriptionDuration: (state, action) => {
             return { ...state, subscriptionDuration: action.payload };
-        },
-        setTrialActivation: (state, action) => {
+        }, */
+        /* setTrialActivation: (state, action) => {
             return { ...state, trialActivation: action.payload };
         },
-        setTrialBurned: (state, action) => {
-            return { ...state, trialBurned: action.payload };
+        setTrialDuration: (state, action) => {
+            return { ...state, trialDuration: action.payload };
+        }, */
+        setPreferences: (state, action) => {
+            // Merges new preferences with existing ones (does not replace the entire object)
+            return { ...state, preferences: { ...state.preferences, ...action.payload } };
+        },
+        setAuthorizedTrackingFalse: (state) => {
+            state.authorizedTracking = false;
         },
         logOut: (state) => {
             return {
@@ -159,9 +197,8 @@ export const userSlice = createSlice({
                 capacitorRefreshToken: '',
                 accountVerified: false,
                 approvedTerms: true,
-                authorizedTracking: true,
                 registrationDate: -1,
-                favoriteSpotsIds: null,
+                favoriteSpots: null,
                 timezoneId: '',
                 timezoneUTC: null,
                 timezoneDST: null,
@@ -174,8 +211,8 @@ export const userSlice = createSlice({
                 stripeSubscriptionId: '',
                 subscriptionExpiration: -1,
                 subscriptionDuration: 'notset',
-                trialActivation: -1,
-                trialBurned: false
+                //trialActivation: -1
+                // authorizedTracking: true, // We don't reset the tracking status when user logs out, we keep not tracking
             }
         }
     }
@@ -185,13 +222,13 @@ export const { setLogin,
     setUserId,
     setUserName,
     setUserEmail,
+    setUserPictureUrl,
     setAccessToken,
     setCapacitorRefreshToken,
     setAccountVerified,
     setApprovedTerms,
-    setAuthorizedTracking,
     setRegistrationDate,
-    setFavoriteSpotsIds,
+    setFavoriteSpots,
     setTimezoneId,
     setTimezoneUTC,
     setTimezoneDST,
@@ -199,12 +236,15 @@ export const { setLogin,
     setSurfingFrom,
     setSurfboards,
     setAccountType,
-    setStripeUserId,
-    setProductId,
-    setStripeSubscriptionId,
-    setSubscriptionExpiration,
-    setTrialBurned,
-    setTrialActivation,
-    setSubscriptionDuration,
+    // setProService,
+    // setStripeUserId,
+    // setProductId,
+    // setStripeSubscriptionId,
+    // setSubscriptionExpiration,
+    // setTrialActivation,
+    // setTrialDuration,
+    setPreferences,
+    // setSubscriptionDuration,
+    setAuthorizedTrackingFalse,
     logOut } = userSlice.actions;
 export default userSlice.reducer;

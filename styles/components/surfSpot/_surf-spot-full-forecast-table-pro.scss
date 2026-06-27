@@ -1,0 +1,20 @@
+/**
+ * SURF SPOT FULL FORECAST TABLE PRO
+ *
+ * Part of the forecast table that shows the days only visible to pro members.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT FULL FORECAST TABLE PRO
+\* ------------------------------------ */
+.ms-surf-spot-full-forecast-table-pro {
+    &__banner {
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

@@ -1,0 +1,65 @@
+/**
+ * PROFILE DETAILS EDIT
+ *
+ * List with the details of the user in edit mode.
+ */
+
+/* ------------------------------------ *\
+    PROFILE DETAILS EDIT
+\* ------------------------------------ */
+.ms-profile-details-edit {
+    &__title {
+        margin-bottom: $space * 2;
+    }
+    &__contents {
+        display: grid;
+        grid-template-columns: auto;
+        // row-gap: $space * 2;
+        column-gap: $space;
+        margin-bottom: $space * 2;
+        // align-items: center;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .ms-form__input {
+        input[type='text'],
+        select {
+            width: 100%;
+        }
+
+        fieldset {
+            display: flex;
+            gap: $space * 2;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-top: $space;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__timezone {
+        display: flex;
+        align-items: center;
+        gap: $space;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-profile-details-edit {
+        .ms-form__input {
+            fieldset {
+                flex-direction: row;
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+/**
+ * STORE BUTTONS
+ *
+ * Android and iOS store buttons.
+ */
+
+/* ------------------------------------ *\
+    #STORE BUTTONS
+\* ------------------------------------ */
+.ms-store-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space;
+
+    img {
+        display: block;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

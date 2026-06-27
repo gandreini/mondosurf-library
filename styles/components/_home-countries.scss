@@ -1,0 +1,39 @@
+/**
+ * HOME COUNTRIES
+ *
+ * Section in the home showing the selected countries.
+ */
+
+/* ------------------------------------ *\
+    #HOME COUNTRIES
+\* ------------------------------------ */
+.ms-home-countries {
+    padding-top: $space * 3;
+    padding-bottom: $space * 3;
+    margin-bottom: $space * 3;
+    border-bottom: 1px solid $color-border-normal;
+    background-color: $color-background-ultralight;
+
+    &__title {
+        margin-bottom: $space * 1.5;
+    }
+
+    &__countries {
+        margin-bottom: $space * 3;
+    }
+
+    &__btn {
+        text-align: center;
+    }
+
+    &__empty,
+    &__error {
+        text-align: center;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

@@ -1,0 +1,42 @@
+/**
+ * SURF-SPOT-NEAR-SPOTS-PREVIEW
+ *
+ * Section that displayes the 2 closest spots and a text and a link to go to the whole list fo near spots.
+ */
+
+/* ------------------------------------ *\
+    #SURF-SPOT-NEAR-SPOTS-PREVIEW
+\* ------------------------------------ */
+.ms-surf-spot-near-spots-preview {
+    margin-top: $space * 3;
+    padding-top: $space * 3;
+    border-top: 1px solid $color-border-normal;
+
+    &__left {
+        width: 100%;
+        margin-bottom: $space * 2;
+    }
+    &__right {
+        width: 100%;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-near-spots-preview {
+        &__content {
+            display: flex;
+            flex-direction: row;
+            gap: $space * 3;
+        }
+        &__left {
+            width: 50%;
+            margin-bottom: 0;
+        }
+        &__right {
+            width: 50%;
+        }
+    }
+}

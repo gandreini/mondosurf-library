@@ -1,0 +1,33 @@
+/**
+ * SURF SPOT FULL FORECAST PAGE
+ *
+ * Surf spot page with he full forecast info.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-FORECAST-EDIT-PAGE
+\* ------------------------------------ */
+.ms-surf-spot-full-forecast {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $space * 1 0 $space * 5 0;
+
+    .ms-empty-state {
+        margin-top: $space * 8;
+    }
+
+    &__loading {
+        margin-top: $space * 1.5;
+
+        .ms-surf-forecast-day__rows {
+            margin-bottom: $space * 2;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

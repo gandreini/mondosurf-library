@@ -1,22 +1,27 @@
 export enum TrackingEvent {
     AppLaunch = 'App Launch',
+
+    // Homepage
     HomeFavsGTsShow = 'Home Favs GTs_Show',
     HomeNearTap = 'Home Near_Tap',
     HomeNearGTsShow = 'Home Near GTs_Show',
     HomeNearSpotsShow = 'Home Near Spots_Show',
-    HomeTrialShow = 'Home Trial_Show',
-    HomeTrialTap = 'Home Trial_Tap',
-    HomeProShow = 'Home Pro_Show',
-    HomeProTap = 'Home Pro_Tap',
-    HomeCalBannerTap = 'Home Cal Banner_Tap',
+    // HomeRegisterShow = 'Home Register_Show',
+    HomeRegisterTap = 'Home Register_Tap',
+    // HomeProShow = 'Home Pro_Show',
+    //HomeProTap = 'Home Pro_Tap',
+    // HomeCalBannerTap = 'Home Cal Banner_Tap',
     FavIconTap = 'Fav Icon_Tap',
-    FavBannerTap = 'Fav Banner_Tap',
     SpotPreviewTap = 'Spot Preview_Tap',
+
+    // Good surf
     GTTap = 'GT_Tap',
     GTShareTap = 'GT Share_Tap',
-    ModalGTWaTap = 'Modal GT Wa_Tap',
-    ModalGTFbTap = 'Modal GT Fb_Tap',
-    ModalGTURLTap = 'Modal GT URL_Tap',
+    // ModalGTWaTap = 'Modal GT Wa_Tap',
+    // ModalGTFbTap = 'Modal GT Fb_Tap',
+    // ModalGTURLTap = 'Modal GT URL_Tap',
+
+    // Login and signup
     ModalEmailShow = 'Modal Email_Show',
     ModalEmailTap = 'Modal Email_Tap',
     ModalSignupShow = 'Modal Signup_Show',
@@ -30,14 +35,15 @@ export enum TrackingEvent {
     EmailCheckApi = 'Email Check_Api',
     LoginCompleteApi = 'Login Complete_Api',
     NavLoginTap = 'Nav Login_Tap',
-    ModalTrialShow = 'Modal Trial_Show',
-    ModalTrialTap = 'Modal Trial_Tap',
-    TrialStartedApi = 'Trial Started_Api',
+    // ModalTrialShow = 'Modal Trial_Show',
+    // ModalTrialTap = 'Modal Trial_Tap',
+    // TrialStartedApi = 'Trial Started_Api',
     TrialWelcomeShow = 'Trial Welcome_Show',
     ModalProShow = 'Modal Pro_Show',
     ModalProTap = 'Modal Pro_Tap',
     ProStartedShow = 'Pro Started_Show',
-    CalBannerTap = 'Cal Banner_Tap',
+
+    // Calendar
     ModalCalShow = 'Modal Cal_Show',
     ModalCalURLTap = 'Modal Cal URL_Tap',
     ModalCalEmailTap = 'Modal Cal Email_Tap',
@@ -47,6 +53,35 @@ export enum TrackingEvent {
     PageCountriesShow = 'Page Countries_Show',
     PageCountryShow = 'Page Country_Show',
     PageRegionShow = 'Page Region_Show',
-    PageSpotShow = 'Page Spot_Show',
+    // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
+    PageHomeShow = 'Page Home_Show',
+
+    // Banners
+    CalBannerTap = 'Cal Banner_Tap',
+    FavBannerTap = 'Fav Banner_Tap',
+    WidgetBannerTap = 'Widget Banner_Tap',
+    FullForecastGetProBannerTap = 'Full Forecast Get Pro Banner_Tap',
+
+    // Spot pages
+    PageSpotGuideShow = 'Page Spot Guide_Show',
+    PageSpotCommentsShow = 'Page Spot Comments_Show',
+    PageSpotForecastShow = 'Page Spot Forecast_Show',
+    PageSpotFullForecastShow = 'Page Spot Full Forecast_Show',
+    PageSpotTideShow = 'Page Spot Tide_Show',
+    PageSpotNearbyShow = 'Page Spot Nearby_Show',
+    PageSpotVideoShow = 'Page Spot Video_Show',
+
+    // Outbound link inside a spot description (SEO link exchange)
+    SpotDescLinkTap = 'Spot Desc Link_Tap',
+
+    // Forecast details
+    SpotForecastDetailsShow = 'Spot Forecast Details_Show',
+
+    // Comments
+    CommentAddedApi = 'Comment Added_Api',
+    CommentLikeAddedApi = 'Comment Like Added_Api',
+    CommentLikeRemovedApi = 'Comment Like Removed_Api',
+    CommentReplyTap = 'Comment Reply_Tap',
+    CommentReplyAddedApi = 'Comment Reply Added_Api',
 }

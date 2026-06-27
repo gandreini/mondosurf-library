@@ -1,0 +1,28 @@
+/**
+ * SURF SPOT METEO STATION
+ *
+ * Style for the component displaying the link for a meteo station with link.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT METEO STATION
+\* ------------------------------------ */
+.ms-surf-spot-meteo-station {
+    &__thumb {
+        margin-bottom: $space;
+        aspect-ratio: 2 / 1;
+        background-size: cover;
+        border-radius: $border-radius;
+    }
+    &__thumb-default {
+    }
+    &__title {
+        @include font-size('s');
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

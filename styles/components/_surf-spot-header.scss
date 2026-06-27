@@ -8,21 +8,65 @@
    #SURF-SPOT-HEADER
 \* ------------------------------------ */
 .ms-surf-spot-header {
-    padding-top: $space * 3;
-    background-color: $color-background-base;
+    &__top {
+        margin: $space * 2 0 $space * 1 0;
+        background-color: $color-background-base;
 
-    &__content {
-        max-width: $page-max-width;
-        margin: 0 auto;
-        width: 100%;
+        .ms-page-title {
+            margin-bottom: 0;
+        }
     }
 
     &__title {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     &__title-tools {
         margin-left: auto;
+        display: flex;
+        gap: $space * 0.5;
+        align-items: center;
+
+        > .ms-favourite-add-button,
+        .ms-surf-spot-header__calendar-icon {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .mondo-icon {
+            // font-size: $font-size-xxl-fluid;
+            font-size: $font-size-xxl;
+            color: var(--color-gray-05);
+        }
+    }
+
+    &__calendar-icon {
+        display: flex;
+        cursor: pointer;
+
+        .mondo-icon-add-calendar:before {
+            color: var(--color-gray-05);
+        }
+
+        &:hover {
+            .mondo-icon-add-calendar:before {
+                color: var(--color-text-link);
+            }
+        }
+    }
+
+    &__tabs {
+        background-color: $color-background-base;
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0;
+        z-index: $z-index-mobile-tab-bar;
     }
 }
 
@@ -30,4 +74,9 @@
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-header {
+        &__title-tools {
+            gap: $space * 1.5;
+        }
+    }
 }

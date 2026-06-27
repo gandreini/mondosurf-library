@@ -1,0 +1,23 @@
+/**
+ * PROFILE NOT LOGGED
+ *
+ * Style for Profile Not Logged page: includes a login button.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE NOT LOGGED
+\* ------------------------------------ */
+.ms-profile-not-logged {
+    &__text {
+        margin-bottom: $space * 1;
+    }
+    &__subtext {
+        margin-bottom: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

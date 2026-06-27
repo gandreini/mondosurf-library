@@ -1,0 +1,85 @@
+/**
+ * SURF SPOT INFO TIDE
+ *
+ * Box with main tide info in the surf spot page.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-INFO-TIDE
+\* ------------------------------------ */
+.ms-surf-spot-info-tide {
+    padding: $space * 2.5;
+    // margin-bottom: $space * 4;
+    background-color: $color-background-ultralight;
+    border: 2px solid var(--color-gray-03);
+    border-radius: $border-radius;
+
+    &.ms-surf-spot-info-tide-has-text &__left {
+        margin-bottom: $space * 2;
+    }
+
+    &__title.ms-body-text {
+        margin-bottom: $space * 0.5;
+        font-weight: $font-weight-bold;
+        @include first-letter-capital;
+    }
+
+    &__details {
+        margin-bottom: $space * 1.5;
+    }
+
+    &__details-text.ms-body-text {
+        margin: 0;
+        @include first-letter-capital;
+        @include fix-android-wrong-font-size;
+    }
+
+    &__details-movement-text.ms-body-text {
+        margin: 0;
+        display: inline-block;
+        @include fix-android-wrong-font-size;
+    }
+
+    &__good-moments {
+        display: block;
+        margin: 0 0 $space 0;
+        @include first-letter-capital;
+        @include fix-android-wrong-font-size;
+    }
+
+    .ms-small-text {
+        margin-bottom: 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #EMPTY
+\* ------------------------------------ */
+.ms-surf-spot-info-tide {
+    &.is-empty {
+        height: 1px;
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid var(--color-gray-03);
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-info-tide {
+        display: flex;
+        gap: $space * 3;
+
+        &__left {
+            flex-shrink: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
+        &__right {
+            width: 50%;
+        }
+    }
+}

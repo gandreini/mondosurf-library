@@ -1,0 +1,294 @@
+/**
+ * SURF SPOT MAP
+ *
+ * OSM map that displays the position of a surf spot.
+ *
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-MAP
+\* ------------------------------------ */
+.ms-map-global {
+    position: relative;
+
+    &__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.ms-map-global .ms-map-global__container {
+    background: $map-background-color;
+}
+
+/* ------------------------------------ *\
+   #MARKERS/ICONS
+\* ------------------------------------ */
+.leaflet-marker-icon.leaflet-div-icon {
+    background: transparent;
+    border: 0;
+}
+
+.leaflet-marker-icon {
+    background: transparent;
+    border: 0;
+
+    .ms-map-marker-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__image {
+            height: 44px;
+            width: auto;
+        }
+    }
+
+    [class*='quality-'] {
+        position: relative;
+
+        svg {
+            position: absolute;
+            top: -2px;
+            right: 2px;
+            stroke: white;
+            stroke-width: 1px;
+            transform: scale(1.5);
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+        }
+    }
+
+    .ms-map-marker-icon.quality-0 {
+        svg {
+            fill: var(--color-forecast-poor);
+        }
+    }
+    .ms-map-marker-icon.quality-1 {
+        svg {
+            fill: var(--color-forecast-good);
+        }
+    }
+    .ms-map-marker-icon.quality-2 {
+        svg {
+            fill: var(--color-forecast-very-good);
+        }
+    }
+    .ms-map-marker-icon.quality-3 {
+        svg {
+            fill: var(--color-forecast-epic);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #CLUSTER
+\* ------------------------------------ */
+.ms-map-cluster {
+    --internal-border: 2.5px;
+    --external-border: 1.5px;
+
+    position: absolute;
+    left: -($map-cluster-size/2);
+    top: -($map-cluster-size/2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    width: $map-cluster-size;
+    height: $map-cluster-size;
+    border-radius: $map-cluster-size;
+    box-shadow:
+        0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+        0 1px 5px 1px rgba(0, 0, 0, 0.1),
+        0 0 0 var(--internal-border) var(--color-gray-04) inset;
+    background-color: var(--color-gray-00);
+
+    &__text {
+        text-align: center;
+        font-size: $font-size-m;
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+
+    &.quality-0 {
+        background-color: var(--color-gray-00);
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) var(--color-forecast-poor) inset;
+    }
+
+    &.quality-1 {
+        background-color: var(--color-forecast-good);
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.quality-2 {
+        background-color: var(--color-forecast-very-good);
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.1) inset;
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+    &.quality-3 {
+        background-color: var(--color-forecast-epic);
+        box-shadow:
+            0 0 0 var(--external-border) rgba(255, 255, 255, 1),
+            0 1px 5px 1px rgba(0, 0, 0, 0.1),
+            0 0 0 var(--internal-border) rgba(0, 0, 0, 0.3) inset;
+
+        .ms-map-cluster__text {
+            color: var(--color-text-inverse);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MAP-CONTROLS
+\* ------------------------------------ */
+.ms-map {
+    &__controls {
+        position: absolute;
+        top: $map-control-margin;
+        bottom: $map-control-margin;
+        left: $map-control-margin;
+        z-index: $z-index-map-zoom-buttons;
+    }
+
+    &__controls_bottom {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        gap: 2px;
+        flex-direction: column;
+
+        .ms-btn {
+            width: 200px;
+        }
+    }
+
+    /* Zoom */
+    &__zoom {
+        margin-bottom: $map-control-margin;
+    }
+    &__zoom-in {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: 1px solid $color-border-normal;
+    }
+    &__zoom-out {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    /* Map switch button */
+    &__switch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $map-control-size;
+        height: $map-control-size;
+        @include map-control;
+        cursor: pointer;
+        pointer-events: all;
+
+        .mondo-icon {
+            font-size: $font-size-xl;
+            color: var(--color-text);
+            transition: all $transition-durations;
+        }
+
+        &.is-active {
+            .mondo-icon {
+                color: var(--color-first);
+            }
+        }
+    }
+
+    /* Center map */
+    &__center {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: $z-index-map-center-button;
+
+        width: $map-control-size;
+        height: $map-control-size;
+
+        @include map-control;
+        bottom: $map-control-margin;
+        left: $map-control-margin;
+        cursor: pointer;
+
+        [class*=' mondo-icon-'] {
+            font-size: $font-size-xl;
+        }
+
+        &.is-displayed {
+            display: flex;
+        }
+    }
+}
+
+// Position from top for the controls in the map page.
+// Considering the top padding due to the iOS bar.
+.ms-map .ms-map__controls {
+    top: calc(#{$map-control-margin} + var(--ios-status-bar-margin)); // iOS spacing.
+}
+
+/* ------------------------------------ *\
+   #ATTRIBUTION
+\* ------------------------------------ */
+.ms-map-global__container {
+    .leaflet-top {
+        z-index: $z-index-map-copyright;
+    }
+}
+
+/* ------------------------------------ *\
+   #HIDE MAPTILER LOGO
+\* ------------------------------------ */
+.ms-map-global,
+.ms-map-global__container {
+    a[href*='www.maptiler.com'] {
+        display: none !important;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+}

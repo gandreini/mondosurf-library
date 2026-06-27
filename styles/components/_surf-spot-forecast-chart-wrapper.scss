@@ -1,0 +1,43 @@
+/**
+ * SURF SPOT FORECAST CHART WRAPPER
+ *
+ * Component that wraps the actual forecast chart in a dedicated page (that looks like a modal).
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT FORECAST CHART WRAPPER
+\* ------------------------------------ */
+.ms-surf-spot-forecast-chart-wrapper {
+    padding-bottom: calc(#{$surf-spot-forecast-days-nav-height} + var(--ios-bottom-bar-margin)); // iOS spacing.
+    padding-top: var(--ios-status-bar-margin); // iOS spacing.
+
+    &__header {
+        margin: $space * 3 0;
+    }
+    &__icon {
+        position: fixed;
+        top: calc(#{$space} * 2 + var(--ios-status-bar-margin)); // iOS spacing.
+        right: $space * 2;
+        z-index: 20000;
+        cursor: pointer;
+
+        .mondo-icon {
+            font-size: $font-size-xxl;
+            color: var(--color-text-light);
+        }
+        &:hover {
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-forecast-chart-wrapper {
+        padding: 0 $space * 3;
+    }
+}

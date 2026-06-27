@@ -1,0 +1,26 @@
+/**
+ * SURF SPOT WEBCAM AND METEO STATIONS
+ *
+ * Section that contains links to webcams and meteo stations.
+ */
+
+/* ------------------------------------ *\
+    #SURF SPOT WEBCAM AND METEO STATIONS
+\* ------------------------------------ */
+.ms-surf-spot-webcam-stations {
+    &__section {
+        .ms-h3-title {
+            margin-bottom: $space * 1.5;
+        }
+    }
+
+    &__section:not(:last-child) {
+        margin-bottom: $space * 3.5;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

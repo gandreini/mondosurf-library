@@ -1,0 +1,28 @@
+/**
+ * SEARCH
+ *
+ * Search Page Layout
+ */
+
+/* ------------------------------------ *\
+   #SEARCH
+\* ------------------------------------ */
+.ms-search {
+    &__form {
+        position: relative;
+        margin-bottom: $space * 3;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-search {
+        bottom: 0;
+
+        .ms-page-title {
+            margin-bottom: $space * 3;
+        }
+    }
+}

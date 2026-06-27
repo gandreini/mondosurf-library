@@ -1,0 +1,94 @@
+/**
+ * PROFILE LOGGED
+ *
+ * Stile for Profile Logged page, with the list of all profile sections.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE LOGGED
+\* ------------------------------------ */
+.ms-profile-logged {
+    &__welcome-text {
+    }
+    &__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Buttons type. */
+    &__list-item,
+    &__list-item a,
+    &__list-item .ms-btn {
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-normal;
+    }
+
+    &__list-item {
+        text-transform: uppercase;
+        color: var(--color-text-light);
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $color-border-light;
+        }
+
+        a {
+            display: block;
+            padding: $space * 2 0;
+            color: var(--color-text);
+            font-weight: $font-weight-bold;
+
+            &:hover {
+                color: var(--color-first);
+            }
+        }
+
+        /* Button */
+        .ms-btn {
+            justify-content: flex-start;
+            height: auto;
+            width: 100%;
+            margin: 0;
+            padding: $space * 2 0;
+            background-color: transparent;
+            text-transform: uppercase;
+            border: 0;
+            color: var(--color-text);
+            font-weight: $font-weight-bold;
+
+            &:hover {
+                color: var(--color-first);
+            }
+
+            &:hover,
+            &:active,
+            &:active:focus,
+            &:focus:hover,
+            &:focus:hover,
+            &:focus {
+                background-color: transparent;
+                border: 0;
+            }
+        }
+    }
+
+    &__coming-soon {
+        display: block;
+        text-transform: none;
+        font-size: $font-size-xxs;
+    }
+
+    // App status
+    &__app-status {
+        padding-top: $space * 2;
+        border-top: 1px solid $color-border-light;
+        font-size: $font-size-xxs-fluid;
+        color: var(--color-text-light);
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

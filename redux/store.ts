@@ -1,21 +1,20 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-
-import appConfigSlice from './appConfigSlice';
-import debugSlice from './debugSlice';
-import IAPProductsSlice from './IAPProductsSlice';
-import mapFiltersSlice from './mapFiltersSlice';
-import modalSlice from './modalSlice';
-import unitsSlice from './unitsSlice';
-import userSlice from './userSlice';
+import appConfigSlice from 'mondosurf-library/redux/appConfigSlice';
+import appStatusSlice from 'mondosurf-library/redux/appStatusSlice';
+import debugSlice from 'mondosurf-library/redux/debugSlice';
+import mapFiltersSlice from 'mondosurf-library/redux/mapFiltersSlice';
+import modalSlice from 'mondosurf-library/redux/modalSlice';
+import RevenueCatSlice from 'mondosurf-library/redux/RevenueCatSlice';
+import userSlice from 'mondosurf-library/redux/userSlice';
 
 const rootReducer = combineReducers({
     mapFilters: mapFiltersSlice,
-    units: unitsSlice,
     modalSlice: modalSlice,
     appConfig: appConfigSlice,
+    appStatus: appStatusSlice,
     user: userSlice,
     debug: debugSlice,
-    IAPProducts: IAPProductsSlice
+    RevenueCat: RevenueCatSlice
 });
 
 export const store = configureStore({

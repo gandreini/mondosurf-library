@@ -1,85 +1,65 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-
-import { FREE_USER_MAX_FORECAST_DAYS, PRO_USER_MAX_FORECAST_DAYS } from "../constants/constants";
-import IGoodTime from "../model/iGoodTime";
-import { ISurfSpotForecast } from "../model/iSurfSpot";
-import { store } from "../redux/store";
-import { cloneObject } from "./object.helpers";
+import { openLoginModal } from 'features/modal/modal.helpers';
+import { postApiAuthCall } from 'mondosurf-library/api/api';
+import { FORECAST_UPDATES, MAX_FORECAST_DAYS } from "mondosurf-library/constants/constants";
+import { cloneObject } from "mondosurf-library/helpers/object.helpers";
+import IGoodTime from "mondosurf-library/model/iGoodTime";
+import { ISurfSpotForecast } from "mondosurf-library/model/iSurfSpot";
+import { store } from "mondosurf-library/redux/store";
+import toastService from 'mondosurf-library/services/toastService';
 
 /**
- * Returns the number of forecast days to be displayed to the user, depending on the account type.
+ * Returns the number of forecast days to be displayed to the user.
+ * Returns 0 for disabled accounts, otherwise returns the max forecast days.
  *
  * @returns {number} Number of days of forecast and GoodTimes to show.
  */
 export const forecastDays = (): number => {
-    const state = store.getState();
-    const accountType = state.user.accountType;
-
-    if (accountType === "admin" || accountType === "pro" || accountType === "trial") {
-        return PRO_USER_MAX_FORECAST_DAYS;
-    } else if (accountType === "free") {
-        return FREE_USER_MAX_FORECAST_DAYS;
-    } else if (accountType === "disabled") {
-        return 0;
-    }
-    return 0;
+    const accountType = store.getState().user.accountType;
+    return accountType === "disabled" ? 0 : MAX_FORECAST_DAYS;
 }
 
 /**
  * Takes the whole forecast object (type: ISurfSpotForecast) and limits the number of days.
- * The first day considered is the current day in the timezone of the spot.
+ * The first day considered is either the provided startDate or the current day in the timezone of the spot.
  * The last day is the first day + the number of days to be displayed (parameter: days).
  *
  * @param   {ISurfSpotForecast} forecastData Full forecast object for the given surf spot.
  * @param   {number} days Days to leave in the object.
- * @param   {string} timezone Timezone of the spot.
+ * @param   {string} spotTimezone Timezone of the spot.
+ * @param   {string} startDate Optional ISO date string to start from (instead of current day).
  * @returns {ISurfSpotForecast} Object with the forecast limited to the number of days.
  */
-export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string): ISurfSpotForecast => {
+export const limitForecastToDaysRange = (forecastData: ISurfSpotForecast, days: number, spotTimezone: string, startDate?: string): ISurfSpotForecast => {
     // Dayjs
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
-    // Clone object: this will be returned.
+    // Clone object: this will be returned
     const clonedForecastData = cloneObject<ISurfSpotForecast>(forecastData);
 
-    // Current day in timezone at 00:00: day to start the forecast from.
-    const startDayInTimezone = dayjs().tz(spotTimezone).startOf('day');
+    // Use provided startDate or default to current day in timezone at 00:00
+    const startDayInTimezone = startDate
+        ? dayjs(startDate).tz(spotTimezone).startOf('day')
+        : dayjs().tz(spotTimezone).startOf('day');
 
-    // Days: Id of the current day in timezone (in the "days" array).
-    let firstDayId = 0;
-    clonedForecastData.days.forEach((day, index) => {
-        if (day.time === startDayInTimezone.format()) {
-            firstDayId = index;
-        }
-    });
+    // Days/Compressed Days: Find the index of the start day using .isSame() for safer comparison
+    let firstDayId = clonedForecastData.days.findIndex(day =>
+        dayjs(day.time).isSame(startDayInTimezone, 'day')
+    );
 
-    // Days: cuts the days before the current day, and those after the given number of days.
+    // Fallback to 0 if date not found
+    if (firstDayId === -1) {
+        firstDayId = 0;
+    }
+
+    // Days: cuts the days before the start day, and those after the given number of days (both for "days" and "compressed days")
     clonedForecastData.days = clonedForecastData.days.slice(firstDayId, days + firstDayId);
+    clonedForecastData.compressed_days.days = clonedForecastData.compressed_days.days.slice(firstDayId, days + firstDayId);
 
-    // Compressed days: Id of the hour corresponding to the current day in timezone (in the "compressed_days.hours" array).
-    let firstCompressedHourId = 0;
-    // ! Retro-compatibility notice: compressed_days.hours breaks the app if flat data is not retrieved.
-    clonedForecastData.compressed_days.hours.forEach((hour, index) => {
-        if (hour === startDayInTimezone.format()) {
-            firstCompressedHourId = index;
-        }
-    });
-    const lastCompressedHourId = firstCompressedHourId + (days * 4); // Last hour of the compressed days. "4" in the number of hours per compressed day.
-
-    // Actual slice of the compressed_days arrays.
-    clonedForecastData.compressed_days.hours = clonedForecastData.compressed_days.hours.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.is_good = clonedForecastData.compressed_days.is_good.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.is_light = clonedForecastData.compressed_days.is_light.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_direction = clonedForecastData.compressed_days.swell_direction.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_height = clonedForecastData.compressed_days.swell_height.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.swell_period = clonedForecastData.compressed_days.swell_period.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.wind_direction = clonedForecastData.compressed_days.wind_direction.slice(firstCompressedHourId, lastCompressedHourId);
-    clonedForecastData.compressed_days.wind_speed = clonedForecastData.compressed_days.wind_speed.slice(firstCompressedHourId, lastCompressedHourId);
-
-    // Good times.
+    // Good times
     const periodEnd = startDayInTimezone.add(days, 'd');
     clonedForecastData.good_times = clonedForecastData.good_times.filter((goodTime: IGoodTime) => dayjs(goodTime.end_time).isBefore(periodEnd));
 
@@ -102,6 +82,7 @@ export const limitGoodTimesToDaysRange = (goodTimes: IGoodTime[]): IGoodTime[] =
     if (!goodTimes || goodTimes.length === 0) {
         return [];
     } else {
+        // eslint-disable-next-line array-callback-return
         return goodTimes.filter((goodTime: IGoodTime) => {
             const startOfRange = dayjs(); // Current time, returns Day.js object
             const endOfRange = dayjs().tz(goodTime.timezone).startOf('day').add(forecastDays(), 'd'); // Returns Day.js object
@@ -114,6 +95,136 @@ export const limitGoodTimesToDaysRange = (goodTimes: IGoodTime[]): IGoodTime[] =
         }) as IGoodTime[]
     }
 }
+
+/**
+ * Checks if a given direction in degrees is within a specified range.
+ * 
+ * The function handles cases where the range wraps around the 360-degree point,
+ * e.g., when min is 320 and max is 20.
+ * 
+ * @param direction - The direction in degrees to check. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * @param min - The minimum bound of the range. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * @param max - The maximum bound of the range. Should be in the range [0, 360), but the function will normalize values outside this range.
+ * 
+ * @returns `true` if the direction is within the range, `false` otherwise.
+ */
+export const directionIsWithinRange = (direction: number, min: number, max: number): boolean => {
+    // Normalize the direction, min, and max to be within [0, 360)
+    direction = (direction + 360) % 360;
+    min = (min + 360) % 360;
+    max = (max + 360) % 360;
+
+    // If min is less than or equal to max, it's a straightforward check
+    if (min <= max) {
+        return direction >= min && direction <= max;
+    }
+    // If min is greater than max, the range wraps around 360
+    else {
+        return direction >= min || direction <= max;
+    }
+}
+
+/**
+ * Calculate the time span (in seconds) to the next forecast update.
+ * 
+ * This function determines the number of seconds remaining until the next forecast update
+ * based on the current time in the Europe/Rome timezone and the predefined update hours.
+ * 
+ * @returns The number of seconds until the next forecast update.
+ */
+export function timeSpanToNextUpdate(): number {
+    // Dayjs
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+
+    // Get the current time in the Europe/Rome timezone
+    const now = dayjs().tz('Europe/Rome');
+
+    // Find the next update hour
+    const nextUpdateHour = FORECAST_UPDATES.find(hour => hour > now.hour());
+
+    // If there's a next update hour on the same day
+    if (nextUpdateHour !== undefined) {
+        const nextUpdate = now.hour(nextUpdateHour).minute(0).second(0).millisecond(0);
+        return nextUpdate.diff(now, 'seconds');
+    }
+
+    // If the next update is on the next day (first hour in the array)
+    const nextUpdate = now.add(1, 'day').hour(FORECAST_UPDATES[0]).minute(0).second(0).millisecond(0);
+    return nextUpdate.diff(now, 'seconds');
+}
+
+/**
+ * Initiates a forecast request process based on the user's login status. If not logged, the login modal is opened.
+ * Usually triggered when the user clicks on the forecast request button
+ * 
+ * @param {string} logged - The user's login status. Can be 'yes', 'no', or 'checking'.
+ * @param {string} spot_id - The id of the spot.
+ * @returns {Promise<string>} A promise that resolves with resolve or reject.
+ */
+// ! TODO Move copy to i18n
+export const requestForecastStep1 = (logged: "yes" | "no" | "checking", spot_id: string) => {
+    return new Promise((resolve, reject) => {
+        if (logged === 'yes') {
+            const state = store.getState();
+            const accessToken = state.user.accessToken;
+            requestForecastStep2(spot_id, accessToken).then((response: any) => {
+                resolve("Operation successful")
+            })
+                .catch((error) => {
+                    reject("Operation failed")
+                });
+        } else {
+            openLoginModal(
+                'spotForecastRequest',
+                'Login to request the forecast',
+                'You need to login or register to Mondo to send the forecast request',
+                (accessToken?: string) => {
+                    requestForecastStep2(spot_id, accessToken).then((response: any) => {
+                        resolve("Operation successful")
+                    })
+                        .catch((error) => {
+                            reject("Operation failed")
+                        });
+                }
+            );
+        }
+    });
+};
+
+/**
+ * Forwards a requests for the forecast to a spot to the Admin by calling the backend API.
+ *
+ * @param {string} spot_id - The id of the spot.
+ * @param {string} [accessToken] - An optional access token for authenticated requests. Optional but fails if not provided.
+ * @returns {Promise<string>} A promise
+ */
+// ! TODO Move copy to i18n
+const requestForecastStep2 = (spot_id: string, accessToken?: string) => {
+    return new Promise((resolve, reject) => {
+        if (accessToken) {
+            postApiAuthCall(
+                'user-request-spot-forecast',
+                accessToken,
+                {
+                    spot_id: spot_id
+                },
+                true
+            )
+                .then((response: any) => {
+                    toastService.success("Forecast request correctly sent. You'll receive and email from our team.");
+                    resolve("Operation successful")
+                })
+                .catch((error) => {
+                    toastService.error("The Forecast request could not be sent, pleas try again.");
+                    reject("Operation failed")
+                });
+        } else {
+            toastService.error("The Forecast request could not be sent, pleas try again.");
+            reject("Operation failed")
+        }
+    });
+};
 
 /**
  * 

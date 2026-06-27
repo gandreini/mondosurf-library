@@ -1,0 +1,26 @@
+/**
+ * DAY ASTRONOMY TABLE
+ *
+ * Tables displaying the astronomy of a day */
+
+/* ------------------------------------ *\
+   #DAY-ASTRONOMY-TABLE
+\* ------------------------------------ */
+.ms-day-astronomy-table {
+    margin-bottom: $space * 2;
+
+    tbody td.ms-day-astronomy-table__icon {
+        text-align: center;
+        width: 24px;
+    }
+
+    &__value {
+        font-weight: $font-weight-bold;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

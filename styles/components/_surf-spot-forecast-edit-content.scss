@@ -1,0 +1,158 @@
+/**
+ * SURF SPOT FORECAST EDIT CONTENT
+ *
+ * .
+ */
+
+$mapToolWidth: 1380px;
+$mapToolHeight: 600px;
+
+/* ------------------------------------ *\
+    #SURF SPOT FORECAST EDIT CONTENT
+\* ------------------------------------ */
+.ms-surf-spot-forecast-edit-content {
+    position: relative;
+    z-index: 10;
+    width: $mapToolWidth;
+    // height: $mapToolHeight;
+    margin-bottom: $space * 4;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $space * 2;
+    }
+
+    &__buttons-left {
+        display: flex;
+        align-items: center;
+        gap: $space;
+    }
+    &__buttons-right {
+        display: flex;
+        align-items: center;
+        gap: $space;
+    }
+
+    .ms-btn.is-active {
+        border: 2px solid var(--color-first);
+        color: var(--color-first);
+    }
+
+    &__tools {
+        position: relative;
+    }
+
+    &__map-wrapper {
+        width: $mapToolWidth;
+        height: $mapToolHeight;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .leaflet-map-pane {
+        position: relative;
+        z-index: 50;
+        width: $mapToolWidth;
+        height: $mapToolHeight;
+    }
+
+    .ms-map-global {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__forecast-tool {
+        position: absolute;
+        top: 0;
+        width: 1380px;
+        height: 600px;
+    }
+
+    // Z-Index
+    .ms-map-global__container {
+        position: relative;
+        z-index: 100;
+    }
+
+    .ms-map__controls {
+        position: absolute;
+        z-index: 300;
+    }
+
+    &__forecast-tool {
+        z-index: 200;
+    }
+
+    // Input fields
+    &__form {
+        position: absolute;
+        z-index: 200;
+        right: $space * 2;
+        top: $space * 7;
+        @include card;
+
+        .ms-form__label {
+            font-size: $font-size-xxs-fluid;
+        }
+
+        .ms-form__input {
+            width: 135px;
+        }
+    }
+
+    &__form-inline-items {
+        display: flex;
+        flex-direction: row;
+        gap: $space;
+    }
+
+    &__form-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 2;
+    }
+
+    &__form-quality-preview {
+        padding-top: 22px;
+    }
+
+    &__form-quality-preview-line {
+        display: flex;
+    }
+
+    // Ai form
+    &__ai-text-form {
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            height: 450px;
+            margin-bottom: $space * 2;
+            font-size: $font-size-m-fluid;
+        }
+
+        .ms-btn {
+            margin-bottom: $space * 2;
+        }
+    }
+
+    &__ai-text-counter {
+        margin-bottom: $space * 2;
+    }
+
+    &__ai-text-form-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: $space * 2;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {
+}

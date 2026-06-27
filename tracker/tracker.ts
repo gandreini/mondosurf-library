@@ -1,11 +1,11 @@
+import { appOs, getPlatform } from 'helpers/device.helpers';
 import mixpanel from 'mixpanel-browser';
-
-import { TrackingEvent } from '../constants/trackingEvent';
-import { getCookie } from '../helpers/cookies.helpers';
-import { isDebug } from '../helpers/debug.helpers';
-import { getPlatform } from '../helpers/device.helpers';
-import { stringToBool } from '../helpers/strings.helpers';
-import { store } from '../redux/store';
+import { TrackingEvent } from 'mondosurf-library/constants/trackingEvent';
+import { getCookie } from 'mondosurf-library/helpers/cookies.helpers';
+import { isDebug } from 'mondosurf-library/helpers/debug.helpers';
+import { stringToBool } from 'mondosurf-library/helpers/strings.helpers';
+import { store } from 'mondosurf-library/redux/store';
+import { DEBUG_MODE, DISABLE_TRACKING } from 'proxies/localConstants';
 
 type DestinationType = ('fb' | 'fbapp' | 'mp' | 'at' | 'ga' | 'sb')[];
 
@@ -23,8 +23,8 @@ export class Tracker {
      * @returns {void}
      */
     static mixpanelInit(mixpanelToken: string) {
-        if (process.env.REACT_APP_DEBUG_MODE === "true") {
-            mixpanel.init(mixpanelToken, { debug: stringToBool(process.env.REACT_APP_DEBUG_MODE) });
+        if (DEBUG_MODE === "true") {
+            mixpanel.init(mixpanelToken, { debug: stringToBool(DEBUG_MODE) });
         } else {
             mixpanel.init(mixpanelToken);
         }
@@ -33,16 +33,16 @@ export class Tracker {
 
     /**
      * Initialize Google Analytics.
+     * Currently not used.
      *
      * @param   {string} gaId Google Analytics Measurement ID retrieved from backend API in app-config.
      * @returns {void}
      */
-    static gaInit(gaId: string) {
+    /* static gaInit(gaId: string) {
         gtag("js", new Date());
         gtag("config", gaId);
-
         Tracker.gaSetUpDone = true;
-    }
+    } */
 
     /**
      * Check if tracking is active.
@@ -56,7 +56,7 @@ export class Tracker {
         const authorizedTracking = state.user.authorizedTracking;
         let trackingStatus: boolean = true;
 
-        // Retrieves the cookie tracking set by Iubenda.
+        // Retrieves the cookie tracking set by Iubenda
         let cookieTracking: boolean;
         if (getCookie("tracking_cookie_allowed") === "false") {
             cookieTracking = false;
@@ -66,9 +66,9 @@ export class Tracker {
         // The user has rejected the "measurement" cookies.
         if ((logged === "no" || logged === "checking") && !cookieTracking) trackingStatus = false;
         // The user has refused tracking when registering (or was disabled by the admin).
-        if (logged === "yes" && !authorizedTracking) trackingStatus = false;
-        // Checks the env parameter REACT_APP_DISABLE_TRACKING.
-        if (process.env.REACT_APP_DISABLE_TRACKING === "true") trackingStatus = false;
+        if (!authorizedTracking) trackingStatus = false;
+        // Checks the global local variable DISABLE_TRACKING.
+        if (DISABLE_TRACKING === "true") trackingStatus = false;
 
         return trackingStatus;
     }
@@ -99,13 +99,17 @@ export class Tracker {
         const logged = state.user.logged;
         const userId = state.user.userId;
         const accountType = state.user.accountType;
+        const favorites = state.user.favoriteSpots !== null ? state.user.favoriteSpots.length : 0;
         const platform = getPlatform();
+        const os = appOs();
 
         return {
             logged: logged,
             userId: userId,
             accountType: accountType,
-            platform: platform
+            favorites: favorites,
+            platform: platform,
+            os: os
         };
     }
 
@@ -125,41 +129,40 @@ export class Tracker {
                 mixpanel.track(eventName, { ...parameters, ...this.commonProperties() });
             }
 
-            /* Google */
-            if (destinations.includes('ga') && gtag && Tracker.gaSetUpDone) {
-                if (isDebug()) console.log("gtag", gtag);
-                if (parameters) {
-                    gtag('event', eventName, {
-                        'event_category': 'MondoEvent',
-                        'event_label': Object.entries(parameters)[0][0],
-                        'value': Object.entries(parameters)[0][1]
-                    });
-                } else {
-                    gtag('event', eventName, {
-                        'event_category': 'MondoEvent'
-                    });
-                }
+            /* Google Analytics 4 */
+            // gtag is loaded for pageviews by the web app (Analytics.tsx); it is not
+            // present in the mobile WebView, where this branch simply no-ops.
+            const gtagFn =
+                typeof window !== 'undefined' ? (window as unknown as { gtag?: (...args: any[]) => void }).gtag : undefined;
+            if (destinations.includes('ga') && typeof gtagFn === 'function') {
+                // GA4 event names must be snake_case alphanumerics: 'Spot Desc Link_Tap' -> 'spot_desc_link_tap'.
+                const ga4EventName = eventName
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '_')
+                    .replace(/^_+|_+$/g, '');
+                if (isDebug()) console.log('📍 GA4 tracking:', ga4EventName, parameters);
+                gtagFn('event', ga4EventName, { ...parameters });
             }
 
             /* Amplitude */
-            if (destinations.includes('at')) {
+            /* if (destinations.includes('at')) {
                 // amplitude.getInstance().logEvent(eventName, parameters);
-            }
+            } */
 
             /* Sendinblue */
-            if (destinations.includes('sb')) {
+            /* if (destinations.includes('sb')) {
                 // sendinblue.track(eventName, parameters);
-            }
+            } */
 
             /* Facebook pixel */
-            if (destinations.includes('fb')) {
+            /* if (destinations.includes('fb')) {
                 // fbq('track', eventName);
-            }
+            } */
 
             /* Facebook App */
-            if (destinations.includes('fbapp')) {
+            /* if (destinations.includes('fbapp')) {
                 // if (isApp()) FacebookAnalytics.logEvent({ event: eventName, params: parameters });
-            }
+            } */
         }
     }
 }

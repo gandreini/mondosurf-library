@@ -1,0 +1,35 @@
+/**
+ * CTA IMPROVE
+ *
+ * Call to action to engage users to improve the data.
+ */
+
+/* ------------------------------------ *\
+   #CTA-IMPROVE
+\* ------------------------------------ */
+.ms-cta-improve {
+    @include gradient-2;
+    padding: $space * 2;
+    border-radius: $border-radius;
+
+    &__title {
+        margin-bottom: $space * 1.5;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        line-height: 1.3;
+        color: var(--color-text-inverse);
+    }
+
+    &__text {
+        margin-bottom: $space * 1.5;
+        color: var(--color-text-inverse);
+        font-size: $font-size-s;
+        line-height: 1.4;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

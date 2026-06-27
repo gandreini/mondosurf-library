@@ -1,0 +1,28 @@
+/**
+ * TRIAL MODAL
+ *
+ * Modal page with details on the pro plan and call to actions.
+ */
+
+/* ------------------------------------ *\
+    #TRIAL
+\* ------------------------------------ */
+.ms-trial {
+    .ms-pro-features-list {
+        margin-bottom: $space * 2;
+    }
+
+    .ms-btn {
+        margin-bottom: $space * 2;
+    }
+
+    &__error-text.ms-body-text {
+        color: var(--color-error);
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

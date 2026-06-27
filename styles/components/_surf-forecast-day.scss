@@ -1,0 +1,97 @@
+/**
+ * SURF FORECAST DAY
+ *
+ * Group of surf rows for the whole day.
+ */
+
+/* ------------------------------------ *\
+    #SURF FORECAST DAY
+\* ------------------------------------ */
+.ms-surf-forecast-day {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $space * 3;
+    cursor: pointer;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: $space * 1 0;
+        position: -webkit-sticky; /* For Safari */
+        position: sticky;
+        top: 0;
+        background-color: $color-background-base;
+        z-index: 10;
+    }
+
+    &__day,
+    &__swell,
+    &__wind,
+    &__secondary-swell {
+        font-size: $font-size-xxs-fluid;
+        font-weight: $font-weight-bold;
+    }
+
+    &__day {
+        width: $forecast-row-first-column-width;
+    }
+
+    &__swell {
+        width: $forecast-row-second-column-width;
+    }
+
+    &__wind {
+        width: $forecast-row-third-column-width;
+    }
+
+    &__secondary-swell {
+        display: none;
+    }
+
+    &__rows {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+}
+
+/* ------------------------------------ *\
+    #COMPRESSED
+\* ------------------------------------ */
+.ms-surf-forecast-day.ms-surf-forecast-compressed-day {
+    .ms-surf-forecast-day__header {
+        top: $tab-height;
+    }
+
+    .ms-surf-forecast-day__day {
+        font-size: $font-size-s-fluid;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-forecast-day {
+        &__day {
+            width: $forecast-row-desktop-first-column-width;
+        }
+        &__swell {
+            width: $forecast-row-desktop-second-column-width;
+        }
+
+        &__wind {
+            width: $forecast-row-desktop-third-column-width;
+        }
+        &__secondary-swell {
+            display: block;
+            width: $forecast-row-desktop-fourth-column-width;
+        }
+
+        &:hover {
+            .ms-surf-forecast-day__header .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+    }
+}

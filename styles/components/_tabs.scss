@@ -1,0 +1,109 @@
+/**
+ * TABS
+ *
+ * Style for tabs.
+ */
+
+/* ------------------------------------ *\
+   #TABS
+\* ------------------------------------ */
+.ms-tabs {
+    height: $tab-height;
+    margin: 0;
+    padding: 0;
+
+    &__items {
+        display: flex;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+        margin: 0;
+        -ms-overflow-style: none; // Hides scrollbar
+        scrollbar-width: none; // Hides scrollbar
+
+        &::-webkit-scrollbar {
+            display: none; // Hides scrollbar
+        }
+    }
+
+    &__item {
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    &__link {
+        display: block;
+        box-sizing: border-box;
+        height: $tab-height;
+        padding: 0 $space * 2;
+        line-height: $tab-height;
+        text-transform: uppercase;
+        background-color: $color-background-base;
+        border-bottom: 3px solid var(--color-text);
+        color: var(--color-text);
+
+        // Active tab
+        &.is-active {
+            color: var(--color-first);
+            border-bottom: 3px solid var(--color-first);
+        }
+
+        // Disabled
+        &.is-disabled {
+            border-bottom: 3px solid var(--color-gray-02);
+            color: var(--color-gray-04);
+            cursor: default;
+        }
+    }
+
+    &__link:not(.is-disabled):hover {
+        color: var(--color-first);
+        border-bottom: 3px solid var(--color-first);
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-tabs.is-loading {
+    height: $tab-height;
+    cursor: default;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+
+    .ms-tabs__items {
+        flex-grow: 1;
+    }
+
+    .ms-tabs__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        height: $tab-height;
+        border-bottom: 3px solid var(--color-gray-02);
+    }
+
+    .ms-tabs__link {
+        @include loading-effect;
+        height: $space * 2;
+        width: 50px;
+        margin: 0 $space * 2;
+        background-color: transparent;
+        border-bottom: transparent;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-tabs.is-loading {
+        margin-left: 0;
+    }
+}

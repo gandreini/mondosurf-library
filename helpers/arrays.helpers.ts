@@ -62,3 +62,38 @@ export const removeFirstAndLastItem = <T>(array: T[]): T[] => {
     if (array === undefined) array = [];
     return array.slice(1, array.length - 1);
 }
+
+/**
+ * Removes duplicate values from an array.
+ *
+ * @param {T[]} arr - The array from which to remove duplicates.
+ * @returns {T[]} A new array with duplicates removed.
+ * @template T - The type of elements in the array.
+ */
+export const removeDuplicatesFromArray = <T>(arr: T[]): T[] => {
+    // Creating a Set automatically removes duplicates, as sets only allow unique values.
+    const uniqueSet: Set<T> = new Set(arr);
+
+    // Convert the Set back to an array.
+    const uniqueArray: T[] = Array.from(uniqueSet);
+
+    return uniqueArray;
+}
+
+/**
+ * Splits an array into groups the length of size.
+ * If array can't be split evenly, the final chunk will be the remaining elements.
+ *
+ * @param {T[]} array The array to process.
+ * @param {number} size The length of each chunk.
+ * @returns {T[][]} An array containing the chunks.
+ */
+export const chunkArray = <T>(array: T[], size: number): T[][] => {
+    const chunkedArr = [];
+    for (let i = 0; i < array.length; i += size) {
+        chunkedArr.push(array.slice(i, i + size));
+    }
+    return chunkedArr;
+}
+
+

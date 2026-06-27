@@ -1,0 +1,49 @@
+/**
+ * SINGLE COUNTRY
+ *
+ * Page of country with the list of the regions and map.
+ */
+
+/* ------------------------------------ *\
+   #SINGLE-COUNTRY
+\* ------------------------------------ */
+.ms-country {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.ms-country {
+    &__regions-list-wrapper {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        z-index: 100;
+    }
+
+    &__regions-list {
+        padding: 0 0 $space * 2 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+.ms-country {
+    &__map-error {
+        padding: $space * 4;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .is-web .ms-country {
+        padding: 0 0 $space * 8 0;
+    }
+}

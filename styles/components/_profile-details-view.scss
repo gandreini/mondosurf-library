@@ -1,0 +1,62 @@
+/**
+ * PROFILE DETAILS VIEW
+ *
+ * List with the details of the user in read mode.
+ */
+
+/* ------------------------------------ *\
+    PROFILE DETAILS
+\* ------------------------------------ */
+.ms-profile-details-view {
+    &__title {
+        margin-bottom: $space * 2;
+    }
+
+    &__contents {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: $space;
+        column-gap: $space;
+        margin-bottom: $space * 2;
+    }
+
+    &__button-edit {
+        margin-bottom: $space * 3;
+    }
+
+    // Danger zone
+    &__danger-zone {
+        padding-top: $space * 3;
+        margin-top: $space * 3;
+        border-top: 1px solid $color-border-normal;
+
+        .ms-h3-title {
+            margin-bottom: $space * 3;
+            color: var(--color-error);
+        }
+    }
+
+    &__danger-zone-link {
+        margin-bottom: $space * 2;
+        cursor: pointer;
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+
+    &__button-delete {
+        margin-bottom: $space * 1;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-profile-details-view {
+        &__contents {
+            row-gap: $space;
+            column-gap: $space * 3;
+        }
+    }
+}

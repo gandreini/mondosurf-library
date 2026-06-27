@@ -1,0 +1,115 @@
+/**
+ * FILTERS
+ *
+ * Style for filters
+ */
+
+$filters-bar-height: 70px;
+
+/* ------------------------------------ *\
+    filters
+\* ------------------------------------ */
+.ms-filters {
+    display: none;
+
+    &.is-visible {
+        display: block;
+    }
+
+    &__page {
+        position: fixed;
+        overflow: auto;
+        z-index: $z-index-filters;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: calc(#{$space} * 3 + var(--ios-status-bar-margin)) $space * 3
+            calc(#{$filters-bar-height} + var(--ios-bottom-bar-margin)) $space *
+            3; // iOS spacing.
+        background-color: $color-background-base;
+    }
+
+    &__block-title {
+        margin-bottom: $space * 2;
+        font-size: $font-size-l;
+        font-weight: $font-weight-bold;
+        text-transform: capitalize;
+    }
+
+    &__block-content {
+        margin-bottom: $space * 3;
+    }
+
+    /* Row */
+    &__row {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: $space * 2 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid $color-border-normal;
+        }
+    }
+
+    &__checkbox {
+        padding: 0;
+        flex-grow: 0;
+        margin-right: $space;
+        color: var(--color-text);
+        cursor: pointer;
+        font-size: $font-size-xxl;
+    }
+
+    &__label {
+        flex-grow: 2;
+        margin: 0 auto 0 $space;
+        padding: 0;
+        text-transform: capitalize;
+        font-size: $font-size-l;
+        cursor: pointer;
+    }
+
+    /* Checked row */
+    &__row.is-checked {
+        .ms-filters__checkbox {
+            color: var(--color-first);
+        }
+    }
+
+    /* Disabled */
+    &__row.is-disabled {
+        cursor: default;
+        .ms-filters__label {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .mondo-icon {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+    }
+
+    /* Buttons */
+    &__buttons {
+        position: fixed;
+        background-color: $color-background-base;
+        @include card-box-shadow-invert;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(
+            #{$filters-bar-height} + var(--ios-bottom-bar-margin)
+        ); // iOS spacing.
+        bottom: 0;
+        left: 0;
+        right: 0;
+        box-sizing: border-box;
+        padding: 0 0 var(--ios-bottom-bar-margin) 0; // iOS spacing.
+
+        .ms-btn:not(:last-child) {
+            margin-right: $space;
+        }
+    }
+}

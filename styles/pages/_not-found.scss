@@ -1,0 +1,72 @@
+/**
+ * 404 NOT FOUND PAGE
+ *
+ * Page displayed when a URL is not found
+ */
+
+/* ------------------------------------ *\
+    #404 NOT FOUND PAGE
+\* ------------------------------------ */
+.ms-not-found {
+    &.ms-content {
+        padding-bottom: $space * 3;
+    }
+
+    &__content {
+        text-align: center;
+        padding: $space * 4 0;
+        max-width: 600px;
+        margin: 0 auto;
+
+        @media all and (max-width: $breakpoint-desktop) {
+            padding: $space * 3 0;
+        }
+    }
+
+    &__icon {
+        margin-bottom: $space * 2;
+    }
+
+    &__subtitle {
+        margin-bottom: $space * 2;
+
+        @media all and (max-width: $breakpoint-desktop) {
+            margin-bottom: $space * 1.5;
+        }
+    }
+
+    &__description {
+        margin-bottom: $space * 4;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0.8;
+
+        @media all and (max-width: $breakpoint-desktop) {
+            margin-bottom: $space * 3;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: $space * 2;
+        justify-content: center;
+        margin-bottom: $space * 4;
+        flex-wrap: wrap;
+
+        .ms-button {
+            min-width: 180px;
+
+            @media all and (max-width: $breakpoint-desktop) {
+                width: 100%;
+                margin-bottom: $space;
+            }
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

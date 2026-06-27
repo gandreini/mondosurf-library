@@ -1,0 +1,25 @@
+/**
+ * PROFILE DETAILS
+ *
+ * Profile details page.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE DETAILS
+\* ------------------------------------ */
+.ms-profile-details {
+    margin-bottom: $space * 3;
+
+    &__content {
+        // flex-grow: 2;
+        // display: flex;
+        // flex-direction: column;
+        // max-width: $page-max-medium-width;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

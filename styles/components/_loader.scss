@@ -1,0 +1,146 @@
+/**
+ * LOADER
+ *
+ * Generic loader
+ */
+
+/* ------------------------------------ *\
+    LOADER
+\* ------------------------------------ */
+.ms-loader {
+    --loader-color: #{$loader-color-front};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ms-loader__content {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--loader-color);
+    animation: dotFlashing 1.2s infinite linear alternate;
+    animation-delay: 0.4s;
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+    }
+
+    &:before {
+        left: -13px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background-color: var(--loader-color);
+        animation: dotFlashing 1.2s infinite alternate;
+        animation-delay: 0s;
+    }
+
+    &:after {
+        left: 13px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background-color: var(--loader-color);
+        animation: dotFlashing 1.2s infinite alternate;
+        animation-delay: 0.8s;
+    }
+}
+
+/* ------------------------------------ *\
+    SMALL
+\* ------------------------------------ */
+.ms-loader.ms-loader-small {
+    .ms-loader__content {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+
+        &:before {
+            left: -9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        &:after {
+            left: 9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    TEXT
+\* ------------------------------------ */
+.ms-loader {
+    &__text {
+        margin-bottom: $space;
+        @include font-size('xxs');
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--color-text-light);
+    }
+}
+
+/* ------------------------------------ *\
+    ANIMATION
+\* ------------------------------------ */
+@keyframes dotFlashing {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/*
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+*/
+
+/* ------------------------------------ *\
+    INSIDE BUTTON
+\* ------------------------------------ */
+.ms-btn {
+    .ms-loader {
+        margin-left: $space;
+        margin-right: $space;
+    }
+}
+
+.ms-btn-cta {
+    .ms-loader__content {
+        --loader-color: white;
+    }
+}

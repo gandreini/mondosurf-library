@@ -1,0 +1,51 @@
+/**
+ * ODOMETER
+ *
+ * Mechanical-counter integer display. Each digit is rendered as a
+ * vertical column 0-9, clipped to one cell tall; a CSS translate on
+ * the inner track rolls the column to the active digit. When the
+ * value changes, all affected columns animate in parallel.
+ *
+ * Markup is produced by <Odometer />.
+ */
+
+.ms-odometer {
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    // tabular-nums keeps every digit the same width, so rolling 1 ↔ 0
+    // (which have very different natural widths) doesn't jitter the
+    // surrounding layout.
+    font-variant-numeric: tabular-nums;
+
+    &__sign {
+        margin-right: 0.05em;
+    }
+
+    &__col {
+        // Each column is exactly one digit tall — overflow:hidden is the
+        // window through which the rolling track is seen.
+        display: inline-block;
+        overflow: hidden;
+        height: 1em;
+        line-height: 1;
+    }
+
+    &__track {
+        // Vertical strip of all ten digits stacked. translateY positions
+        // the active digit at the column's visible top edge.
+        display: flex;
+        flex-direction: column;
+        transition-property: transform;
+        // Snappy with a tiny overshoot so a single-digit ±1 roll feels
+        // mechanical without being mushy.
+        transition-timing-function: $easing-mechanical;
+        will-change: transform;
+    }
+
+    &__cell {
+        display: block;
+        height: 1em;
+        line-height: 1;
+    }
+}

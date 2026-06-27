@@ -1,0 +1,160 @@
+/**
+ * LOGIN MODAL
+ *
+ * Login modal style: using original classes (original templates not changed yet)
+ */
+
+/* ------------------------------------ *\
+   #GENERAL
+\* ------------------------------------ */
+.ms-login-modal {
+    &__login-form {
+        padding: 0;
+    }
+
+    /* Social buttons */
+    .ms-btn-social-fb, .ms-btn-social-gl {
+        margin-bottom: $space*2;
+    }
+
+    /* Inputs */
+    .ms-login-modal__input-field {
+        position: relative;
+        margin-bottom: $space*2;
+
+        label {
+            display: none;
+        }
+    }
+
+    input[type="email"], input[type="password"], input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 0;
+    }
+
+    /* Password visibility switch button */
+    .ms-login-modal__password-view {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 0;
+        background: transparent;
+        font-size: $font-size-l;
+        line-height: $form-input-height - 2;
+        cursor: pointer;
+    }
+
+    /* HR "or" separator */
+    &__or {
+        position: relative;
+        margin-top: $space*1.5;
+        margin-bottom: $space*1;
+        text-align: center;
+        overflow: visible;
+
+        &:after {
+            content: "or";
+            position: relative;
+            padding: 0 10px;
+            margin-top: -30px;
+            top: -15px;
+            font-size: $font-size-s;
+            font-style: italic;
+            background-color: $color-background-base;
+        }
+    }
+
+    /* Small text */
+    &__small-info {
+        display: inline-block;
+        margin-top: $space;
+        margin-bottom: $space*2;
+        font-size: $font-size-s;
+        color: var(--color-text);
+    }
+
+    /* Checkbox */
+    .ms-login-modal__check-conditions {
+        display: flex;
+        input[type="checkbox"] {
+            margin-right: $space*1.5;
+        }
+
+        label {
+            margin: 0;
+            padding: 0;
+            display: block;
+            line-height: 1.5;
+        }
+    }
+    
+}
+
+
+/* ------------------------------------ *\
+   #FORGOT
+\* ------------------------------------ */
+.ms-login-modal {
+    &__reset-password-text {
+        margin-bottom: $space*2;
+        font-size: $font-size-s;
+    }
+
+    &__reset-button {
+        width: 100%;
+        margin-bottom: $space*2;
+    }
+
+    &__return-to-login {
+        margin-bottom: 0;
+        padding-top: $space;
+        font-size: $font-size-xs;
+        color: var(--color-text);
+        transition: color $transition-durations;
+        text-align: left;
+        border-top: 1px solid $color-border-light;
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+#forgot-pass-div_mod {
+    overflow: hidden;
+}
+
+/* ------------------------------------ *\
+   #VIEW-SWITCH
+\* ------------------------------------ */
+.ms-login-modal__wiew-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-top: $space*3;
+    padding-top: $space*3;
+    border-top: 1px solid $color-border-light;
+
+    p {
+        font-size: $font-size-s;
+        line-height: 1.4;
+    }
+
+    .ms-btn {
+        min-width: 100px;
+    }
+}
+
+#reveal_login {
+    width: auto;
+    margin-bottom: 0;
+}
+
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

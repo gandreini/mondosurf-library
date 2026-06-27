@@ -1,0 +1,17 @@
+/**
+ * GOOGLE LOGIN SUCCESS
+ *
+ * Page displayed after the Google login is successful.
+ */
+
+/* ------------------------------------ *\
+    #GOOGLE LOGIN SUCCESS
+\* ------------------------------------ */
+.ms-google-login-succeeded {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+}

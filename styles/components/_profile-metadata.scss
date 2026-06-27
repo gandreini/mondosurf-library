@@ -1,0 +1,24 @@
+/**
+ * PROFILE METADATA
+ *
+ * Label value couples used in profile page.
+ */
+
+/* ------------------------------------ *\
+    #PROFILE METADATA
+\* ------------------------------------ */
+.ms-profile-metadata {
+    &__label {
+        font-size: $font-size-m-fluid;
+        font-weight: $font-weight-semibold;
+    }
+    &__value {
+        font-size: $font-size-m-fluid;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

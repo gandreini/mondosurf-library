@@ -1,0 +1,83 @@
+/**
+ * REGION
+ *
+ * Page of region with the list of the surf spots and map.
+ */
+
+/* ------------------------------------ *\
+   #REGION
+\* ------------------------------------ */
+.ms-region {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------------ *\
+   #LIST
+\* ------------------------------------ */
+.ms-region {
+    &__spots-list-wrapper {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        z-index: 100;
+    }
+
+    &__spots-list {
+        padding: 0 0 $space * 2 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #STATISTICS
+\* ------------------------------------ */
+.ms-region {
+    &__content-charts {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: $space * 2 0;
+    }
+}
+
+/* ------------------------------------ *\
+   #INFO-TAB
+\* ------------------------------------ */
+.ms-region {
+    &__info.is-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-region.is-loading {
+    .ms-region__content-map {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------ *\
+   #ERROR
+\* ------------------------------------ */
+.ms-region {
+    &__map-error {
+        padding: $space * 4;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .is-web .ms-region {
+        padding: 0 0 $space * 8 0;
+    }
+}

@@ -1,0 +1,60 @@
+/**
+ * TABLE
+ *
+ * Table style
+ */
+
+/* ------------------------------------ *\
+   #TABLE
+\* ------------------------------------ */
+.ms-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid $table-border-color;
+    border-radius: $border-radius;
+
+    thead {
+        th {
+            padding: $space * 0.75;
+            border: 1px solid $table-border-color;
+            background-color: $color-background-light;
+            color: var(--color-text);
+            font-size: $font-size-xs;
+            text-align: left;
+        }
+    }
+
+    tbody {
+        td {
+            padding: $space * 0.75;
+            font-size: $font-size-s;
+            color: var(--color-text);
+            font-size: $font-size-xs-fluid;
+            text-align: left;
+        }
+
+        td:not(:last-child) {
+            border-right: 2px solid $table-border-color;
+        }
+
+        tr:not(:last-child) td {
+            border-bottom: 2px solid $table-border-color;
+        }
+    }
+
+    // No data
+    &__no-data {
+        font-style: italic;
+        color: var(--color-text-light);
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-footer {
+        margin-bottom: 0;
+    }
+}

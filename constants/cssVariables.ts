@@ -16,7 +16,7 @@ export const CSS_VARIABLES = {
     cssColorTide: globalStyle.getPropertyValue('--color-chart-tide'),
 
     // Forecast colors.
-    cssColorForecastPossible: globalStyle.getPropertyValue('--color-forecast-possible'),
+    cssColorForecastPossible: globalStyle.getPropertyValue('--color-forecast-poor'),
     cssColorForecastGood: globalStyle.getPropertyValue('--color-forecast-good'),
     cssColorForecastVeryGood: globalStyle.getPropertyValue('--color-forecast-very-good'),
     cssColorForecastEpic: globalStyle.getPropertyValue('--color-forecast-epic'),

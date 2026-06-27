@@ -1,0 +1,69 @@
+/**
+ * PROFILE PLAN
+ *
+ * Page displaying the plan of the user (Free/Pro).
+ */
+
+/* ------------------------------------ *\
+    #PROFILE PLAN
+\* ------------------------------------ */
+.ms-profile-plan {
+    &__content {
+        margin-bottom: $space * 2;
+
+        .ms-btn {
+            margin-bottom: $space * 2;
+        }
+    }
+
+    &__metadata {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: $space;
+        column-gap: $space;
+        margin-bottom: $space * 2;
+    }
+
+    &__metadata-border {
+        padding-bottom: $space * 2;
+        border-bottom: 1px solid $color-border-normal;
+    }
+
+    &__text {
+        margin-top: $space * 1;
+        margin-bottom: $space * 2;
+    }
+
+    .ms-small-text {
+        margin-bottom: $space * 1.5;
+    }
+
+    .ms-grid-2-2 {
+        margin-bottom: $space * 1.5;
+    }
+
+    // Danger zone
+    &__danger-zone {
+        padding-top: $space * 3;
+        margin-top: $space * 3;
+        border-top: 1px solid $color-border-normal;
+
+        .ms-h3-title {
+            margin-bottom: $space * 3;
+            color: var(--color-error);
+        }
+    }
+
+    &__danger-zone-link {
+        cursor: pointer;
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

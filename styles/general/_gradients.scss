@@ -1,0 +1,97 @@
+//
+// GRADIENTS
+//
+// Mixins that define gradients
+//
+
+// ------------------------------------ //
+// #GRADIENTS
+// ------------------------------------ //
+@mixin gradient-1 {
+    background: #3f608e; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #3f608e 0%, #24717c 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #3f608e 0%, #24717c 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #3f608e 0%, #24717c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+@mixin gradient-2 {
+    background: #0a688f; /* Old browsers */
+    background: linear-gradient(135deg, #0a688f 0%, #00aced 100% ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+@mixin gradient-3 {
+    background: #7bb4b2; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #7bb4b2 0%, #b1c7b1 17%, #a1a882 38%, #7e9b8d 58%, #527e7b 78%, #316777 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #7bb4b2 0%, #b1c7b1 17%, #a1a882 38%, #7e9b8d 58%, #527e7b 78%, #316777 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #7bb4b2 0%, #b1c7b1 17%, #a1a882 38%, #7e9b8d 58%, #527e7b 78%, #316777 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+@mixin gradient-4 {
+    background: #45b649; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #45b649 0%, #dce35b 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #45b649 0%, #dce35b 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #45b649 0%, #dce35b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+@mixin gradient-5 {
+    background: rgba(119,161,211,1);
+    background-image: linear-gradient( 109.6deg,  rgba(121,203,202,1) 11.2%, rgba(119,161,211,1) 91.1% );
+}
+
+@mixin gradient-6 {
+    background: rgba(36, 215, 55,0.24);
+    background-image: linear-gradient( 109.6deg,  rgba(36, 215, 55,0.24) 11.2%, rgba(36, 215, 55,0.14) 91.1% );
+}
+
+
+@mixin gradient-6 {
+    background: #283048;  /* fallback for old browsers */
+    background: linear-gradient(to top, rgba( #859398, .08), rgba( #283048, .2) ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+@mixin gradient-instagram {
+    /* stylelint-disable */
+    background:
+    // left bottom
+    radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%),
+    radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+    // left top
+    radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%),
+    radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%),
+    //  right top
+    radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%),
+    radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%),
+    // right bottom
+    radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+    /////// create a base coat to smooth
+    /////// corner gradients
+    linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+    /* stylelint-enable */
+}
+
+@mixin gradient-45( $color-start, $color-end) {
+    background: -moz-linear-gradient(-45deg, $color-start 0%, $color-start 50%, $color-end 51%, $color-end 100%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$color-start), color-stop(50%,$color-start), color-stop(51%,$color-end), color-stop(100%,$color-end));
+    background: -webkit-linear-gradient(-45deg, $color-start 0%,$color-start 50%,$color-end 51%,$color-end 100%);
+    background: -o-linear-gradient(-45deg, $color-start 0%,$color-start 50%,$color-end 51%,$color-end 100%);
+    background: -ms-linear-gradient(-45deg, $color-start 0%,$color-start 50%,$color-end 51%,$color-end 100%);
+    background: linear-gradient(135deg, $color-start 0%,$color-start 50%,$color-end 51%,$color-end 100%);
+}
+
+@mixin calendar-availability-day( $color-start, $color-end) {
+    // background: $color;
+    background: -moz-linear-gradient(-35deg, $color-start 0%,$color-start 49%,$color-end 50%,$color-end 100%);
+    background: -webkit-linear-gradient(-35deg, $color-start 0%,$color-start 49%,$color-end 50%,$color-end 100%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$color-start), color-stop(49%,$color-start), color-stop(50%,$color-end), color-stop(100%,$color-end));
+    background: -o-linear-gradient(-35deg, $color-start 0%,$color-start 49%,$color-end 50%,$color-end 100%);
+    background: -ms-linear-gradient(-35deg, $color-start 0%,$color-start 49%,$color-end 50%,$color-end 100%);
+    background: linear-gradient(125deg, $color-start 0%,$color-start 49%,$color-end 50%,$color-end 100%);
+}
+
+@mixin home-cta-gradient {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&1+0,0+100 */
+    background: -moz-linear-gradient(top, rgba(0,0,0,.48) 0%, rgba(0,0,0,0) 45%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,.48) 0%,rgba(0,0,0,0) 45%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,.48) 0%,rgba(0,0,0,0) 45%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}

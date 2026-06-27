@@ -1,0 +1,67 @@
+/**
+ * SURF SPOT DIRECTION
+ *
+ * Depicts the direction with a chart and some text omn the right.
+ */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-DIRECTION
+\* ------------------------------------ */
+.ms-surf-spot-direction {
+    display: flex;
+    align-items: center;
+
+    &__chart {
+        display: flex;
+        align-items: center;
+
+        svg {
+            width: 24px;
+            height: 24px;
+            margin-right: $space;
+            margin-left: -1px;
+        }
+    }
+
+    &__label {
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        font-size: $font-size-xxxs-fluid;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    &__small-text {
+        color: var(--color-text-light);
+        font-size: $font-size-xxxs-fluid;
+    }
+
+    &__value {
+        color: var(--color-text);
+        font-size: $font-size-xs-fluid;
+    }
+
+    /* Swell */
+    &-swell {
+        .ms-surf-spot-direction__label {
+            color: var(--color-chart-swell);
+        }
+    }
+
+    /* Wind */
+    &-wind {
+        .ms-surf-spot-direction__label {
+            color: var(--color-chart-wind);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+}

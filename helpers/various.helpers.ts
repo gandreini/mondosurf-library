@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import { checkIfSpotIdIsInFavorites } from "mondosurf-library/helpers/favorites.helpers";
+import { store } from "mondosurf-library/redux/store";
 
 /**
  * Returns the value of a GET parameter,
@@ -29,7 +30,7 @@ export function getUrlParameter(
 */
 export function hexToRGBA(hex: string, alpha: number): string {
 
-    hex = _.trimStart(hex, ' '); // Trim white space if it's there.
+    hex = hex.trim(); // Removes whitespace from both ends of this string
 
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -51,22 +52,6 @@ export function hexToRGBA(hex: string, alpha: number): string {
  */
 export function oneDecimal(numberToFix: number): number {
     return parseFloat(numberToFix.toFixed(1));
-}
-
-/**
- * Copy to clipboard function only for web applications (non apps).
- * 
- * @param   {element} elementToGetStringId Id of the form element (like an input or textarea) to copy the text from.
- * @param   {Function} callbackFunction Callback function to be called after the text has been copied.
- */
-export function copyToClipboardWeb(textToCopy: string, callbackFunction?: Function): void {
-    navigator.clipboard.writeText(
-        textToCopy
-    ).then(function () {
-        if (callbackFunction) callbackFunction();
-    }, function () {
-        /* clipboard write failed */
-    });
 }
 
 /**
@@ -99,4 +84,47 @@ export const checkIfElementIsInView = (element: HTMLElement, paddingTop: number 
     // Partially visible elements return true:
     const isVisible = elemTop < (window.innerHeight) && elemBottom >= 0;
     return isVisible;
+}
+
+/**
+ * Generates a UUID (Universally Unique Identifier) in version 4 format.
+ * 
+ * The UUID is generated using random numbers and follows the format
+ * 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx', where 'x' is replaced with a 
+ * random hexadecimal digit and 'y' is replaced with a random hexadecimal 
+ * digit from the set {8, 9, A, or B}.
+ * 
+ * @returns A string representing a UUID v4.
+ */
+export const generateUUID = (): string => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+/**
+ * Determines whether the "Favorites" banner should be shown based on the user's login status
+ * and their favorite spots.
+ *
+ * @param {number} spotId - The ID of the spot to check against the user's favorite spots.
+ * @returns {boolean} - Returns `true` if the "Favorites" banner should be shown, `false` otherwise.
+ */
+export const shouldShowFavoritesBanner = (spotId: number): boolean => {
+    // Redux.
+    const state = store.getState();
+    const logged = state.user.logged;
+    const favoriteSpots = state.user.favoriteSpots;
+
+    if
+        (logged != 'yes' ||
+        (logged === 'yes' && !favoriteSpots) ||
+        (logged === 'yes' &&
+            favoriteSpots &&
+            !checkIfSpotIdIsInFavorites(favoriteSpots, spotId))) {
+        return true
+    } else {
+        return false;
+    }
 }

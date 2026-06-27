@@ -1,0 +1,283 @@
+/**
+ * COMMENT
+ *
+ * Style for the single comment.
+ */
+
+/* ------------------------------------ *\
+    #COMMENT  
+\* ------------------------------------ */
+.ms-comment {
+    padding-bottom: $space * 2.5;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: $space * 0.5;
+
+        .ms-small-text {
+            margin-bottom: 0;
+        }
+    }
+
+    &__header-left {
+        display: flex;
+        gap: $space * 1;
+    }
+
+    &__delete {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+
+        .mondo-icon {
+            color: var(--color-gray-04);
+            font-size: $font-size-s-fluid;
+        }
+
+        &:hover {
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+    }
+
+    &__spot-name.ms-small-text {
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+
+    &__author.ms-small-text {
+        font-weight: $font-weight-bold;
+        color: var(--color-text);
+    }
+
+    &__text.ms-body-text {
+        margin-bottom: $space * 1.5;
+    }
+
+    &__deleted-placeholder {
+        font-style: italic;
+        color: var(--color-gray-04);
+    }
+
+    &.is-deleted {
+        .ms-comment__author.ms-small-text {
+            color: var(--color-gray-04);
+            font-weight: $font-weight-normal;
+            font-style: italic;
+        }
+    }
+
+    &.is-reply {
+        margin-left: $space * 2;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $space * 0.5;
+        margin-top: $space * 0.5;
+    }
+
+    // Reddit-style action pill: light gray rounded chip with icon + label/count.
+    // Shared base for like and reply actions in the comment footer.
+    &__action-pill {
+        display: flex !important;
+        align-items: center;
+        gap: $space * 0.5;
+        padding: $space * 0.75 $space * 1.25;
+        border-radius: 999px;
+        border: 0;
+        background-color: $color-background-light;
+        color: var(--color-text);
+        font-weight: $font-weight-normal;
+        line-height: 1;
+        cursor: pointer;
+        transition: background-color 120ms ease, color 120ms ease;
+
+        .mondo-icon {
+            // display:block + line-height:1 strips the descent space the icon
+            // font reserves below its glyph, so align-items: center can
+            // actually centre the visible glyph instead of the glyph + descent.
+            display: block;
+            line-height: 1;
+            font-size: $font-size-s-fluid;
+            transition: color 120ms ease;
+        }
+
+        &:hover:not(:disabled) {
+            background-color: $color-background-medium;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+    }
+
+    &__like-btn {
+        @extend .ms-comment__action-pill;
+        // Spacing between the arrow and the count is owned by the count's own
+        // margin-left (see &__like-count), NOT the inherited flex gap. With the
+        // gap zeroed, an empty count reserves no space, so the lone arrow stays
+        // centred in the pill (equal left/right padding).
+        gap: 0;
+        // The liked state is conveyed solely by the glyph swap (upvote →
+        // upvote-fill). No background, text colour, or icon tint change —
+        // the filled arrow on its own is the indicator.
+
+        // Hover: tint both the glyph AND the count text brand-blue (in
+        // addition to the pill bg shift inherited from action-pill). The count
+        // inherits `color` from the pill, so setting it here covers it too.
+        &:hover:not(:disabled) {
+            color: var(--color-text-link);
+
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+    }
+
+    // Wrapper around the upvote glyph. The `.is-popping` class is added
+    // briefly on every like-state toggle so the icon scale-pulses — keyed
+    // on a React state flag (not :hover), so the bounce is tied to the
+    // action, not the cursor.
+    &__like-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        // Smooth colour transition on the glyph when .is-liked toggles.
+        .mondo-icon {
+            transition: color $duration-standard $easing-smooth;
+        }
+
+        &.is-popping {
+            animation: ms-like-icon-pop $duration-pop $easing-overshoot;
+        }
+    }
+
+    @keyframes ms-like-icon-pop {
+        0% {
+            transform: scale(1);
+        }
+
+        45% {
+            transform: scale(1.32);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    // The like count wrapper. Two-stage choreography across the 0 ↔ 1 line:
+    //
+    //   Forward (0 → 1): the wrapper expands first to make room (max-width
+    //   transitions 0 → 5ch), then the digit pops in with a fade + slight
+    //   scale + slide-up. transition-delay on the inner element waits for
+    //   the wrapper to be mostly open before revealing.
+    //
+    //   Reverse (1 → 0): the digit fades + sinks out first, then the
+    //   wrapper collapses (the wrapper's max-width transition is delayed).
+    //
+    // The reveal is on `.ms-odometer` because that's the inner element
+    // whose content represents the digit; <Odometer> is always mounted, so
+    // we can transition it instead of remounting on every change.
+    &__like-count {
+        font-size: $font-size-s-fluid;
+        display: inline-block;
+        overflow: hidden;
+        max-width: 5ch;
+        // The gap from the arrow lives here (not the pill's flex gap) so it
+        // collapses to 0 together with the width when empty — see &.is-empty.
+        margin-left: $space * 0.5;
+        transition:
+            max-width $duration-reveal $easing-mechanical,
+            margin-left $duration-reveal $easing-mechanical;
+
+        >* {
+            display: inline-flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transform-origin: center 60%;
+            // Reveal: starts AFTER the wrapper has begun opening (delay
+            // ~180ms) so the user reads it as "pill makes space, then
+            // digit drops in". Slight overshoot bezier for a pop.
+            transition:
+                opacity $duration-medium $easing-smooth 180ms,
+                transform $duration-long $easing-overshoot 180ms;
+        }
+
+        &.is-empty {
+            max-width: 0;
+            // Collapse the arrow-gap alongside the width so the lone arrow
+            // centres in the pill.
+            margin-left: 0;
+            // Wait for the digit to disappear before collapsing the wrapper.
+            transition:
+                max-width $duration-reveal $easing-easeout 160ms,
+                margin-left $duration-reveal $easing-easeout 160ms;
+
+            >* {
+                opacity: 0;
+                transform: translateY(4px) scale(0.55);
+                // Disappear fast and with no delay, so the wrapper has
+                // something to wait for.
+                transition:
+                    opacity $duration-fast $easing-easeout,
+                    transform $duration-quick $easing-easeout;
+            }
+        }
+    }
+
+    &__reply-btn {
+        @extend .ms-comment__action-pill;
+        font-size: $font-size-s-fluid;
+
+        // Interactive variant (spot-page button): glyph AND label turn
+        // brand-blue on hover, matching the like pill. The label inherits
+        // `color` from the pill, so setting it here covers it.
+        &:not(.is-static):hover {
+            color: var(--color-text-link);
+
+            .mondo-icon {
+                color: var(--color-text-link);
+            }
+        }
+
+        // Static informational variant (homepage card): the pill itself isn't
+        // clickable — the wrapping MondoLink handles navigation — so suppress
+        // both the inherited bg-hover and any icon/text tint. (Per design, the
+        // homepage replies-count pill must NOT react to hover.)
+        &.is-static:hover {
+            background-color: $color-background-light;
+        }
+    }
+
+    &__reply-count-text {
+        font-size: $font-size-s-fluid;
+    }
+
+    // Deep-link target: we still scroll to #comment-{id}, but per design the
+    // brief background-flash highlight was removed (it read as distracting).
+    // The scroll-margin-top below keeps the sticky header from covering the
+    // landed comment.
+
+    // Avoid sticky-header overlap when scrollIntoView lands on this comment.
+    scroll-margin-top: var(--header-height, 64px);
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: breakpoint-desktop) {}

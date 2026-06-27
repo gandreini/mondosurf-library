@@ -1,0 +1,78 @@
+/**
+ * LAYOUT
+ *
+ * General layout
+ */
+
+/* ------------------------------------ *\
+   #LAYOUT
+\* ------------------------------------ */
+.ms-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ms-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    height: 100%;
+    padding-top: var(--ios-status-bar-margin);
+    padding-bottom: var(--ios-bottom-bar-margin);
+    box-sizing: border-box;
+    // border: 2px solid red;
+}
+
+.ms {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    z-index: $z-index-ms;
+    padding-bottom: $tab-bar-height;
+    overflow-y: auto;
+    background-color: $color-background-base;
+    // border: 2px solid gold;
+}
+
+.ms-content {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: $page-max-width;
+    margin: $space * 3 auto 0 auto;
+    width: 100%;
+    // border: 2px solid blue;
+}
+
+/* ------------------------------------ *\
+   #FOOTER
+\* ------------------------------------ */
+.ms-footer {
+    display: none;
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms {
+        // padding-bottom: 0;
+    }
+
+    .ms-footer {
+        display: block;
+    }
+
+    /* Sticky footer */
+    .is-web .ms {
+        flex: 1 0 auto;
+        margin-bottom: 0;
+        padding-bottom: $space * 1;
+    }
+
+    /* .ms-content {
+        margin: 0 auto $space * 10 auto;
+    } */
+}

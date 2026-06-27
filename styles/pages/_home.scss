@@ -1,0 +1,45 @@
+/**
+ * HOMEPAGE
+ *
+ * Homepage Layout
+ */
+
+/* ------------------------------------ *\
+   #HOMEPAGE
+\* ------------------------------------ */
+.ms-home {
+    .ms-search-form {
+        margin: $space * 5 0;
+    }
+
+    &__banner {
+        max-width: $page-max-width;
+        margin: $space * 4 auto;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-home {
+        padding-bottom: 0;
+
+        &__form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        &__banner {
+            margin: $space * 6 auto;
+        }
+
+        .ms-search-form {
+            max-width: $page-max-width;
+            flex-grow: 1;
+        }
+    }
+}

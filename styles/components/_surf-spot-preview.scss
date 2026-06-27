@@ -1,0 +1,208 @@
+/**
+ * SURF SPOT PREVIEW
+ *
+ * Item that previews a Surf Spot */
+
+/* ------------------------------------ *\
+   #SURF-SPOT-PREVIEW
+\* ------------------------------------ */
+.ms-surf-spot-preview {
+    &__link {
+        position: relative;
+        display: block;
+        @include card;
+        padding: 0;
+    }
+
+    // Breadcrumbs.
+    &__breadcrumbs {
+        display: flex;
+        align-items: center;
+        padding: $space * 0.75 $space * 1.5 $space * 0.4 $space * 1.5;
+        border-bottom: 1px solid white-border-light;
+    }
+
+    &__breadcrumbs-flag {
+        margin-right: $space;
+        font-size: $font-size-l-fluid;
+    }
+
+    &__breadcrumbs-country {
+        font-size: $font-size-s-fluid;
+        color: var(--color-text-light);
+        &:after {
+            content: '\203A';
+            margin-left: $space/2;
+            margin-right: $space/2;
+        }
+    }
+
+    &__breadcrumbs-region {
+        font-size: $font-size-s-fluid;
+        color: var(--color-text-light);
+    }
+
+    &__flag {
+        display: inline-block;
+        width: 30px;
+        margin-right: $space * 0.5;
+    }
+
+    // Header.
+    &__header {
+        position: relative;
+        display: flex;
+        padding: $space * 1.5 $space * 2 $space * 0.5 $space * 2;
+    }
+
+    &__icon {
+        margin-left: -3px;
+        margin-right: $space * 0.75;
+
+        .mondo-icon {
+            font-size: $font-size-xxl;
+            color: var(--color-text);
+        }
+    }
+
+    &__title {
+        margin: $space * 0.25 auto 0 0;
+        padding: 0 $space 0 0;
+        font-weight: $font-weight-bold;
+        line-height: 1.2;
+        color: var(--color-text);
+        transition: all $transition-durations;
+        font-size: $font-size-l-fluid;
+    }
+
+    // Content.
+    &__content {
+        overflow: hidden;
+        padding-bottom: $space;
+    }
+
+    &__row {
+        box-sizing: border-box;
+        padding: $space * 0.5 $space * 2 $space * 0.5 $space * 2;
+    }
+
+    &__label {
+        display: block;
+        font-weight: $font-weight-bold;
+        color: var(--color-text-light);
+        text-transform: uppercase;
+        line-height: 1.1;
+        font-size: $font-size-xxxs-fluid;
+    }
+
+    &__value {
+        display: block;
+        color: var(--color-text);
+        line-height: 1.1;
+        font-size: $font-size-xs-fluid;
+    }
+}
+
+/* ------------------------------------ *\
+   #QUALITY
+\* ------------------------------------ */
+.ms-surf-spot-preview {
+    .ms-surf-spot-preview-quality-icon {
+        position: absolute;
+        top: 8px;
+        left: 29px;
+        text-shadow:
+            -2px -2px 0 $color-background-base,
+            0 -2px 0 $color-background-base,
+            2px -2px 0 $color-background-base,
+            2px 0 0 $color-background-base,
+            2px 2px 0 $color-background-base,
+            0 2px 0 $color-background-base,
+            -2px 2px 0 $color-background-base,
+            -2px 0 0 $color-background-base;
+    }
+
+    .ms-surf-spot-preview-quality-row {
+        display: flex;
+        align-items: center;
+        gap: $space * 0.5;
+        height: $space * 4;
+        // padding-top: $space * 1.25;
+        padding-left: $space * 2;
+        border-top: 1px solid $color-border-light;
+        background-color: $color-background-ultralight;
+        border-radius: 0 0 $border-radius * 2 $border-radius * 2;
+
+        .ms-small-text {
+            margin: 0;
+        }
+
+        &__forecast-text {
+            color: var(--color-text);
+        }
+        &__no-forecast-text {
+        }
+
+        .ms-loader {
+            margin-left: $space;
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #LOADING
+\* ------------------------------------ */
+.ms-surf-spot-preview.is-loading {
+    .ms-surf-spot-preview__link {
+        cursor: default;
+        pointer-events: none;
+    }
+    .ms-surf-spot-preview__icon {
+        width: 30px;
+        height: 30px;
+        @include loading-effect;
+        border-radius: 15px;
+
+        .mondo-icon {
+            display: none;
+        }
+    }
+
+    .ms-surf-spot-preview__title {
+        width: 50%;
+        height: 24px;
+        @include loading-effect;
+    }
+
+    .ms-surf-spot-preview__single-data {
+        width: 100%;
+        height: 20px;
+        @include loading-effect;
+    }
+
+    .ms-surf-spot-preview__label {
+        display: none;
+    }
+}
+
+/* ------------------------------------ *\
+   #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-surf-spot-preview {
+        &__title {
+            margin: 0 auto 0 0;
+        }
+    }
+    /* Hover */
+    .ms-surf-spot-preview:not(.is-loading):hover {
+        .ms-surf-spot-preview__link {
+            @include card-hover;
+        }
+
+        .ms-surf-spot-preview__title,
+        .ms-surf-spot-preview__icon .mondo-icon {
+            color: var(--color-text-link);
+        }
+    }
+}

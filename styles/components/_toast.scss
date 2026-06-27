@@ -1,0 +1,20 @@
+.ms-toast {
+    &__buttons {
+        display: block;
+        margin-top: $space;
+
+        > :not(:last-child) {
+            margin-right: $space;
+        }
+    }
+
+    &__buttons-text-link {
+        padding: 0;
+        margin: 0;
+        color: var(--color-text-inverse);
+        background-color: transparent;
+        border: 0;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

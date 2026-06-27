@@ -1,6 +1,6 @@
 interface IMetadata {
     label?: string;
-    value: string;
+    value: string | React.ReactNode;
     inline?: boolean;
 }
 

@@ -1,0 +1,76 @@
+/**
+ * UTILITIES
+ *
+ * Various utilities classes.
+ */
+
+/* ------------------------------------ *\
+   #HIDDEN
+\* ------------------------------------ */
+.is-hidden {
+    display: none;
+}
+
+/* ------------------------------------ *\
+   #COLORS
+\* ------------------------------------ */
+.ms-color-swell {
+    color: var(--color-chart-swell);
+}
+.ms-color-wind {
+    color: var(--color-chart-wind);
+}
+
+/* ------------------------------------ *\
+   #MAX-HEIGHT-ELEMENTS
+\* ------------------------------------ */
+.ms-max-height {
+    position: relative;
+    max-height: 0px;
+    overflow: hidden;
+
+    &.is-active {
+        cursor: pointer;
+    }
+
+    &.is-active:not(.is-expanded):after {
+        content: ' ';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 42px;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+}
+
+/* ------------------------------------ *\
+   #HORIZONTAL-SCROLL-ELEMENT
+\* ------------------------------------ */
+/* Adds grantients on the side of horizontal scrollable elements */
+.ms-horizontal-scroll {
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; // Hides scrollbar
+    scrollbar-width: none; // Hides scrollbar
+
+    &__left-gradient {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 34px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        pointer-events: none;
+    }
+
+    &__right-gradient {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 34px;
+        background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        pointer-events: none;
+    }
+}
