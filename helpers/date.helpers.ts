@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import { mondoTranslate } from 'proxies/mondoTranslate';
+
 /**
  * Returns the given days in UNIX time (seconds).
  *
@@ -61,9 +64,6 @@ export const extDayFormat = (): string => {
 export const dayMonthYearFormat = (): string => {
     return "D MMM YYYY"
 }
-
-import dayjs from 'dayjs';
-import { mondoTranslate } from 'proxies/mondoTranslate';
 
 /**
  * Returns a friendly, social-style relative timestamp:
