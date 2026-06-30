@@ -12,24 +12,30 @@ interface IAxiosState {
     APIstatus?: string;
 }
 
+// Abort a request that hangs (e.g. a slow search query spiking to several seconds)
+// instead of leaving the UI spinning forever.
+const REQUEST_TIMEOUT_MS = 8000;
+
 export default function useGetFetch(url: string, params?: any) {
 
-    // Abort controller to abort the fetch request.
-    const source = axios.CancelToken.source();
-    const [state, setState] = useState<IAxiosState>({ status: "init", error: null, payload: [] })
+    const [state, setState] = useState<IAxiosState>({ status: "init", error: null, payload: [] });
 
-    // useEffect to launch the fetch.
     useEffect(() => {
 
         if (!url || url === '') {
-            source.cancel('Api is being aborted due to empty URL');
             return;
         }
 
-        // Debug.
+        // Cancel token + stale guard. When the url changes (or the component unmounts)
+        // the cleanup aborts the in-flight request AND flips `ignore`, so a late/slow
+        // response can never overwrite the results of a newer query (last-typed wins,
+        // not last-resolved).
+        const source = axios.CancelToken.source();
+        let ignore = false;
+
         if (isDebug()) console.log("useGetFetch", "url: " + url);
 
-        setState({ ...state, status: "loading" });
+        setState({ status: "loading", error: null, payload: [] });
 
         axios({
             method: "get",
@@ -38,33 +44,38 @@ export default function useGetFetch(url: string, params?: any) {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
+            cancelToken: source.token,
+            timeout: REQUEST_TIMEOUT_MS,
         })
             .then(function (response) {
-                setState({ ...state, status: "loaded", payload: response.data });
+                if (ignore) return;
+                setState({ status: "loaded", payload: response.data });
             })
             .catch(function (error) {
-                if (axios.isCancel(error)) {
-                    setState({ ...state, status: "canceled", error: error, APImessage: error.message });
+                // A cancelled request (a newer query took over, or unmount) is not an error.
+                if (ignore || axios.isCancel(error)) {
+                    return;
+                }
+                if (error.response) {
+                    // The server responded with a status outside the 2xx range.
+                    setState({
+                        status: "error",
+                        error: error,
+                        APIcode: error.response.data?.code,
+                        APImessage: error.response.data?.message,
+                        APIstatus: error.response.status,
+                    });
                 } else {
-                    if (error.response) {
-                        // The request was made and the server responded with a status code that falls out of the range of 2xx.
-                        setState({ ...state, status: "error", error: error, APIcode: error.response.data.code, APImessage: error.response.data.message, APIstatus: error.response.status });
-                    } else if (error.request) {
-                        // The request was made but no response was received, `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in Node.js
-                        // console.log(error.request);
-                        setState({ ...state, status: "error", error: error });
-                    } else {
-                        // Something happened in setting up the request and triggered an Error
-                        // console.log('Error', error.message);
-                        setState({ ...state, status: "error", error: error });
-                    }
+                    // No response received (timeout / network) or a request-setup error.
+                    setState({ status: "error", error: error });
                 }
             });
 
         return function cleanup() {
-            source.cancel('Api is being canceled');
+            ignore = true;
+            source.cancel('Request canceled: query changed or component unmounted');
         };
-    }, [url]); // Fetch launched as the url changes.
+    }, [url]); // re-fetch when the url changes
 
     return state;
 }
