@@ -9,7 +9,7 @@
 }
 @font-palette-values --palette0 {
     font-family: "mondo-icon";
-    base-palette: 0
+    base-palette: 0;
 }
 .mondo-icon, [class^="mondo-icon-"], [class*=" mondo-icon-"] {
     /* Use !important to prevent extensions from overriding this font. */
@@ -27,6 +27,9 @@
 .palette0 {
     font-palette: --palette0;
     color: currentColor;
+}
+.mondo-icon-star-fill:before {
+    content: "\f032";
 }
 .mondo-icon-tab-bar-spots:before {
     content: "\f028";
