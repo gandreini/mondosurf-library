@@ -28,11 +28,11 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
             {props.quality === 0 && (
                 <>
                     <div className="ms-good-time-quality__stars">
-                        <Icon icon={'star'} />
+                        <Icon icon={'star-fill'} />
                         {!props.singleStar && (
                             <>
-                                <Icon icon={'star'} />
-                                <Icon icon={'star'} />
+                                <Icon icon={'star-fill'} />
+                                <Icon icon={'star-fill'} />
                             </>
                         )}
                     </div>
@@ -48,11 +48,11 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
             {props.quality === 1 && (
                 <>
                     <div className="ms-good-time-quality__stars">
-                        <Icon icon={'star'} />
+                        <Icon icon={'star-fill'} />
                         {!props.singleStar && (
                             <>
-                                <Icon icon={'star'} />
-                                <Icon icon={'star'} />
+                                <Icon icon={'star-fill'} />
+                                <Icon icon={'star-fill'} />
                             </>
                         )}
                     </div>
@@ -64,11 +64,11 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
             {props.quality === 2 && (
                 <>
                     <div className="ms-good-time-quality__stars">
-                        <Icon icon={'star'} />
+                        <Icon icon={'star-fill'} />
                         {!props.singleStar && (
                             <>
-                                <Icon icon={'star'} />
-                                <Icon icon={'star'} />
+                                <Icon icon={'star-fill'} />
+                                <Icon icon={'star-fill'} />
                             </>
                         )}
                     </div>
@@ -80,11 +80,11 @@ const GoodTimeQuality: React.FC<IGoodTimeQuality> = (props) => {
             {props.quality === 3 && (
                 <>
                     <div className="ms-good-time-quality__stars">
-                        <Icon icon={'star'} />
+                        <Icon icon={'star-fill'} />
                         {!props.singleStar && (
                             <>
-                                <Icon icon={'star'} />
-                                <Icon icon={'star'} />
+                                <Icon icon={'star-fill'} />
+                                <Icon icon={'star-fill'} />
                             </>
                         )}
                     </div>

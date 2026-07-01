@@ -10,13 +10,18 @@
 .ms-good-time-quality {
     display: flex;
     align-items: center;
+    gap: 1px;
 
     &__stars {
         margin-right: $space * 0.5;
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        justifly-elements: center;
     }
 
     &__text {
-        margin-top: 2px;
+        margin-top: 3px;
         font-size: $font-size-xs;
         text-transform: uppercase;
         font-weight: $font-weight-normal;
@@ -27,7 +32,6 @@
     &__text-1 {
         display: block;
         font-size: $font-size-xs;
-        // color: var(--color-text-light);
     }
     &__text-2 {
         display: block;
@@ -35,8 +39,8 @@
         color: var(--color-text-light);
     }
 
-    .mondo-icon-star {
-        font-size: $font-size-xl;
+    .mondo-icon-star, .mondo-icon-star-fill {
+        font-size: 16px;
         color: $color-background-base;
         -webkit-text-stroke: 1px $color-border-dark;
         text-stroke: 1px $color-border-normal;
@@ -44,14 +48,14 @@
 }
 
 .ms-good-time-quality-0 {
-    .mondo-icon-star:nth-child(1) {
+    .mondo-icon-star-fill:nth-child(1) {
         -webkit-text-stroke: 1px var(--color-forecast-poor);
         text-stroke: 1px var(--color-forecast-poor);
     }
 }
 
 .ms-good-time-quality-1 {
-    .mondo-icon-star:nth-child(1) {
+    .mondo-icon-star-fill:nth-child(1) {
         color: var(--color-forecast-good);
         -webkit-text-stroke: 1px var(--color-forecast-good);
         text-stroke: 1px var(--color-forecast-good);
@@ -59,8 +63,8 @@
 }
 
 .ms-good-time-quality-2 {
-    .mondo-icon-star:nth-child(1),
-    .mondo-icon-star:nth-child(2) {
+    .mondo-icon-star-fill:nth-child(1),
+    .mondo-icon-star-fill:nth-child(2) {
         color: var(--color-forecast-very-good);
         -webkit-text-stroke: 1px var(--color-forecast-very-good);
         text-stroke: 1px var(--color-forecast-very-good);
@@ -68,9 +72,9 @@
 }
 
 .ms-good-time-quality-3 {
-    .mondo-icon-star:nth-child(1),
-    .mondo-icon-star:nth-child(2),
-    .mondo-icon-star:nth-child(3) {
+    .mondo-icon-star-fill:nth-child(1),
+    .mondo-icon-star-fill:nth-child(2),
+    .mondo-icon-star-fill:nth-child(3) {
         color: var(--color-forecast-epic);
         -webkit-text-stroke: 1px var(--color-forecast-epic);
         text-stroke: 1px var(--color-forecast-epic);
@@ -82,7 +86,7 @@
 \* ------------------------------------ */
 .ms-good-time-quality.ms-good-time-quality-s {
     .mondo-icon-star {
-        font-size: 19px;
+        font-size: 16px;
     }
 }
 
