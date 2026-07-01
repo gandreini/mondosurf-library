@@ -40,7 +40,14 @@
         // Snappy with a tiny overshoot so a single-digit ±1 roll feels
         // mechanical without being mushy.
         transition-timing-function: $easing-mechanical;
-        will-change: transform;
+        // NOTE: intentionally NO permanent `will-change: transform`. A
+        // persistent compositing layer made the clipped digit column
+        // rasterise at a degenerate (zero-height) size on FIRST PAINT
+        // inside the Android Capacitor webview — the like count stayed
+        // invisible on the initially-mounted homepage comments and only
+        // appeared once a reflow (tapping "Show more") forced a repaint.
+        // The `transition` above still animates the roll fine without the
+        // hint. Do not re-add will-change without testing on-device.
     }
 
     &__cell {
