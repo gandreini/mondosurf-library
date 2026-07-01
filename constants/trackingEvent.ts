@@ -55,6 +55,8 @@ export enum TrackingEvent {
     PageRegionShow = 'Page Region_Show',
     // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
+    // Search performed (results returned): carries search_term, results_count, zero_results.
+    SearchApi = 'Search_Api',
     PageHomeShow = 'Page Home_Show',
 
     // Banners
