@@ -65,6 +65,11 @@ export enum TrackingEvent {
     WidgetBannerTap = 'Widget Banner_Tap',
     FullForecastGetProBannerTap = 'Full Forecast Get Pro Banner_Tap',
 
+    // Surf-travel affiliate card (River B: guide + full-forecast, web + app).
+    // commonProperties() stamps platform + os, so tap-rate is comparable per platform.
+    AffiliateWidgetShow = 'Affiliate Widget_Show',
+    AffiliateLinkTap = 'Affiliate Link_Tap',
+
     // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',
     PageSpotCommentsShow = 'Page Spot Comments_Show',
