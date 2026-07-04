@@ -55,11 +55,15 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
         const prevLiked = userHasLiked;
         const prevCount = likesCount;
         const nextLiked = !prevLiked;
+        const optimisticCount = Math.max(0, prevCount + (nextLiked ? 1 : -1));
 
-        // Icon flips immediately — instant visual acknowledgement of the click.
-        // The COUNT update is held back: the Odometer roll reveals it at the
-        // end of the cooldown window for a satisfying beat.
+        // Optimistic update: the icon AND the count move immediately, so the
+        // click is unmistakably acknowledged (users watch the number, not the
+        // glyph — a count that doesn't budge reads as "nothing happened"). The
+        // server response reconciles the exact value below; a failure reverts
+        // both. The re-click cooldown is kept, but decoupled from the count.
         setUserHasLiked(nextLiked);
+        setLikesCount(optimisticCount);
         triggerIconPulse();
         setPending(true);
 
@@ -74,24 +78,23 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
                     nextLiked ? TrackingEvent.CommentLikeAddedApi : TrackingEvent.CommentLikeRemovedApi,
                     { spot_id: props.spotId, comment_id: props.commentId }
                 );
-                // Reveal the new count when the cooldown releases (a 2s beat
-                // counted from the click). Until then likesCount stays at its
-                // previous value and the AnimatedNumber sits idle.
+                // Reconcile the optimistic guess with the authoritative server
+                // values (covers drift from a simultaneous toggle in another
+                // tab). Applied immediately — the user already saw the change.
+                setLikesCount(response.likes_count);
+                setUserHasLiked(response.user_has_liked);
+                if (props.onToggle) props.onToggle(response.likes_count, response.user_has_liked);
+                // Honour the cooldown for re-clicking (matches the backend
+                // per-(user, comment) rate-limit window).
                 const elapsed = Date.now() - startedAt;
                 const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
-                window.setTimeout(() => {
-                    setLikesCount(response.likes_count);
-                    // Re-sync in case the server's idea of liked-state drifted
-                    // (e.g. simultaneous toggle from another tab).
-                    setUserHasLiked(response.user_has_liked);
-                    setPending(false);
-                    if (props.onToggle) props.onToggle(response.likes_count, response.user_has_liked);
-                }, remaining);
+                window.setTimeout(() => setPending(false), remaining);
             })
             .catch((error: any) => {
-                // Revert the icon immediately on failure — don't make the user
-                // wait the full cooldown to find out their click was rejected.
+                // Revert the optimistic update — both icon and count — so the UI
+                // reflects reality when the request is rejected.
                 setUserHasLiked(prevLiked);
+                setLikesCount(prevCount);
                 triggerIconPulse();
                 // Suppress the toast for rate-limit (the cooldown is the
                 // user-facing guard; 429 is just an edge-case safety net).
@@ -102,10 +105,6 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
                 const elapsed = Date.now() - startedAt;
                 const remaining = Math.max(0, LIKE_COOLDOWN_MS - elapsed);
                 window.setTimeout(() => setPending(false), remaining);
-                // Keep prevCount referenced to silence the unused-var linter
-                // and document the intent: we deliberately never touched
-                // likesCount, so there's nothing to revert here.
-                void prevCount;
             });
     };
 
@@ -127,7 +126,7 @@ const LikeButton: React.FC<ILikeButton> = (props) => {
             aria-pressed={userHasLiked}
             aria-label={mondoTranslate(userHasLiked ? 'comments.unlike_aria_label' : 'comments.like_aria_label')}>
             <span className={`ms-comment__like-icon${iconPulsing ? ' is-popping' : ''}`}>
-                <Icon icon={userHasLiked ? 'upvote-fill' : 'upvote'} />
+                <Icon icon={userHasLiked ? 'thumbs-up-fill' : 'thumbs-up'} />
             </span>
             {/* Wrapper is always mounted so the 0 ↔ 1 boundary can animate
                 (expand/collapse). The CSS `.is-empty` class collapses the

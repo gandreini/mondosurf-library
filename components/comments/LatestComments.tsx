@@ -3,7 +3,6 @@
 import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import Comment from 'mondosurf-library/components/comments/Comment';
 import { IComment } from 'mondosurf-library/model/iComment';
-import MondoLink from 'proxies/MondoLink';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -60,27 +59,26 @@ const LatestComments: React.FC = (props) => {
                         <List
                             pageSize={4}
                             components={fetchedComments.payload.map((comment: IComment) => (
-                                <MondoLink
+                                <Comment
                                     key={comment.ID}
-                                    href={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}#comment-${comment.ID}`}>
-                                    <Comment
-                                        comment_text={comment.comment_text}
-                                        comment_author_name={
-                                            comment.comment_author_name ? comment.comment_author_name.split(' ')[0] : ''
-                                        }
-                                        comment_author_id={comment.comment_author_id}
-                                        comment_date={comment.comment_date}
-                                        commented_resource_id={comment.commented_resource_id}
-                                        commented_spot_name={comment.commented_spot_name}
-                                        commented_spot_slug={comment.commented_spot_slug}
-                                        ID={comment.ID}
-                                        expandable={false}
-                                        likes_count={comment.likes_count}
-                                        user_has_liked={comment.user_has_liked}
-                                        is_deleted={comment.is_deleted}
-                                        reply_count={comment.reply_count}
-                                    />
-                                </MondoLink>
+                                    href={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}#comment-${comment.ID}`}
+                                    replyHref={`surf-spot/${comment.commented_spot_slug}/comments/${comment.commented_resource_id}?reply=1#comment-${comment.ID}`}
+                                    comment_text={comment.comment_text}
+                                    comment_author_name={
+                                        comment.comment_author_name ? comment.comment_author_name.split(' ')[0] : ''
+                                    }
+                                    comment_author_id={comment.comment_author_id}
+                                    comment_date={comment.comment_date}
+                                    commented_resource_id={comment.commented_resource_id}
+                                    commented_spot_name={comment.commented_spot_name}
+                                    commented_spot_slug={comment.commented_spot_slug}
+                                    ID={comment.ID}
+                                    expandable={false}
+                                    likes_count={comment.likes_count}
+                                    user_has_liked={comment.user_has_liked}
+                                    is_deleted={comment.is_deleted}
+                                    reply_count={comment.reply_count}
+                                />
                             ))}
                         />
                     </ul>

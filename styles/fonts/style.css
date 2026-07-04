@@ -20,6 +20,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.mondo-icon-thumbs-up:before {
+    content: "\f033";
+}
+.mondo-icon-thumbs-up-fill:before {
+    content: "\f034";
+}
 .mondo-icon-tab-bar-spots:before {
     content: "\f028";
 }

@@ -11,6 +11,7 @@ import { IComment } from 'mondosurf-library/model/iComment';
 import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
+import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useSelector } from 'react-redux';
 
@@ -23,6 +24,14 @@ interface ICommentProps extends IComment {
     onReplyClick?: () => void;
     // Whether the inline ReplyForm is currently open below this comment.
     replyFormOpen?: boolean;
+    // When set (homepage "Latest comments"), the header + text become a link to
+    // this href. The actions bar (Like/Reply) is deliberately left OUTSIDE the
+    // link, so a near-miss on Like never triggers navigation.
+    href?: string;
+    // When set (homepage), the Reply pill becomes a link to the spot's comments
+    // page with reply intent (?reply=1) — the user lands there with that
+    // comment's reply field focused.
+    replyHref?: string;
 }
 
 const Comment: React.FC<ICommentProps> = (props) => {
@@ -64,18 +73,15 @@ const Comment: React.FC<ICommentProps> = (props) => {
         });
     };
 
-    const canDelete = props.allow_editing
-        && login === 'yes'
-        && !!props.ID
-        && userIdRedux === props.comment_author_id
-        && !isDeleted;
+    const canDelete =
+        props.allow_editing && login === 'yes' && !!props.ID && userIdRedux === props.comment_author_id && !isDeleted;
 
-    return (
-        <li
-            id={`comment-${props.ID}`}
-            className={`ms-comment${isDeleted ? ' is-deleted' : ''}${isReply ? ' is-reply' : ''}`}
-            data-test="comment"
-            data-comment-id={props.ID}>
+    // Header + text form the navigable region. On the homepage (href set) they
+    // are wrapped in a link to the spot's comments; the actions bar below is
+    // rendered OUTSIDE this so Like/Reply are never inside the navigation link.
+    // (href and canDelete never coexist: the homepage never passes allow_editing.)
+    const body = (
+        <>
             <div className="ms-comment__header">
                 <div className="ms-comment__header-left">
                     {props.commented_spot_name && (
@@ -120,6 +126,22 @@ const Comment: React.FC<ICommentProps> = (props) => {
                     )}
                 </p>
             </div>
+        </>
+    );
+
+    return (
+        <li
+            id={`comment-${props.ID}`}
+            className={`ms-comment${isDeleted ? ' is-deleted' : ''}${isReply ? ' is-reply' : ''}`}
+            data-test="comment"
+            data-comment-id={props.ID}>
+            {props.href ? (
+                <MondoLink href={props.href} className="ms-comment__link">
+                    {body}
+                </MondoLink>
+            ) : (
+                body
+            )}
             {!isDeleted && (
                 <div className="ms-comment__actions">
                     <LikeButton
@@ -128,13 +150,15 @@ const Comment: React.FC<ICommentProps> = (props) => {
                         likesCount={props.likes_count ?? 0}
                         userHasLiked={props.user_has_liked ?? false}
                     />
-                    {/* Reply pill — top-level only. Picks interactive (button)
-                        vs static (span + count) flavor based on onReplyClick. */}
+                    {/* Reply pill — top-level only. Variant is chosen by props:
+                        onReplyClick → button (spot), replyHref → link (home),
+                        neither → static count. */}
                     {!isReply && (
                         <ReplyPill
                             onClick={props.onReplyClick}
                             replyFormOpen={props.replyFormOpen}
                             count={props.reply_count}
+                            href={props.replyHref}
                         />
                     )}
                 </div>
