@@ -186,7 +186,24 @@ export const logout = (accessToken: string, deviceId: string) => {
 };
 
 /**
+ * Tells apart a definitive auth rejection from a transient failure.
+ * Only a 4xx response from the server means the session is really invalid:
+ * network errors (no response at all, timeouts) and 5xx must NOT log the
+ * user out, or a connectivity blip destroys a perfectly valid session.
+ */
+const isDefinitiveAuthRejection = (error: any): boolean => {
+    const status = error?.response?.status;
+    return typeof status === 'number' && status >= 400 && status < 500;
+};
+
+// Single-flight guard: only one refresh-token request may be in flight.
+// Refresh tokens are single-use (rotated server-side), so two concurrent
+// refresh calls would consume the same token twice and kill the session.
+let refreshTokenInFlight: Promise<any> | null = null;
+
+/**
  * Refreshes the access and refresh token.
+ * Concurrent calls share the same in-flight request (single-flight).
  *
  * Endpoint: 'refresh-token'
  *
@@ -201,11 +218,15 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
     const storageRefreshToken: string = state.user.capacitorRefreshToken; // Redux
     const appIsOnline: boolean = state.appStatus.online; // Redu
 
+    if (refreshTokenInFlight) {
+        return refreshTokenInFlight;
+    }
+
     if (isApp() && !appIsOnline) {
         toastService.error(mondoTranslate('toast.offline'), 'data-test-offline', 4000);
         return Promise.reject('App offline');
     } else {
-        return axios({
+        refreshTokenInFlight = axios({
             method: 'post',
             url: JWT_API_URL! + 'refresh-token',
             withCredentials: true, // Cookies should be included in cross-site requests
@@ -228,15 +249,23 @@ export const refreshToken = (accessToken: string, deviceId: string) => {
                             store.dispatch(setCapacitorRefreshToken(response.data.refresh_token)); // Redux
                         }
                     } else {
+                        // Explicit server rejection (success === false): the session is gone.
                         handleActualLogout('Refresh token failed', response);
                     }
                     return response;
                 }
             })
             .catch(function (error) {
-                handleActualLogout('Refresh token failed (error)', error);
+                if (isDefinitiveAuthRejection(error)) {
+                    handleActualLogout('Refresh token rejected', error);
+                }
+                // Transient failure (network/timeout/5xx): keep the session, caller may retry later.
                 throw error;
+            })
+            .finally(() => {
+                refreshTokenInFlight = null;
             });
+        return refreshTokenInFlight;
     }
 };
 
@@ -281,11 +310,20 @@ export const checkIfUserIsLoggedOnOpen = (deviceId: string, userId: number | nul
                 // iOS: Logs in the user to Revenue Cat
                 // if (isAppiOs()) revenueCatRecognizeUser(response.data.user_id);
             } else {
+                // Explicit server response with success === false: the session is really invalid.
                 handleActualLogout('checkIfUserIsLoggedOnOpen failed', response);
             }
         })
         .catch(function (error) {
-            handleActualLogout('checkIfUserIsLoggedOnOpen failed (error)', error);
+            if (isDefinitiveAuthRejection(error)) {
+                handleActualLogout('checkIfUserIsLoggedOnOpen failed (error)', error);
+            } else if (store.getState().user.logged !== 'yes') {
+                // Transient failure (network/timeout/5xx) on cold start: no session in
+                // memory yet, so mark the user as not logged BUT keep the stored refresh
+                // token, so the next re-auth attempt can restore the session.
+                store.dispatch(setLogin('no'));
+            }
+            // Transient failure on warm resume: user is already logged in memory, leave everything untouched.
         });
 };
 
