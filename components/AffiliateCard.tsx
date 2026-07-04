@@ -1,6 +1,6 @@
 'use client';
 
-import { AffiliateKind, buildAffiliateLink, RiverBTemplate } from 'mondosurf-library/helpers/affiliate.helpers';
+import { AffiliateCoords, AffiliateKind, buildAffiliateLink, RiverBTemplate } from 'mondosurf-library/helpers/affiliate.helpers';
 import { trackAffiliateLinkTap, trackAffiliateWidgetShow } from 'mondosurf-library/helpers/affiliateTracking.helpers';
 import { RootState } from 'mondosurf-library/redux/store';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
@@ -12,6 +12,12 @@ interface IAffiliateCard {
     template: RiverBTemplate;
     /** Region (else country) label — already resolved by the caller (non-empty). */
     destinationLabel: string;
+    /**
+     * Spot coordinates for the hotel search — already resolved by the caller via
+     * resolveAffiliateCoords (null for hide_location spots, so the hotel link
+     * falls back to a destination-name search and never leaks the break).
+     */
+    coords?: AffiliateCoords | null;
     /**
      * How to open the outbound link. Omitted on web → the link is a real
      * <a target="_blank"> and the browser opens a new tab. Provided in the native
@@ -28,12 +34,10 @@ interface Program {
     cta: string;
 }
 
-// Hotel first (the v2-gate predictor) — hidden until its link is live (Booking
-// pending TP approval); activity (Klook) is live now.
-const PROGRAMS: Program[] = [
-    { kind: 'hotel', emoji: '🏨', title: 'Where to stay', cta: 'Find hotels' },
-    { kind: 'activity', emoji: '🏄', title: 'Things to do', cta: 'Explore activities & tours' }
-];
+// Hotel only (the v2-gate predictor) — live as a plain Booking search (unaffiliated
+// until TP approves, see buildAffiliateLink). The Klook activity banner was dropped
+// as noise; its link builder stays in affiliate.helpers.ts if it ever comes back.
+const PROGRAMS: Program[] = [{ kind: 'hotel', emoji: '🏨', title: 'Where to stay', cta: 'Find hotels' }];
 
 /**
  * Native surf-travel affiliate card on River B pages/screens. Renders one
@@ -42,7 +46,7 @@ const PROGRAMS: Program[] = [
  * post-mount reveal. Shared by mondosurf-web and mondosurf-app — the only
  * platform difference is how the outbound link opens (see `openHref`).
  */
-export default function AffiliateCard({ spotId, template, destinationLabel, openHref }: IAffiliateCard) {
+export default function AffiliateCard({ spotId, template, destinationLabel, coords, openHref }: IAffiliateCard) {
     const logged = useSelector((s: RootState) => s.user.logged);
     const authorizedTracking = useSelector((s: RootState) => s.user.authorizedTracking);
     const [visible, setVisible] = useState(false);
@@ -75,10 +79,7 @@ export default function AffiliateCard({ spotId, template, destinationLabel, open
 
     if (!visible) return null;
 
-    const programs = PROGRAMS.map((p) => ({ ...p, href: buildAffiliateLink(p.kind, destinationLabel) })).filter(
-        (p): p is Program & { href: string } => Boolean(p.href)
-    );
-    if (programs.length === 0) return null;
+    const programs = PROGRAMS.map((p) => ({ ...p, href: buildAffiliateLink(p.kind, destinationLabel, coords) }));
 
     // Track the tap, then let the browser follow the link (web) or hand off to the
     // system browser (app). One handler, so both platforms share identical markup.
@@ -91,8 +92,7 @@ export default function AffiliateCard({ spotId, template, destinationLabel, open
     };
 
     return (
-        <div ref={cardRef} className="ms-affiliate-card" data-test="affiliate-card">
-            <p className="ms-h3-title ms-affiliate-card__title">Planning a trip to {destinationLabel}?</p>
+        <div ref={cardRef} className={`ms-affiliate-card ms-affiliate-card--${template}`} data-test="affiliate-card">
             <section className="ms-grid-1-2">
                 {programs.map((p) => (
                     <a
@@ -108,15 +108,14 @@ export default function AffiliateCard({ spotId, template, destinationLabel, open
                             {p.emoji}
                         </span>
                         <div className="ms-banner__texts">
-                            <p className="ms-h3-title ms-banner__text">{p.title}</p>
+                            <p className="ms-h3-title ms-banner__text">
+                                {p.title} in {destinationLabel}
+                            </p>
                             <p className="ms-banner__subtext ms-small-text">{p.cta} →</p>
                         </div>
                     </a>
                 ))}
             </section>
-            <p className="ms-small-text ms-affiliate-card__disclosure">
-                Affiliate links — we may earn a commission.
-            </p>
         </div>
     );
 }

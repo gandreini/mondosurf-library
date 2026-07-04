@@ -43,15 +43,42 @@ export function resolveAffiliateDestination(spot: AffiliateDestinationInput): st
     return spot.region_name?.trim() || spot.country?.trim() || null;
 }
 
+export interface AffiliateCoords {
+    lat: number;
+    lng: number;
+}
+
 /**
- * Build the affiliate deep link for a program kind, targeted at `place`
- * (a resolved region/country), or null when that program isn't live yet.
+ * Resolve the coordinates the hotel search may be centered on. Returns null for
+ * hide_location spots — a map search centered on the exact break would leak the
+ * hidden location — and when coords are missing; buildAffiliateLink then falls
+ * back to a destination-name search.
  */
-export function buildAffiliateLink(kind: AffiliateKind, place: string): string | null {
+export function resolveAffiliateCoords(spot: {
+    lat?: number;
+    lng?: number;
+    hide_location?: boolean;
+}): AffiliateCoords | null {
+    if (spot.hide_location) return null;
+    return typeof spot.lat === 'number' && typeof spot.lng === 'number' ? { lat: spot.lat, lng: spot.lng } : null;
+}
+
+/**
+ * Build the outbound link for a program kind, targeted at `place`
+ * (a resolved region/country) and, for hotels, `coords` when available.
+ */
+export function buildAffiliateLink(kind: AffiliateKind, place: string, coords?: AffiliateCoords | null): string {
     if (kind === 'activity') {
         const target = `https://www.klook.com/en-US/search/?query=${encodeURIComponent(place)}`;
         return `${KLOOK_REDIRECT}?aid=${encodeURIComponent(KLOOK_AID)}&k_site=${encodeURIComponent(target)}`;
     }
-    // hotel: Booking pending TP approval (requested 2026-06-29) — button hidden until then.
-    return null;
+    // hotel: plain (non-affiliated) Booking search for now — the TP Booking program
+    // is still pending approval (requested 2026-06-29). Shipped plain so the button
+    // is live and taps are measured in-house (trackAffiliateLinkTap), giving the
+    // click baseline the board asked for. Once TP approves, wrap this URL in the
+    // tp.media deep link generated from the dashboard — only this branch changes.
+    if (coords) {
+        return `https://www.booking.com/searchresults.html?latitude=${coords.lat}&longitude=${coords.lng}&dest_type=latlong&radius=20&order=distance_from_search`;
+    }
+    return `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(place)}`;
 }
