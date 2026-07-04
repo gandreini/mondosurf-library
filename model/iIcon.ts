@@ -49,6 +49,8 @@ export interface IIcon {
         | 'trash'
         | 'upvote'
         | 'upvote-fill'
+        | 'thumbs-up'
+        | 'thumbs-up-fill'
         | 'wave'
         | 'wave-a-frame'
         | 'wave-left'

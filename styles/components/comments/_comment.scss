@@ -5,10 +5,19 @@
  */
 
 /* ------------------------------------ *\
-    #COMMENT  
+    #COMMENT
 \* ------------------------------------ */
 .ms-comment {
     padding-bottom: $space * 2.5;
+
+    // Navigable region wrapper (homepage "Latest comments"). Wraps header +
+    // text only — the actions bar sits OUTSIDE it, so a near-miss on Like/Reply
+    // can't trigger navigation. Resets the anchor's default text styling.
+    &__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
 
     &__header {
         display: flex;
@@ -102,7 +111,11 @@
         font-weight: $font-weight-normal;
         line-height: 1;
         cursor: pointer;
-        transition: background-color 120ms ease, color 120ms ease;
+        // No underline when the pill is rendered as an <a> (homepage reply link).
+        text-decoration: none;
+        transition:
+            background-color 120ms ease,
+            color 120ms ease;
 
         .mondo-icon {
             // display:block + line-height:1 strips the descent space the icon
@@ -131,8 +144,8 @@
         // gap zeroed, an empty count reserves no space, so the lone arrow stays
         // centred in the pill (equal left/right padding).
         gap: 0;
-        // The liked state is conveyed solely by the glyph swap (upvote →
-        // upvote-fill). No background, text colour, or icon tint change —
+        // The liked state is conveyed solely by the glyph swap (thumbs-up →
+        // thumbs-up-fill). No background, text colour, or icon tint change —
         // the filled arrow on its own is the indicator.
 
         // Hover: tint both the glyph AND the count text brand-blue (in
@@ -205,7 +218,7 @@
             max-width $duration-reveal $easing-mechanical,
             margin-left $duration-reveal $easing-mechanical;
 
-        >* {
+        > * {
             display: inline-flex;
             opacity: 1;
             transform: translateY(0) scale(1);
@@ -228,7 +241,7 @@
                 max-width $duration-reveal $easing-easeout 160ms,
                 margin-left $duration-reveal $easing-easeout 160ms;
 
-            >* {
+            > * {
                 opacity: 0;
                 transform: translateY(4px) scale(0.55);
                 // Disappear fast and with no delay, so the wrapper has
@@ -255,8 +268,8 @@
             }
         }
 
-        // Static informational variant (homepage card): the pill itself isn't
-        // clickable — the wrapping MondoLink handles navigation — so suppress
+        // Static informational variant (homepage card): the pill isn't
+        // clickable and sits OUTSIDE the card's navigation link, so suppress
         // both the inherited bg-hover and any icon/text tint. (Per design, the
         // homepage replies-count pill must NOT react to hover.)
         &.is-static:hover {
@@ -280,4 +293,5 @@
 /* ------------------------------------ *\
     #MEDIA-QUERIES
 \* ------------------------------------ */
-@media all and (min-width: breakpoint-desktop) {}
+@media all and (min-width: breakpoint-desktop) {
+}

@@ -5,6 +5,7 @@ import useAuthGetFetch from 'mondosurf-library/api/useAuthGetFetch';
 import CommentThread from 'mondosurf-library/components/comments/CommentThread';
 import CommentsForm from 'mondosurf-library/components/comments/CommentsForm';
 import SkeletonLoader from 'mondosurf-library/components/SkeletonLoader';
+import { withLoginGate } from 'mondosurf-library/helpers/auth.helpers';
 import { scrollToCommentFromHash } from 'mondosurf-library/helpers/scrollToComment.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { mondoTranslate } from 'proxies/mondoTranslate';
@@ -42,6 +43,15 @@ const Comments: React.FC<IComments> = (props) => {
         if (match) setFocusedCommentId(parseInt(match[1], 10));
     }, []);
 
+    // Read the "open reply" intent (?reply=1) that the homepage reply pill adds
+    // to its link. When present we open + focus that comment's reply form on
+    // arrival (see effect below).
+    const [wantsReply, setWantsReply] = useState<boolean>(false);
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (new URLSearchParams(window.location.search).get('reply') === '1') setWantsReply(true);
+    }, []);
+
     // Fetch comments
     useEffect(() => {
         setCommentsQuery('comments/' + props.resourceId);
@@ -59,6 +69,12 @@ const Comments: React.FC<IComments> = (props) => {
     useEffect(() => {
         if (hasScrolledToHashRef.current) return;
         if (!focusedCommentId || fetchedComments.status !== 'loaded') return;
+        // Reply intent: the ReplyForm centres itself on mount, so let it own the
+        // scroll and skip the hash scroll to avoid two competing smooth scrolls.
+        if (wantsReply) {
+            hasScrolledToHashRef.current = true;
+            return;
+        }
         // Defer to the next animation frame so the comments React just queued
         // are committed to the DOM before we look them up by id.
         const handle = window.requestAnimationFrame(() => {
@@ -66,7 +82,22 @@ const Comments: React.FC<IComments> = (props) => {
             hasScrolledToHashRef.current = true;
         });
         return () => window.cancelAnimationFrame(handle);
-    }, [focusedCommentId, fetchedComments.status]);
+    }, [focusedCommentId, fetchedComments.status, wantsReply]);
+
+    // Honour the homepage reply intent: once the list has loaded and we know the
+    // target comment, open its reply form. ReplyForm auto-focuses the textarea
+    // and scrolls itself into view on mount. One-shot.
+    const hasOpenedReplyRef = useRef<boolean>(false);
+    useEffect(() => {
+        if (hasOpenedReplyRef.current) return;
+        if (!wantsReply || !focusedCommentId || fetchedComments.status !== 'loaded') return;
+        hasOpenedReplyRef.current = true;
+        // Same gate as the in-page Reply button: prompt login first when needed,
+        // then open + focus the target comment's reply form.
+        withLoginGate('replyButton', 'comments.login_modal_text_reply', () => {
+            setOpenReplyCommentId(focusedCommentId);
+        });
+    }, [wantsReply, focusedCommentId, fetchedComments.status]);
 
     const refreshComments = () => {
         setCommentsQuery('comments/' + props.resourceId + '?timestamp=' + new Date().getTime());
