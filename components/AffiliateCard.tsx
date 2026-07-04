@@ -2,10 +2,7 @@
 
 import { AffiliateCoords, AffiliateKind, buildAffiliateLink, RiverBTemplate } from 'mondosurf-library/helpers/affiliate.helpers';
 import { trackAffiliateLinkTap, trackAffiliateWidgetShow } from 'mondosurf-library/helpers/affiliateTracking.helpers';
-import { RootState } from 'mondosurf-library/redux/store';
-import { Tracker } from 'mondosurf-library/tracker/tracker';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 interface IAffiliateCard {
     spotId: number;
@@ -41,28 +38,19 @@ const PROGRAMS: Program[] = [{ kind: 'hotel', emoji: '🏨', title: 'Where to st
 
 /**
  * Native surf-travel affiliate card on River B pages/screens. Renders one
- * outbound card per live program (Travelpayouts deep links). Consent-gated like
- * GA4 and client-only (the gate reads document.cookie), so it mounts as a
- * post-mount reveal. Shared by mondosurf-web and mondosurf-app — the only
- * platform difference is how the outbound link opens (see `openHref`).
+ * outbound card per live program. Shown to everyone — the tracking calls
+ * self-gate on consent inside Tracker.trackEvent, so non-consented users see
+ * the card but fire no events. Shared by mondosurf-web and mondosurf-app — the
+ * only platform difference is how the outbound link opens (see `openHref`).
  */
 export default function AffiliateCard({ spotId, template, destinationLabel, coords, openHref }: IAffiliateCard) {
-    const logged = useSelector((s: RootState) => s.user.logged);
-    const authorizedTracking = useSelector((s: RootState) => s.user.authorizedTracking);
-    const [visible, setVisible] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
     const shownRef = useRef(false);
-
-    // Consent gate — evaluated client-side only (reads document.cookie + store);
-    // re-runs if auth/consent state settles or changes.
-    useEffect(() => {
-        setVisible(Tracker.trackingIsActive());
-    }, [logged, authorizedTracking]);
 
     // Impression event — fire once when the card enters the viewport.
     useEffect(() => {
         const el = cardRef.current;
-        if (!visible || !el || shownRef.current) return;
+        if (!el || shownRef.current) return;
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries.some((e) => e.isIntersecting) && !shownRef.current) {
@@ -75,9 +63,7 @@ export default function AffiliateCard({ spotId, template, destinationLabel, coor
         );
         observer.observe(el);
         return () => observer.disconnect();
-    }, [visible, spotId, template]);
-
-    if (!visible) return null;
+    }, [spotId, template]);
 
     const programs = PROGRAMS.map((p) => ({ ...p, href: buildAffiliateLink(p.kind, destinationLabel, coords) }));
 
