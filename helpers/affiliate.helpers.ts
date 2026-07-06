@@ -23,6 +23,36 @@ export type RiverBTemplate = 'guide' | 'full-forecast';
 const KLOOK_AID = 'api|13694|e4d22a4e60f242879f0f43b23-744664|pid|744664';
 const KLOOK_REDIRECT = 'https://affiliate.klook.com/redirect';
 
+/**
+ * Travelpayouts deep-link identifiers for the Booking.com program (approved
+ * 2026-07-06, this project's marker 744664). `campaign_id`/`p` identify the
+ * Booking program within TP; `trs` is the traffic source for the Mondo project.
+ * Read from the dashboard's "Full link" form of a generated Booking link.
+ */
+const BOOKING_TP = { campaignId: '84', p: '2076', marker: '744664', trs: '544505' } as const;
+
+/**
+ * Wrap a full booking.com deep link in the tp.media redirect so the tap is
+ * attributed to marker 744664. Attribution happens via this redirect (it mints
+ * a per-click id and applies the marker) — NOT via any `aid=` on the booking.com
+ * URL — so the destination MUST be routed through tp.media, never linked direct.
+ * The whole destination URL is URL-encoded into `u=` (tp.media decodes it once),
+ * which keeps its own lat/lng/date query params intact. `sub_id` carries the
+ * destination for TP-side reporting, independent of the consent-gated in-house
+ * tracking (trackAffiliateLinkTap).
+ */
+function wrapBookingTp(destinationUrl: string, subId: string): string {
+    const params = new URLSearchParams({
+        campaign_id: BOOKING_TP.campaignId,
+        p: BOOKING_TP.p,
+        marker: BOOKING_TP.marker,
+        trs: BOOKING_TP.trs,
+        sub_id: subId,
+        u: destinationUrl,
+    });
+    return `https://tp.media/r?${params.toString()}`;
+}
+
 export interface AffiliateDestinationInput {
     /** Surf region display name, e.g. "Lombok" (ISurfSpot.region_name). */
     region_name?: string;
@@ -72,13 +102,11 @@ export function buildAffiliateLink(kind: AffiliateKind, place: string, coords?: 
         const target = `https://www.klook.com/en-US/search/?query=${encodeURIComponent(place)}`;
         return `${KLOOK_REDIRECT}?aid=${encodeURIComponent(KLOOK_AID)}&k_site=${encodeURIComponent(target)}`;
     }
-    // hotel: plain (non-affiliated) Booking search for now — the TP Booking program
-    // is still pending approval (requested 2026-06-29). Shipped plain so the button
-    // is live and taps are measured in-house (trackAffiliateLinkTap), giving the
-    // click baseline the board asked for. Once TP approves, wrap this URL in the
-    // tp.media deep link generated from the dashboard — only this branch changes.
-    if (coords) {
-        return `https://www.booking.com/searchresults.html?latitude=${coords.lat}&longitude=${coords.lng}&dest_type=latlong&radius=20&order=distance_from_search`;
-    }
-    return `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(place)}`;
+    // hotel: route the Booking deep link through Travelpayouts (program approved
+    // 2026-07-06). Same coords-centered search as before — now wrapped in tp.media
+    // so the tap is attributed to marker 744664. See wrapBookingTp.
+    const dest = coords
+        ? `https://www.booking.com/searchresults.html?latitude=${coords.lat}&longitude=${coords.lng}&dest_type=latlong&radius=20&order=distance_from_search`
+        : `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(place)}`;
+    return wrapBookingTp(dest, place);
 }

@@ -26,7 +26,10 @@ export const MAIN_CONTACT_EMAIL = 'hello@mondo.surf';
 // Dev override (REACT_APP_GEOJSON_FILE_URL in the app's .env / NEXT_PUBLIC_ in web): the prod
 // API's anti-scraping allowlist 403s a non-prod Origin (the CORS preflight can't carry X-MS-Auth),
 // so in dev point this at a same-origin copy served from public/. Unset in prod → prod URL.
-export const GEOJSON_FILE_URL = process.env.REACT_APP_GEOJSON_FILE_URL || process.env.NEXT_PUBLIC_GEOJSON_FILE_URL || 'https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json';
+export const GEOJSON_FILE_URL =
+    process.env.REACT_APP_GEOJSON_FILE_URL ||
+    process.env.NEXT_PUBLIC_GEOJSON_FILE_URL ||
+    'https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json';
 
-export const APP_LATEST_VERSION = '4.19.1';
-export const APP_LATEST_VERSION_PROGRESSIVE = 72;
+export const APP_LATEST_VERSION = '4.19.2';
+export const APP_LATEST_VERSION_PROGRESSIVE = 73;
