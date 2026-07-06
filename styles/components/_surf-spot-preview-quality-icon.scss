@@ -1,0 +1,17 @@
+/* ------------------------------------ *\
+   #QUALITY — icon
+\* ------------------------------------ */
+.ms-surf-spot-preview-quality-icon {
+    position: absolute;
+    top: 8px;
+    left: 29px;
+    text-shadow:
+        -2px -2px 0 $color-background-base,
+        0 -2px 0 $color-background-base,
+        2px -2px 0 $color-background-base,
+        2px 0 0 $color-background-base,
+        2px 2px 0 $color-background-base,
+        0 2px 0 $color-background-base,
+        -2px 2px 0 $color-background-base,
+        -2px 0 0 $color-background-base;
+}

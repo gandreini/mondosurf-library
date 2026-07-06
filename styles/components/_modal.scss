@@ -291,16 +291,6 @@
     .ms-btn-cta {
         @extend .ms-btn-danger;
     }
-
-    .ms-delete-account-modal {
-        display: flex;
-        flex-direction: column;
-        gap: $space * 2;
-
-        input[type='text'] {
-            width: 100%;
-        }
-    }
 }
 
 /* ------------------------------------ *\

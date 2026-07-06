@@ -25,14 +25,14 @@ const SurfSpotPreviewQualityRow: React.FC<ISurfSpotPreviewQualityRow> = ({ spotI
         <>
             {/* Loading */}
             {fetchedQuality.status === 'loading' && (
-                <div className="ms-surf-spot-preview__row ms-surf-spot-preview-quality-row">
+                <div className="ms-surf-spot-preview-quality-row ms-surf-spot-preview__row">
                     <Loader size="small" />
                 </div>
             )}
 
             {/* Spot Quality */}
             {fetchedQuality.status === 'loaded' && surfForecastEnabled && surfQuality !== null && (
-                <div className="ms-surf-spot-preview__row ms-surf-spot-preview-quality-row">
+                <div className="ms-surf-spot-preview-quality-row ms-surf-spot-preview__row">
                     <span className="ms-surf-spot-preview-quality-row__forecast-text ms-small-text">Next 7 days:</span>
                     <GoodTimeQuality quality={surfQuality} size="s" />
                 </div>
@@ -40,7 +40,7 @@ const SurfSpotPreviewQualityRow: React.FC<ISurfSpotPreviewQualityRow> = ({ spotI
 
             {/* No forecast for the spot */}
             {fetchedQuality.status === 'loaded' && !surfForecastEnabled && (
-                <div className="ms-surf-spot-preview__row ms-surf-spot-preview-quality-row">
+                <div className="ms-surf-spot-preview-quality-row ms-surf-spot-preview__row">
                     <span className="ms-surf-spot-preview-quality-row__no-forecast-text ms-small-text">
                         No forecast for this spot
                     </span>
