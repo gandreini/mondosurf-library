@@ -33,3 +33,28 @@ export function trackDescriptionLinkClick(event: MouseEvent<HTMLElement>, spotId
 
     return href;
 }
+
+/**
+ * Classifies a description link by destination. Returns the INTERNAL path
+ * (pathname + search + hash) when `href` points inside Mondo — an absolute
+ * mondo.surf URL (any subdomain) or a root-relative path — so the caller can
+ * navigate in-app via the router / same tab. Returns null for EXTERNAL links,
+ * which the caller opens in a new tab (web) or the system browser (mobile).
+ *
+ * Pure and platform-agnostic on purpose: the same internal/external decision is
+ * needed on web and mobile, and mirrors the WP-side link policy in
+ * StringHelper::format_description(). Keep the one source of truth here.
+ */
+export function internalMondoPath(href: string): string | null {
+    // Root-relative link (no host) is internal by definition.
+    if (href.startsWith('/')) return href;
+
+    let url: URL;
+    try {
+        url = new URL(href);
+    } catch {
+        return null; // unparseable -> treat as external, let the caller handle it
+    }
+
+    return /(^|\.)mondo\.surf$/i.test(url.host) ? url.pathname + url.search + url.hash : null;
+}
