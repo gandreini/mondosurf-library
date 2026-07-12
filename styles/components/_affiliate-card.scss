@@ -1,0 +1,32 @@
+/**
+ * AFFILIATE CARD
+ *
+ * Surf-travel affiliate card (River B pages/screens). Shared by mondosurf-web
+ * and mondosurf-app so both platforms render the same card — mirrors the shared
+ * AffiliateCard component in mondosurf-library.
+ */
+
+/* ------------------------------------ *\
+    #AFFILIATE CARD (surf-travel-affiliate)
+\* ------------------------------------ */
+// Full-forecast screen: the card follows the "Last update / Next update" line,
+// which has no spacing of its own, so add breathing room above. The guide places
+// the card after the description section (which already provides the gap), so it
+// gets no extra margin — spacing is scoped per template, not global.
+.ms-affiliate-card--full-forecast {
+    margin-top: $space * 4;
+}
+
+.ms-banner-affiliate {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    &__emoji {
+        font-size: 28px;
+        line-height: 1;
+    }
+}

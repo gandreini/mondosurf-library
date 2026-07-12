@@ -532,7 +532,7 @@ export function monthsArray(): string[] {
  * @param wetsuitCode number Is the code of the wetsuit.
  * @returns wetsuit icon string
  */
-export function returnWetsuitIcon(wetsuitCode: number): 'swimsuit' | 'springsuit' | 'wetsuit-full' | 'wetsuit-winter' | 'wetsuit-freeze1' {
+export function returnWetsuitIcon(wetsuitCode: number): 'swimsuit' | 'springsuit' | 'wetsuit-full' | 'wetsuit-winter' | 'wetsuit-freeze' {
     switch (wetsuitCode) {
         case 1: {
             return 'swimsuit';
@@ -547,7 +547,7 @@ export function returnWetsuitIcon(wetsuitCode: number): 'swimsuit' | 'springsuit
             return 'wetsuit-winter';
         }
         case 5: {
-            return 'wetsuit-freeze1';
+            return 'wetsuit-freeze';
         }
         default: {
             return 'swimsuit';

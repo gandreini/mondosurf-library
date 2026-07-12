@@ -55,6 +55,8 @@ export enum TrackingEvent {
     PageRegionShow = 'Page Region_Show',
     // PageSpotShow = 'Page Spot_Show',
     PageSearchShow = 'Page Search_Show',
+    // Search performed (results returned): carries search_term, results_count, zero_results.
+    SearchApi = 'Search_Api',
     PageHomeShow = 'Page Home_Show',
 
     // Banners
@@ -62,6 +64,11 @@ export enum TrackingEvent {
     FavBannerTap = 'Fav Banner_Tap',
     WidgetBannerTap = 'Widget Banner_Tap',
     FullForecastGetProBannerTap = 'Full Forecast Get Pro Banner_Tap',
+
+    // Surf-travel affiliate card (River B: guide + full-forecast, web + app).
+    // commonProperties() stamps platform + os, so tap-rate is comparable per platform.
+    AffiliateWidgetShow = 'Affiliate Widget_Show',
+    AffiliateLinkTap = 'Affiliate Link_Tap',
 
     // Spot pages
     PageSpotGuideShow = 'Page Spot Guide_Show',
@@ -72,9 +79,16 @@ export enum TrackingEvent {
     PageSpotNearbyShow = 'Page Spot Nearby_Show',
     PageSpotVideoShow = 'Page Spot Video_Show',
 
+    // Outbound link inside a spot description (SEO link exchange)
+    SpotDescLinkTap = 'Spot Desc Link_Tap',
+
     // Forecast details
     SpotForecastDetailsShow = 'Spot Forecast Details_Show',
 
     // Comments
     CommentAddedApi = 'Comment Added_Api',
+    CommentLikeAddedApi = 'Comment Like Added_Api',
+    CommentLikeRemovedApi = 'Comment Like Removed_Api',
+    CommentReplyTap = 'Comment Reply_Tap',
+    CommentReplyAddedApi = 'Comment Reply Added_Api',
 }

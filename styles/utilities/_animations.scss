@@ -1,0 +1,37 @@
+/**
+ * ANIMATION TOKENS
+ *
+ * Reusable easing functions and duration constants for transitions and
+ * keyframes across the design system. Use these instead of hand-rolling
+ * cubic-beziers / durations per component — gives the app a consistent
+ * motion feel and makes tuning one place change everywhere.
+ *
+ * Easings
+ *   $easing-smooth       Gentle ease in/out. General-purpose state changes.
+ *   $easing-overshoot    Pop with a slight bounce. Tap feedback, scale pulses.
+ *   $easing-mechanical   Slight overshoot, less bouncy. Mechanical reveals,
+ *                        slot/odometer rolls, max-width expansion.
+ *   $easing-easeout      Sharp ease-out. Disappearing / collapsing.
+ *
+ * Durations
+ *   $duration-fast       160ms — quick fades on disappear
+ *   $duration-quick      180ms — short transitions
+ *   $duration-standard   220ms — colour transitions
+ *   $duration-medium     260ms — opacity reveals
+ *   $duration-long       320ms — transform reveals
+ *   $duration-reveal     360ms — wrapper expand/collapse
+ *   $duration-pop        380ms — scale pulses, slot rolls
+ */
+
+$easing-smooth:     cubic-bezier(0.2, 0.8, 0.2, 1);
+$easing-overshoot:  cubic-bezier(0.34, 1.56, 0.64, 1);
+$easing-mechanical: cubic-bezier(0.34, 1.32, 0.5, 1);
+$easing-easeout:    cubic-bezier(0.4, 0, 1, 1);
+
+$duration-fast:     160ms;
+$duration-quick:    180ms;
+$duration-standard: 220ms;
+$duration-medium:   260ms;
+$duration-long:     320ms;
+$duration-reveal:   360ms;
+$duration-pop:      380ms;

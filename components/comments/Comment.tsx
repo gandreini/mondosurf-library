@@ -5,38 +5,58 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { deleteApiAuthCall } from 'mondosurf-library/api/api';
 import Icon from 'mondosurf-library/components/Icon';
+import { relativeDate } from 'mondosurf-library/helpers/date.helpers';
 import { truncateTextAfterNCharacters } from 'mondosurf-library/helpers/strings.helpers';
 import { IComment } from 'mondosurf-library/model/iComment';
 import { RootState } from 'mondosurf-library/redux/store';
 import modalService from 'mondosurf-library/services/modalService';
 import toastService from 'mondosurf-library/services/toastService';
+import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useSelector } from 'react-redux';
 
 import ExpandableText from '../ExpandableText';
+import LikeButton from './LikeButton';
+import ReplyPill from './ReplyPill';
 
-const Comment: React.FC<IComment> = (props) => {
-    // Dayjs plugins
+interface ICommentProps extends IComment {
+    // Whether to render the Reply button (top-level comments only; Phase B).
+    onReplyClick?: () => void;
+    // Whether the inline ReplyForm is currently open below this comment.
+    replyFormOpen?: boolean;
+    // When set (homepage "Latest comments"), the header + text become a link to
+    // this href. The actions bar (Like/Reply) is deliberately left OUTSIDE the
+    // link, so a near-miss on Like never triggers navigation.
+    href?: string;
+    // When set (homepage), the Reply pill becomes a link to the spot's comments
+    // page with reply intent (?reply=1) — the user lands there with that
+    // comment's reply field focused.
+    replyHref?: string;
+}
+
+const Comment: React.FC<ICommentProps> = (props) => {
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
-    // Redux
     const login = useSelector((state: RootState) => state.user.logged);
     const userIdRedux = useSelector((state: RootState) => state.user.userId);
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
+
+    const isDeleted = props.is_deleted === true;
+    const isReply = props.parent_id !== undefined && props.parent_id !== null && props.parent_id !== -1;
 
     // Delete comment
     const onDeleteComment = () => {
         modalService.openModal({
             title: mondoTranslate('comments.delete_modal_title'),
             text: mondoTranslate('comments.delete_modal_text', {
-                comment_text: truncateTextAfterNCharacters(props.comment_text, 100, true)
+                comment_text: truncateTextAfterNCharacters(props.comment_text ?? '', 100, true)
             }),
             classes: 'ms-modal-login',
             buttonText: mondoTranslate('comments.delete_modal_button'),
             buttonFunction: () => {
                 deleteApiAuthCall('comments/' + props.ID, accessToken, {})
-                    .then((response) => {
+                    .then(() => {
                         toastService.success(
                             mondoTranslate('comments.toast_deletion_successful'),
                             'data-test-toast-comment-deleted'
@@ -44,7 +64,7 @@ const Comment: React.FC<IComment> = (props) => {
                         modalService.closeModal();
                         if (props.callback) props.callback();
                     })
-                    .catch((error) => {
+                    .catch(() => {
                         toastService.success(mondoTranslate('comments.toast_deletion_error'));
                         modalService.closeModal();
                     });
@@ -53,8 +73,15 @@ const Comment: React.FC<IComment> = (props) => {
         });
     };
 
-    return (
-        <li className="ms-comment" data-test="comment" data-comment-id={props.ID}>
+    const canDelete =
+        props.allow_editing && login === 'yes' && !!props.ID && userIdRedux === props.comment_author_id && !isDeleted;
+
+    // Header + text form the navigable region. On the homepage (href set) they
+    // are wrapped in a link to the spot's comments; the actions bar below is
+    // rendered OUTSIDE this so Like/Reply are never inside the navigation link.
+    // (href and canDelete never coexist: the homepage never passes allow_editing.)
+    const body = (
+        <>
             <div className="ms-comment__header">
                 <div className="ms-comment__header-left">
                     {props.commented_spot_name && (
@@ -64,15 +91,19 @@ const Comment: React.FC<IComment> = (props) => {
                         </>
                     )}
                     <p className="ms-small-text"> by </p>
-                    {props.comment_author_name && (
-                        <p className="ms-comment__author ms-small-text">{props.comment_author_name.split(' ')[0]}</p>
-                    )}
+                    <p className="ms-comment__author ms-small-text">
+                        {isDeleted || !props.comment_author_name
+                            ? mondoTranslate('comments.deleted_placeholder')
+                            : props.comment_author_name.split(' ')[0]}
+                    </p>
                     <p className="ms-small-text"> • </p>
-                    <p className="ms-comment__date ms-small-text">
-                        {dayjs(props.comment_date).format('DD-MM-YYYY HH:mm')}
+                    <p
+                        className="ms-comment__date ms-small-text"
+                        title={dayjs(props.comment_date).format('DD MMM YYYY HH:mm')}>
+                        {relativeDate(props.comment_date)}
                     </p>
                 </div>
-                {props.allow_editing && login === 'yes' && props.ID && userIdRedux === props.comment_author_id && (
+                {canDelete && (
                     <div className="ms-comment__header-right">
                         <button className="ms-comment__delete" onClick={onDeleteComment} data-test="comment-delete">
                             <Icon icon="trash" />
@@ -82,13 +113,56 @@ const Comment: React.FC<IComment> = (props) => {
             </div>
             <div className="ms-comment__content">
                 <p className="ms-comment__text ms-body-text">
-                    <ExpandableText
-                        text={props.comment_text}
-                        expandable={props.expandable}
-                        initialExpanded={props.initialExpanded}
-                    />
+                    {isDeleted ? (
+                        <span className="ms-comment__deleted-placeholder">
+                            {mondoTranslate('comments.deleted_placeholder')}
+                        </span>
+                    ) : (
+                        <ExpandableText
+                            text={props.comment_text ?? ''}
+                            expandable={props.expandable}
+                            initialExpanded={props.initialExpanded}
+                        />
+                    )}
                 </p>
             </div>
+        </>
+    );
+
+    return (
+        <li
+            id={`comment-${props.ID}`}
+            className={`ms-comment${isDeleted ? ' is-deleted' : ''}${isReply ? ' is-reply' : ''}`}
+            data-test="comment"
+            data-comment-id={props.ID}>
+            {props.href ? (
+                <MondoLink href={props.href} className="ms-comment__link">
+                    {body}
+                </MondoLink>
+            ) : (
+                body
+            )}
+            {!isDeleted && (
+                <div className="ms-comment__actions">
+                    <LikeButton
+                        commentId={props.ID}
+                        spotId={props.commented_resource_id}
+                        likesCount={props.likes_count ?? 0}
+                        userHasLiked={props.user_has_liked ?? false}
+                    />
+                    {/* Reply pill — top-level only. Variant is chosen by props:
+                        onReplyClick → button (spot), replyHref → link (home),
+                        neither → static count. */}
+                    {!isReply && (
+                        <ReplyPill
+                            onClick={props.onReplyClick}
+                            replyFormOpen={props.replyFormOpen}
+                            count={props.reply_count}
+                            href={props.replyHref}
+                        />
+                    )}
+                </div>
+            )}
         </li>
     );
 };

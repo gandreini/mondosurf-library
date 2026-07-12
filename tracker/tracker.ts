@@ -129,21 +129,20 @@ export class Tracker {
                 mixpanel.track(eventName, { ...parameters, ...this.commonProperties() });
             }
 
-            /* Google */
-            /* if (destinations.includes('ga') && typeof gtag === 'function' && Tracker.gaSetUpDone) {
-                if (isDebug()) console.log("gtag", gtag);
-                if (parameters) {
-                    gtag('event', eventName, {
-                        'event_category': 'MondoEvent',
-                        'event_label': Object.entries(parameters)[0][0],
-                        'value': Object.entries(parameters)[0][1]
-                    });
-                } else {
-                    gtag('event', eventName, {
-                        'event_category': 'MondoEvent'
-                    });
-                }
-            } */
+            /* Google Analytics 4 */
+            // gtag is loaded for pageviews by the web app (Analytics.tsx); it is not
+            // present in the mobile WebView, where this branch simply no-ops.
+            const gtagFn =
+                typeof window !== 'undefined' ? (window as unknown as { gtag?: (...args: any[]) => void }).gtag : undefined;
+            if (destinations.includes('ga') && typeof gtagFn === 'function') {
+                // GA4 event names must be snake_case alphanumerics: 'Spot Desc Link_Tap' -> 'spot_desc_link_tap'.
+                const ga4EventName = eventName
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '_')
+                    .replace(/^_+|_+$/g, '');
+                if (isDebug()) console.log('📍 GA4 tracking:', ga4EventName, parameters);
+                gtagFn('event', ga4EventName, { ...parameters });
+            }
 
             /* Amplitude */
             /* if (destinations.includes('at')) {

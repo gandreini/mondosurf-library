@@ -3,8 +3,12 @@
 import { useState, useRef, useLayoutEffect } from 'react';
 
 interface IExpandableTextProps {
-    /** The text content to display */
+    /** The text content to display (used for plain rendering, measurement and as the a11y baseline) */
     text: string;
+    /** Optional pre-sanitised HTML. When set, rendered via dangerouslySetInnerHTML instead of `text`. */
+    html?: string;
+    /** Optional click handler on the content (e.g. event delegation for outbound links) */
+    onContentClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
     /** Label for the expand action (default: "Read more") */
     label?: string;
     /** Number of lines to show when collapsed (default: 3) */
@@ -28,6 +32,8 @@ interface IExpandableTextProps {
  */
 const ExpandableText: React.FC<IExpandableTextProps> = ({
     text,
+    html,
+    onContentClick,
     label = 'Read more',
     lines = 4,
     className = '',
@@ -63,7 +69,7 @@ const ExpandableText: React.FC<IExpandableTextProps> = ({
             const { scrollHeight, clientHeight } = element;
             setNeedsTruncation(scrollHeight > clientHeight);
         }
-    }, [text, lines, expandable, isExpanded]);
+    }, [text, html, lines, expandable, isExpanded]);
 
     const handleToggle = () => {
         setIsExpanded(!isExpanded);
@@ -74,15 +80,18 @@ const ExpandableText: React.FC<IExpandableTextProps> = ({
 
     return (
         <div className={`ms-expandable-text ${className}`.trim()}>
-            {/* Text content - CSS line-clamp handles truncation when collapsed */}
+            {/* Text content - CSS line-clamp handles truncation when collapsed.
+                When `html` is provided it is rendered as (already-sanitised) HTML; otherwise plain `text`. */}
             <div
                 ref={textRef}
                 className={`ms-expandable-text__content ${
                     showCollapsed ? 'ms-expandable-text__content--collapsed' : ''
                 }`}
-                style={showCollapsed ? { WebkitLineClamp: lines } : undefined}>
-                {text}
-            </div>
+                style={showCollapsed ? { WebkitLineClamp: lines } : undefined}
+                onClick={onContentClick}
+                {...(html ? { dangerouslySetInnerHTML: { __html: html } } : { children: text })}
+            />
+
 
             {/* Expand/collapse button - only shown if expandable and text needs truncation */}
             {expandable && needsTruncation && (

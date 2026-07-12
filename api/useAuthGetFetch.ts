@@ -33,7 +33,11 @@ export default function useAuthGetFetch(url: string, params?: any, needsAuth: bo
     // useEffect to launch the fetch.
     useEffect(() => {
         if (url && url !== '') {
-            setState({ status: "loading", error: null, payload: [] });
+            // Preserve the previous payload during a refresh (stale-while-
+            // revalidate) so consumers don't see the list disappear and a
+            // skeleton flash on every refetch. Initial state already has
+            // payload: [], so the first load still shows skeletons.
+            setState((prev) => ({ ...prev, status: "loading", error: null }));
 
             // Login status not defined.
             if (userLogged === "checking") {

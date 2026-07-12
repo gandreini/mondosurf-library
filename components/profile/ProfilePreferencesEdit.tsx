@@ -3,6 +3,7 @@
 
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 import Loader from 'mondosurf-library/components/Loader';
+import ToggleSwitch from 'mondosurf-library/components/ToggleSwitch';
 import { RootState, store } from 'mondosurf-library/redux/store';
 import { setPreferences } from 'mondosurf-library/redux/userSlice';
 import toastService from 'mondosurf-library/services/toastService';
@@ -18,30 +19,31 @@ interface IProfilePreferencesEdit {
         userPrefsHeight: 'meters' | 'feet';
         userPrefsSpeed: 'kph' | 'mph' | 'kn';
         userPrefsTemperature: 'c' | 'f';
+        notifyCommentReplyEmail: boolean;
+        notifyCommentLikeEmail: boolean;
+        notifyFavoriteSpotCommentEmail: boolean;
     };
 }
 
 const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
-    // React hook form stuff.
     const {
         register,
         handleSubmit,
-        clearErrors,
-        setError,
-        setFocus,
         getValues,
         setValue,
-        trigger,
         formState: { errors }
     } = useForm({ reValidateMode: 'onSubmit' });
 
-    // Redux.
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
 
     const [savingPreferences, setSavingPreferences] = useState<boolean>(false);
     const [frequencyIsWeekly, setFrequencyIsWeekly] = useState<boolean>(false);
 
-    // Set defaults
+    // Set defaults for the select fields. The 3 notification toggles are
+    // initialised via `defaultChecked` on the inputs themselves below —
+    // setValue doesn't update an uncontrolled checkbox's DOM `checked`
+    // state, so initial state would otherwise visually disagree with the
+    // form state.
     useEffect(() => {
         setValue('preferencesBulletinFrequency', props.preferences.userBulletinFrequency);
         setValue('preferencesBulletinWeekDay', props.preferences.userBulletinWeekDay);
@@ -59,6 +61,9 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
         const height: string = getValues('preferencesHeight');
         const speed: string = getValues('preferencesSpeed');
         const temperature: string = getValues('preferencesTemperature');
+        const notifyReply: boolean = !!getValues('notifyCommentReplyEmail');
+        const notifyLike: boolean = !!getValues('notifyCommentLikeEmail');
+        const notifyFavSpot: boolean = !!getValues('notifyFavoriteSpotCommentEmail');
 
         postApiAuthCall(
             'user-preferences-update',
@@ -68,24 +73,30 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                 bulletin_week_day: bulletinWeekDay,
                 prefs_height: height,
                 prefs_speed: speed,
-                prefs_temperature: temperature
+                prefs_temperature: temperature,
+                notify_comment_reply_email: notifyReply,
+                notify_comment_like_email: notifyLike,
+                notify_favorite_spot_comment_email: notifyFavSpot
             },
             true
         )
-            .then((response: any) => {
+            .then(() => {
                 store.dispatch(
                     setPreferences({
                         userBulletinFrequency: bulletinFrequency,
                         userBulletinWeekDay: bulletinWeekDay,
                         userPrefsHeight: height,
                         userPrefsSpeed: speed,
-                        userPrefsTemperature: temperature
+                        userPrefsTemperature: temperature,
+                        notifyCommentReplyEmail: notifyReply,
+                        notifyCommentLikeEmail: notifyLike,
+                        notifyFavoriteSpotCommentEmail: notifyFavSpot
                     })
-                ); // To redux state
+                );
                 setSavingPreferences(false);
                 toastService.success('Preferences updated correctly');
             })
-            .catch((error) => {
+            .catch(() => {
                 setSavingPreferences(false);
                 toastService.error('Error saving your preferences, please try again');
             });
@@ -168,6 +179,37 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                             <option value="f">{mondoTranslate('profile.temperature_unit_fahrenheit')}</option>
                         </select>
                     </div>
+
+                    <hr className="ms-profile-preferences-edit__separator" />
+
+                    <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
+                        {mondoTranslate('profile.notifications_section_title')}
+                    </h2>
+
+                    <ToggleSwitch
+                        id="notifyCommentReplyEmail"
+                        label={mondoTranslate('profile.notify_comment_reply_email_label')}
+                        description={mondoTranslate('profile.notify_comment_reply_email_description')}
+                        dataTest="pref-notify-reply-email"
+                        defaultChecked={props.preferences.notifyCommentReplyEmail}
+                        {...register('notifyCommentReplyEmail')}
+                    />
+                    <ToggleSwitch
+                        id="notifyCommentLikeEmail"
+                        label={mondoTranslate('profile.notify_comment_like_email_label')}
+                        description={mondoTranslate('profile.notify_comment_like_email_description')}
+                        dataTest="pref-notify-like-email"
+                        defaultChecked={props.preferences.notifyCommentLikeEmail}
+                        {...register('notifyCommentLikeEmail')}
+                    />
+                    <ToggleSwitch
+                        id="notifyFavoriteSpotCommentEmail"
+                        label={mondoTranslate('profile.notify_favorite_spot_comment_email_label')}
+                        description={mondoTranslate('profile.notify_favorite_spot_comment_email_description')}
+                        dataTest="pref-notify-favorite-spot-email"
+                        defaultChecked={props.preferences.notifyFavoriteSpotCommentEmail}
+                        {...register('notifyFavoriteSpotCommentEmail')}
+                    />
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">
                     <button type="submit" className="ms-btn ms-btn-cta ms-btn-l">
