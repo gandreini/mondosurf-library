@@ -849,5 +849,20 @@
   "invasive_banner": {
     "text": "Please verify your account using the link sent to your email",
     "button": "Send verification email"
+  },
+  "spotSubscribe": {
+    "title": "Get surf alerts for {{spotName}}",
+    "subtitle": "We'll email you when {{spotName}} has good surf on the way.",
+    "trust": "Always free · no account · unsubscribe anytime",
+    "email_placeholder": "Your email",
+    "submit": "Get alerts",
+    "submitting": "Sending…",
+    "success_title": "Almost there — check your inbox",
+    "success_text": "We sent a confirmation link to {{email}} from Mondo Surf. Tap it to start your alerts — check your spam folder if it's not there in a minute.",
+    "error_email_invalid": "Please enter a valid email address.",
+    "error_rate_limited": "Too many attempts. Please try again in a few minutes.",
+    "error_cap_reached": "This email already gets alerts for 3 spots.",
+    "cap_upgrade_cta": "Create a free account to follow more",
+    "error_generic": "Something went wrong. Please try again."
   }
 }
