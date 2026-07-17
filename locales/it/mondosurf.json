@@ -759,6 +759,7 @@
     "submitting": "Invio…",
     "success_title": "Ci siamo quasi — controlla la posta",
     "success_text": "Abbiamo inviato un link di conferma a {{email}} da Mondo Surf. Toccalo per attivare gli avvisi — controlla lo spam se non lo vedi entro un minuto.",
+    "already_text": "Ricevi già gli avvisi per questo spot.",
     "error_email_invalid": "Inserisci un indirizzo email valido.",
     "error_rate_limited": "Troppi tentativi. Riprova tra qualche minuto.",
     "error_cap_reached": "Questa email riceve già avvisi per 3 spot.",

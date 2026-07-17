@@ -1,0 +1,90 @@
+/**
+ * SPOT SUBSCRIBE
+ *
+ * No-account per-spot email subscribe form (spot-email-alerts), River B pages.
+ * Shared by mondosurf-web (and, later, mondosurf-app) via the SpotSubscribeForm
+ * component in mondosurf-library. A calm tinted box, deliberately distinct from
+ * the affiliate card. Visual polish is refined in the design-system pass (P3.5).
+ */
+
+/* ------------------------------------ *\
+    #SPOT SUBSCRIBE (spot-email-alerts)
+\* ------------------------------------ */
+.ms-spot-subscribe {
+    padding: $space * 1.5;
+    border: 1px solid $help-border-color;
+    border-radius: $border-radius-soft;
+    background-color: $help-bg-color;
+
+    &__title {
+        font-weight: 700;
+        margin: 0 0 $space * 0.25;
+    }
+
+    &__subtitle {
+        margin: 0 0 $space;
+        color: $help-text-color;
+    }
+
+    &__form {
+        margin: 0;
+    }
+
+    &__row {
+        display: flex;
+        gap: $space * 0.5;
+        flex-wrap: wrap;
+    }
+
+    &__input {
+        flex: 1 1 200px;
+        min-width: 0;
+        padding: $space * 0.5 $space * 0.75;
+        border: 1px solid $help-border-color;
+        border-radius: $border-radius-soft;
+
+        &::placeholder {
+            color: $form-input-placeholder-color;
+        }
+    }
+
+    // Off-screen honeypot: in the DOM for bots, invisible + unreachable for
+    // humans and assistive tech.
+    &__hp {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__error {
+        margin: $space * 0.5 0 0;
+        color: #c0392b;
+    }
+
+    &__cap {
+        margin: $space * 0.5 0 0;
+    }
+
+    &__trust {
+        margin: $space * 0.75 0 0;
+        font-size: 0.8em;
+        color: $help-text-color;
+    }
+
+    &--done {
+        // Success/already state keeps the same box, no form inside.
+    }
+
+    &__success-title {
+        font-weight: 700;
+        margin: 0 0 $space * 0.25;
+    }
+
+    &__success-text {
+        margin: 0;
+        color: $help-text-color;
+    }
+}
