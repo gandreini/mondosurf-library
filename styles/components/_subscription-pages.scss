@@ -1,0 +1,92 @@
+/**
+ * SUBSCRIPTION PAGES
+ *
+ * Confirm page + the tokenized preferences/unsubscribe page (spot-email-alerts).
+ * Shared, restrained styling built on $space + the help-box tokens, matching the
+ * subscribe form. Visual polish only — behaviour lives in the page components.
+ */
+
+/* ------------------------------------ *\
+    #SUBSCRIPTION PAGES (spot-email-alerts)
+\* ------------------------------------ */
+.ms-subscription-confirm,
+.ms-subscription-prefs {
+    padding-top: $space * 3;
+    padding-bottom: $space * 3;
+
+    &__mondo-logo {
+        font-size: 32px;
+        margin-bottom: $space;
+    }
+}
+
+.ms-subscription-confirm {
+    text-align: center;
+
+    &__app {
+        margin-top: $space * 2;
+        padding: $space * 1.5;
+        border: 1px solid $help-border-color;
+        border-radius: $border-radius-soft;
+        background-color: $help-bg-color;
+    }
+
+    &__app-title {
+        font-weight: 700;
+        margin: 0 0 $space * 0.25;
+    }
+}
+
+.ms-subscription-prefs {
+    &__list {
+        list-style: none;
+        margin: $space 0;
+        padding: 0;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space;
+        padding: $space * 0.5 0;
+        border-bottom: 1px solid $help-border-color;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 0.25;
+        margin: $space 0;
+
+        label {
+            font-weight: 700;
+        }
+
+        select {
+            padding: $space * 0.5;
+            border: 1px solid $help-border-color;
+            border-radius: $border-radius-soft;
+        }
+    }
+
+    &__toggle {
+        margin: $space * 0.5 0;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: $space * 0.5;
+        }
+    }
+
+    &__saved {
+        margin-top: $space;
+        color: #1a7f37;
+    }
+
+    &__error {
+        margin-top: $space;
+        color: #c0392b;
+    }
+}
