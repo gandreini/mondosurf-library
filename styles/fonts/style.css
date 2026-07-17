@@ -20,6 +20,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.mondo-icon-minimize:before {
+    content: "\f00e";
+}
+.mondo-icon-maximize:before {
+    content: "\f035";
+}
 .mondo-icon-thumbs-up:before {
     content: "\f033";
 }
@@ -145,9 +151,6 @@
 }
 .mondo-icon-eye-slash:before {
     content: "\f00f";
-}
-.mondo-icon-enlarge:before {
-    content: "\f00e";
 }
 .mondo-icon-ellipsis-v:before {
     content: "\f00d";

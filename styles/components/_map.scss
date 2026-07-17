@@ -158,6 +158,10 @@
         bottom: $map-control-margin;
         left: $map-control-margin;
         z-index: $z-index-map-zoom-buttons;
+        // The container is a full-height strip: it must not swallow clicks meant
+        // for whatever sits under it (e.g. the minimize/ellipsis buttons) — only
+        // its buttons are interactive (pointer-events in map-control-button).
+        pointer-events: none;
     }
 
     &__controls_bottom {
@@ -175,52 +179,24 @@
     /* Zoom */
     &__zoom {
         margin-bottom: $map-control-margin;
-
-        [class*=' mondo-icon-'] {
-            font-size: $font-size-xl;
-            color: var(--color-text);
-            transition: all $transition-durations;
-        }
     }
 
     &__zoom-in {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: $map-control-size;
-        height: $map-control-size;
-        @include map-control;
+        @include map-control-button;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         border-bottom: 1px solid $color-border-normal;
     }
     &__zoom-out {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: $map-control-size;
-        height: $map-control-size;
-        @include map-control;
+        @include map-control-button;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
     }
 
     /* Map switch button */
     &__switch {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: $map-control-size;
-        height: $map-control-size;
-        @include map-control;
-        cursor: pointer;
+        @include map-control-button;
         pointer-events: all;
-
-        [class*=' mondo-icon-'] {
-            font-size: $font-size-xl;
-            color: var(--color-text);
-            transition: all $transition-durations;
-        }
 
         &.is-active {
             [class*=' mondo-icon-'] {
@@ -231,23 +207,12 @@
 
     /* Center map */
     &__center {
+        @include map-control-button;
         display: none;
-        align-items: center;
-        justify-content: center;
         position: absolute;
         z-index: $z-index-map-center-button;
-
-        width: $map-control-size;
-        height: $map-control-size;
-
-        @include map-control;
         bottom: $map-control-margin;
         left: $map-control-margin;
-        cursor: pointer;
-
-        [class*=' mondo-icon-'] {
-            font-size: $font-size-xl;
-        }
 
         &.is-displayed {
             display: flex;
@@ -268,6 +233,15 @@
     .leaflet-top {
         z-index: $z-index-map-copyright;
     }
+}
+
+// MapLibre attribution: small and unobtrusive, top-right, flush with the map edge.
+.maplibregl-ctrl-top-right .maplibregl-ctrl-attrib {
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.6;
+    padding: 0 5px;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 /* ------------------------------------ *\

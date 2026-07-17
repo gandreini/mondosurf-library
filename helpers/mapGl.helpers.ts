@@ -239,7 +239,10 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
         filter: ['!', ['has', 'point_count']],
         layout: {
             'icon-image': PIN_ICON_IMAGE_EXPRESSION as never,
-            'icon-size': 0.7,
+            // 0.8 of the 55px logical image = 44px tall — same as the DOM markers
+            // (markerElement) and the app's Leaflet pins, so the pin size doesn't
+            // jump between the inline preview and fullscreen.
+            'icon-size': 0.8,
             'icon-anchor': 'bottom',
             'icon-allow-overlap': true
         }

@@ -8,20 +8,16 @@
 //   - forecast-edit          : draggableMarker + onMarkerDragEnd
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import maplibregl, {
-    GeolocateControl,
-    type IControl,
-    Map as MapLibreMap,
-    Marker,
-    NavigationControl,
-    Popup
-} from 'maplibre-gl';
+import maplibregl, { AttributionControl, Map as MapLibreMap, Marker, Popup } from 'maplibre-gl';
 import type { FeatureCollection } from 'geojson';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IMAGES_URL } from 'proxies/localConstants';
+import { getUserLocation } from 'proxies/getUserLocation';
 import { isApp } from 'helpers/device.helpers';
 import { useRouterProxy } from 'proxies/useRouter';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import Icon from 'mondosurf-library/components/Icon';
+import Loader from 'mondosurf-library/components/Loader';
 import { returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
 import toastService from 'mondosurf-library/services/toastService';
 import {
@@ -62,8 +58,14 @@ interface IMapGl {
     interactive?: boolean;
     /** Fetch the world spots file and render it clustered (fullscreen / map page). */
     loadAllSpots?: boolean;
-    /** Show zoom + layer-toggle + geolocation controls. */
+    /** Show the classic top-left controls (zoom in/out + layer switch), same markup/style as the Leaflet map. */
     showControls?: boolean;
+    /** Show the classic bottom-left geolocation (crosshair) button (map page only). */
+    showGeolocationButton?: boolean;
+    /** Viewport padding (px): the point the map centres on sits at the middle of
+     *  the UNPADDED area — used by the guide map to centre the spot inside the
+     *  in-flow window of its fixed, viewport-sized layer. Applied once at init. */
+    padding?: { top: number; bottom: number };
     /** Single draggable marker at lat/lng (forecast-edit). */
     draggableMarker?: boolean;
     /** Marker icon filename under map-pins/ (e.g. parking). */
@@ -79,6 +81,12 @@ const markerElement = (src: string, opts: { alt?: string; quality?: number } = {
     img.className = 'ms-map-marker-icon__image';
     img.src = src;
     img.alt = opts.alt ?? '';
+    // All pin art shares the 35:55 (70:110) canvas. Explicit attributes pin the
+    // DOM markers to the same 44px height as the GL symbol pins (icon-size 0.8)
+    // and the app's Leaflet map — without them the SVG renders at its intrinsic
+    // 35x55 and the size jumps between inline preview and fullscreen.
+    img.width = 28;
+    img.height = 44;
     el.appendChild(img);
     return el;
 };
@@ -101,6 +109,8 @@ const MapGl: React.FC<IMapGl> = ({
     interactive = false,
     loadAllSpots = false,
     showControls = false,
+    showGeolocationButton = false,
+    padding,
     draggableMarker = false,
     customIcon,
     onMarkerDragEnd
@@ -121,8 +131,11 @@ const MapGl: React.FC<IMapGl> = ({
     const popupRef = useRef<Popup | null>(null);
     const allSpotsRef = useRef<FeatureCollection | null>(null);
     const layerRef = useRef<MapGlLayer>('vector');
+    // Mirrors layerRef for rendering (the switch button's is-active state).
+    const [activeLayer, setActiveLayer] = useState<MapGlLayer>('vector');
+    // Shows a loader inside the geolocation button while the position is being fetched.
+    const [geolocationStatus, setGeolocationStatus] = useState<'IDLE' | 'REQUESTING'>('IDLE');
     const loadedAllRef = useRef(false);
-    const controlsAddedRef = useRef(false);
     // Tracks the LATEST desired world state so an async loadWorld that resolves
     // after a collapse doesn't add world clusters onto the inline preview.
     const wantWorldRef = useRef(false);
@@ -165,19 +178,41 @@ const MapGl: React.FC<IMapGl> = ({
 
         const layer = readMapGlLayer();
         layerRef.current = layer;
+        setActiveLayer(layer);
 
-        const map = new maplibregl.Map({
-            container: containerRef.current,
-            style: getMapGlStyle(layer),
-            center: lat != null && lng != null ? [lng, lat] : [0, 20],
-            zoom: lat != null && lng != null ? zoom : 1.5,
-            attributionControl: true,
-            fadeDuration: 0
-        });
+        // No WebGL (old device, blocklisted GPU, some headless/bot renderers):
+        // the constructor THROWS, and an uncaught throw in this effect would
+        // unmount the whole React tree — a blank page over a map. Catch it and
+        // leave the static placeholder instead.
+        let map: MapLibreMap;
+        try {
+            map = new maplibregl.Map({
+                container: containerRef.current,
+                style: getMapGlStyle(layer),
+                center: lat != null && lng != null ? [lng, lat] : [0, 20],
+                zoom: lat != null && lng != null ? zoom : 1.5,
+                attributionControl: false,
+                fadeDuration: 0
+            });
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('MapGl: map init failed (WebGL unavailable?)', e);
+            return;
+        }
         mapRef.current = map;
 
+        // Constant viewport padding (e.g. the guide window): set once, before the
+        // first frame — the centre point then renders in the padded focus area.
+        if (padding && lat != null && lng != null) {
+            map.jumpTo({ center: [lng, lat], zoom, padding: { top: padding.top, bottom: padding.bottom, left: 0, right: 0 } });
+        }
+
+        // Attribution: small, top-right — same spot as the old Leaflet map
+        // (compact: false keeps it always visible instead of the ⓘ toggle).
+        map.addControl(new AttributionControl({ compact: false }), 'top-right');
+
         if (!interactive) setMapInteractivity(map, false);
-        // Controls are added by the showControls effect (runs right after this on mount).
+        // Controls are plain React buttons rendered next to the canvas (see the JSX below).
 
         // Lazy-load the teardrop pin images for the clustered points layer (survives setStyle).
         wirePinImages(map);
@@ -232,7 +267,6 @@ const MapGl: React.FC<IMapGl> = ({
             map.remove();
             mapRef.current = null;
             loadedAllRef.current = false;
-            controlsAddedRef.current = false;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // init once
@@ -244,26 +278,48 @@ const MapGl: React.FC<IMapGl> = ({
         // Resize on the grow is handled by the ResizeObserver (container size change).
     }, [interactive]);
 
-    // --- add controls when they become enabled (guide: inline has none, fullscreen does) ---
-    useEffect(() => {
+    // --- control handlers (the classic ms-map buttons, same behavior as the Leaflet map) ---
+    const zoomBy = (delta: number) => {
         const map = mapRef.current;
-        if (map && showControls) addControls(map);
-        // addControls is a stable closure guarded by controlsAddedRef — intentionally not a dep.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showControls]);
+        // easeTo (not setZoom) so the +/- buttons animate like pinch/scroll zoom.
+        if (map) map.easeTo({ zoom: map.getZoom() + delta, duration: 300 });
+    };
 
-    function addControls(map: MapLibreMap) {
-        // Idempotent: in the guide flow showControls flips true on every fullscreen
-        // open, but the same map instance must not accumulate duplicate controls.
-        if (controlsAddedRef.current) return;
-        controlsAddedRef.current = true;
-        map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
-        map.addControl(
-            new GeolocateControl({ positionOptions: { enableHighAccuracy: true }, trackUserLocation: false }),
-            'top-right'
-        );
-        map.addControl(makeLayerToggleControl(map, layerRef, closePopup), 'top-right');
-    }
+    // Cycles street → satellite → hybrid and persists the choice.
+    const toggleLayer = () => {
+        const map = mapRef.current;
+        if (!map) return;
+        closePopup(); // setStyle won't remove an open spot popover
+        const next = nextMapGlLayer(layerRef.current);
+        layerRef.current = next;
+        setActiveLayer(next);
+        writeMapGlLayer(next);
+        map.setStyle(getMapGlStyle(next));
+    };
+
+    // Centers on the user (map page's crosshair button): drop a current-location
+    // marker and ease there — mirrors the old Leaflet centerMapOnUserPosition.
+    const centerOnUser = () => {
+        const map = mapRef.current;
+        if (!map || geolocationStatus === 'REQUESTING') return;
+        setGeolocationStatus('REQUESTING');
+        getUserLocation()
+            .then((response: GeolocationPosition) => {
+                if (mapRef.current !== map) return;
+                const { latitude, longitude } = response.coords;
+                markersRef.current.push(
+                    new Marker({
+                        element: markerElement(IMAGES_URL + 'map-pins/current-location.png'),
+                        anchor: 'bottom'
+                    })
+                        .setLngLat([longitude, latitude])
+                        .addTo(map)
+                );
+                map.easeTo({ center: [longitude, latitude], zoom: 16 });
+            })
+            .catch(() => undefined) // denied/unavailable: silently keep the current view (as the old map did)
+            .finally(() => setGeolocationStatus('IDLE'));
+    };
 
     // --- react to loadAllSpots toggling (fullscreen open/close) ---
     useEffect(() => {
@@ -318,7 +374,44 @@ const MapGl: React.FC<IMapGl> = ({
         if (lat != null && lng != null) map.easeTo({ center: [lng, lat], zoom, duration: 300 });
     };
 
-    return <div ref={containerRef} className="ms-map-gl" data-test="surf-spot-map" />;
+    return (
+        <>
+            <div ref={containerRef} className="ms-map-gl" data-test="surf-spot-map" />
+
+            {/* The classic controls (same markup/classes as the Leaflet map): top-left,
+                zoom in / zoom out / layer switch. No center button — the guide map is
+                already centred on the spot. */}
+            {showControls && (
+                <div className="ms-map__controls" data-test="surf-spot-map-controls">
+                    <div className="ms-map__zoom">
+                        <div id="map_zoom_in" className="ms-map__zoom-in" onClick={() => zoomBy(1)}>
+                            <Icon icon="plus" />
+                        </div>
+                        <div id="map_zoom_out" className="ms-map__zoom-out" onClick={() => zoomBy(-1)}>
+                            <Icon icon="minus" />
+                        </div>
+                    </div>
+                    <div
+                        id="map_global_switch-button"
+                        title={mondoTranslate('surf_spot.switch_map_layer')}
+                        className={
+                            activeLayer === 'satellite1' || activeLayer === 'satellite2'
+                                ? 'ms-map__switch is-active'
+                                : 'ms-map__switch'
+                        }
+                        onClick={toggleLayer}>
+                        <Icon icon="image" />
+                    </div>
+                </div>
+            )}
+
+            {showGeolocationButton && (
+                <div className="ms-map__center is-displayed" onClick={centerOnUser} data-test="surf-spot-map-center">
+                    {geolocationStatus === 'REQUESTING' ? <Loader size="small" /> : <Icon icon="crosshair" />}
+                </div>
+            )}
+        </>
+    );
 };
 
 // --- helpers kept local to the component (DOM/control glue) ---
@@ -338,38 +431,6 @@ function addDomPins(map: MapLibreMap, pins: IMapGlPin[], onClick: (pin: IMapGlPi
         created.push(new Marker({ element: el, anchor: 'bottom' }).setLngLat([pin.lng, pin.lat]).addTo(map));
     }
     return created;
-}
-
-// Minimal custom control: a button that cycles street → satellite → hybrid.
-function makeLayerToggleControl(
-    map: MapLibreMap,
-    layerRef: { current: MapGlLayer },
-    onBeforeStyleChange: () => void
-): IControl {
-    const container = document.createElement('div');
-    container.className = 'maplibregl-ctrl maplibregl-ctrl-group ms-map-gl__layer-toggle';
-    container.setAttribute('data-test', 'surf-spot-map-controls');
-    const button = document.createElement('button');
-    button.type = 'button';
-    const label = mondoTranslate('surf_spot.switch_map_layer');
-    button.title = label;
-    button.setAttribute('aria-label', label);
-    button.className = 'ms-map-gl__layer-toggle-btn';
-    button.textContent = '🗺️';
-    button.addEventListener('click', () => {
-        onBeforeStyleChange(); // drop any open spot popover — setStyle won't remove it
-        const next = nextMapGlLayer(layerRef.current);
-        layerRef.current = next;
-        writeMapGlLayer(next);
-        map.setStyle(getMapGlStyle(next));
-    });
-    container.appendChild(button);
-    return {
-        onAdd: () => container,
-        onRemove: () => {
-            container.parentNode?.removeChild(container);
-        }
-    };
 }
 
 export default MapGl;
