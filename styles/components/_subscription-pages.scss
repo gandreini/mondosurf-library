@@ -53,33 +53,6 @@
         border-bottom: 1px solid $help-border-color;
     }
 
-    &__field {
-        display: flex;
-        flex-direction: column;
-        gap: $space * 0.25;
-        margin: $space 0;
-
-        label {
-            font-weight: 700;
-        }
-
-        select {
-            padding: $space * 0.5;
-            border: 1px solid $help-border-color;
-            border-radius: $border-radius-soft;
-        }
-    }
-
-    &__toggle {
-        margin: $space * 0.5 0;
-
-        label {
-            display: flex;
-            align-items: center;
-            gap: $space * 0.5;
-        }
-    }
-
     &__saved {
         margin-top: $space;
         color: #1a7f37;
