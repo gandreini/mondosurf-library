@@ -99,4 +99,5 @@ export enum TrackingEvent {
     SpotSubscribeSubmitErr = 'Spot Subscribe Submit_Err',
     SpotSubscribeCapReached = 'Spot Subscribe Cap_Show',
     SpotSubscribeUpgradeTap = 'Spot Subscribe Upgrade_Tap',
+    SpotSubscribeConfirmShow = 'Spot Subscribe Confirm_Show',
 }

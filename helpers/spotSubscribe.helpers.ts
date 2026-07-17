@@ -68,3 +68,34 @@ export function mapSubscribeError(err: { code?: string; [key: string]: unknown }
             return { state: 'error', messageKey: 'spotSubscribe.error_generic' };
     }
 }
+
+// --- Confirm page (P3.4) ----------------------------------------------------
+
+export type ConfirmUiState = 'confirmed' | 'already' | 'expired' | 'cap' | 'error';
+
+export interface ConfirmOutcome {
+    state: ConfirmUiState;
+    messageKey: string;
+}
+
+/** POST /spot-subscription-confirm/ success body → confirm-page state. */
+export function mapConfirmSuccess(res: { code?: string; [key: string]: unknown } | null | undefined): ConfirmOutcome {
+    if (res && res.code === 'already_confirmed') {
+        return { state: 'already', messageKey: 'spotSubscribe.confirm_already' };
+    }
+    return { state: 'confirmed', messageKey: 'spotSubscribe.confirm_success' };
+}
+
+/** Rejected confirm (callApiNew throws the body) → confirm-page state. */
+export function mapConfirmError(err: { code?: string; [key: string]: unknown } | null | undefined): ConfirmOutcome {
+    switch (err && err.code) {
+        case 'token_expired':
+            return { state: 'expired', messageKey: 'spotSubscribe.confirm_expired' };
+        case 'cap_reached':
+            return { state: 'cap', messageKey: 'spotSubscribe.error_cap_reached' };
+        case 'invalid_token':
+            return { state: 'error', messageKey: 'spotSubscribe.confirm_invalid' };
+        default:
+            return { state: 'error', messageKey: 'spotSubscribe.confirm_error' };
+    }
+}
