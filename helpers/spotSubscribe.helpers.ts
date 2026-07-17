@@ -69,6 +69,23 @@ export function mapSubscribeError(err: { code?: string; [key: string]: unknown }
     }
 }
 
+/**
+ * True only when a rejected callApiNew is a genuine 404 (a foreign/unknown
+ * token) — NOT a 5xx or a network failure (`callApiNew` throws `new Error(...)`
+ * for those, with no `data`). The token-probe uses this so a transient error on
+ * one endpoint never mislabels a valid link as "invalid".
+ */
+export function isNotFoundError(err: unknown): boolean {
+    if (!err || typeof err !== 'object') {
+        return false;
+    }
+    const e = err as { code?: string; data?: { status?: number } };
+    if (e.data && e.data.status === 404) {
+        return true;
+    }
+    return e.code === 'invalid_token';
+}
+
 // --- Confirm page (P3.4) ----------------------------------------------------
 
 export type ConfirmUiState = 'confirmed' | 'already' | 'expired' | 'cap' | 'error';
