@@ -1,9 +1,9 @@
 'use client';
 
 import { FeatureCollection } from 'geojson';
+import dynamic from 'next/dynamic';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import dynamic from 'next/dynamic';
 
 // Map statically imports leaflet, which touches `window` at module load and
 // throws during SSR. Importing it here statically made the guide's whole
