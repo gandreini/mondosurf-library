@@ -1,7 +1,17 @@
+'use client';
+
 import { FeatureCollection } from 'geojson';
-import Map from 'mondosurf-library/components/Map';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
+import dynamic from 'next/dynamic';
+
+// Map statically imports leaflet, which touches `window` at module load and
+// throws during SSR. Importing it here statically made the guide's whole
+// client segment (map + affiliate card + subscribe form) bail out of SSR —
+// they only appeared after client hydration, invisible to crawlers/no-JS.
+// Load it client-only, matching the other Map consumers (surf-spots-map,
+// forecast-edit); the coordinates box below still SSRs (schema.org geo).
+const Map = dynamic(() => import('mondosurf-library/components/Map'), { ssr: false });
 
 interface ISurfSpotMap {
     lat: number;
