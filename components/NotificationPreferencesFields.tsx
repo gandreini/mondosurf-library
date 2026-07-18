@@ -14,6 +14,8 @@ export interface NotificationPreferencesValues {
 interface INotificationPreferencesFields {
     values: NotificationPreferencesValues;
     onChange: <K extends keyof NotificationPreferencesValues>(key: K, value: NotificationPreferencesValues[K]) => void;
+    /** Locks every control while a save is in flight (F1/F2). */
+    disabled?: boolean;
 }
 
 const WEEK_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -29,7 +31,7 @@ const COMMENT_TOGGLES: { key: keyof NotificationPreferencesValues; dataTest: str
  * Purely presentational and fully controlled — the parent owns the values and
  * the save (JWT there, token here); this component has no auth/context branches.
  */
-const NotificationPreferencesFields: React.FC<INotificationPreferencesFields> = ({ values, onChange }) => (
+const NotificationPreferencesFields: React.FC<INotificationPreferencesFields> = ({ values, onChange, disabled }) => (
     <>
         <div className="ms-form__input">
             <label className="ms-form__label" htmlFor="notif_bulletin_frequency">
@@ -39,6 +41,7 @@ const NotificationPreferencesFields: React.FC<INotificationPreferencesFields> = 
                 id="notif_bulletin_frequency"
                 value={values.bulletin_frequency || 'daily'}
                 onChange={(e) => onChange('bulletin_frequency', e.target.value)}
+                disabled={disabled}
                 data-test="pref-bulletin-frequency">
                 <option value="daily">{mondoTranslate('profile.bulletin_frequency_daily')}</option>
                 <option value="weekly">{mondoTranslate('profile.bulletin_frequency_weekly')}</option>
@@ -56,6 +59,7 @@ const NotificationPreferencesFields: React.FC<INotificationPreferencesFields> = 
                     id="notif_bulletin_week_day"
                     value={values.bulletin_week_day || 'monday'}
                     onChange={(e) => onChange('bulletin_week_day', e.target.value)}
+                    disabled={disabled}
                     data-test="pref-bulletin-week-day">
                     {WEEK_DAYS.map((day) => (
                         <option key={day} value={day}>
@@ -74,6 +78,7 @@ const NotificationPreferencesFields: React.FC<INotificationPreferencesFields> = 
                 description={mondoTranslate(`profile.${key}_description`)}
                 dataTest={dataTest}
                 checked={!!values[key]}
+                disabled={disabled}
                 onChange={(e) => onChange(key, e.target.checked)}
             />
         ))}

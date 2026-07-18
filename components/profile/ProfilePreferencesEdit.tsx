@@ -118,7 +118,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     <p>{errors.profileForm.message.toString()}</p>
                 )}
                 <div className="ms-profile-preferences-edit__contents">
-                    <NotificationPreferencesFields values={notifValues} onChange={updateNotif} />
+                    <NotificationPreferencesFields values={notifValues} onChange={updateNotif} disabled={savingPreferences} />
 
                     <hr className="ms-profile-preferences-edit__separator" />
 
@@ -155,7 +155,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     </div>
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">
-                    <button type="submit" className="ms-btn ms-btn-cta ms-btn-l">
+                    <button type="submit" className="ms-btn ms-btn-cta ms-btn-l" disabled={savingPreferences}>
                         {savingPreferences && <Loader size="small" />}
                         {!savingPreferences && <>{mondoTranslate('profile.save_preferences')}</>}
                     </button>

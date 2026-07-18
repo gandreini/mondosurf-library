@@ -49,6 +49,10 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
     }, [spotId, spotName]);
 
     const onSubmit = (data: { email: string; website: string }) => {
+        if (submitting) {
+            return; // re-entrancy guard (F3): the disabled button covers clicks,
+            // this covers programmatic/keyboard submits and the pre-render gap.
+        }
         setSubmitting(true);
         setOutcome(null);
         setSubmittedEmail(data.email.trim());
