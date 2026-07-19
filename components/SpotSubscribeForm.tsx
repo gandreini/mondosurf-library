@@ -88,7 +88,11 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
     // Terminal success / already-subscribed → replace the form with a confirmation.
     if (outcome && (outcome.state === 'success' || outcome.state === 'already')) {
         return (
-            <div className="ms-spot-subscribe ms-spot-subscribe--done" data-test="spot-subscribe-success">
+            <div
+                className="ms-spot-subscribe ms-spot-subscribe--done"
+                role="status"
+                aria-live="polite"
+                data-test="spot-subscribe-success">
                 <p className="ms-spot-subscribe__success-title">{mondoTranslate('spotSubscribe.success_title')}</p>
                 <p className="ms-spot-subscribe__success-text">
                     {mondoTranslate(outcome.messageKey, { email: submittedEmail })}
@@ -119,6 +123,7 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                         type="email"
                         inputMode="email"
                         autoComplete="email"
+                        spellCheck={false}
                         aria-label={mondoTranslate('spotSubscribe.email_placeholder')}
                         placeholder={mondoTranslate('spotSubscribe.email_placeholder')}
                         className="ms-spot-subscribe__input"
@@ -135,7 +140,11 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                 </div>
 
                 {(errors.email || (outcome && outcome.state === 'error')) && (
-                    <p className="ms-spot-subscribe__error" data-test="spot-subscribe-error">
+                    <p
+                        className="ms-spot-subscribe__error"
+                        role="alert"
+                        aria-live="assertive"
+                        data-test="spot-subscribe-error">
                         {errors.email
                             ? mondoTranslate('spotSubscribe.error_email_invalid')
                             : mondoTranslate(outcome!.messageKey)}
@@ -143,7 +152,7 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                 )}
 
                 {outcome && outcome.state === 'cap' && (
-                    <p className="ms-spot-subscribe__cap" data-test="spot-subscribe-cap">
+                    <p className="ms-spot-subscribe__cap" aria-live="polite" data-test="spot-subscribe-cap">
                         {mondoTranslate(outcome.messageKey)}{' '}
                         <a
                             href="https://www.mondo.surf/profile"
