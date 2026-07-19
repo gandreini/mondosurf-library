@@ -94,6 +94,22 @@ select {
     height: $height-common-xl;
 }
 
+/* Input size modifiers — mirror the ms-btn-m/l/xl scale so a field can sit next
+   to a same-size button. Written as element.class (and placed AFTER the base
+   blocks) on purpose: the base selectors like `input[type='email']` have
+   element+attribute specificity (0,1,1), so a bare component class (0,1,0) can
+   NEVER override the height — that's the trap these modifiers exist to avoid. */
+input.ms-input-m,
+select.ms-input-m,
+textarea.ms-input-m {
+    height: $height-common-m;
+}
+input.ms-input-l,
+select.ms-input-l,
+textarea.ms-input-l {
+    height: $height-common-l;
+}
+
 /* Checkbox */
 input[type='checkbox'] {
     width: $height-common-s;

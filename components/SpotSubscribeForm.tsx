@@ -131,7 +131,7 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                         spellCheck={false}
                         aria-label={mondoTranslate('spotSubscribe.email_placeholder')}
                         placeholder={mondoTranslate('spotSubscribe.email_placeholder')}
-                        className="ms-spot-subscribe__input"
+                        className="ms-spot-subscribe__input ms-input-l"
                         data-test="spot-subscribe-email"
                         {...register('email', { required: true, pattern: EMAIL_PATTERN })}
                     />

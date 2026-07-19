@@ -54,12 +54,12 @@
         }
     }
 
-    // One size down from the global form chrome (which is $height-common-xl):
-    // border/radius/shadow/placeholder still come from the global styles.
+    // Sizing/layout only. The height comes from the global `ms-input-l` size
+    // modifier (matches the ms-btn-l next to it) — a height set here would lose
+    // to the global `input[type='email']` selector on specificity.
     &__input {
         flex: 1 1 220px;
         min-width: 0;
-        height: $height-common-l;
 
         @media (max-width: 480px) {
             flex: none;
