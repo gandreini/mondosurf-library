@@ -3,11 +3,11 @@
  *
  * No-account per-spot email subscribe form (spot-email-alerts), River B pages.
  * Shared by mondosurf-web (and, later, mondosurf-app) via the SpotSubscribeForm
- * component in mondosurf-library. Editorial variant (Giulio, 2026-07-19): no
- * card — hairline rules above/below, so the form reads as part of the guide
- * content rather than a promo box, in a page already full of cards. Controls
- * are one size down from the site default ($height-common-l, not -xl) to keep
- * the section quiet; the blue CTA button carries the emphasis.
+ * component in mondosurf-library. Light tinted card (Giulio, 2026-07-19, after
+ * trying a no-card editorial variant: the soft background separates the form
+ * from the page better). Same visual family as .ms-banner but with quieter
+ * chrome; controls one size down from the site default ($height-common-l via
+ * the ms-input-l / ms-btn-l pair) so the blue CTA carries the emphasis.
  */
 
 /* ------------------------------------ *\
@@ -15,13 +15,14 @@
 \* ------------------------------------ */
 .ms-spot-subscribe {
     margin-top: $space * 2;
-    padding: $space * 2 0;
-    border-top: 1px solid $color-border-normal;
-    border-bottom: 1px solid $color-border-normal;
+    padding: $space * 2;
+    background-color: var(--color-first-light);
+    border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
+    border-radius: $border-radius * 2;
 
     &__title {
         margin: 0 0 $space * 0.375;
-        color: var(--color-text);
+        color: var(--color-text-link);
         font-size: $font-size-l-fluid;
         font-weight: 700;
         line-height: 1.2;
@@ -92,12 +93,12 @@
     }
 
     &--done {
-        // Success/already state keeps the same hairline section, no form inside.
+        // Success/already state keeps the same card, no form inside.
     }
 
     &__success-title {
         margin: 0 0 $space * 0.375;
-        color: var(--color-text);
+        color: var(--color-text-link);
         font-size: $font-size-l-fluid;
         font-weight: 700;
         line-height: 1.2;
