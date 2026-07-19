@@ -41,11 +41,13 @@
         gap: $space * 0.375;
     }
 
+    // Typography matched to .ms-spot-subscribe__title (2026-07-19).
     .ms-banner__text {
         margin-bottom: 0;
         color: var(--color-text-link);
         line-height: 1.2;
-        font-size: $font-size-m-fluid;
+        font-size: $font-size-l-fluid;
+        font-weight: 700;
     }
     .ms-banner__subtext {
         color: var(--color-text);
