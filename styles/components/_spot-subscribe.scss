@@ -3,10 +3,11 @@
  *
  * No-account per-spot email subscribe form (spot-email-alerts), River B pages.
  * Shared by mondosurf-web (and, later, mondosurf-app) via the SpotSubscribeForm
- * component in mondosurf-library. Same visual family as .ms-banner (light
- * Mondo-blue tint) but with quieter chrome: the banner above it is a link-out,
- * this is the conversion element — the white input + CTA button carry the
- * emphasis, not the box.
+ * component in mondosurf-library. Editorial variant (Giulio, 2026-07-19): no
+ * card — hairline rules above/below, so the form reads as part of the guide
+ * content rather than a promo box, in a page already full of cards. Controls
+ * are one size down from the site default ($height-common-l, not -xl) to keep
+ * the section quiet; the blue CTA button carries the emphasis.
  */
 
 /* ------------------------------------ *\
@@ -14,15 +15,18 @@
 \* ------------------------------------ */
 .ms-spot-subscribe {
     margin-top: $space * 2;
-    padding: $space * 2;
-    background-color: var(--color-first-light);
-    border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
-    border-radius: $border-radius * 2;
+    padding: $space * 2 0;
+    border-top: 1px solid $color-border-normal;
+    border-bottom: 1px solid $color-border-normal;
+
+    &__icon {
+        color: var(--color-text-link);
+    }
 
     &__title {
         margin: 0 0 $space * 0.375;
-        color: var(--color-text-link);
-        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+        font-size: $font-size-l-fluid;
         font-weight: 700;
         line-height: 1.2;
     }
@@ -42,15 +46,25 @@
     &__row {
         display: flex;
         gap: $space;
-        flex-wrap: wrap;
+
+        // Explicit stack on small screens: full-width input and button, not an
+        // accidental flex wrap.
+        @media (max-width: 480px) {
+            flex-direction: column;
+        }
     }
 
-    // Sizing/layout only — chrome (height, border, radius, inset shadow,
-    // placeholder) comes from the global form styles so the input matches
-    // every other form on the site.
+    // One size down from the global form chrome (which is $height-common-xl):
+    // border/radius/shadow/placeholder still come from the global styles.
     &__input {
         flex: 1 1 220px;
         min-width: 0;
+        height: $height-common-l;
+
+        @media (max-width: 480px) {
+            flex: none;
+            width: 100%;
+        }
     }
 
     // Off-screen honeypot: in the DOM for bots, invisible + unreachable for
@@ -82,13 +96,13 @@
     }
 
     &--done {
-        // Success/already state keeps the same box, no form inside.
+        // Success/already state keeps the same hairline section, no form inside.
     }
 
     &__success-title {
         margin: 0 0 $space * 0.375;
-        color: var(--color-text-link);
-        font-size: $font-size-m-fluid;
+        color: var(--color-text);
+        font-size: $font-size-l-fluid;
         font-weight: 700;
         line-height: 1.2;
     }
