@@ -132,7 +132,7 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                     />
                     <button
                         type="submit"
-                        className="ms-btn ms-btn-cta ms-btn-m"
+                        className="ms-btn ms-btn-cta ms-btn-xl"
                         data-test="spot-subscribe-submit"
                         disabled={submitting}>
                         {submitting ? <Loader size="small" /> : mondoTranslate('spotSubscribe.submit')}

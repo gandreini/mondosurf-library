@@ -3,8 +3,10 @@
  *
  * No-account per-spot email subscribe form (spot-email-alerts), River B pages.
  * Shared by mondosurf-web (and, later, mondosurf-app) via the SpotSubscribeForm
- * component in mondosurf-library. A calm tinted box, deliberately distinct from
- * the affiliate card. Visual polish is refined in the design-system pass (P3.5).
+ * component in mondosurf-library. Same visual family as .ms-banner (light
+ * Mondo-blue tint) but with quieter chrome: the banner above it is a link-out,
+ * this is the conversion element — the white input + CTA button carry the
+ * emphasis, not the box.
  */
 
 /* ------------------------------------ *\
@@ -12,19 +14,25 @@
 \* ------------------------------------ */
 .ms-spot-subscribe {
     margin-top: $space * 2;
-    padding: $space * 1.5;
-    border: 1px solid $help-border-color;
-    border-radius: $border-radius-soft;
-    background-color: $help-bg-color;
+    padding: $space * 2;
+    background-color: var(--color-first-light);
+    border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
+    border-radius: $border-radius * 2;
 
     &__title {
+        margin: 0 0 $space * 0.375;
+        color: var(--color-text-link);
+        font-size: $font-size-m-fluid;
         font-weight: 700;
-        margin: 0 0 $space * 0.25;
+        line-height: 1.2;
     }
 
     &__subtitle {
-        margin: 0 0 $space;
-        color: $help-text-color;
+        margin: 0 0 $space * 1.5;
+        color: var(--color-text);
+        font-size: $font-size-s-fluid;
+        line-height: 1.25;
+        max-width: 65ch;
     }
 
     &__form {
@@ -33,20 +41,16 @@
 
     &__row {
         display: flex;
-        gap: $space * 0.5;
+        gap: $space;
         flex-wrap: wrap;
     }
 
+    // Sizing/layout only — chrome (height, border, radius, inset shadow,
+    // placeholder) comes from the global form styles so the input matches
+    // every other form on the site.
     &__input {
-        flex: 1 1 200px;
+        flex: 1 1 220px;
         min-width: 0;
-        padding: $space * 0.5 $space * 0.75;
-        border: 1px solid $help-border-color;
-        border-radius: $border-radius-soft;
-
-        &::placeholder {
-            color: $form-input-placeholder-color;
-        }
     }
 
     // Off-screen honeypot: in the DOM for bots, invisible + unreachable for
@@ -61,18 +65,20 @@
     }
 
     &__error {
-        margin: $space * 0.5 0 0;
-        color: #c0392b;
+        margin: $space 0 0;
+        color: var(--color-error-dark);
+        font-size: $font-size-s-fluid;
     }
 
     &__cap {
-        margin: $space * 0.5 0 0;
+        margin: $space 0 0;
+        font-size: $font-size-s-fluid;
     }
 
     &__trust {
-        margin: $space * 0.75 0 0;
-        font-size: 0.8em;
-        color: $help-text-color;
+        margin: $space 0 0;
+        font-size: $font-size-s;
+        color: var(--color-text-light);
     }
 
     &--done {
@@ -80,12 +86,17 @@
     }
 
     &__success-title {
+        margin: 0 0 $space * 0.375;
+        color: var(--color-text-link);
+        font-size: $font-size-m-fluid;
         font-weight: 700;
-        margin: 0 0 $space * 0.25;
+        line-height: 1.2;
     }
 
     &__success-text {
         margin: 0;
-        color: $help-text-color;
+        color: var(--color-text);
+        font-size: $font-size-s-fluid;
+        max-width: 65ch;
     }
 }
