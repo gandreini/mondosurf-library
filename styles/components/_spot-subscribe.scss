@@ -19,10 +19,6 @@
     border-top: 1px solid $color-border-normal;
     border-bottom: 1px solid $color-border-normal;
 
-    &__icon {
-        color: var(--color-text-link);
-    }
-
     &__title {
         margin: 0 0 $space * 0.375;
         color: var(--color-text);

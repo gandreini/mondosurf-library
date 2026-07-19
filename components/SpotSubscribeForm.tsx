@@ -103,12 +103,7 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
 
     return (
         <div className="ms-spot-subscribe" data-test="spot-subscribe">
-            <p className="ms-spot-subscribe__title">
-                <span className="ms-spot-subscribe__icon" aria-hidden="true">
-                    ✉
-                </span>{' '}
-                {mondoTranslate('spotSubscribe.title', { spotName })}
-            </p>
+            <p className="ms-spot-subscribe__title">{mondoTranslate('spotSubscribe.title', { spotName })}</p>
             <p className="ms-spot-subscribe__subtitle">{mondoTranslate('spotSubscribe.subtitle', { spotName })}</p>
 
             <form className="ms-form ms-spot-subscribe__form" onSubmit={handleSubmit(onSubmit)} noValidate>
