@@ -2,8 +2,10 @@
  * SUBSCRIPTION PAGES
  *
  * Confirm page + the tokenized preferences/unsubscribe page (spot-email-alerts).
- * Shared, restrained styling built on $space + the help-box tokens, matching the
- * subscribe form. Visual polish only — behaviour lives in the page components.
+ * Same visual language as .ms-spot-subscribe: light --color-first-light card
+ * with a quiet rgba border (NOT the $help-* tokens — those map to the full
+ * Mondo blue and made the app-upsell box render saturated blue with invisible
+ * blue links). Visual polish only — behaviour lives in the page components.
  */
 
 /* ------------------------------------ *\
@@ -24,16 +26,30 @@
     text-align: center;
 
     &__app {
-        margin-top: $space * 2;
-        padding: $space * 1.5;
-        border: 1px solid $help-border-color;
-        border-radius: $border-radius-soft;
-        background-color: $help-bg-color;
+        max-width: 560px;
+        margin: $space * 3 auto 0;
+        padding: $space * 2;
+        background-color: var(--color-first-light);
+        border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
+        border-radius: $border-radius * 2;
+
+        p {
+            margin: 0 0 $space * 0.75;
+            color: var(--color-text);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 
-    &__app-title {
+    // Nested under &__app to out-specific the `&__app p` margin rule above.
+    &__app &__app-title {
+        color: var(--color-text-link);
+        font-size: $font-size-l-fluid;
         font-weight: 700;
-        margin: 0 0 $space * 0.25;
+        line-height: 1.2;
+        margin: 0 0 $space * 0.375;
     }
 }
 
@@ -49,17 +65,17 @@
         align-items: center;
         justify-content: space-between;
         gap: $space;
-        padding: $space * 0.5 0;
-        border-bottom: 1px solid $help-border-color;
+        padding: $space * 0.75 0;
+        border-bottom: 1px solid $color-border-normal;
     }
 
     &__saved {
         margin-top: $space;
-        color: #1a7f37;
+        color: #1a7f37; // darker than --color-success for text-on-white contrast
     }
 
     &__error {
         margin-top: $space;
-        color: #c0392b;
+        color: var(--color-error-dark);
     }
 }
