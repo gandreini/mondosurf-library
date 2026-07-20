@@ -29,6 +29,13 @@
     margin: 0 auto;
     box-sizing: border-box;
     display: flex;
+    flex-grow: 1;
+    // The .ms wrapper doesn't stretch to the viewport (global layout quirk that
+    // also top-anchors .ms-password-reset), so flex-grow alone leaves the block
+    // at the top. A viewport-based min-height makes it tall enough to actually
+    // center the emoji+title+button vertically. Subtract the footer's rough
+    // height so the whole page still fits without a big empty scroll.
+    min-height: calc(100vh - 320px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
