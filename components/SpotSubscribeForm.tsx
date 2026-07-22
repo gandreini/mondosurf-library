@@ -87,16 +87,25 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
 
     // Terminal success / already-subscribed → replace the form with a confirmation.
     if (outcome && (outcome.state === 'success' || outcome.state === 'already')) {
+        // 'already' is a complete statement on its own: title only, no subtitle
+        // (a "check your inbox" subtitle would contradict "you're already in").
+        const isAlready = outcome.state === 'already';
         return (
             <div
                 className="ms-spot-subscribe ms-spot-subscribe--done"
                 role="status"
                 aria-live="polite"
                 data-test="spot-subscribe-success">
-                <p className="ms-spot-subscribe__success-title">{mondoTranslate('spotSubscribe.success_title')}</p>
-                <p className="ms-spot-subscribe__success-text">
-                    {mondoTranslate(outcome.messageKey, { email: submittedEmail })}
+                <p className="ms-spot-subscribe__success-title">
+                    {isAlready
+                        ? mondoTranslate('spotSubscribe.already_text')
+                        : mondoTranslate('spotSubscribe.success_title')}
                 </p>
+                {!isAlready && (
+                    <p className="ms-spot-subscribe__success-text">
+                        {mondoTranslate(outcome.messageKey, { email: submittedEmail })}
+                    </p>
+                )}
             </div>
         );
     }
