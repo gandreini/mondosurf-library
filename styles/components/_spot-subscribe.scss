@@ -14,7 +14,6 @@
     #SPOT SUBSCRIBE (spot-email-alerts)
 \* ------------------------------------ */
 .ms-spot-subscribe {
-    margin-top: $space * 2;
     padding: $space * 2;
     background-color: var(--color-first-light);
     border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
@@ -102,6 +101,12 @@
         font-size: $font-size-l-fluid;
         font-weight: 700;
         line-height: 1.2;
+
+        // Title-only state (already-subscribed): no subtitle follows, so drop the
+        // bottom margin — otherwise it pushes the single line above the box centre.
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     &__success-text {
