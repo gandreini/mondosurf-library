@@ -85,6 +85,18 @@
         font-size: $font-size-s-fluid;
     }
 
+    // Inline link that opens the login/register modal — a <button> for correct
+    // semantics (it triggers an action, not navigation), styled as a text link.
+    &__cap-link {
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: var(--color-text-link);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
     &__trust {
         margin: $space 0 0;
         font-size: $font-size-s;

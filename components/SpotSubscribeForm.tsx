@@ -10,6 +10,7 @@ import {
     SubscribeOutcome
 } from 'mondosurf-library/helpers/spotSubscribe.helpers';
 import { Tracker } from 'mondosurf-library/tracker/tracker';
+import { openLoginModal } from 'features/modal/modal.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -163,15 +164,22 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
                 {outcome && outcome.state === 'cap' && (
                     <p className="ms-spot-subscribe__cap" aria-live="polite" data-test="spot-subscribe-cap">
                         {mondoTranslate(outcome.messageKey)}{' '}
-                        <a
-                            href="https://www.mondo.surf/profile"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() =>
-                                Tracker.trackEvent(['mp'], TrackingEvent.SpotSubscribeUpgradeTap, { spotId, spotName })
-                            }>
+                        {/* In-app: open the login/register modal (an account holds unlimited
+                            spots as favorites). Same helper LoginButton uses, so it works on
+                            web and app. The email footer keeps a plain /profile link instead. */}
+                        <button
+                            type="button"
+                            className="ms-spot-subscribe__cap-link"
+                            data-test="spot-subscribe-cap-cta"
+                            onClick={() => {
+                                Tracker.trackEvent(['mp'], TrackingEvent.SpotSubscribeUpgradeTap, {
+                                    spotId,
+                                    spotName
+                                });
+                                openLoginModal('spotSubscribeCap');
+                            }}>
                             {mondoTranslate('spotSubscribe.cap_upgrade_cta')}
-                        </a>
+                        </button>
                     </p>
                 )}
             </form>
