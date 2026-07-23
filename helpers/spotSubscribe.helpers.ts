@@ -17,21 +17,18 @@ export interface SubscribeOutcome {
 }
 
 /**
- * Builds the urlencoded body for POST /spot-subscription-subscribe/. The server
- * expects `form_ts` as unix SECONDS (it compares against its own time for the
- * min-time-to-submit bot check), while the client tracks the render time in ms.
+ * Builds the urlencoded body for POST /spot-subscription-subscribe/.
+ * `website` is the honeypot field (kept empty by real users).
  */
 export function buildSubscribePayload(
     email: string,
     spotId: number,
-    formRenderedAtMs: number,
     website: string,
     sourceUrl: string
 ): Record<string, string | number> {
     return {
         email: email.trim(),
         spot_id: spotId,
-        form_ts: Math.floor(formRenderedAtMs / 1000),
         website,
         source_url: sourceUrl
     };

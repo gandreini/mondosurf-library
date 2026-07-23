@@ -12,7 +12,7 @@ import {
 import { Tracker } from 'mondosurf-library/tracker/tracker';
 import { openLoginModal } from 'features/modal/modal.helpers';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface ISpotSubscribeForm {
@@ -40,12 +40,9 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [outcome, setOutcome] = useState<SubscribeOutcome | null>(null);
     const [submittedEmail, setSubmittedEmail] = useState<string>('');
-    const renderedAtRef = useRef<number>(Date.now());
 
-    // Impression fires once on mount; also (re)stamp the render time used for
-    // the min-time-to-submit bot check.
+    // Impression fires once per spot.
     useEffect(() => {
-        renderedAtRef.current = Date.now();
         Tracker.trackEvent(['mp'], TrackingEvent.SpotSubscribeShow, { spotId, spotName });
     }, [spotId, spotName]);
 
@@ -62,7 +59,6 @@ const SpotSubscribeForm: React.FC<ISpotSubscribeForm> = ({ spotId, spotName }) =
         const payload = buildSubscribePayload(
             data.email,
             spotId,
-            renderedAtRef.current,
             data.website || '',
             typeof window !== 'undefined' ? window.location.href : ''
         );
