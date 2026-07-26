@@ -14,6 +14,16 @@
     padding-top: $space * 3;
     padding-bottom: $space * 3;
 
+    // Breathing room under the page title ("Email preferences" / "Your surf alerts").
+    .ms-h2-title {
+        margin-bottom: $space * 2;
+    }
+
+    // Match the profile preferences page: full-width selects.
+    select {
+        width: 100%;
+    }
+
     &__list {
         list-style: none;
         margin: $space 0;
