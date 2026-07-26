@@ -63,4 +63,10 @@
     &__actions .ms-btn {
         width: 100%;
     }
+
+    // A form embedded in a status page (e.g. reset-password) fills the content
+    // column so its inputs/button don't shrink to intrinsic width.
+    &__content form {
+        width: 100%;
+    }
 }

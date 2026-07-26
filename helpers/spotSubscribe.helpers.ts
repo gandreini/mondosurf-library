@@ -90,6 +90,8 @@ export type ConfirmUiState = 'confirmed' | 'already' | 'expired' | 'cap' | 'erro
 export interface ConfirmOutcome {
     state: ConfirmUiState;
     messageKey: string;
+    /** Optional second line rendered as a subtitle under the title. */
+    messageTextKey?: string;
 }
 
 /** POST /spot-subscription-confirm/ success body → confirm-page state. */
@@ -104,7 +106,11 @@ export function mapConfirmSuccess(res: { code?: string; [key: string]: unknown }
 export function mapConfirmError(err: { code?: string; [key: string]: unknown } | null | undefined): ConfirmOutcome {
     switch (err && err.code) {
         case 'token_expired':
-            return { state: 'expired', messageKey: 'spotSubscribe.confirm_expired' };
+            return {
+                state: 'expired',
+                messageKey: 'spotSubscribe.confirm_expired',
+                messageTextKey: 'spotSubscribe.confirm_expired_text'
+            };
         case 'cap_reached':
             return { state: 'cap', messageKey: 'spotSubscribe.error_cap_reached' };
         case 'invalid_token':
