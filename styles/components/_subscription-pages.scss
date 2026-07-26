@@ -26,7 +26,7 @@
 
     &__list {
         list-style: none;
-        margin: $space 0;
+        margin: $space 0 $space * 2; // breathing room before "Unsubscribe from all"
         padding: 0;
     }
 
@@ -35,8 +35,37 @@
         align-items: center;
         justify-content: space-between;
         gap: $space;
-        padding: $space * 0.75 0;
+        padding: $space * 3 0; // 24px vertical breathing room
         border-bottom: 1px solid $color-border-normal;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    // A long spot name shrinks and wraps instead of pushing the link off-row.
+    &__spot-name {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    // Per-spot unsubscribe: a light blue text link, not a heavy button. Never
+    // wraps or shrinks, so it stays intact next to a long name.
+    &__stop {
+        flex-shrink: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: var(--color-text-link);
+        text-decoration: underline;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
     }
 
     &__saved {
