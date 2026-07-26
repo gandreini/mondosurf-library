@@ -885,8 +885,8 @@
     "prefs_error": "Could not save. Please try again.",
     "error_email_invalid": "Please enter a valid email address",
     "error_rate_limited": "Too many attempts. Please try again in a few minutes.",
-    "error_cap_reached": "This email already gets alerts for 3 spots",
-    "cap_upgrade_cta": "Create a free account to follow more",
+    "error_cap_reached": "You already get alerts for 3 spots",
+    "cap_upgrade_cta": "Create a free account for unlimited alerts",
     "error_generic": "Something went wrong. Please try again."
   }
 }
