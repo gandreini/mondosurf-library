@@ -1,17 +1,14 @@
 'use client';
 
 import { FeatureCollection } from 'geojson';
-import dynamic from 'next/dynamic';
+// The Map statically imports leaflet, which touches `window` at module load and
+// throws during SSR. Each platform loads it via its own proxy: web wraps it in
+// next/dynamic (ssr:false) so the rest of the guide's client segment still SSRs
+// (the coordinates box below carries the schema.org geo); the app (no SSR)
+// imports it directly. This keeps SurfSpotMap itself platform-agnostic.
+import Map from 'proxies/LazyMap';
 import MondoLink from 'proxies/MondoLink';
 import { mondoTranslate } from 'proxies/mondoTranslate';
-
-// Map statically imports leaflet, which touches `window` at module load and
-// throws during SSR. Importing it here statically made the guide's whole
-// client segment (map + affiliate card + subscribe form) bail out of SSR —
-// they only appeared after client hydration, invisible to crawlers/no-JS.
-// Load it client-only, matching the other Map consumers (surf-spots-map,
-// forecast-edit); the coordinates box below still SSRs (schema.org geo).
-const Map = dynamic(() => import('mondosurf-library/components/Map'), { ssr: false });
 
 interface ISurfSpotMap {
     lat: number;
