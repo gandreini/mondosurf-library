@@ -32,6 +32,13 @@
         gap: $space * 3.5;
     }
 
+    // Banners
+    &__banners {
+        display: flex;
+        flex-direction: column;
+        gap: $space*2;
+    }
+
     // Description
     &__description {
         @include consistent;
