@@ -15,7 +15,7 @@
     background-color: $color-background-base; // $color-background-ultralight;
     box-sizing: border-box;
     border-radius: $border-radius * 2;
-    border: 2px solid $color-border-normal;
+    border: 1px solid $color-border-normal;
 
     padding: 0; // Overwrites card mixin padding.
     background-color: $color-background-ultralight;
@@ -60,7 +60,7 @@
         align-items: center;
         // padding: $space * 1.25 $space * 1 $space * 1 $space * 1;
         padding: $space * 1 $space * 1 $space * 0.75 $space * 1;
-        border-bottom: 2px solid $color-border-light;
+        border-bottom: 1px solid $color-border-normal;
         border-radius: $border-radius * 2 $border-radius * 2 0 0;
         background-color: $color-background-base;
         justify-content: space-between;
