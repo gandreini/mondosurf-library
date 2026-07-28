@@ -47,6 +47,7 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
                             className="ms-page-title__icon-wrapper"
                             title={props.backlinkTitle || undefined}
                             href={props.backlink}
+                            dataTest="page-title-backlink"
                             onClickCallback={onBackClick}>
                             <Icon icon="arrow-left" />
                         </MondoLink>

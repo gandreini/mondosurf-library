@@ -1,3 +1,7 @@
+// Client: passes the click-tracking callback into MondoLink (a client
+// component), and functions can't cross a server→client boundary.
+'use client';
+
 import Banner from 'mondosurf-library/components/Banner';
 import FavoriteAddButton from 'mondosurf-library/components/FavoriteAddButton';
 import Icon from 'mondosurf-library/components/Icon';
