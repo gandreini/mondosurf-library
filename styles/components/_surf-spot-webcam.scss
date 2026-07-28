@@ -9,12 +9,18 @@
 \* ------------------------------------ */
 .ms-surf-spot-webcam {
     &__thumb {
+        position: relative;
+        overflow: hidden;
         margin-bottom: $space;
         aspect-ratio: 2 / 1;
-        background-size: cover;
         border-radius: $border-radius;
     }
-    &__thumb-default {
+    &__thumb-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     &__title {
         @include font-size('s');
