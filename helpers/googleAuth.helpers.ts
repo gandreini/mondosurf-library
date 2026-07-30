@@ -52,7 +52,8 @@ export const handleWebGoogleSignIn = (response: any, deviceId: string, callback?
                     decodedToken.given_name,
                     decodedToken.picture,
                     true,
-                    decodedToken.sub
+                    decodedToken.sub,
+                    credential // raw signed id_token, re-verified server-side
                 )
                     .then((response) => {
                         if (response) {

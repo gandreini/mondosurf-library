@@ -94,7 +94,10 @@ export const login = (
     name?: string,
     pictureUrl?: string,
     googleAuth?: boolean,
-    googleAuthId?: string
+    googleAuthId?: string,
+    // Raw signed Google id_token, verified server-side in /auth (account-takeover
+    // fix). Optional during the Phase-1 rollout so older builds keep working.
+    googleIdToken?: string
 ) => {
     return axios({
         method: 'post',
@@ -107,7 +110,8 @@ export const login = (
             name: name,
             picture_url: pictureUrl,
             google_auth: googleAuth,
-            google_auth_id: googleAuthId
+            google_auth_id: googleAuthId,
+            id_token: googleIdToken
         }),
         withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
