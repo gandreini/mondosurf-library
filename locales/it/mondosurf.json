@@ -222,8 +222,6 @@
     "on_now": "On now!"
   },
   "home": {
-    "no_countries_found": "Sorry no countries were found on the system",
-    "countries_server_error": "Ops, there was an error loading the countries, try reloading the page",
     "hero": {
       "supertitle": "Mondo Surf Atlas and Forecast",
       "title": "Your surf forecast calendar",
@@ -291,7 +289,11 @@
         "sub_text": "Cancel anytime"
       }
     },
-    "geolocation_unsupported": "Sorry, geolocation is not supported on your device"
+    "geolocation_unsupported": "Sorry, geolocation is not supported on your device",
+    "links": {
+      "spots_title": "Surf spot popolari",
+      "destinations_title": "Destinazioni surf top"
+    }
   },
   "map_filters": {
     "filter": "Filter surf spots",
@@ -340,7 +342,6 @@
       "title": "Worldwide surf spots map - 🌊 Mondo",
       "description": "Explore the world's best surf spots with our interactive map. Find detailed spot information, forecasts, and more with just a click."
     },
-
     "favorites": {
       "title": "Your favorite surf spots - 🌊 Mondo",
       "description": "Find your favorite surf spots on Mondo Surf. Personalize your surfing experience with a list of spots you love, with latest forecasts and detailed spot information."

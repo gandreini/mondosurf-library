@@ -6,6 +6,7 @@ export enum TrackingEvent {
     HomeNearTap = 'Home Near_Tap',
     HomeNearGTsShow = 'Home Near GTs_Show',
     HomeNearSpotsShow = 'Home Near Spots_Show',
+    HomeLinksTap = 'Home Links_Tap',
     // HomeRegisterShow = 'Home Register_Show',
     HomeRegisterTap = 'Home Register_Tap',
     // HomeProShow = 'Home Pro_Show',

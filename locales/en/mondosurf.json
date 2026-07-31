@@ -266,8 +266,6 @@
     "on_now": "On now!"
   },
   "home": {
-    "no_countries_found": "Sorry no countries were found on the system",
-    "countries_server_error": "Ops, there was an error loading the countries, try reloading the page",
     "hero": {
       "supertitle": "Mondo Surf Atlas and Forecast",
       "title": "Every surf spot, with forecast",
@@ -317,7 +315,11 @@
       "button_text_1": "Register to Mondo for free",
       "sub_text": "Already a member? Click to log in"
     },
-    "geolocation_unsupported": "Sorry, geolocation is not supported on your device"
+    "geolocation_unsupported": "Sorry, geolocation is not supported on your device",
+    "links": {
+      "spots_title": "Popular surf spots",
+      "destinations_title": "Top surf destinations"
+    }
   },
   "map_filters": {
     "filter": "Filter surf spots",
