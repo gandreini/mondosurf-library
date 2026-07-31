@@ -37,16 +37,13 @@ const SurfSpotMap: React.FC<ISurfSpotMap> = (props) => {
             {/* Coordinates box */}
             <div
                 className="ms-surf-spot-map__coordinates"
-                itemProp="geo"
-                itemType="http://schema.org/GeoCoordinates"
-                itemScope
                 data-test="surf-spot-coordinates">
                 <div className="ms-surf-spot-map__coordinates-text">
                     {mondoTranslate('surf_spot.coordinates')}{' '}
-                    <span className="ms-surf-spot-map__coordinates-lat" itemProp="latitude">
+                    <span className="ms-surf-spot-map__coordinates-lat">
                         {props.lat.toFixed(6)}{' '}
                     </span>
-                    <span className="ms-surf-spot-map__coordinates-lng" itemProp="longitude">
+                    <span className="ms-surf-spot-map__coordinates-lng">
                         {props.lng.toFixed(6)}
                     </span>
                 </div>

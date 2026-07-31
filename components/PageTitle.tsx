@@ -11,7 +11,6 @@ interface IPageTitle {
     backlink?: string;
     backlinkTitle?: string;
     loading?: boolean;
-    itemProp?: string;
 }
 
 const PageTitle: React.FC<IPageTitle> = (props) => {
@@ -56,8 +55,7 @@ const PageTitle: React.FC<IPageTitle> = (props) => {
                         {props.flag && <span className="ms-page-title__flag">{props.flag}</span>}
                         <h1
                             className="ms-page-title__title"
-                            data-test="page-title"
-                            itemProp={props.itemProp || undefined}>
+                            data-test="page-title">
                             {props.title}
                         </h1>
                     </div>

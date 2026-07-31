@@ -8,17 +8,14 @@ interface IBreadcrumb {
     contentPosition: string;
 }
 
+// Structured data lives in the page-level JSON-LD graph (BreadcrumbList),
+// so this component is presentation-only.
 const Breadcrumb: React.FC<IBreadcrumb> = (props) => {
     return (
-        <li
-            className="ms-breadcrumbs__list-item "
-            itemScope
-            itemProp="itemListElement"
-            itemType="https://schema.org/ListItem">
-            <MondoLink itemProp="item" className="ms-breadcrumbs__list-link" href={props.url}>
-                <span itemProp="name">{props.label}</span>
+        <li className="ms-breadcrumbs__list-item ">
+            <MondoLink className="ms-breadcrumbs__list-link" href={props.url}>
+                <span>{props.label}</span>
             </MondoLink>
-            <meta itemProp="position" content={props.contentPosition}></meta>
         </li>
     );
 };

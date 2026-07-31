@@ -6,17 +6,13 @@ interface IBreadcrumbCurrent {
     href: string;
 }
 
+// Current page: non-interactive by design (the old anchor rendered href="" and the
+// CSS sets cursor: default on it). Callers still pass href/contentPosition; both are
+// intentionally unused so the shared API stays stable for the app.
 const BreadcrumbCurrent: React.FC<IBreadcrumbCurrent> = (props) => {
     return (
-        <li
-            className="ms-breadcrumbs__list-item is-active"
-            itemScope
-            itemProp="itemListElement"
-            itemType="https://schema.org/ListItem">
-            <a itemProp="item" className="ms-breadcrumbs__list-link" href="">
-                <span itemProp="name">{props.label}</span>
-            </a>
-            <meta itemProp="position" content={props.contentPosition}></meta>
+        <li className="ms-breadcrumbs__list-item is-active">
+            <span className="ms-breadcrumbs__list-link">{props.label}</span>
         </li>
     );
 };
