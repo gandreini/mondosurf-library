@@ -238,22 +238,23 @@ const MapGl: React.FC<IMapGl> = ({
         // they survive setStyle and tolerate the layers not existing yet — no re-wiring.
         wireSpotsClusterEvents(map, showSpotPopup);
 
-        map.on('load', () => {
-            if (draggableMarker && lat != null && lng != null) {
-                const el = customIcon ? markerElement(IMAGES_URL + 'map-pins/' + customIcon) : undefined;
-                const marker = new Marker({ element: el, draggable: true, anchor: 'bottom' })
-                    .setLngLat([lng, lat])
-                    .addTo(map);
-                marker.on('dragend', () => {
-                    const p = marker.getLngLat();
-                    if (onMarkerDragEnd) onMarkerDragEnd(p.lat, p.lng);
-                });
-                markersRef.current.push(marker);
-                return;
-            }
+        // DOM markers are HTML overlays: they do NOT depend on the style/tiles
+        // being loaded, so add them immediately. Gating them on map 'load' made
+        // pins wait (sometimes minutes) on slow tile servers.
+        if (draggableMarker && lat != null && lng != null) {
+            const el = customIcon ? markerElement(IMAGES_URL + 'map-pins/' + customIcon) : undefined;
+            const marker = new Marker({ element: el, draggable: true, anchor: 'bottom' })
+                .setLngLat([lng, lat])
+                .addTo(map);
+            marker.on('dragend', () => {
+                const p = marker.getLngLat();
+                if (onMarkerDragEnd) onMarkerDragEnd(p.lat, p.lng);
+            });
+            markersRef.current.push(marker);
+        } else if (!loadAllSpots) {
             // World loading is owned solely by the loadAllSpots effect (single owner).
-            if (!loadAllSpots) markersRef.current = addDomPins(map, pins, pinClick);
-        });
+            markersRef.current = addDomPins(map, pins, pinClick);
+        }
 
         // Re-add the clustered source/layers after a layer switch (setStyle wipes
         // sources/layers; the layer-id click/hover handlers above survive).
