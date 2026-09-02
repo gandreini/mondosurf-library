@@ -97,9 +97,10 @@
         width: auto;
     }
 
+    // NB: no `position: relative` here — MapLibre's own .maplibregl-marker is
+    // position:absolute (which already makes it the star's containing block);
+    // overriding it pulls the marker into normal flow and breaks positioning.
     &[class*='quality-'] {
-        position: relative;
-
         svg {
             position: absolute;
             top: -2px;
