@@ -1,0 +1,72 @@
+/**
+ * STATUS PAGE
+ *
+ * Shared shell for full-page status/info screens reached from a link or email:
+ * a centered icon + title + optional text + loader + CTA(s). No logo/wordmark
+ * (the user already knows where they are). Consumers: subscription confirm,
+ * subscription preferences/unsubscribe (and, once migrated, reset-password,
+ * account-verify). Replaces the per-page duplicated layout CSS.
+ *
+ * Centering: the Footer lives OUTSIDE `.ms`, so `.ms` holds only the page. The
+ * shell flex-grows to fill `.ms` and centers the __content block on both axes —
+ * same mechanism as the (already-centered) reset-password page, no min-height.
+ */
+
+/* ------------------------------------ *\
+    #STATUS PAGE
+\* ------------------------------------ */
+.ms-status-page {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: $space * 2;
+
+    // Single flex column: one `gap` sets the whole vertical rhythm.
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space * 1.5;
+        width: 100%;
+        max-width: 480px;
+        text-align: center;
+    }
+
+    &__icon {
+        margin: 0;
+        font-size: $font-size-xxxl-fluid;
+        line-height: 1;
+    }
+
+    // Pairs with .ms-h2-title; the gap replaces the heading's own margins.
+    &__title {
+        margin: 0;
+    }
+
+    &__text {
+        margin: 0;
+        max-width: 65ch;
+        color: var(--color-text);
+    }
+
+    // Stacked, full-width CTAs (capped so they don't stretch on desktop).
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: $space;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    &__actions .ms-btn {
+        width: 100%;
+    }
+
+    // A form embedded in a status page (e.g. reset-password) fills the content
+    // column so its inputs/button don't shrink to intrinsic width.
+    &__content form {
+        width: 100%;
+    }
+}

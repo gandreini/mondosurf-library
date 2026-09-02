@@ -79,7 +79,9 @@ export default function AffiliateCard({ spotId, template, destinationLabel, coor
 
     return (
         <div ref={cardRef} className={`ms-affiliate-card ms-affiliate-card--${template}`} data-test="affiliate-card">
-            <section className="ms-grid-1-2">
+            {/* Full-width since the Klook banner was dropped — a single program
+                takes the whole row (was ms-grid-1-2 when there were two). */}
+            <section>
                 {programs.map((p) => (
                     <a
                         key={p.kind}

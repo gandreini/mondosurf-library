@@ -94,7 +94,10 @@ export const login = (
     name?: string,
     pictureUrl?: string,
     googleAuth?: boolean,
-    googleAuthId?: string
+    googleAuthId?: string,
+    // Raw signed Google id_token, verified server-side in /auth (account-takeover
+    // fix). Optional during the Phase-1 rollout so older builds keep working.
+    googleIdToken?: string
 ) => {
     return axios({
         method: 'post',
@@ -107,7 +110,8 @@ export const login = (
             name: name,
             picture_url: pictureUrl,
             google_auth: googleAuth,
-            google_auth_id: googleAuthId
+            google_auth_id: googleAuthId,
+            id_token: googleIdToken
         }),
         withCredentials: true, // Cookies should be included in cross-site requests
         headers: {
@@ -520,7 +524,13 @@ export const updateUserStatus = (response: AxiosResponse<any>, registration: boo
 
     // Only if first time registration
     if (registration) {
-        store.dispatch(setFavoriteSpots([])); // Always inits an empty array (to replace null value)
+        // A brand-new account can already have favorites: the spot-email-alerts
+        // D2 bridge migrates any anonymous per-spot subscriptions for this email
+        // into favorites at registration, and the register response returns them.
+        // Use them (falling back to []) so the Favorites page isn't empty until a
+        // manual refresh.
+        store.dispatch(setFavoriteSpots(response.data.favourite_spots ? response.data.favourite_spots : []));
+        if (response.data.favourite_spots) prefetchFavoritesGuidesAndForecast(response.data.favourite_spots);
     }
 
     // Data available only for users who login (and don't register for the first time)

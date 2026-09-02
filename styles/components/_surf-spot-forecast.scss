@@ -75,7 +75,7 @@
 \* ------------------------------------ */
 .ms-surf-spot-forecast {
     &__forecast-good-times {
-        margin: $space * 3 0 $space * 5 0;
+        margin: $space * 3 0 $space * 3 0;
     }
 
     &__good-times-days {
@@ -111,6 +111,20 @@
         > section {
             margin-bottom: $grid-gutter-h;
         }
+    }
+}
+
+/* ------------------------------------ *\
+    #SPOT SUBSCRIBE (spot-email-alerts)
+\* ------------------------------------ */
+// Page-scoped spacing (same pattern as the affiliate card): the component's own
+// margin-top is sized for the guide (right after the description). Here the
+// good-times block above already ends with $space*5, so drop the top margin and
+// give the form the page's standard $space*5 bottom rhythm before the tables.
+.ms-surf-spot-forecast {
+    .ms-spot-subscribe {
+        margin-top: 0;
+        margin-bottom: $space * 5;
     }
 }
 

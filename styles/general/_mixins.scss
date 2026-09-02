@@ -79,16 +79,19 @@
     background-color: $color-background-base; // $color-background-ultralight;
     box-sizing: border-box;
     border-radius: $border-radius * 2;
+    border: 1px solid $color-border-normal;
+    border-radius: $border-radius;
     // border: 1px solid #f7f7f7; // ! TODO ADD VARIABLE
     // border: 1px solid rgb(221, 221, 221); // ! TODO ADD VARIABLE
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02),
-        0 6px 12px rgba(0, 0, 0, 0.02), 0 12px 24px rgba(0, 0, 0, 0.02), 0 0px 4px rgba(0, 0, 0, 0.04);
+    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02),
+    //     0 6px 12px rgba(0, 0, 0, 0.02), 0 12px 24px rgba(0, 0, 0, 0.02), 0 0px 4px rgba(0, 0, 0, 0.04);
     transition: all $transition-durations;
     transition-timing-function: ease-in;
 }
 
 @mixin card-hover {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(0, 0, 0, 0.1), 0 36px 50px -50px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(0, 0, 0, 0.1), 0 36px 50px -50px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-gray-04);
 }
 
 @mixin card-box-shadow {

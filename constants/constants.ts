@@ -31,5 +31,5 @@ export const GEOJSON_FILE_URL =
     process.env.NEXT_PUBLIC_GEOJSON_FILE_URL ||
     'https://rest-api.mondo.surf/wp-content/uploads/geojson/worldwide-spots.json';
 
-export const APP_LATEST_VERSION = '4.19.2';
-export const APP_LATEST_VERSION_PROGRESSIVE = 73;
+export const APP_LATEST_VERSION = '4.20.1';
+export const APP_LATEST_VERSION_PROGRESSIVE = 76;

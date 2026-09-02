@@ -3,7 +3,9 @@
 
 import { postApiAuthCall } from 'mondosurf-library/api/api';
 import Loader from 'mondosurf-library/components/Loader';
-import ToggleSwitch from 'mondosurf-library/components/ToggleSwitch';
+import NotificationPreferencesFields, {
+    NotificationPreferencesValues
+} from 'mondosurf-library/components/NotificationPreferencesFields';
 import { RootState, store } from 'mondosurf-library/redux/store';
 import { setPreferences } from 'mondosurf-library/redux/userSlice';
 import toastService from 'mondosurf-library/services/toastService';
@@ -37,60 +39,64 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
     const accessToken = useSelector((state: RootState) => state.user.accessToken);
 
     const [savingPreferences, setSavingPreferences] = useState<boolean>(false);
-    const [frequencyIsWeekly, setFrequencyIsWeekly] = useState<boolean>(false);
 
-    // Set defaults for the select fields. The 3 notification toggles are
-    // initialised via `defaultChecked` on the inputs themselves below —
-    // setValue doesn't update an uncontrolled checkbox's DOM `checked`
-    // state, so initial state would otherwise visually disagree with the
-    // form state.
+    // The bulletin + comment-notification fields are shared with the no-login
+    // preferences page via NotificationPreferencesFields, which is fully
+    // controlled — so they live in state here (units stay on react-hook-form).
+    const [notifValues, setNotifValues] = useState<NotificationPreferencesValues>({
+        bulletin_frequency: props.preferences.userBulletinFrequency,
+        bulletin_week_day: props.preferences.userBulletinWeekDay,
+        notify_comment_reply_email: props.preferences.notifyCommentReplyEmail,
+        notify_comment_like_email: props.preferences.notifyCommentLikeEmail,
+        notify_favorite_spot_comment_email: props.preferences.notifyFavoriteSpotCommentEmail
+    });
+    const updateNotif = <K extends keyof NotificationPreferencesValues>(
+        key: K,
+        value: NotificationPreferencesValues[K]
+    ) => setNotifValues((prev) => ({ ...prev, [key]: value }));
+
+    // Seed the unit selects once on mount (the notification fields are
+    // controlled via state).
     useEffect(() => {
-        setValue('preferencesBulletinFrequency', props.preferences.userBulletinFrequency);
-        setValue('preferencesBulletinWeekDay', props.preferences.userBulletinWeekDay);
         setValue('preferencesHeight', props.preferences.userPrefsHeight);
         setValue('preferencesSpeed', props.preferences.userPrefsSpeed);
         setValue('preferencesTemperature', props.preferences.userPrefsTemperature);
-        if (props.preferences.userBulletinFrequency === 'weekly') setFrequencyIsWeekly(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Save preferences
     const onSaveProfilePreferences = () => {
         setSavingPreferences(true);
-        const bulletinFrequency: string = getValues('preferencesBulletinFrequency');
-        const bulletinWeekDay: string = getValues('preferencesBulletinWeekDay');
         const height: string = getValues('preferencesHeight');
         const speed: string = getValues('preferencesSpeed');
         const temperature: string = getValues('preferencesTemperature');
-        const notifyReply: boolean = !!getValues('notifyCommentReplyEmail');
-        const notifyLike: boolean = !!getValues('notifyCommentLikeEmail');
-        const notifyFavSpot: boolean = !!getValues('notifyFavoriteSpotCommentEmail');
 
         postApiAuthCall(
             'user-preferences-update',
             accessToken,
             {
-                bulletin_frequency: bulletinFrequency,
-                bulletin_week_day: bulletinWeekDay,
+                bulletin_frequency: notifValues.bulletin_frequency,
+                bulletin_week_day: notifValues.bulletin_week_day,
                 prefs_height: height,
                 prefs_speed: speed,
                 prefs_temperature: temperature,
-                notify_comment_reply_email: notifyReply,
-                notify_comment_like_email: notifyLike,
-                notify_favorite_spot_comment_email: notifyFavSpot
+                notify_comment_reply_email: notifValues.notify_comment_reply_email,
+                notify_comment_like_email: notifValues.notify_comment_like_email,
+                notify_favorite_spot_comment_email: notifValues.notify_favorite_spot_comment_email
             },
             true
         )
             .then(() => {
                 store.dispatch(
                     setPreferences({
-                        userBulletinFrequency: bulletinFrequency,
-                        userBulletinWeekDay: bulletinWeekDay,
+                        userBulletinFrequency: notifValues.bulletin_frequency,
+                        userBulletinWeekDay: notifValues.bulletin_week_day,
                         userPrefsHeight: height,
                         userPrefsSpeed: speed,
                         userPrefsTemperature: temperature,
-                        notifyCommentReplyEmail: notifyReply,
-                        notifyCommentLikeEmail: notifyLike,
-                        notifyFavoriteSpotCommentEmail: notifyFavSpot
+                        notifyCommentReplyEmail: notifValues.notify_comment_reply_email,
+                        notifyCommentLikeEmail: notifValues.notify_comment_like_email,
+                        notifyFavoriteSpotCommentEmail: notifValues.notify_favorite_spot_comment_email
                     })
                 );
                 setSavingPreferences(false);
@@ -112,39 +118,7 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                     <p>{errors.profileForm.message.toString()}</p>
                 )}
                 <div className="ms-profile-preferences-edit__contents">
-                    <div className="ms-form__input">
-                        <label className="ms-form__label" htmlFor="preferences_bulletin_frequency">
-                            {mondoTranslate('profile.bulletin_frequency_label')}
-                        </label>
-                        <select
-                            {...register('preferencesBulletinFrequency')}
-                            onChange={(e) => {
-                                setFrequencyIsWeekly(e.target.value === 'weekly' ? true : false);
-                            }}>
-                            <option value="daily">{mondoTranslate('profile.bulletin_frequency_daily')}</option>
-                            <option value="weekly">{mondoTranslate('profile.bulletin_frequency_weekly')}</option>
-                            <option value="never">{mondoTranslate('profile.bulletin_frequency_never')}</option>
-                        </select>
-                        <p className="ms-small-text">{mondoTranslate('profile.bulletin_frequency_description')}</p>
-                    </div>
-                    {frequencyIsWeekly && (
-                        <div className="ms-form__input">
-                            <label className="ms-form__label" htmlFor="preferences_bulletin_week_day">
-                                {mondoTranslate('profile.bulletin_week_day_label')}
-                            </label>
-                            <select {...register('preferencesBulletinWeekDay')}>
-                                <option value="monday">{mondoTranslate('profile.bulletin_week_day_monday')}</option>
-                                <option value="tuesday">{mondoTranslate('profile.bulletin_week_day_tuesday')}</option>
-                                <option value="wednesday">
-                                    {mondoTranslate('profile.bulletin_week_day_wednesday')}
-                                </option>
-                                <option value="thursday">{mondoTranslate('profile.bulletin_week_day_thursday')}</option>
-                                <option value="friday">{mondoTranslate('profile.bulletin_week_day_friday')}</option>
-                                <option value="saturday">{mondoTranslate('profile.bulletin_week_day_saturday')}</option>
-                                <option value="sunday">{mondoTranslate('profile.bulletin_week_day_sunday')}</option>
-                            </select>
-                        </div>
-                    )}
+                    <NotificationPreferencesFields values={notifValues} onChange={updateNotif} disabled={savingPreferences} />
 
                     <hr className="ms-profile-preferences-edit__separator" />
 
@@ -179,40 +153,9 @@ const ProfilePreferencesEdit: React.FC<IProfilePreferencesEdit> = (props) => {
                             <option value="f">{mondoTranslate('profile.temperature_unit_fahrenheit')}</option>
                         </select>
                     </div>
-
-                    <hr className="ms-profile-preferences-edit__separator" />
-
-                    <h2 className="ms-profile-preferences-edit__section-title ms-h2-title">
-                        {mondoTranslate('profile.notifications_section_title')}
-                    </h2>
-
-                    <ToggleSwitch
-                        id="notifyCommentReplyEmail"
-                        label={mondoTranslate('profile.notify_comment_reply_email_label')}
-                        description={mondoTranslate('profile.notify_comment_reply_email_description')}
-                        dataTest="pref-notify-reply-email"
-                        defaultChecked={props.preferences.notifyCommentReplyEmail}
-                        {...register('notifyCommentReplyEmail')}
-                    />
-                    <ToggleSwitch
-                        id="notifyCommentLikeEmail"
-                        label={mondoTranslate('profile.notify_comment_like_email_label')}
-                        description={mondoTranslate('profile.notify_comment_like_email_description')}
-                        dataTest="pref-notify-like-email"
-                        defaultChecked={props.preferences.notifyCommentLikeEmail}
-                        {...register('notifyCommentLikeEmail')}
-                    />
-                    <ToggleSwitch
-                        id="notifyFavoriteSpotCommentEmail"
-                        label={mondoTranslate('profile.notify_favorite_spot_comment_email_label')}
-                        description={mondoTranslate('profile.notify_favorite_spot_comment_email_description')}
-                        dataTest="pref-notify-favorite-spot-email"
-                        defaultChecked={props.preferences.notifyFavoriteSpotCommentEmail}
-                        {...register('notifyFavoriteSpotCommentEmail')}
-                    />
                 </div>
                 <div className="ms-profile-preferences-edit__buttons">
-                    <button type="submit" className="ms-btn ms-btn-cta ms-btn-l">
+                    <button type="submit" className="ms-btn ms-btn-cta ms-btn-l" disabled={savingPreferences}>
                         {savingPreferences && <Loader size="small" />}
                         {!savingPreferences && <>{mondoTranslate('profile.save_preferences')}</>}
                     </button>

@@ -222,8 +222,6 @@
     "on_now": "On now!"
   },
   "home": {
-    "no_countries_found": "Sorry no countries were found on the system",
-    "countries_server_error": "Ops, there was an error loading the countries, try reloading the page",
     "hero": {
       "supertitle": "Mondo Surf Atlas and Forecast",
       "title": "Your surf forecast calendar",
@@ -291,7 +289,11 @@
         "sub_text": "Cancel anytime"
       }
     },
-    "geolocation_unsupported": "Sorry, geolocation is not supported on your device"
+    "geolocation_unsupported": "Sorry, geolocation is not supported on your device",
+    "links": {
+      "spots_title": "Surf spot popolari",
+      "destinations_title": "Destinazioni surf top"
+    }
   },
   "map_filters": {
     "filter": "Filter surf spots",
@@ -340,7 +342,6 @@
       "title": "Worldwide surf spots map - 🌊 Mondo",
       "description": "Explore the world's best surf spots with our interactive map. Find detailed spot information, forecasts, and more with just a click."
     },
-
     "favorites": {
       "title": "Your favorite surf spots - 🌊 Mondo",
       "description": "Find your favorite surf spots on Mondo Surf. Personalize your surfing experience with a list of spots you love, with latest forecasts and detailed spot information."
@@ -572,7 +573,7 @@
     "error_title": "Verification error",
     "no_token": "Couldn't retrieve the code to verify your account, please try again to click on the link in the email",
     "send_verification_email_btn": "Resend verification email",
-    "back_btn": "Back to Mondo Surf",
+    "back_btn": "Torna alla home",
     "account_verified_title": "Account verified!",
     "account_verified": "Your account was correctly verified! Now you can use all the functionalities of Mondo Surf.",
     "account_already_confirmed_title": "Account already verified",
@@ -754,5 +755,44 @@
     "1": "Good",
     "2": "Very good",
     "3": "Epic"
+  },
+  "spotSubscribe": {
+    "title": "Ricevi gli avvisi surf per {{spotName}}",
+    "subtitle": "Ti scriviamo quando a {{spotName}} sta arrivando buon surf.",
+    "trust": "Sempre gratis · senza account · disiscrizione quando vuoi",
+    "email_placeholder": "La tua email",
+    "submit": "Attiva gli avvisi",
+    "submitting": "Invio…",
+    "success_title": "Ci siamo quasi — controlla la posta",
+    "success_text": "Abbiamo inviato un link di conferma a {{email}} da Mondo Surf. Toccalo per attivare gli avvisi — controlla lo spam se non lo vedi entro un minuto.",
+    "already_text": "Ricevi già gli avvisi per questo spot.",
+    "confirm_title": "Sto confermando i tuoi avvisi surf…",
+    "confirm_success": "Fatto — i tuoi avvisi surf sono attivi.",
+    "confirm_already": "Hai già confermato. I tuoi avvisi surf sono attivi.",
+    "confirm_expired": "Questo link di conferma è scaduto",
+    "confirm_expired_text": "Iscriviti di nuovo dalla pagina dello spot.",
+    "confirm_invalid": "Questo link di conferma non è valido.",
+    "confirm_error": "Qualcosa è andato storto nella conferma. Riprova.",
+    "confirm_app_title": "Sfrutta al meglio Mondo",
+    "confirm_app_text": "Installa l'app per gestire i tuoi spot, scegliere i giorni del bollettino e vedere le previsioni complete.",
+    "unsub_loading": "Carico i tuoi avvisi…",
+    "unsub_title": "I tuoi avvisi surf",
+    "unsub_intro": "Ricevi avvisi per questi spot. Fermane uno, o tutti insieme.",
+    "unsub_stop": "Disiscriviti",
+    "unsub_confirm": "Clicca di nuovo per confermare",
+    "unsub_all_button": "Disiscriviti da tutti",
+    "unsub_done_all": "Fatto — non riceverai più avvisi surf.",
+    "unsub_empty": "Non hai avvisi surf attivi.",
+    "unsub_error": "Qualcosa è andato storto. Riprova.",
+    "unsub_invalid": "Questo link non è valido.",
+    "prefs_title": "Preferenze email",
+    "prefs_save": "Salva preferenze",
+    "prefs_saved": "Preferenze salvate.",
+    "prefs_error": "Impossibile salvare. Riprova.",
+    "error_email_invalid": "Inserisci un indirizzo email valido.",
+    "error_rate_limited": "Troppi tentativi. Riprova tra qualche minuto.",
+    "error_cap_reached": "Ricevi già avvisi per 3 spot",
+    "cap_upgrade_cta": "Crea un account gratuito per avvisi illimitati",
+    "error_generic": "Qualcosa è andato storto. Riprova."
   }
 }

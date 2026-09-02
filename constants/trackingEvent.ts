@@ -6,6 +6,7 @@ export enum TrackingEvent {
     HomeNearTap = 'Home Near_Tap',
     HomeNearGTsShow = 'Home Near GTs_Show',
     HomeNearSpotsShow = 'Home Near Spots_Show',
+    HomeLinksTap = 'Home Links_Tap',
     // HomeRegisterShow = 'Home Register_Show',
     HomeRegisterTap = 'Home Register_Tap',
     // HomeProShow = 'Home Pro_Show',
@@ -91,4 +92,13 @@ export enum TrackingEvent {
     CommentLikeRemovedApi = 'Comment Like Removed_Api',
     CommentReplyTap = 'Comment Reply_Tap',
     CommentReplyAddedApi = 'Comment Reply Added_Api',
+
+    // Spot email alerts (spot-email-alerts): no-account per-spot subscribe form
+    SpotSubscribeShow = 'Spot Subscribe_Show',
+    SpotSubscribeSubmitTap = 'Spot Subscribe Submit_Tap',
+    SpotSubscribeSubmitOk = 'Spot Subscribe Submit_Api',
+    SpotSubscribeSubmitErr = 'Spot Subscribe Submit_Err',
+    SpotSubscribeCapReached = 'Spot Subscribe Cap_Show',
+    SpotSubscribeUpgradeTap = 'Spot Subscribe Upgrade_Tap',
+    SpotSubscribeConfirmShow = 'Spot Subscribe Confirm_Show',
 }

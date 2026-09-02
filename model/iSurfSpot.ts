@@ -71,12 +71,14 @@ export interface ISurfSpotWebcam {
     name: string;
     url: string;
     thumb?: string;
+    thumb_large?: string;
 }
 
 export interface ISurfSpotMeteoStation {
     name: string;
     url: string;
     thumb?: string;
+    thumb_large?: string;
 }
 
 export interface ISurfSpotForecast {

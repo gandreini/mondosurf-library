@@ -1,5 +1,12 @@
+'use client';
+
 import { FeatureCollection } from 'geojson';
-import Map from 'mondosurf-library/components/Map';
+// The Map statically imports leaflet, which touches `window` at module load and
+// throws during SSR. Each platform loads it via its own proxy: web wraps it in
+// next/dynamic (ssr:false) so the rest of the guide's client segment still SSRs
+// (the coordinates box below carries the schema.org geo); the app (no SSR)
+// imports it directly. This keeps SurfSpotMap itself platform-agnostic.
+import Map from 'proxies/LazyMap';
 import SurfSpotCoordinates from 'mondosurf-library/components/surfSpot/SurfSpotCoordinates';
 
 interface ISurfSpotMap {
@@ -26,6 +33,7 @@ const SurfSpotMap: React.FC<ISurfSpotMap> = (props) => {
                 </section>
             </div>
 
+            {/* Coordinates box (extracted component: schema.org GeoCoordinates + links) */}
             <SurfSpotCoordinates
                 lat={props.lat}
                 lng={props.lng}

@@ -9,9 +9,7 @@ interface IBreadcrumbs {
 const Breadcrumbs: React.FC<IBreadcrumbs> = (props) => {
     return (
         <nav className={props.loading ? 'ms-breadcrumbs is-loading' : 'ms-breadcrumbs'}>
-            <ol className="ms-breadcrumbs__list" itemScope itemType="https://schema.org/BreadcrumbList">
-                {props.children}
-            </ol>
+            <ol className="ms-breadcrumbs__list">{props.children}</ol>
         </nav>
     );
 };

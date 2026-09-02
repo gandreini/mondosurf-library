@@ -1,0 +1,125 @@
+/**
+ * HOMEPAGE LINKS
+ *
+ * Curated internal-link section at the bottom of the homepage: popular surf
+ * spots and top destinations. Static and server-rendered — it exists to be
+ * visible to both readers and crawlers on every viewport, unlike .ms-footer
+ * which is display:none below $breakpoint-desktop.
+ */
+
+/* ------------------------------------ *\
+    #HOMEPAGE LINKS
+\* ------------------------------------ */
+.ms-homepage-links {
+    padding: $space * 5 0;
+    // Page background on purpose, NOT $color-background-ultralight. The footer
+    // uses that grey, and on desktop the two sit adjacent — matching it made
+    // this block read as part of the footer, i.e. as boilerplate. It is page
+    // content, and it should look like it.
+    background-color: $color-background-base;
+    border-top: 1px solid $color-border-light;
+
+    &__inner {
+        max-width: $page-max-width;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: $space * 5;
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: $space * 2;
+    }
+
+    &__title.ms-h2-title {
+        margin: 0;
+        text-align: center;
+    }
+
+    // The links themselves. A wrapping inline list rather than a column:
+    // 11 place names read as a browsable set, not as a menu to scan top-down.
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: $space;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__item {
+        margin: 0;
+        display: flex;
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        gap: $space * 0.5;
+        // 44px floor: these are the only touch targets in the block, and at the
+        // text's natural height they land around 34px, below the comfortable
+        // minimum. Setting the height rather than padding keeps the pills even
+        // when a label wraps.
+        min-height: 44px;
+        box-sizing: border-box;
+        padding: $space * 0.75 $space * 1.5;
+        border: 1px solid $color-border-light;
+        border-radius: 999px;
+        background-color: $color-background-base;
+        color: var(--color-text);
+        font-size: 14px;
+        line-height: 1.4;
+        text-decoration: none;
+        // Only the properties that actually change, so the pill does not
+        // repaint everything on hover.
+        transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $color-border-dark;
+            background-color: $color-background-ultralight;
+        }
+
+        // Keyboard focus must stay obvious: the hover treatment alone is too
+        // quiet to serve as a focus indicator.
+        &:focus-visible {
+            outline: 2px solid var(--color-first);
+            outline-offset: 2px;
+        }
+    }
+
+    &__flag {
+        // Decorative: the country name next to it already carries the meaning.
+        font-size: 15px;
+        line-height: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ms-homepage-links__link {
+        transition: none;
+    }
+}
+
+/* ------------------------------------ *\
+    #MEDIA-QUERIES
+\* ------------------------------------ */
+@media all and (min-width: $breakpoint-desktop) {
+    .ms-homepage-links {
+        padding: $space * 7 0;
+
+        &__link {
+            font-size: 15px;
+            padding: $space $space * 2;
+        }
+
+        &__list {
+            gap: $space * 1.5;
+        }
+    }
+}

@@ -1,0 +1,130 @@
+/**
+ * SPOT SUBSCRIBE
+ *
+ * No-account per-spot email subscribe form (spot-email-alerts), River B pages.
+ * Shared by mondosurf-web (and, later, mondosurf-app) via the SpotSubscribeForm
+ * component in mondosurf-library. Light tinted card (Giulio, 2026-07-19, after
+ * trying a no-card editorial variant: the soft background separates the form
+ * from the page better). Same visual family as .ms-banner but with quieter
+ * chrome; controls one size down from the site default ($height-common-l via
+ * the ms-input-l / ms-btn-l pair) so the blue CTA carries the emphasis.
+ */
+
+/* ------------------------------------ *\
+    #SPOT SUBSCRIBE (spot-email-alerts)
+\* ------------------------------------ */
+.ms-spot-subscribe {
+    padding: $space * 2;
+    background-color: var(--color-first-light);
+    border: 1px solid rgba(var(--color-text-link-rgb), 0.25);
+    border-radius: $border-radius * 2;
+
+    &__title {
+        margin: 0 0 $space * 0.375;
+        color: var(--color-text-link);
+        font-size: $font-size-l-fluid;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    &__subtitle {
+        margin: 0 0 $space * 1.5;
+        color: var(--color-text);
+        font-size: $font-size-s-fluid;
+        line-height: 1.25;
+        max-width: 65ch;
+    }
+
+    &__form {
+        margin: 0;
+    }
+
+    &__row {
+        display: flex;
+        gap: $space;
+
+        // Explicit stack on small screens: full-width input and button, not an
+        // accidental flex wrap.
+        @media (max-width: 480px) {
+            flex-direction: column;
+        }
+    }
+
+    // Sizing/layout only. The height comes from the global `ms-input-l` size
+    // modifier (matches the ms-btn-l next to it) — a height set here would lose
+    // to the global `input[type='email']` selector on specificity.
+    &__input {
+        flex: 1 1 220px;
+        min-width: 0;
+
+        @media (max-width: 480px) {
+            flex: none;
+            width: 100%;
+        }
+    }
+
+    // Off-screen honeypot: in the DOM for bots, invisible + unreachable for
+    // humans and assistive tech.
+    &__hp {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__error {
+        margin: $space 0 0;
+        color: var(--color-error-dark);
+        font-size: $font-size-s-fluid;
+    }
+
+    &__cap {
+        margin: $space 0 0;
+        font-size: $font-size-s-fluid;
+    }
+
+    // Inline link that opens the login/register modal — a <button> for correct
+    // semantics (it triggers an action, not navigation), styled as a text link.
+    &__cap-link {
+        padding: 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: var(--color-text-link);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    &__trust {
+        margin: $space 0 0;
+        font-size: $font-size-s;
+        color: var(--color-text-light);
+    }
+
+    &--done {
+        // Success/already state keeps the same card, no form inside.
+    }
+
+    &__success-title {
+        margin: 0 0 $space * 0.375;
+        color: var(--color-text-link);
+        font-size: $font-size-l-fluid;
+        font-weight: 700;
+        line-height: 1.2;
+
+        // Title-only state (already-subscribed): no subtitle follows, so drop the
+        // bottom margin — otherwise it pushes the single line above the box centre.
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__success-text {
+        margin: 0;
+        color: var(--color-text);
+        font-size: $font-size-s-fluid;
+        max-width: 65ch;
+    }
+}
