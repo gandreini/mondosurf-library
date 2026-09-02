@@ -273,19 +273,13 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
         paint: {
             'circle-color': [
                 'step', maxGd,
-                '#ffffff', // < 0: no forecast
-                0, '#ffffff',
+                '#ffffff', // < 1: no forecast, or poor (the old map treated 0 as -1)
                 1, QUALITY_COLORS[1],
                 2, QUALITY_COLORS[2],
                 3, QUALITY_COLORS[3]
             ] as never,
             'circle-stroke-width': 2.5,
-            'circle-stroke-color': [
-                'step', maxGd,
-                CLUSTER_RING_NEUTRAL,
-                0, QUALITY_COLORS[0],
-                1, '#ffffff'
-            ] as never,
+            'circle-stroke-color': ['step', maxGd, CLUSTER_RING_NEUTRAL, 1, '#ffffff'] as never,
             'circle-radius': CLUSTER_SIZE / 2
         }
     });
@@ -334,7 +328,7 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
         id: POINT_STARS_LAYER_ID,
         type: 'symbol',
         source: SPOTS_SOURCE_ID,
-        filter: ['all', ['!', ['has', 'point_count']], ['>=', ['to-number', ['get', 'gd'], -1], 0]],
+        filter: ['all', ['!', ['has', 'point_count']], ['>=', ['to-number', ['get', 'gd'], -1], 1]],
         layout: {
             'icon-image': [
                 'concat', 'ms-quality-star-', ['to-string', ['to-number', ['get', 'gd'], -1]]

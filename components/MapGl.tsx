@@ -77,9 +77,10 @@ interface IMapGl {
 // Shared marker DOM builder (used by spot pins and the draggable edit marker).
 const markerElement = (src: string, opts: { alt?: string; quality?: number } = {}): HTMLElement => {
     const el = document.createElement('div');
-    // quality class (and the star below) only for a real quality value, like the
-    // Leaflet createMarker: gd is -1 when the spot has no forecast.
-    const hasQuality = opts.quality !== undefined && opts.quality >= 0;
+    // quality class (and the star below) only for GOOD quality (1-3), matching
+    // the Leaflet map's observed behavior: its parseFloat(gd) || -1 collapsed
+    // quality 0 (poor) into -1, so poor spots never showed a star either.
+    const hasQuality = opts.quality !== undefined && opts.quality >= 1;
     el.className = 'ms-map-marker-icon' + (hasQuality ? ' quality-' + opts.quality : '');
     const img = document.createElement('img');
     img.className = 'ms-map-marker-icon__image';
