@@ -27,6 +27,7 @@ import {
     nextMapGlLayer,
     normaliseSpots,
     pinSvgUrl,
+    QUALITY_STAR_PATH,
     readMapGlLayer,
     removeSpotsClusterLayers,
     setMapInteractivity,
@@ -76,7 +77,10 @@ interface IMapGl {
 // Shared marker DOM builder (used by spot pins and the draggable edit marker).
 const markerElement = (src: string, opts: { alt?: string; quality?: number } = {}): HTMLElement => {
     const el = document.createElement('div');
-    el.className = 'ms-map-marker-icon' + (opts.quality !== undefined ? ' quality-' + opts.quality : '');
+    // quality class (and the star below) only for a real quality value, like the
+    // Leaflet createMarker: gd is -1 when the spot has no forecast.
+    const hasQuality = opts.quality !== undefined && opts.quality >= 0;
+    el.className = 'ms-map-marker-icon' + (hasQuality ? ' quality-' + opts.quality : '');
     const img = document.createElement('img');
     img.className = 'ms-map-marker-icon__image';
     img.src = src;
@@ -88,6 +92,18 @@ const markerElement = (src: string, opts: { alt?: string; quality?: number } = {
     img.width = 28;
     img.height = 44;
     el.appendChild(img);
+    // Quality star: same markup as the Leaflet createMarker so the shared CSS
+    // (fill by .quality-N, white stroke, drop shadow) applies unchanged.
+    if (hasQuality) {
+        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        star.setAttribute('width', '16');
+        star.setAttribute('height', '16');
+        star.setAttribute('viewBox', '0 0 16 16');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', QUALITY_STAR_PATH);
+        star.appendChild(path);
+        el.appendChild(star);
+    }
     return el;
 };
 

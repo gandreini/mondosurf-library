@@ -110,6 +110,58 @@ export const SPOTS_SOURCE_ID = 'ms-spots';
 export const CLUSTERS_LAYER_ID = 'ms-spots-clusters';
 export const CLUSTER_COUNT_LAYER_ID = 'ms-spots-cluster-count';
 export const POINTS_LAYER_ID = 'ms-spots-points';
+export const POINT_STARS_LAYER_ID = 'ms-spots-point-stars';
+
+// --- Surf-quality visuals (parity with the Leaflet map) ---------------------
+// gd (surf quality) drives pin stars and cluster colors exactly like the old
+// Leaflet map: star fill per quality on pins, cluster bubble colored by the
+// BEST quality among its children. Hex values mirror the CSS custom properties
+// in styles/_color-properties.scss (--color-forecast-*): GL paint can't read
+// CSS variables, so they are duplicated here on purpose — keep in sync.
+export const QUALITY_COLORS: Record<number, string> = {
+    0: '#86e090', // --color-forecast-poor
+    1: '#45c46f', // --color-forecast-good
+    2: '#1e8f4e', // --color-forecast-very-good
+    3: '#124d31'  // --color-forecast-epic
+};
+const CLUSTER_TEXT_DARK = '#4b4e53'; // --color-text
+const CLUSTER_RING_NEUTRAL = '#bbbec3'; // --color-gray-04
+const CLUSTER_SIZE = 36; // px diameter — $map-cluster-size, same as the Leaflet clusters
+
+/** The 16x16 star path used by the Leaflet quality markers (single source for
+ *  the DOM markers' inline SVG and the GL star images below). */
+export const QUALITY_STAR_PATH =
+    'M7.70679 0.571557C7.81526 0.310742 8.18474 0.310742 8.29322 0.571557L10.2807 5.35008C10.3264 5.46003 10.4298 5.53515 10.5486 5.54467L15.7074 5.95825C15.9889 5.98082 16.1031 6.33221 15.8886 6.51598L11.9581 9.88285C11.8677 9.96032 11.8282 10.0819 11.8558 10.1977L13.0566 15.2318C13.1222 15.5066 12.8233 15.7238 12.5822 15.5765L8.16553 12.8788C8.06391 12.8168 7.93609 12.8168 7.83447 12.8788L3.41781 15.5765C3.17674 15.7238 2.87783 15.5066 2.94337 15.2318L4.1442 10.1977C4.17183 10.0819 4.13233 9.96032 4.04189 9.88285L0.111421 6.51598C-0.103107 6.33221 0.0110668 5.98082 0.292639 5.95825L5.45145 5.54467C5.57015 5.53515 5.67355 5.46003 5.71929 5.35008L7.70679 0.571557Z';
+
+const starImageId = (quality: number): string => `ms-quality-star-${quality}`;
+
+/** Draws the 4 colored quality stars into the map's image registry (canvas,
+ *  white stroke + drop shadow like the CSS version). Idempotent; call after
+ *  each setStyle too (setStyle wipes custom images). */
+export const ensureQualityStarImages = (map: MapLibreMap): void => {
+    for (const q of [0, 1, 2, 3]) {
+        const id = starImageId(q);
+        if (map.hasImage(id)) continue;
+        // 24px logical star (the CSS scales the 16px SVG by 1.5), drawn @2x.
+        const logical = 24;
+        const canvas = document.createElement('canvas');
+        canvas.width = logical * 2;
+        canvas.height = logical * 2;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        ctx.scale((logical * 2) / 16, (logical * 2) / 16); // path is on a 16x16 grid
+        const path = new Path2D(QUALITY_STAR_PATH);
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+        ctx.shadowBlur = 2;
+        ctx.fillStyle = QUALITY_COLORS[q];
+        ctx.fill(path);
+        ctx.shadowColor = 'transparent';
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 16 / logical; // ≈1px at rendered size, like the CSS stroke
+        ctx.stroke(path);
+        map.addImage(id, ctx.getImageData(0, 0, logical * 2, logical * 2), { pixelRatio: 2 });
+    }
+};
 
 // SINGLE SOURCE OF TRUTH: wave direction → pin art basename. Both renderers
 // derive from this — the inline DOM markers (SVG, see pinSvgUrl) and the
@@ -198,20 +250,43 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
         data,
         cluster: true,
         clusterRadius: 50,
-        clusterMaxZoom: 14
+        clusterMaxZoom: 14,
+        // Best surf quality among the cluster's children (gd is a string in the
+        // world file, hence to-number; -1 = no forecast). Drives the bubble
+        // color exactly like the Leaflet iconCreateFunction did.
+        clusterProperties: {
+            maxGd: ['max', ['to-number', ['get', 'gd'], -1]]
+        }
         // NB: do NOT set a low source `maxzoom` here — capping it below the view
         // zoom stops the source generating tiles and nothing renders.
     });
 
+    // Parity with .ms-map-cluster in _map.scss: fixed 36px bubble; white with a
+    // gray ring (no forecast) or a poor-green ring (quality 0); solid green
+    // fills with a white ring for quality 1-3.
+    const maxGd = ['get', 'maxGd'] as never;
     map.addLayer({
         id: CLUSTERS_LAYER_ID,
         type: 'circle',
         source: SPOTS_SOURCE_ID,
         filter: ['has', 'point_count'],
         paint: {
-            'circle-color': '#1a8fe3',
-            'circle-opacity': 0.85,
-            'circle-radius': ['step', ['get', 'point_count'], 16, 25, 22, 100, 30]
+            'circle-color': [
+                'step', maxGd,
+                '#ffffff', // < 0: no forecast
+                0, '#ffffff',
+                1, QUALITY_COLORS[1],
+                2, QUALITY_COLORS[2],
+                3, QUALITY_COLORS[3]
+            ] as never,
+            'circle-stroke-width': 2.5,
+            'circle-stroke-color': [
+                'step', maxGd,
+                CLUSTER_RING_NEUTRAL,
+                0, QUALITY_COLORS[0],
+                1, '#ffffff'
+            ] as never,
+            'circle-radius': CLUSTER_SIZE / 2
         }
     });
 
@@ -228,7 +303,11 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
             'text-font': ['Noto Sans Regular'],
             'text-size': 13
         },
-        paint: { 'text-color': '#ffffff' }
+        // Dark text on the light bubbles (no forecast / quality 0), white on the
+        // solid green ones — same as the CSS.
+        paint: {
+            'text-color': ['step', maxGd, CLUSTER_TEXT_DARK, 1, '#ffffff'] as never
+        }
     });
 
     // Individual (non-clustered) spots: teardrop pins matching the inline preview.
@@ -247,11 +326,32 @@ export const addSpotsClusterLayers = (map: MapLibreMap, data: FeatureCollection)
             'icon-allow-overlap': true
         }
     });
+
+    // Quality star on top of each unclustered pin (parity with the Leaflet
+    // divIcon markers: 24px star at the pin's top-right, fill by quality).
+    ensureQualityStarImages(map);
+    map.addLayer({
+        id: POINT_STARS_LAYER_ID,
+        type: 'symbol',
+        source: SPOTS_SOURCE_ID,
+        filter: ['all', ['!', ['has', 'point_count']], ['>=', ['to-number', ['get', 'gd'], -1], 0]],
+        layout: {
+            'icon-image': [
+                'concat', 'ms-quality-star-', ['to-string', ['to-number', ['get', 'gd'], -1]]
+            ] as never,
+            // Pin is 44px tall / 28 wide, anchored at its tip: the star sits at
+            // the pin's top-right like the CSS (top -2, right 2).
+            'icon-anchor': 'center',
+            'icon-offset': [4, -38] as never,
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true
+        }
+    });
 };
 
 /** Removes the clustered source + layers (inverse of addSpotsClusterLayers). */
 export const removeSpotsClusterLayers = (map: MapLibreMap): void => {
-    for (const id of [CLUSTERS_LAYER_ID, CLUSTER_COUNT_LAYER_ID, POINTS_LAYER_ID]) {
+    for (const id of [CLUSTERS_LAYER_ID, CLUSTER_COUNT_LAYER_ID, POINTS_LAYER_ID, POINT_STARS_LAYER_ID]) {
         if (map.getLayer(id)) map.removeLayer(id);
     }
     if (map.getSource(SPOTS_SOURCE_ID)) map.removeSource(SPOTS_SOURCE_ID);
