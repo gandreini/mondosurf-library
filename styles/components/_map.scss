@@ -33,11 +33,7 @@
     border: 0;
 }
 
-// .maplibregl-marker: the MapGl DOM markers (guide inline preview) share the
-// exact same inner markup as the Leaflet divIcon markers, so the pin sizing and
-// the quality-star colors below apply to both renderers.
-.leaflet-marker-icon,
-.maplibregl-marker {
+.leaflet-marker-icon {
     background: transparent;
     border: 0;
 
@@ -85,6 +81,47 @@
         svg {
             fill: var(--color-forecast-epic);
         }
+    }
+}
+
+/* MapGl DOM markers (guide inline preview): same markup as the Leaflet divIcon
+   markers but WITHOUT the .leaflet-marker-icon wrapper — the maplibregl-marker
+   element itself is .ms-map-marker-icon. Mirror of the rules above. */
+.maplibregl-marker.ms-map-marker-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ms-map-marker-icon__image {
+        height: 44px;
+        width: auto;
+    }
+
+    &[class*='quality-'] {
+        position: relative;
+
+        svg {
+            position: absolute;
+            top: -2px;
+            right: 2px;
+            stroke: white;
+            stroke-width: 1px;
+            transform: scale(1.5);
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+        }
+    }
+
+    &.quality-0 svg {
+        fill: var(--color-forecast-poor);
+    }
+    &.quality-1 svg {
+        fill: var(--color-forecast-good);
+    }
+    &.quality-2 svg {
+        fill: var(--color-forecast-very-good);
+    }
+    &.quality-3 svg {
+        fill: var(--color-forecast-epic);
     }
 }
 
