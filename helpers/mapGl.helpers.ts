@@ -210,7 +210,14 @@ export const wirePinImages = (map: MapLibreMap): void => {
 
 /** Fetches the world spots file (already lean, ~185 KB gz, CDN-cached). */
 export const fetchAllSpots = async (): Promise<FeatureCollection> => {
-    const res = await fetch(GEOJSON_FILE_URL);
+    // Vercel preview deploys are not in the Cloudflare Origin allowlist (403),
+    // so they read a same-origin snapshot from public/ instead. Snapshot only —
+    // possibly stale — but enough to test clusters before promoting to prod.
+    const url =
+        typeof window !== 'undefined' && window.location.hostname.endsWith('.vercel.app')
+            ? '/geojson/worldwide-spots.json'
+            : GEOJSON_FILE_URL;
+    const res = await fetch(url);
     if (!res.ok) throw new Error(`spots fetch failed: ${res.status}`);
     return (await res.json()) as FeatureCollection;
 };
