@@ -133,14 +133,6 @@ const MapGl: React.FC<IMapGl> = ({
     onMarkerDragEnd
 }: IMapGl) => {
     const router = useRouterProxy();
-    // App (Capacitor) navigates via the router; web does a full-page navigation
-    // (matches the old map's web <a href> / app router.push split).
-    const goToSpot = (slug: string, id: number) => {
-        const path = `/surf-spot/${slug}/guide/${id}`;
-        if (isApp()) router.push(path);
-        else window.location.assign(path);
-    };
-    const pinClick = (pin: IMapGlPin) => goToSpot(pin.slug, pin.id);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<MapLibreMap | null>(null);
@@ -188,6 +180,11 @@ const MapGl: React.FC<IMapGl> = ({
             .setDOMContent(link)
             .addTo(map);
     };
+
+    // Same behaviour as the clustered world points (and the old Leaflet map):
+    // clicking a pin opens the preview popover, never navigates directly.
+    const pinClick = (pin: IMapGlPin) =>
+        showSpotPopup({ id: pin.id, slug: pin.slug, name: pin.name, direction: pin.direction, lngLat: [pin.lng, pin.lat] });
 
     // --- init once ---
     useEffect(() => {
