@@ -17,10 +17,19 @@
     // Anchor for the absolute map layer below.
     position: relative;
 
+    // Reserved height of the inline map box, decided by CSS (media query), NOT
+    // by the JS mobile/desktop branch — so the very first paint already
+    // reserves the right height and switching branch causes no layout jump.
+    --ms-guide-map-height: 300px;
+
+    @media all and (min-width: $breakpoint-desktop) {
+        --ms-guide-map-height: 460px;
+    }
+
     // Desktop variant (JS-gated in GuideMap): a plain in-flow map, taller than
     // the mobile window, no fullscreen layer/choreography.
     &--desktop {
-        height: 460px;
+        height: var(--ms-guide-map-height);
 
         .ms-map-global {
             position: relative;
@@ -115,7 +124,7 @@
     &__window {
         position: relative;
         width: 100%;
-        height: 300px;
+        height: var(--ms-guide-map-height);
         z-index: 1;
         // The window is a transparent pane over the map layer: it must never
         // swallow clicks itself (in fullscreen it would sit over the map controls);
