@@ -14,27 +14,29 @@
 }
 
 .ms-surf-spot-map {
-    // The fixed, viewport-sized map layer behind the page (Strava-style). It is
-    // already at its final size while inline — the page shows it through the
-    // transparent __window below, and expanding only moves the page (curtains),
-    // never the map. On desktop the page column is centered, so the layer is
-    // clipped to the column while inline (--ms-map-clip-*), opening to full
-    // width with the curtains.
+    // Anchor for the absolute map layer below.
+    position: relative;
+
+    // The viewport-sized map layer behind the page (Strava-style), already at
+    // its final size while inline. It is ABSOLUTE — in the page flow — so it
+    // scrolls natively with the content (compositor-smooth; a fixed layer
+    // JS-synced to scroll vibrates one frame behind). Anchored so its hole
+    // lines up with the transparent __window; expanding lifts it to the
+    // viewport with the --ms-map-rise transform (measured on open), joining
+    // the curtains' choreography. On desktop the page column is centered, so
+    // the layer is clipped to the column while inline (--ms-map-clip-*).
     &__layer {
-        position: fixed;
-        top: var(--ms-map-top, 0px);
-        left: 0;
+        position: absolute;
+        top: calc(-1 * var(--ms-map-hole-top, 0px));
+        left: calc(-1 * var(--ms-map-clip-left, 0px));
         width: 100vw;
         height: calc(100dvh - var(--ms-map-top, 0px));
         overflow: hidden;
         background-color: var(--color-gray-00);
         clip-path: inset(0 var(--ms-map-clip-right, 0px) 0 var(--ms-map-clip-left, 0px));
-        // Scroll-follow while inline: GuideMap keeps --ms-map-scroll equal to how
-        // far the window has scrolled since mount, so the fixed layer moves with
-        // the page. No transform transition here — it would lag the scroll; the
-        // fullscreen flip transitions it via body.ms-map-anim below.
-        transform: translateY(var(--ms-map-scroll, 0px));
-        transition: clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        transition:
+            clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+            transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 
         .ms-map-global {
             position: relative;
@@ -183,10 +185,12 @@
         .ms-map-gl__collapse-label {
             overflow: hidden;
             white-space: nowrap;
-            max-width: 80px;
-            margin-left: $space / 2;
+            max-width: 120px;
+            margin-left: $space;
             font-size: $font-size-s;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-normal;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
             color: var(--color-text);
             animation: ms-map-close-label-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1) 360ms backwards;
         }
@@ -200,8 +204,8 @@
         }
 
         to {
-            max-width: 80px;
-            margin-left: $space / 2;
+            max-width: 120px;
+            margin-left: $space;
             opacity: 1;
         }
     }
@@ -379,25 +383,17 @@ body.ms-map-expanded {
     }
 
     // The curtains are open: the layer expands to the full viewport width
-    // (mobile: already there), slides back to its resting position (undoing
-    // any scroll-follow translation) and the attribution reaches the true corner.
+    // (mobile: already there), rises from its in-flow position to just under
+    // the pinned tabs (--ms-map-rise, measured on open) and the attribution
+    // reaches the true corner.
     .ms-surf-spot-map__layer {
         clip-path: inset(0 0 0 0);
-        transform: translateY(0);
+        transform: translateY(var(--ms-map-rise, 0px));
 
         .maplibregl-ctrl-top-right {
             top: 0;
         }
     }
-}
-
-// Raised by GuideMap around each fullscreen open/close: the layer's transform
-// joins the curtains' 320ms choreography, then goes back to instant so the
-// inline scroll-follow doesn't lag.
-body.ms-map-anim .ms-surf-spot-map__layer {
-    transition:
-        clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
-        transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* ------------------------------------ *\

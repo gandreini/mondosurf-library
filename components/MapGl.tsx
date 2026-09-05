@@ -289,8 +289,16 @@ const MapGl: React.FC<IMapGl> = ({
     // --- react to interactive toggle (inline → fullscreen grow) ---
     useEffect(() => {
         const map = mapRef.current;
-        if (map) setMapInteractivity(map, interactive);
+        if (!map) return;
+        setMapInteractivity(map, interactive);
         // Resize on the grow is handled by the ResizeObserver (container size change).
+        // Fullscreen: drop the window padding so the spot recentres in the FULL
+        // viewport (the inline padding centred it in the small window). The
+        // collapse path restores the padding in unloadWorld's easeTo.
+        if (interactive && padding) {
+            map.easeTo({ padding: { top: 0, bottom: 0, left: 0, right: 0 }, duration: 320 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [interactive]);
 
     // --- control handlers (the classic ms-map buttons, same behavior as the Leaflet map) ---
@@ -391,7 +399,15 @@ const MapGl: React.FC<IMapGl> = ({
         closePopup();
         removeSpotsClusterLayers(map);
         loadedAllRef.current = false;
-        if (lat != null && lng != null) map.easeTo({ center: [lng, lat], zoom, duration: 300 });
+        if (lat != null && lng != null) {
+            map.easeTo({
+                center: [lng, lat],
+                zoom,
+                // Restore the inline-window padding dropped on expand.
+                ...(padding ? { padding: { top: padding.top, bottom: padding.bottom, left: 0, right: 0 } } : {}),
+                duration: 300
+            });
+        }
     };
 
     return (
