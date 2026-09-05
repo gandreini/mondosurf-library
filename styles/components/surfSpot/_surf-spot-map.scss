@@ -33,14 +33,6 @@
             background-color: var(--color-gray-02);
         }
 
-        // No expand button on desktop: the "…" button takes the first slot.
-        .ms-map-gl__more {
-            left: $space;
-        }
-
-        .ms-map-gl__more-menu {
-            left: $space;
-        }
     }
 
     // The viewport-sized map layer behind the page (Strava-style), already at
@@ -219,6 +211,13 @@
         bottom: $space;
         left: calc(#{$space} * 2 + #{$map-control-size});
         z-index: 3; // above the tap-layer
+    }
+
+    // Desktop: no expand button, so "…" takes the first slot. AFTER the base
+    // rule on purpose — same specificity, source order decides.
+    &--desktop .ms-map-gl__more,
+    &--desktop .ms-map-gl__more-menu {
+        left: $space;
     }
 
     // Invisible click-away layer behind the open menu.
