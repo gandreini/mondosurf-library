@@ -17,6 +17,23 @@
     // Anchor for the absolute map layer below.
     position: relative;
 
+    // Desktop variant (JS-gated in GuideMap): a plain in-flow map, taller than
+    // the mobile window, no fullscreen layer/choreography.
+    &--desktop {
+        height: 460px;
+
+        .ms-map-global {
+            position: relative;
+            height: 100%;
+        }
+
+        .ms-map-gl__skeleton {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-gray-02);
+        }
+    }
+
     // The viewport-sized map layer behind the page (Strava-style), already at
     // its final size while inline. It is ABSOLUTE — in the page flow — so it
     // scrolls natively with the content (compositor-smooth; a fixed layer

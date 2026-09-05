@@ -67,6 +67,8 @@ interface IMapGl {
      *  the UNPADDED area — used by the guide map to centre the spot inside the
      *  in-flow window of its fixed, viewport-sized layer. Applied once at init. */
     padding?: { top: number; bottom: number };
+    /** Ctrl/Cmd+wheel to zoom (desktop inline maps: plain wheel keeps scrolling the page). */
+    cooperativeGestures?: boolean;
     /** Single draggable marker at lat/lng (forecast-edit). */
     draggableMarker?: boolean;
     /** Marker icon filename under map-pins/ (e.g. parking). */
@@ -128,6 +130,7 @@ const MapGl: React.FC<IMapGl> = ({
     showControls = false,
     showGeolocationButton = false,
     padding,
+    cooperativeGestures = false,
     draggableMarker = false,
     customIcon,
     onMarkerDragEnd
@@ -206,7 +209,8 @@ const MapGl: React.FC<IMapGl> = ({
                 center: lat != null && lng != null ? [lng, lat] : [0, 20],
                 zoom: lat != null && lng != null ? zoom : 1.5,
                 attributionControl: false,
-                fadeDuration: 0
+                fadeDuration: 0,
+                cooperativeGestures
             });
         } catch (e) {
             // eslint-disable-next-line no-console
