@@ -297,6 +297,71 @@
 }
 
 /* ------------------------------------ *\
+   #MAPGL SPOT POPOVER
+\* ------------------------------------ */
+// Preview popover on the MapLibre maps (guide fullscreen + /surf-spots-map).
+// Mirrors the old Leaflet popover (_map-tooltip.scss) so old and new maps
+// look the same. Global on purpose: MapLibre appends the popup to the map
+// container, which differs per page.
+.ms-map-popup {
+    font-family: var(--font-family-main);
+
+    .maplibregl-popup-content {
+        min-width: 180px;
+        padding: $space * 1.5 $space * 3.5 $space * 1.5 $space * 1.5;
+        border-radius: $border-radius;
+        @include card-box-shadow;
+    }
+
+    .ms-map-popup__link {
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover .ms-map-popup__title {
+            color: var(--color-text-link);
+        }
+    }
+
+    .ms-map-popup__title {
+        display: block;
+        margin-bottom: $space/2;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-s-fluid;
+        color: var(--color-text);
+    }
+
+    .ms-map-popup__details {
+        display: block;
+        font-size: $font-size-xs-fluid;
+        color: var(--color-text);
+
+        .ms-label-value {
+            display: block;
+
+            span {
+                font-size: $font-size-xxs-fluid;
+            }
+
+            .ms-value {
+                display: inline-block; // ::first-letter needs a block container
+                @include first-letter-capital;
+            }
+        }
+    }
+
+    .maplibregl-popup-close-button {
+        top: $space + 0.5;
+        right: $space + 0.5;
+        font-size: $font-size-l-fluid;
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
    #MEDIA-QUERIES
 \* ------------------------------------ */
 @media all and (min-width: $breakpoint-desktop) {
