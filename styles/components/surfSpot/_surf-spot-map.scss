@@ -87,9 +87,8 @@
             transition: top 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
-        // Spot preview popover styles live in _map.scss (.ms-map-popup): the
-        // popup is part of MapGl itself and must be styled on EVERY page using
-        // it (guide fullscreen AND /surf-spots-map), not only inside this layer.
+        // Spot preview popover: shared with the Leaflet maps — markup from
+        // mapPopUpHelper.spotPopupInnerHtml, styles in _map-tooltip.scss.
     }
 
     // The in-flow window: reserves the inline box (no CLS) and lets the fixed

@@ -18,7 +18,7 @@ import { useRouterProxy } from 'proxies/useRouter';
 import { mondoTranslate } from 'proxies/mondoTranslate';
 import Icon from 'mondosurf-library/components/Icon';
 import Loader from 'mondosurf-library/components/Loader';
-import { returnDirectionLabel } from 'mondosurf-library/helpers/labels.helpers';
+import { spotPopupInnerHtml } from 'mondosurf-library/helpers/mapPopUpHelper';
 import toastService from 'mondosurf-library/services/toastService';
 import {
     addSpotsClusterLayers,
@@ -161,19 +161,12 @@ const MapGl: React.FC<IMapGl> = ({
         if (!map) return;
         const path = `/surf-spot/${spot.slug}/guide/${spot.id}`;
         const link = document.createElement('a');
-        link.className = 'ms-map-popup__link';
+        link.className = 'ms-map-tooltip__content';
         link.href = path;
-        // Same structure/content as the old Leaflet popover (mapPopUpHelper):
-        // bold title + labelled "Direction: …" row. ("Bottom" is omitted: the
-        // lean world geojson doesn't carry it.)
-        const dir = spot.direction && spot.direction !== '0' ? returnDirectionLabel(spot.direction) : '';
-        link.innerHTML =
-            `<span class="ms-map-popup__title">${spot.name}</span>` +
-            (dir
-                ? `<span class="ms-map-popup__details"><span class="ms-label-value">` +
-                  `<span class="ms-label">${mondoTranslate('basics.direction')}</span> ` +
-                  `<span class="ms-value">${dir}</span></span></span>`
-                : '');
+        // Content shared with the Leaflet maps — single source of truth
+        // (spotPopupInnerHtml). "Bottom" shows when the data carries it (the
+        // lean world geojson doesn't).
+        link.innerHTML = spotPopupInnerHtml({ name: spot.name, direction: spot.direction });
         // In the app, route via the SPA router rather than a full navigation.
         link.addEventListener('click', (ev) => {
             if (isApp()) {
@@ -182,7 +175,7 @@ const MapGl: React.FC<IMapGl> = ({
             }
         });
         closePopup();
-        popupRef.current = new Popup({ offset: 28, closeButton: true, className: 'ms-map-popup' })
+        popupRef.current = new Popup({ offset: 28, closeButton: true, className: 'ms-map-tooltip' })
             .setLngLat(spot.lngLat)
             .setDOMContent(link)
             .addTo(map);

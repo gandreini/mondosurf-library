@@ -1,42 +1,24 @@
 /**
  * MAP TOOLTIP
  *
- * OSM map tooltip.
- *
+ * Spot popover on the maps. ONE set of styles for both map engines: the
+ * content markup is shared (helpers/mapPopUpHelper.ts → spotPopupInnerHtml),
+ * these content styles are engine-agnostic, and only the popup "chrome"
+ * (box padding, tip, close button) is scoped per engine below.
  */
 
-// .leaflet-container .ms-map-tooltip .leaflet-popup-content > div
-
 /* ------------------------------------ *\
-   #MAP-TOOLTIP
+   #CONTENT (shared: Leaflet + MapLibre)
 \* ------------------------------------ */
-.leaflet-container .ms-map-tooltip {
+.ms-map-tooltip {
     font-family: var(--font-family-main);
-
-    .leaflet-popup-content-wrapper {
-        padding-top: $space * 1.5;
-        padding-bottom: $space * 1.5;
-        border-radius: $border-radius;
-        @include card-box-shadow;
-    }
-
-    .leaflet-popup-content-wrapper {
-        border-radius: $border-radius;
-    }
-
-    .leaflet-popup-tip {
-        @include card-box-shadow;
-    }
-
-    .leaflet-popup-content {
-        margin: 0;
-    }
 
     &__content {
         display: block;
         padding: 0;
         margin: 0 $space * 3.5 0 $space * 1.5;
         cursor: pointer;
+        text-decoration: none;
 
         &:hover {
             .ms-map-tooltip__title {
@@ -67,6 +49,26 @@
             }
         }
     }
+}
+
+/* ------------------------------------ *\
+   #LEAFLET CHROME
+\* ------------------------------------ */
+.leaflet-container .ms-map-tooltip {
+    .leaflet-popup-content-wrapper {
+        padding-top: $space * 1.5;
+        padding-bottom: $space * 1.5;
+        border-radius: $border-radius;
+        @include card-box-shadow;
+    }
+
+    .leaflet-popup-tip {
+        @include card-box-shadow;
+    }
+
+    .leaflet-popup-content {
+        margin: 0;
+    }
 
     // Close
     a.leaflet-popup-close-button {
@@ -75,6 +77,30 @@
         span {
             font-size: $font-size-l-fluid;
         }
+
+        &:hover {
+            color: var(--color-text-link);
+        }
+    }
+}
+
+/* ------------------------------------ *\
+   #MAPLIBRE CHROME
+\* ------------------------------------ */
+// Same box as the Leaflet wrapper: vertical padding on the box, horizontal
+// spacing from the shared __content margins.
+.ms-map-tooltip {
+    .maplibregl-popup-content {
+        min-width: 180px;
+        padding: $space * 1.5 0;
+        border-radius: $border-radius;
+        @include card-box-shadow;
+    }
+
+    .maplibregl-popup-close-button {
+        top: $space + 0.5;
+        right: $space + 0.5;
+        font-size: $font-size-l-fluid;
 
         &:hover {
             color: var(--color-text-link);
