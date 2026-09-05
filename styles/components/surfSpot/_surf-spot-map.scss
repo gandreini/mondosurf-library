@@ -360,10 +360,12 @@ $map-grow-transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 body.ms-map-expanded {
-    // Title slides fully above the viewport; the tabs travel just enough to
-    // reach the viewport top.
+    // Title and tabs are adjacent in flow, so they travel by the SAME distance,
+    // glued together for the whole animation (a bigger title offset opens a gap
+    // between them that shows the map behind). When the tabs reach the viewport
+    // top, the title — sitting right above them — is exactly fully off-screen.
     .ms-surf-spot-header__top {
-        transform: translateY(calc(-100% - var(--ms-map-shift, 0px)));
+        transform: translateY(calc(-1 * var(--ms-map-shift, 0px)));
     }
 
     .ms-surf-spot-header__tabs {
