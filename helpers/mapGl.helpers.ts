@@ -4,14 +4,15 @@ import { GEOJSON_FILE_URL } from 'mondosurf-library/constants/constants';
 import { IMAGES_URL } from 'proxies/localConstants';
 
 /**
- * Two layers only (Giulio, 2026-09-05: plain satellite vs hybrid were near
- * identical — dropped the label-less one). Keys reuse the existing
- * `ms_map_style` localStorage values so the preference carries over from the
- * old Leaflet map (its stored 'satellite1' now reads as the hybrid):
+ * Keys reuse the existing `ms_map_style` localStorage values, same semantics
+ * as the old Leaflet map:
  *   vector     -> street (OpenFreeMap vector)
+ *   satellite1 -> Google hybrid (TEMPORARY: unofficial, unlicensed endpoint —
+ *                 same one the old map uses; Google may block it at any time.
+ *                 Giulio's call 2026-09-05. Drop this layer if it breaks.)
  *   satellite2 -> Esri imagery + place/boundary labels
  */
-export type MapGlLayer = 'vector' | 'satellite2';
+export type MapGlLayer = 'vector' | 'satellite1' | 'satellite2';
 
 // Street: OpenFreeMap vector style — keyless, free, commercial-OK.
 const OPENFREEMAP_STREET = 'https://tiles.openfreemap.org/styles/liberty';
@@ -33,6 +34,22 @@ const esriImageryTiles = (): string => {
         ? `https://ibasemaps-api.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=${key}`
         : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 };
+
+// TEMPORARY (see MapGlLayer note): Google hybrid via the old map's unofficial
+// endpoint. No SLA, no license — kept only until it stops working.
+const googleHybridStyle = (): StyleSpecification => ({
+    version: 8,
+    glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+    sources: {
+        'google-hybrid': {
+            type: 'raster',
+            tiles: [0, 1, 2, 3].map((i) => `https://mt${i}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}`),
+            tileSize: 256,
+            attribution: '© Google Maps'
+        }
+    },
+    layers: [{ id: 'google-hybrid', type: 'raster', source: 'google-hybrid' }]
+});
 
 const satelliteStyle = (): StyleSpecification => {
     const sources: StyleSpecification['sources'] = {
@@ -59,15 +76,16 @@ const satelliteStyle = (): StyleSpecification => {
 
 /** Returns a MapLibre style: a URL string for the vector basemap, or a raster style object. */
 export const getMapGlStyle = (layer: MapGlLayer): string | StyleSpecification => {
-    return layer === 'satellite2' ? satelliteStyle() : OPENFREEMAP_STREET;
+    if (layer === 'satellite1') return googleHybridStyle();
+    if (layer === 'satellite2') return satelliteStyle();
+    return OPENFREEMAP_STREET;
 };
 
 /** Reads the user's last-used layer from localStorage (street on first visit / SSR). */
 export const readMapGlLayer = (): MapGlLayer => {
     if (typeof window === 'undefined') return 'vector';
     const value = window.localStorage.getItem('ms_map_style');
-    // 'satellite1' is the old map's label-less satellite — folded into the hybrid.
-    return value === 'satellite1' || value === 'satellite2' ? 'satellite2' : 'vector';
+    return value === 'satellite1' || value === 'satellite2' ? value : 'vector';
 };
 
 /** Persists the chosen layer so the next map mount opens in it. */
@@ -75,9 +93,9 @@ export const writeMapGlLayer = (layer: MapGlLayer): void => {
     if (typeof window !== 'undefined') window.localStorage.setItem('ms_map_style', layer);
 };
 
-/** Layer toggle: street ↔ satellite (with labels). */
+/** Layer toggle cycle: street → Google hybrid → Esri hybrid → street. */
 export const nextMapGlLayer = (current: MapGlLayer): MapGlLayer =>
-    current === 'vector' ? 'satellite2' : 'vector';
+    current === 'vector' ? 'satellite1' : current === 'satellite1' ? 'satellite2' : 'vector';
 
 /** Enables or disables all pan/zoom interaction handlers (used for the inline preview → fullscreen toggle). */
 export const setMapInteractivity = (map: MapLibreMap, enabled: boolean): void => {
