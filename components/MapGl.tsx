@@ -431,7 +431,7 @@ const MapGl: React.FC<IMapGl> = ({
                         id="map_global_switch-button"
                         title={mondoTranslate('surf_spot.switch_map_layer')}
                         className={
-                            activeLayer === 'satellite1' || activeLayer === 'satellite2'
+                            activeLayer === 'satellite2'
                                 ? 'ms-map__switch is-active'
                                 : 'ms-map__switch'
                         }

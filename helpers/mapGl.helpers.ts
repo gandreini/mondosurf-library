@@ -4,13 +4,14 @@ import { GEOJSON_FILE_URL } from 'mondosurf-library/constants/constants';
 import { IMAGES_URL } from 'proxies/localConstants';
 
 /**
- * Layer keys reuse the existing `ms_map_style` localStorage values so the
- * preference carries over from the old Leaflet map:
+ * Two layers only (Giulio, 2026-09-05: plain satellite vs hybrid were near
+ * identical — dropped the label-less one). Keys reuse the existing
+ * `ms_map_style` localStorage values so the preference carries over from the
+ * old Leaflet map (its stored 'satellite1' now reads as the hybrid):
  *   vector     -> street (OpenFreeMap vector)
- *   satellite1 -> satellite (Esri World Imagery)
- *   satellite2 -> hybrid    (Esri imagery + place/boundary labels)
+ *   satellite2 -> Esri imagery + place/boundary labels
  */
-export type MapGlLayer = 'vector' | 'satellite1' | 'satellite2';
+export type MapGlLayer = 'vector' | 'satellite2';
 
 // Street: OpenFreeMap vector style — keyless, free, commercial-OK.
 const OPENFREEMAP_STREET = 'https://tiles.openfreemap.org/styles/liberty';
@@ -33,7 +34,7 @@ const esriImageryTiles = (): string => {
         : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 };
 
-const satelliteStyle = (withLabels: boolean): StyleSpecification => {
+const satelliteStyle = (): StyleSpecification => {
     const sources: StyleSpecification['sources'] = {
         'esri-imagery': {
             type: 'raster',
@@ -42,17 +43,15 @@ const satelliteStyle = (withLabels: boolean): StyleSpecification => {
             attribution: ESRI_ATTRIBUTION
         }
     };
+    sources['esri-reference'] = {
+        type: 'raster',
+        tiles: [ESRI_REFERENCE_TILES],
+        tileSize: 256
+    };
     const layers: StyleSpecification['layers'] = [
-        { id: 'esri-imagery', type: 'raster', source: 'esri-imagery' }
+        { id: 'esri-imagery', type: 'raster', source: 'esri-imagery' },
+        { id: 'esri-reference', type: 'raster', source: 'esri-reference' }
     ];
-    if (withLabels) {
-        sources['esri-reference'] = {
-            type: 'raster',
-            tiles: [ESRI_REFERENCE_TILES],
-            tileSize: 256
-        };
-        layers.push({ id: 'esri-reference', type: 'raster', source: 'esri-reference' });
-    }
     // Raster styles ship no glyphs; point at OpenFreeMap's font endpoint so the
     // cluster-count labels render over satellite too (same font as the vector style).
     return { version: 8, glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf', sources, layers };
@@ -60,22 +59,15 @@ const satelliteStyle = (withLabels: boolean): StyleSpecification => {
 
 /** Returns a MapLibre style: a URL string for the vector basemap, or a raster style object. */
 export const getMapGlStyle = (layer: MapGlLayer): string | StyleSpecification => {
-    switch (layer) {
-        case 'satellite1':
-            return satelliteStyle(false);
-        case 'satellite2':
-            return satelliteStyle(true);
-        case 'vector':
-        default:
-            return OPENFREEMAP_STREET;
-    }
+    return layer === 'satellite2' ? satelliteStyle() : OPENFREEMAP_STREET;
 };
 
 /** Reads the user's last-used layer from localStorage (street on first visit / SSR). */
 export const readMapGlLayer = (): MapGlLayer => {
     if (typeof window === 'undefined') return 'vector';
     const value = window.localStorage.getItem('ms_map_style');
-    return value === 'satellite1' || value === 'satellite2' ? value : 'vector';
+    // 'satellite1' is the old map's label-less satellite — folded into the hybrid.
+    return value === 'satellite1' || value === 'satellite2' ? 'satellite2' : 'vector';
 };
 
 /** Persists the chosen layer so the next map mount opens in it. */
@@ -83,9 +75,9 @@ export const writeMapGlLayer = (layer: MapGlLayer): void => {
     if (typeof window !== 'undefined') window.localStorage.setItem('ms_map_style', layer);
 };
 
-/** Cycle order for the layer toggle button: street → satellite → hybrid → street. */
+/** Layer toggle: street ↔ satellite (with labels). */
 export const nextMapGlLayer = (current: MapGlLayer): MapGlLayer =>
-    current === 'vector' ? 'satellite1' : current === 'satellite1' ? 'satellite2' : 'vector';
+    current === 'vector' ? 'satellite2' : 'vector';
 
 /** Enables or disables all pan/zoom interaction handlers (used for the inline preview → fullscreen toggle). */
 export const setMapInteractivity = (map: MapLibreMap, enabled: boolean): void => {
