@@ -457,7 +457,12 @@ function addDomPins(map: MapLibreMap, pins: IMapGlPin[], onClick: (pin: IMapGlPi
     for (const pin of pins) {
         if (!Number.isFinite(pin.lat) || !Number.isFinite(pin.lng)) continue;
         const el = createPinElement(pin);
-        el.addEventListener('click', () => onClick(pin));
+        el.addEventListener('click', (e) => {
+            // Don't let the click reach the map: the popover has closeOnClick,
+            // so the same bubbled click would close it in the same instant.
+            e.stopPropagation();
+            onClick(pin);
+        });
         el.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
