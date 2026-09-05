@@ -252,8 +252,12 @@ const MapGl: React.FC<IMapGl> = ({
                 if (onMarkerDragEnd) onMarkerDragEnd(p.lat, p.lng);
             });
             markersRef.current.push(marker);
-        } else if (!loadAllSpots) {
-            // World loading is owned solely by the loadAllSpots effect (single owner).
+        } else if (pins.length) {
+            // Local pins are ALWAYS DOM markers, world or not — the clustered
+            // source excludes their spots (worldClusterData), so without these
+            // they'd be invisible (bit us on the desktop guide map, where
+            // loadAllSpots is true from the start). World loading itself is
+            // owned solely by the loadAllSpots effect (single owner).
             markersRef.current = addDomPins(map, pins, pinClick);
         }
 
