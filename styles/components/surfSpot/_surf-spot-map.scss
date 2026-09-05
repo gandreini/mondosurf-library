@@ -32,6 +32,15 @@
             height: 100%;
             background-color: var(--color-gray-02);
         }
+
+        // No expand button on desktop: the "…" button takes the first slot.
+        .ms-map-gl__more {
+            left: $space;
+        }
+
+        .ms-map-gl__more-menu {
+            left: $space;
+        }
     }
 
     // The viewport-sized map layer behind the page (Strava-style), already at
