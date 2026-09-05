@@ -41,12 +41,35 @@
             height: 100%;
         }
 
-        // Fullscreen-only buttons live here, bottom-left of the viewport:
-        // keep them clear of the iOS home indicator.
-        .ms-map-gl__collapse,
-        .ms-map-gl__more,
-        .ms-map-gl__more-menu {
+        // Fullscreen bottom-left button group: a flex row, so the "…" button
+        // follows the Close pill while its label animates in (absolute slots
+        // would overlap). Cleared from the iOS home indicator as a group.
+        .ms-map-gl__bottom-actions {
+            position: absolute;
+            bottom: $space;
+            left: $space;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: $space;
             margin-bottom: env(safe-area-inset-bottom, 0);
+
+            .ms-map-gl__collapse,
+            .ms-map-gl__more {
+                position: static;
+            }
+
+            // Anchored to the group instead of the window/layer.
+            .ms-map-gl__more-menu {
+                bottom: calc(#{$map-control-size} + #{$space});
+                left: 0;
+                margin-bottom: env(safe-area-inset-bottom, 0);
+            }
+
+            // The click-away layer must cover the whole viewport, not the group.
+            .ms-map-gl__more-backdrop {
+                position: fixed;
+            }
         }
 
         // Classic controls: clear of the iOS notch.
