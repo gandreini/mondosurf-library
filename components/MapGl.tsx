@@ -163,10 +163,17 @@ const MapGl: React.FC<IMapGl> = ({
         const link = document.createElement('a');
         link.className = 'ms-map-popup__link';
         link.href = path;
-        const dir = returnDirectionLabel(spot.direction);
+        // Same structure/content as the old Leaflet popover (mapPopUpHelper):
+        // bold title + labelled "Direction: …" row. ("Bottom" is omitted: the
+        // lean world geojson doesn't carry it.)
+        const dir = spot.direction && spot.direction !== '0' ? returnDirectionLabel(spot.direction) : '';
         link.innerHTML =
             `<span class="ms-map-popup__title">${spot.name}</span>` +
-            (dir ? `<span class="ms-map-popup__detail">${dir}</span>` : '');
+            (dir
+                ? `<span class="ms-map-popup__details"><span class="ms-label-value">` +
+                  `<span class="ms-label">${mondoTranslate('basics.direction')}</span> ` +
+                  `<span class="ms-value">${dir}</span></span></span>`
+                : '');
         // In the app, route via the SPA router rather than a full navigation.
         link.addEventListener('click', (ev) => {
             if (isApp()) {

@@ -88,30 +88,63 @@
         }
 
         // Spot preview popover (clicking an individual spot in fullscreen).
+        // Mirrors the old Leaflet popover (_map-tooltip.scss) so the two maps
+        // look the same until the world map migrates to MapLibre too.
         .ms-map-popup {
+            font-family: var(--font-family-main);
+
             .maplibregl-popup-content {
-                padding: $space $space * 1.5;
-                border-radius: $space;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+                min-width: 180px;
+                padding: $space * 1.5 $space * 3.5 $space * 1.5 $space * 1.5;
+                border-radius: $border-radius;
+                @include card-box-shadow;
             }
 
             .ms-map-popup__link {
-                display: flex;
-                flex-direction: column;
-                gap: $space/4;
+                display: block;
                 text-decoration: none;
-                color: var(--color-text);
+                cursor: pointer;
+
+                &:hover .ms-map-popup__title {
+                    color: var(--color-text-link);
+                }
             }
 
             .ms-map-popup__title {
+                display: block;
+                margin-bottom: $space/2;
                 font-weight: $font-weight-bold;
-                font-size: $font-size-s;
+                font-size: $font-size-s-fluid;
+                color: var(--color-text);
             }
 
-            .ms-map-popup__detail {
-                font-size: $font-size-xs;
-                color: var(--color-gray-06);
-                @include first-letter-capital;
+            .ms-map-popup__details {
+                display: block;
+                font-size: $font-size-xs-fluid;
+                color: var(--color-text);
+
+                .ms-label-value {
+                    display: block;
+
+                    span {
+                        font-size: $font-size-xxs-fluid;
+                    }
+
+                    .ms-value {
+                        display: inline-block; // ::first-letter needs a block container
+                        @include first-letter-capital;
+                    }
+                }
+            }
+
+            .maplibregl-popup-close-button {
+                top: $space + 0.5;
+                right: $space + 0.5;
+                font-size: $font-size-l-fluid;
+
+                &:hover {
+                    color: var(--color-text-link);
+                }
             }
         }
     }
