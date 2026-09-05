@@ -190,6 +190,26 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 3px 12px rgba(0, 0, 0, 0.04);
 }
 
+// A square map button (zoom / layer switch / center / maximize-minimize):
+// the map-control chrome + a centered icon.
+@mixin map-control-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $map-control-size;
+    height: $map-control-size;
+    padding: 0;
+    cursor: pointer;
+    pointer-events: all; // interactive even inside a pointer-events: none container
+    @include map-control;
+
+    [class*=' mondo-icon-'] {
+        font-size: $font-size-xl;
+        color: var(--color-text);
+        transition: all $transition-durations;
+    }
+}
+
 // ------------------------------------ //
 // #FONT-SIZES
 // ------------------------------------ //

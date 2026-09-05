@@ -7,12 +7,266 @@
 /* ------------------------------------ *\
     #SURF SPOT MAP
 \* ------------------------------------ */
+// MapLibre canvas always fills its parent (guide reserved box, fullscreen, map page).
+.ms-map-gl {
+    width: 100%;
+    height: 100%;
+}
+
 .ms-surf-spot-map {
-    &__map {
-        width: 100%;
-        overflow: hidden;
+    // Anchor for the absolute map layer below.
+    position: relative;
+
+    // Reserved height of the inline map box, decided by CSS (media query), NOT
+    // by the JS mobile/desktop branch — so the very first paint already
+    // reserves the right height and switching branch causes no layout jump.
+    --ms-guide-map-height: 300px;
+
+    @media all and (min-width: $breakpoint-desktop) {
+        --ms-guide-map-height: 460px;
+    }
+
+    // Desktop variant (JS-gated in GuideMap): a plain in-flow map, taller than
+    // the mobile window, no fullscreen layer/choreography.
+    &--desktop {
+        height: var(--ms-guide-map-height);
+
         .ms-map-global {
-            height: 300px;
+            position: relative;
+            height: 100%;
+        }
+
+        .ms-map-gl__skeleton {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-gray-02);
+        }
+
+    }
+
+    // The viewport-sized map layer behind the page (Strava-style), already at
+    // its final size while inline. It is ABSOLUTE — in the page flow — so it
+    // scrolls natively with the content (compositor-smooth; a fixed layer
+    // JS-synced to scroll vibrates one frame behind). Anchored so its hole
+    // lines up with the transparent __window; expanding lifts it to the
+    // viewport with the --ms-map-rise transform (measured on open), joining
+    // the curtains' choreography. On desktop the page column is centered, so
+    // the layer is clipped to the column while inline (--ms-map-clip-*).
+    &__layer {
+        position: absolute;
+        top: calc(-1 * var(--ms-map-hole-top, 0px));
+        left: calc(-1 * var(--ms-map-clip-left, 0px));
+        width: 100vw;
+        height: calc(100dvh - var(--ms-map-top, 0px));
+        overflow: hidden;
+        background-color: var(--color-gray-00);
+        clip-path: inset(0 var(--ms-map-clip-right, 0px) 0 var(--ms-map-clip-left, 0px));
+        transition:
+            clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+            transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+        .ms-map-global {
+            position: relative;
+            height: 100%;
+        }
+
+        // Fullscreen bottom-left button group: a flex row, so the "…" button
+        // follows the Close pill while its label animates in (absolute slots
+        // would overlap). Cleared from the iOS home indicator as a group.
+        .ms-map-gl__bottom-actions {
+            position: absolute;
+            bottom: $space;
+            left: $space;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: $space;
+            margin-bottom: env(safe-area-inset-bottom, 0);
+
+            .ms-map-gl__collapse,
+            .ms-map-gl__more {
+                position: static;
+            }
+
+            // Anchored to the group instead of the window/layer.
+            .ms-map-gl__more-menu {
+                bottom: calc(#{$map-control-size} + #{$space});
+                left: 0;
+                margin-bottom: env(safe-area-inset-bottom, 0);
+            }
+
+            // The click-away layer must cover the whole viewport, not the group.
+            .ms-map-gl__more-backdrop {
+                position: fixed;
+            }
+        }
+
+        // Classic controls: clear of the iOS notch.
+        .ms-map__controls {
+            top: calc(#{$map-control-margin} + env(safe-area-inset-top, 0px));
+        }
+
+        // While inline, the layer's real top-right corner is hidden behind the
+        // page, so the attribution docks at the window's top edge; it slides to
+        // the true corner when the curtains open.
+        .maplibregl-ctrl-top-right {
+            top: var(--ms-map-hole-top, 0px);
+            transition: top 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        // Spot preview popover: shared with the Leaflet maps — markup from
+        // mapPopUpHelper.spotPopupInnerHtml, styles in _map-tooltip.scss.
+    }
+
+    // The in-flow window: reserves the inline box (no CLS) and lets the fixed
+    // layer show through (it has no background once the skeleton is gone).
+    // Hosts the inline affordances.
+    &__window {
+        position: relative;
+        width: 100%;
+        height: var(--ms-guide-map-height);
+        z-index: 1;
+        // The window is a transparent pane over the map layer: it must never
+        // swallow clicks itself (in fullscreen it would sit over the map controls);
+        // only its own children are interactive.
+        pointer-events: none;
+
+        .ms-map-gl__tap-layer,
+        .ms-map-gl__skeleton {
+            pointer-events: all;
+        }
+
+        // Placeholder shown in the reserved box until the live map mounts at idle.
+        .ms-map-gl__skeleton {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-gray-02);
+        }
+
+        // Transparent tap layer over the inline preview: a tap opens fullscreen,
+        // a scroll does not (click vs touchmove), a pinch opens fullscreen (JS).
+        // pan-y keeps page scroll native but stops the browser's own pinch-zoom
+        // from fighting the open gesture. Removed in fullscreen.
+        .ms-map-gl__tap-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            touch-action: pan-y;
+            z-index: 2;
+        }
+
+        .ms-map-gl__expand {
+            z-index: 3; // above the tap-layer
+        }
+    }
+
+    // Shared button geometry — maximize/ellipsis sit bottom-left of the window
+    // while inline, minimize/ellipsis bottom-left of the layer while fullscreen.
+    .ms-map-gl__expand,
+    .ms-map-gl__collapse {
+        @include map-control-button;
+        position: absolute;
+        bottom: $space;
+        left: $space;
+    }
+
+    // Fullscreen close button grows into a pill: the "Close" label slides out of
+    // the icon once the curtains have opened (the button mounts with fullscreen,
+    // so the animation runs on every open; `backwards` hides it during the delay).
+    .ms-map-gl__collapse {
+        width: auto;
+        min-width: $map-control-size;
+        padding: 0 $space;
+
+        .ms-map-gl__collapse-label {
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 120px;
+            margin-left: $space;
+            font-size: $font-size-s;
+            font-weight: $font-weight-normal;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--color-text);
+            animation: ms-map-close-label-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1) 360ms backwards;
+        }
+    }
+
+    @keyframes ms-map-close-label-in {
+        from {
+            max-width: 0;
+            margin-left: 0;
+            opacity: 0;
+        }
+
+        to {
+            max-width: 120px;
+            margin-left: $space;
+            opacity: 1;
+        }
+    }
+
+    // "More" (ellipsis) button: second slot of the bottom-left group. Opens the
+    // small actions menu above the group.
+    .ms-map-gl__more {
+        @include map-control-button;
+        position: absolute;
+        bottom: $space;
+        left: calc(#{$space} * 2 + #{$map-control-size});
+        z-index: 3; // above the tap-layer
+    }
+
+    // Desktop: no expand button, so "…" takes the first slot. AFTER the base
+    // rule on purpose — same specificity, source order decides.
+    &--desktop .ms-map-gl__more,
+    &--desktop .ms-map-gl__more-menu {
+        left: $space;
+    }
+
+    // Invisible click-away layer behind the open menu.
+    .ms-map-gl__more-backdrop {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        z-index: 4;
+        pointer-events: all;
+    }
+
+    .ms-map-gl__more-menu {
+        @include map-control;
+        position: absolute;
+        bottom: calc(#{$space} * 2 + #{$map-control-size});
+        left: $space;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        min-width: 180px;
+        padding: $space/2 0;
+        pointer-events: all;
+    }
+
+    .ms-map-gl__more-item {
+        display: block;
+        padding: $space $space * 2;
+        border: 0;
+        background: none;
+        text-align: left;
+        text-decoration: none;
+        font-size: $font-size-s;
+        color: var(--color-text);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color-gray-02);
         }
     }
 
@@ -62,6 +316,94 @@
         flex-grow: 1;
         display: flex;
         width: 100%;
+    }
+}
+
+/* ------------------------------------ *\
+    #FULLSCREEN PAGE CHOREOGRAPHY
+\* ------------------------------------ */
+// Expanding the guide map is a page transition, not an overlay, and the map
+// itself NEVER moves: it lives on a fixed layer behind the page (see __layer),
+// and the page acts as two curtains over it. On expand the spot title slides
+// up, the (already sticky) tabs pin to the top of the viewport, the content
+// below the window slides down, and the site header / bottom tab-bar slide
+// away — revealing the map that was already there. Driven by the
+// `ms-map-expanded` body class + px vars measured by GuideMap: --ms-map-shift
+// (how far the tabs travel to reach the top), --ms-map-top (tabs height = the
+// layer's top edge), --ms-map-hole-top / --ms-map-clip-* (the window's place
+// inside the layer).
+$map-grow-transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+.ms-surf-spot-header__top,
+.ms-surf-spot-header__tabs,
+.ms-surf-spot__guide-contents,
+.ms-header,
+.ms-tab-bar {
+    transition: $map-grow-transition;
+}
+
+// The curtains must be opaque: the map layer sits behind the page, so the
+// title block and the content below the window carry their own background and
+// stack above the layer. (The tabs already have both.) The title's gap to the
+// tabs becomes padding — a margin is transparent and would show the map.
+.ms-surf-spot .ms-surf-spot-header__top {
+    position: relative;
+    z-index: 2;
+    background-color: $color-background-base;
+    margin-bottom: 0;
+    padding-bottom: $space;
+}
+
+.ms-surf-spot__guide-contents {
+    position: relative;
+    z-index: 2;
+    background-color: $color-background-base;
+    padding-top: $space * 3; // breathing room between the map window and the description
+    padding-bottom: $space * 2; // covers the page's own bottom padding (removed below)
+}
+
+// Close the transparent sliver at the very bottom of the page (the layer would
+// show through the page padding).
+.ms-surf-spot:has(.ms-surf-spot-map) {
+    padding-bottom: 0;
+}
+
+body.ms-map-expanded {
+    // Title and tabs are adjacent in flow, so they travel by the SAME distance,
+    // glued together for the whole animation (a bigger title offset opens a gap
+    // between them that shows the map behind). When the tabs reach the viewport
+    // top, the title — sitting right above them — is exactly fully off-screen.
+    .ms-surf-spot-header__top {
+        transform: translateY(calc(-1 * var(--ms-map-shift, 0px)));
+    }
+
+    .ms-surf-spot-header__tabs {
+        transform: translateY(calc(-1 * var(--ms-map-shift, 0px)));
+    }
+
+    .ms-surf-spot__guide-contents {
+        transform: translateY(100vh);
+    }
+
+    .ms-header {
+        transform: translateY(-110%);
+    }
+
+    .ms-tab-bar {
+        transform: translateY(110%);
+    }
+
+    // The curtains are open: the layer expands to the full viewport width
+    // (mobile: already there), rises from its in-flow position to just under
+    // the pinned tabs (--ms-map-rise, measured on open) and the attribution
+    // reaches the true corner.
+    .ms-surf-spot-map__layer {
+        clip-path: inset(0 0 0 0);
+        transform: translateY(var(--ms-map-rise, 0px));
+
+        .maplibregl-ctrl-top-right {
+            top: 0;
+        }
     }
 }
 

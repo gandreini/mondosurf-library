@@ -532,6 +532,11 @@
     "open_in_google_maps": "Open in Google Maps",
     "google_maps": "Google Maps",
     "see_on_map": "See on the map",
+    "switch_map_layer": "Switch map layer",
+    "map_more_options": "Map options",
+    "copy_coordinates": "Copy coordinates",
+    "coordinates_copied": "Coordinates copied!",
+    "map_spots_load_error": "Couldn't load the surf spots, please try again",
     "wave_direction": "Wave direction",
     "best_swell": "Best swell",
     "best_wind": "Best wind",
@@ -561,7 +566,8 @@
     "no_near_spots_text": "Sorry, there are no near spots",
     "near_spots_error": "Sorry, there was an error retrieving near spots",
     "no_videos": "There are no video for this surf spot",
-    "video_error": "There was an error retrieving the spot video"
+    "video_error": "There was an error retrieving the spot video",
+    "close_map": "Chiudi mappa"
   },
   "account_verify": {
     "verify_account_title": "Verify your account",

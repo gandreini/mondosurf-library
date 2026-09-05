@@ -56,7 +56,7 @@ const SurfSpotForecastCompressedDay: React.FC<ISurfSpotForecastCompressedDay> = 
                 <p className="ms-surf-forecast-day__swell">Swell</p>
                 <p className="ms-surf-forecast-day__wind">Wind</p>
                 <p className="ms-surf-forecast-day__secondary-swell">Secondary swell</p>
-                <Icon icon={'enlarge'} />
+                <Icon icon={'maximize'} />
             </div>
 
             <div className="ms-surf-forecast-day__rows">

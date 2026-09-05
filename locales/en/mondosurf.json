@@ -606,6 +606,11 @@
     "open_in_google_maps": "Open in Google Maps",
     "google_maps": "Google Maps",
     "see_on_map": "See on the map",
+    "switch_map_layer": "Switch map layer",
+    "map_more_options": "Map options",
+    "copy_coordinates": "Copy coordinates",
+    "coordinates_copied": "Coordinates copied!",
+    "map_spots_load_error": "Couldn't load the surf spots, please try again",
     "wave_direction": "Wave direction",
     "best_swell": "Best swell",
     "best_wind": "Best wind",
@@ -639,7 +644,8 @@
     "video_error": "There was an error retrieving the spot video",
     "location_hidden": "The location of {{spotName}} is not available to preserve and protect the integrity of the spot",
     "near_spots_preview_text": "There are {{numberOfNearSpots}} surf spots within a range of 100 km from {{spotName}}. Use this section to find alternative spots that may be less crowded, better suited for your surfing skills, or offer a better forecast report for the next 7 days. Each spot includes detailed surf reports, forecast updates, and webcam views to help you plan. Whether you're seeking less crowded alternatives or simply exploring a region, the list of nearby surf spots is an essential tool.",
-    "near_spots_preview_button": "See all {{numberOfNearSpots}} surf spots"
+    "near_spots_preview_button": "See all {{numberOfNearSpots}} surf spots",
+    "close_map": "Close map"
   },
   "account_verify": {
     "verify_account_title": "Verify your account",
