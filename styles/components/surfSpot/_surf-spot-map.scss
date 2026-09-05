@@ -29,6 +29,11 @@
         overflow: hidden;
         background-color: var(--color-gray-00);
         clip-path: inset(0 var(--ms-map-clip-right, 0px) 0 var(--ms-map-clip-left, 0px));
+        // Scroll-follow while inline: GuideMap keeps --ms-map-scroll equal to how
+        // far the window has scrolled since mount, so the fixed layer moves with
+        // the page. No transform transition here — it would lag the scroll; the
+        // fullscreen flip transitions it via body.ms-map-anim below.
+        transform: translateY(var(--ms-map-scroll, 0px));
         transition: clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 
         .ms-map-global {
@@ -142,6 +147,40 @@
         position: absolute;
         bottom: $space;
         left: $space;
+    }
+
+    // Fullscreen close button grows into a pill: the "Close" label slides out of
+    // the icon once the curtains have opened (the button mounts with fullscreen,
+    // so the animation runs on every open; `backwards` hides it during the delay).
+    .ms-map-gl__collapse {
+        width: auto;
+        min-width: $map-control-size;
+        padding: 0 $space;
+
+        .ms-map-gl__collapse-label {
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 80px;
+            margin-left: $space / 2;
+            font-size: $font-size-s;
+            font-weight: $font-weight-bold;
+            color: var(--color-text);
+            animation: ms-map-close-label-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1) 360ms backwards;
+        }
+    }
+
+    @keyframes ms-map-close-label-in {
+        from {
+            max-width: 0;
+            margin-left: 0;
+            opacity: 0;
+        }
+
+        to {
+            max-width: 80px;
+            margin-left: $space / 2;
+            opacity: 1;
+        }
     }
 
     // "More" (ellipsis) button: second slot of the bottom-left group. Opens the
@@ -317,14 +356,25 @@ body.ms-map-expanded {
     }
 
     // The curtains are open: the layer expands to the full viewport width
-    // (mobile: already there) and the attribution reaches the true corner.
+    // (mobile: already there), slides back to its resting position (undoing
+    // any scroll-follow translation) and the attribution reaches the true corner.
     .ms-surf-spot-map__layer {
         clip-path: inset(0 0 0 0);
+        transform: translateY(0);
 
         .maplibregl-ctrl-top-right {
             top: 0;
         }
     }
+}
+
+// Raised by GuideMap around each fullscreen open/close: the layer's transform
+// joins the curtains' 320ms choreography, then goes back to instant so the
+// inline scroll-follow doesn't lag.
+body.ms-map-anim .ms-surf-spot-map__layer {
+    transition:
+        clip-path 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* ------------------------------------ *\

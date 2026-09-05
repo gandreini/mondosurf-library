@@ -257,7 +257,7 @@ const MapGl: React.FC<IMapGl> = ({
         // sources/layers; the layer-id click/hover handlers above survive).
         map.on('styledata', () => {
             if (loadedAllRef.current && allSpotsRef.current && map.isStyleLoaded() && !map.getSource(SPOTS_SOURCE_ID)) {
-                addSpotsClusterLayers(map, allSpotsRef.current);
+                addSpotsClusterLayers(map, worldClusterData(allSpotsRef.current));
             }
         });
 
@@ -350,7 +350,17 @@ const MapGl: React.FC<IMapGl> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadAllSpots]);
 
-    // Load the world spots: drop local DOM pins, fetch (once, cached) + cluster.
+    // World data minus the spots already shown as DOM pins: they must never be
+    // swallowed into a cluster, so they simply don't enter the clustered source.
+    const worldClusterData = (data: FeatureCollection): FeatureCollection => {
+        const pinIds = new Set(pins.map((p) => Number(p.id)));
+        if (!pinIds.size) return data;
+        return { ...data, features: data.features.filter((f) => !pinIds.has(Number(f.properties?.id))) };
+    };
+
+    // Load the world spots: fetch (once, cached) + cluster. The local DOM pins
+    // (spot + near spots) STAY on top and their spots are excluded from the
+    // clustered source — so zooming never swallows them into a cluster.
     // Cluster click/hover handlers were wired once at init (survive setStyle).
     const loadWorld = async (map: MapLibreMap) => {
         if (loadedAllRef.current) return;
@@ -365,11 +375,7 @@ const MapGl: React.FC<IMapGl> = ({
                 return;
             }
             allSpotsRef.current = data; // cached already-normalised — no re-map on layer switch / re-open
-            addSpotsClusterLayers(map, data);
-            // Remove the local DOM pins only after the clusters are in, so a throw
-            // above leaves the inline preview pins intact.
-            markersRef.current.forEach((m) => m.remove());
-            markersRef.current = [];
+            addSpotsClusterLayers(map, worldClusterData(data));
         } catch (e) {
             // Non-blocking: the map stays usable; local pins (if any) were already shown.
             loadedAllRef.current = false;
@@ -379,13 +385,12 @@ const MapGl: React.FC<IMapGl> = ({
         }
     };
 
-    // Collapse back to the inline preview: remove cluster layers/source, restore
-    // local DOM pins, recenter on the spot. World data stays cached for re-open.
+    // Collapse back to the inline preview: remove cluster layers/source and
+    // recenter on the spot. The DOM pins never left. World data stays cached.
     const unloadWorld = (map: MapLibreMap) => {
         closePopup();
         removeSpotsClusterLayers(map);
         loadedAllRef.current = false;
-        markersRef.current = addDomPins(map, pins, pinClick);
         if (lat != null && lng != null) map.easeTo({ center: [lng, lat], zoom, duration: 300 });
     };
 
